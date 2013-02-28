@@ -1,0 +1,588 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.eabi_attribute 28, 1
+   5              		.fpu fpv4-sp-d16
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 6
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.thumb
+  16              		.file	"stm32f30x_iwdg.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.align	2
+  21              		.global	IWDG_WriteAccessCmd
+  22              		.thumb
+  23              		.thumb_func
+  25              	IWDG_WriteAccessCmd:
+  26              	.LFB111:
+  27              		.file 1 "../src/stm32f30x_iwdg.c"
+   1:../src/stm32f30x_iwdg.c **** /**
+   2:../src/stm32f30x_iwdg.c ****   ******************************************************************************
+   3:../src/stm32f30x_iwdg.c ****   * @file    stm32f30x_iwdg.c
+   4:../src/stm32f30x_iwdg.c ****   * @author  MCD Application Team
+   5:../src/stm32f30x_iwdg.c ****   * @version V1.0.1
+   6:../src/stm32f30x_iwdg.c ****   * @date    23-October-2012
+   7:../src/stm32f30x_iwdg.c ****   * @brief   This file provides firmware functions to manage the following 
+   8:../src/stm32f30x_iwdg.c ****   *          functionalities of the Independent watchdog (IWDG) peripheral:           
+   9:../src/stm32f30x_iwdg.c ****   *           + Prescaler and Counter configuration
+  10:../src/stm32f30x_iwdg.c ****   *           + IWDG activation
+  11:../src/stm32f30x_iwdg.c ****   *           + Flag management
+  12:../src/stm32f30x_iwdg.c ****   *
+  13:../src/stm32f30x_iwdg.c ****   @verbatim  
+  14:../src/stm32f30x_iwdg.c ****   
+  15:../src/stm32f30x_iwdg.c ****  ===============================================================================
+  16:../src/stm32f30x_iwdg.c ****                           ##### IWDG features #####
+  17:../src/stm32f30x_iwdg.c ****  ===============================================================================
+  18:../src/stm32f30x_iwdg.c ****     [..] The IWDG can be started by either software or hardware (configurable
+  19:../src/stm32f30x_iwdg.c ****          through option byte).
+  20:../src/stm32f30x_iwdg.c ****     [..] The IWDG is clocked by its own dedicated low-speed clock (LSI) and
+  21:../src/stm32f30x_iwdg.c ****          thus stays active even if the main clock fails.
+  22:../src/stm32f30x_iwdg.c ****          Once the IWDG is started, the LSI is forced ON and cannot be disabled
+  23:../src/stm32f30x_iwdg.c ****          (LSI cannot be disabled too), and the counter starts counting down from 
+  24:../src/stm32f30x_iwdg.c ****          the reset value of 0xFFF. When it reaches the end of count value (0x000)
+  25:../src/stm32f30x_iwdg.c ****          a system reset is generated.
+  26:../src/stm32f30x_iwdg.c ****          The IWDG counter should be reloaded at regular intervals to prevent
+  27:../src/stm32f30x_iwdg.c ****          an MCU reset.
+  28:../src/stm32f30x_iwdg.c ****     [..] The IWDG is implemented in the VDD voltage domain that is still functional
+  29:../src/stm32f30x_iwdg.c ****          in STOP and STANDBY mode (IWDG reset can wake-up from STANDBY).          
+  30:../src/stm32f30x_iwdg.c ****     [..] IWDGRST flag in RCC_CSR register can be used to inform when a IWDG
+  31:../src/stm32f30x_iwdg.c ****          reset occurs.
+  32:../src/stm32f30x_iwdg.c ****     [..] Min-max timeout value @41KHz (LSI): ~0.1ms / ~25.5s
+  33:../src/stm32f30x_iwdg.c ****          The IWDG timeout may vary due to LSI frequency dispersion. STM32F30x
+  34:../src/stm32f30x_iwdg.c ****          devices provide the capability to measure the LSI frequency (LSI clock
+  35:../src/stm32f30x_iwdg.c ****          connected internally to TIM16 CH1 input capture). The measured value
+  36:../src/stm32f30x_iwdg.c ****          can be used to have an IWDG timeout with an acceptable accuracy. 
+  37:../src/stm32f30x_iwdg.c ****          For more information, please refer to the STM32F30x Reference manual.
+  38:../src/stm32f30x_iwdg.c **** 
+  39:../src/stm32f30x_iwdg.c ****                       ##### How to use this driver #####
+  40:../src/stm32f30x_iwdg.c ****  ===============================================================================
+  41:../src/stm32f30x_iwdg.c ****     [..] This driver allows to use IWDG peripheral with either window option enabled
+  42:../src/stm32f30x_iwdg.c ****          or disabled. To do so follow one of the two procedures below.
+  43:../src/stm32f30x_iwdg.c ****     (#) Window option is enabled:    
+  44:../src/stm32f30x_iwdg.c ****         (++) Start the IWDG using IWDG_Enable() function, when the IWDG is used
+  45:../src/stm32f30x_iwdg.c ****              in software mode (no need to enable the LSI, it will be enabled
+  46:../src/stm32f30x_iwdg.c ****              by hardware).        
+  47:../src/stm32f30x_iwdg.c ****         (++) Enable write access to IWDG_PR and IWDG_RLR registers using
+  48:../src/stm32f30x_iwdg.c ****              IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable) function.
+  49:../src/stm32f30x_iwdg.c ****         (++) Configure the IWDG prescaler using IWDG_SetPrescaler() function.
+  50:../src/stm32f30x_iwdg.c ****         (++) Configure the IWDG counter value using IWDG_SetReload() function.
+  51:../src/stm32f30x_iwdg.c ****              This value will be loaded in the IWDG counter each time the counter
+  52:../src/stm32f30x_iwdg.c ****              is reloaded, then the IWDG will start counting down from this value.
+  53:../src/stm32f30x_iwdg.c ****         (++) Wait for the IWDG registers to be updated using IWDG_GetFlagStatus() function.
+  54:../src/stm32f30x_iwdg.c ****         (++) Configure the IWDG refresh window using IWDG_SetWindowValue() function.
+  55:../src/stm32f30x_iwdg.c **** 
+  56:../src/stm32f30x_iwdg.c ****     (#) Window option is disabled:    
+  57:../src/stm32f30x_iwdg.c ****         (++) Enable write access to IWDG_PR and IWDG_RLR registers using
+  58:../src/stm32f30x_iwdg.c ****              IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable) function.
+  59:../src/stm32f30x_iwdg.c ****         (++) Configure the IWDG prescaler using IWDG_SetPrescaler() function.
+  60:../src/stm32f30x_iwdg.c ****         (++) Configure the IWDG counter value using IWDG_SetReload() function.
+  61:../src/stm32f30x_iwdg.c ****              This value will be loaded in the IWDG counter each time the counter
+  62:../src/stm32f30x_iwdg.c ****              is reloaded, then the IWDG will start counting down from this value.
+  63:../src/stm32f30x_iwdg.c ****         (++) Wait for the IWDG registers to be updated using IWDG_GetFlagStatus() function.
+  64:../src/stm32f30x_iwdg.c ****         (++) reload the IWDG counter at regular intervals during normal operation 
+  65:../src/stm32f30x_iwdg.c ****              to prevent an MCU reset, using IWDG_ReloadCounter() function.
+  66:../src/stm32f30x_iwdg.c ****         (++) Start the IWDG using IWDG_Enable() function, when the IWDG is used
+  67:../src/stm32f30x_iwdg.c ****              in software mode (no need to enable the LSI, it will be enabled
+  68:../src/stm32f30x_iwdg.c ****              by hardware).    
+  69:../src/stm32f30x_iwdg.c ****           
+  70:../src/stm32f30x_iwdg.c ****   @endverbatim
+  71:../src/stm32f30x_iwdg.c ****     
+  72:../src/stm32f30x_iwdg.c ****   ******************************************************************************
+  73:../src/stm32f30x_iwdg.c ****   * @attention
+  74:../src/stm32f30x_iwdg.c ****   *
+  75:../src/stm32f30x_iwdg.c ****   * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  76:../src/stm32f30x_iwdg.c ****   *
+  77:../src/stm32f30x_iwdg.c ****   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  78:../src/stm32f30x_iwdg.c ****   * You may not use this file except in compliance with the License.
+  79:../src/stm32f30x_iwdg.c ****   * You may obtain a copy of the License at:
+  80:../src/stm32f30x_iwdg.c ****   *
+  81:../src/stm32f30x_iwdg.c ****   *        http://www.st.com/software_license_agreement_liberty_v2
+  82:../src/stm32f30x_iwdg.c ****   *
+  83:../src/stm32f30x_iwdg.c ****   * Unless required by applicable law or agreed to in writing, software 
+  84:../src/stm32f30x_iwdg.c ****   * distributed under the License is distributed on an "AS IS" BASIS, 
+  85:../src/stm32f30x_iwdg.c ****   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  86:../src/stm32f30x_iwdg.c ****   * See the License for the specific language governing permissions and
+  87:../src/stm32f30x_iwdg.c ****   * limitations under the License.
+  88:../src/stm32f30x_iwdg.c ****   *
+  89:../src/stm32f30x_iwdg.c ****   ******************************************************************************
+  90:../src/stm32f30x_iwdg.c ****   */
+  91:../src/stm32f30x_iwdg.c **** 
+  92:../src/stm32f30x_iwdg.c **** /* Includes ------------------------------------------------------------------*/
+  93:../src/stm32f30x_iwdg.c **** #include "stm32f30x_iwdg.h"
+  94:../src/stm32f30x_iwdg.c **** 
+  95:../src/stm32f30x_iwdg.c **** /** @addtogroup STM32F30x_StdPeriph_Driver
+  96:../src/stm32f30x_iwdg.c ****   * @{
+  97:../src/stm32f30x_iwdg.c ****   */
+  98:../src/stm32f30x_iwdg.c **** 
+  99:../src/stm32f30x_iwdg.c **** /** @defgroup IWDG 
+ 100:../src/stm32f30x_iwdg.c ****   * @brief IWDG driver modules
+ 101:../src/stm32f30x_iwdg.c ****   * @{
+ 102:../src/stm32f30x_iwdg.c ****   */ 
+ 103:../src/stm32f30x_iwdg.c **** 
+ 104:../src/stm32f30x_iwdg.c **** /* Private typedef -----------------------------------------------------------*/
+ 105:../src/stm32f30x_iwdg.c **** /* Private define ------------------------------------------------------------*/
+ 106:../src/stm32f30x_iwdg.c **** /* ---------------------- IWDG registers bit mask ----------------------------*/
+ 107:../src/stm32f30x_iwdg.c **** /* KR register bit mask */
+ 108:../src/stm32f30x_iwdg.c **** #define KR_KEY_RELOAD    ((uint16_t)0xAAAA)
+ 109:../src/stm32f30x_iwdg.c **** #define KR_KEY_ENABLE    ((uint16_t)0xCCCC)
+ 110:../src/stm32f30x_iwdg.c **** 
+ 111:../src/stm32f30x_iwdg.c **** /* Private macro -------------------------------------------------------------*/
+ 112:../src/stm32f30x_iwdg.c **** /* Private variables ---------------------------------------------------------*/
+ 113:../src/stm32f30x_iwdg.c **** /* Private function prototypes -----------------------------------------------*/
+ 114:../src/stm32f30x_iwdg.c **** /* Private functions ---------------------------------------------------------*/
+ 115:../src/stm32f30x_iwdg.c **** 
+ 116:../src/stm32f30x_iwdg.c **** /** @defgroup IWDG_Private_Functions
+ 117:../src/stm32f30x_iwdg.c ****   * @{
+ 118:../src/stm32f30x_iwdg.c ****   */
+ 119:../src/stm32f30x_iwdg.c **** 
+ 120:../src/stm32f30x_iwdg.c **** /** @defgroup IWDG_Group1 Prescaler and Counter configuration functions
+ 121:../src/stm32f30x_iwdg.c ****  *  @brief   Prescaler and Counter configuration functions
+ 122:../src/stm32f30x_iwdg.c ****  *
+ 123:../src/stm32f30x_iwdg.c **** @verbatim   
+ 124:../src/stm32f30x_iwdg.c ****  ===============================================================================
+ 125:../src/stm32f30x_iwdg.c ****             ##### Prescaler and Counter configuration functions #####
+ 126:../src/stm32f30x_iwdg.c ****  ===============================================================================  
+ 127:../src/stm32f30x_iwdg.c **** 
+ 128:../src/stm32f30x_iwdg.c **** @endverbatim
+ 129:../src/stm32f30x_iwdg.c ****   * @{
+ 130:../src/stm32f30x_iwdg.c ****   */
+ 131:../src/stm32f30x_iwdg.c **** 
+ 132:../src/stm32f30x_iwdg.c **** /**
+ 133:../src/stm32f30x_iwdg.c ****   * @brief  Enables or disables write access to IWDG_PR and IWDG_RLR registers.
+ 134:../src/stm32f30x_iwdg.c ****   * @param  IWDG_WriteAccess: new state of write access to IWDG_PR and IWDG_RLR registers.
+ 135:../src/stm32f30x_iwdg.c ****   *   This parameter can be one of the following values:
+ 136:../src/stm32f30x_iwdg.c ****   *     @arg IWDG_WriteAccess_Enable: Enable write access to IWDG_PR and IWDG_RLR registers
+ 137:../src/stm32f30x_iwdg.c ****   *     @arg IWDG_WriteAccess_Disable: Disable write access to IWDG_PR and IWDG_RLR registers
+ 138:../src/stm32f30x_iwdg.c ****   * @retval None
+ 139:../src/stm32f30x_iwdg.c ****   */
+ 140:../src/stm32f30x_iwdg.c **** void IWDG_WriteAccessCmd(uint16_t IWDG_WriteAccess)
+ 141:../src/stm32f30x_iwdg.c **** {
+  28              		.loc 1 141 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 8
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33 0000 80B4     		push	{r7}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 4
+  36              		.cfi_offset 7, -4
+  37 0002 83B0     		sub	sp, sp, #12
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_offset 16
+  40 0004 00AF     		add	r7, sp, #0
+  41              	.LCFI2:
+  42              		.cfi_def_cfa_register 7
+  43 0006 0346     		mov	r3, r0
+  44 0008 FB80     		strh	r3, [r7, #6]	@ movhi
+ 142:../src/stm32f30x_iwdg.c ****   /* Check the parameters */
+ 143:../src/stm32f30x_iwdg.c ****   assert_param(IS_IWDG_WRITE_ACCESS(IWDG_WriteAccess));
+ 144:../src/stm32f30x_iwdg.c ****   IWDG->KR = IWDG_WriteAccess;
+  45              		.loc 1 144 0
+  46 000a 4FF44053 		mov	r3, #12288
+  47 000e C4F20003 		movt	r3, 16384
+  48 0012 FA88     		ldrh	r2, [r7, #6]
+  49 0014 1A60     		str	r2, [r3, #0]
+ 145:../src/stm32f30x_iwdg.c **** }
+  50              		.loc 1 145 0
+  51 0016 07F10C07 		add	r7, r7, #12
+  52 001a BD46     		mov	sp, r7
+  53 001c 80BC     		pop	{r7}
+  54 001e 7047     		bx	lr
+  55              		.cfi_endproc
+  56              	.LFE111:
+  58              		.align	2
+  59              		.global	IWDG_SetPrescaler
+  60              		.thumb
+  61              		.thumb_func
+  63              	IWDG_SetPrescaler:
+  64              	.LFB112:
+ 146:../src/stm32f30x_iwdg.c **** 
+ 147:../src/stm32f30x_iwdg.c **** /**
+ 148:../src/stm32f30x_iwdg.c ****   * @brief  Sets IWDG Prescaler value.
+ 149:../src/stm32f30x_iwdg.c ****   * @param  IWDG_Prescaler: specifies the IWDG Prescaler value.
+ 150:../src/stm32f30x_iwdg.c ****   *   This parameter can be one of the following values:
+ 151:../src/stm32f30x_iwdg.c ****   *     @arg IWDG_Prescaler_4: IWDG prescaler set to 4
+ 152:../src/stm32f30x_iwdg.c ****   *     @arg IWDG_Prescaler_8: IWDG prescaler set to 8
+ 153:../src/stm32f30x_iwdg.c ****   *     @arg IWDG_Prescaler_16: IWDG prescaler set to 16
+ 154:../src/stm32f30x_iwdg.c ****   *     @arg IWDG_Prescaler_32: IWDG prescaler set to 32
+ 155:../src/stm32f30x_iwdg.c ****   *     @arg IWDG_Prescaler_64: IWDG prescaler set to 64
+ 156:../src/stm32f30x_iwdg.c ****   *     @arg IWDG_Prescaler_128: IWDG prescaler set to 128
+ 157:../src/stm32f30x_iwdg.c ****   *     @arg IWDG_Prescaler_256: IWDG prescaler set to 256
+ 158:../src/stm32f30x_iwdg.c ****   * @retval None
+ 159:../src/stm32f30x_iwdg.c ****   */
+ 160:../src/stm32f30x_iwdg.c **** void IWDG_SetPrescaler(uint8_t IWDG_Prescaler)
+ 161:../src/stm32f30x_iwdg.c **** {
+  65              		.loc 1 161 0
+  66              		.cfi_startproc
+  67              		@ args = 0, pretend = 0, frame = 8
+  68              		@ frame_needed = 1, uses_anonymous_args = 0
+  69              		@ link register save eliminated.
+  70 0020 80B4     		push	{r7}
+  71              	.LCFI3:
+  72              		.cfi_def_cfa_offset 4
+  73              		.cfi_offset 7, -4
+  74 0022 83B0     		sub	sp, sp, #12
+  75              	.LCFI4:
+  76              		.cfi_def_cfa_offset 16
+  77 0024 00AF     		add	r7, sp, #0
+  78              	.LCFI5:
+  79              		.cfi_def_cfa_register 7
+  80 0026 0346     		mov	r3, r0
+  81 0028 FB71     		strb	r3, [r7, #7]
+ 162:../src/stm32f30x_iwdg.c ****   /* Check the parameters */
+ 163:../src/stm32f30x_iwdg.c ****   assert_param(IS_IWDG_PRESCALER(IWDG_Prescaler));
+ 164:../src/stm32f30x_iwdg.c ****   IWDG->PR = IWDG_Prescaler;
+  82              		.loc 1 164 0
+  83 002a 4FF44053 		mov	r3, #12288
+  84 002e C4F20003 		movt	r3, 16384
+  85 0032 FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
+  86 0034 5A60     		str	r2, [r3, #4]
+ 165:../src/stm32f30x_iwdg.c **** }
+  87              		.loc 1 165 0
+  88 0036 07F10C07 		add	r7, r7, #12
+  89 003a BD46     		mov	sp, r7
+  90 003c 80BC     		pop	{r7}
+  91 003e 7047     		bx	lr
+  92              		.cfi_endproc
+  93              	.LFE112:
+  95              		.align	2
+  96              		.global	IWDG_SetReload
+  97              		.thumb
+  98              		.thumb_func
+ 100              	IWDG_SetReload:
+ 101              	.LFB113:
+ 166:../src/stm32f30x_iwdg.c **** 
+ 167:../src/stm32f30x_iwdg.c **** /**
+ 168:../src/stm32f30x_iwdg.c ****   * @brief  Sets IWDG Reload value.
+ 169:../src/stm32f30x_iwdg.c ****   * @param  Reload: specifies the IWDG Reload value.
+ 170:../src/stm32f30x_iwdg.c ****   *   This parameter must be a number between 0 and 0x0FFF.
+ 171:../src/stm32f30x_iwdg.c ****   * @retval None
+ 172:../src/stm32f30x_iwdg.c ****   */
+ 173:../src/stm32f30x_iwdg.c **** void IWDG_SetReload(uint16_t Reload)
+ 174:../src/stm32f30x_iwdg.c **** {
+ 102              		.loc 1 174 0
+ 103              		.cfi_startproc
+ 104              		@ args = 0, pretend = 0, frame = 8
+ 105              		@ frame_needed = 1, uses_anonymous_args = 0
+ 106              		@ link register save eliminated.
+ 107 0040 80B4     		push	{r7}
+ 108              	.LCFI6:
+ 109              		.cfi_def_cfa_offset 4
+ 110              		.cfi_offset 7, -4
+ 111 0042 83B0     		sub	sp, sp, #12
+ 112              	.LCFI7:
+ 113              		.cfi_def_cfa_offset 16
+ 114 0044 00AF     		add	r7, sp, #0
+ 115              	.LCFI8:
+ 116              		.cfi_def_cfa_register 7
+ 117 0046 0346     		mov	r3, r0
+ 118 0048 FB80     		strh	r3, [r7, #6]	@ movhi
+ 175:../src/stm32f30x_iwdg.c ****   /* Check the parameters */
+ 176:../src/stm32f30x_iwdg.c ****   assert_param(IS_IWDG_RELOAD(Reload));
+ 177:../src/stm32f30x_iwdg.c ****   IWDG->RLR = Reload;
+ 119              		.loc 1 177 0
+ 120 004a 4FF44053 		mov	r3, #12288
+ 121 004e C4F20003 		movt	r3, 16384
+ 122 0052 FA88     		ldrh	r2, [r7, #6]
+ 123 0054 9A60     		str	r2, [r3, #8]
+ 178:../src/stm32f30x_iwdg.c **** }
+ 124              		.loc 1 178 0
+ 125 0056 07F10C07 		add	r7, r7, #12
+ 126 005a BD46     		mov	sp, r7
+ 127 005c 80BC     		pop	{r7}
+ 128 005e 7047     		bx	lr
+ 129              		.cfi_endproc
+ 130              	.LFE113:
+ 132              		.align	2
+ 133              		.global	IWDG_ReloadCounter
+ 134              		.thumb
+ 135              		.thumb_func
+ 137              	IWDG_ReloadCounter:
+ 138              	.LFB114:
+ 179:../src/stm32f30x_iwdg.c **** 
+ 180:../src/stm32f30x_iwdg.c **** /**
+ 181:../src/stm32f30x_iwdg.c ****   * @brief  Reloads IWDG counter with value defined in the reload register
+ 182:../src/stm32f30x_iwdg.c ****   *   (write access to IWDG_PR and IWDG_RLR registers disabled).
+ 183:../src/stm32f30x_iwdg.c ****   * @param  None
+ 184:../src/stm32f30x_iwdg.c ****   * @retval None
+ 185:../src/stm32f30x_iwdg.c ****   */
+ 186:../src/stm32f30x_iwdg.c **** void IWDG_ReloadCounter(void)
+ 187:../src/stm32f30x_iwdg.c **** {
+ 139              		.loc 1 187 0
+ 140              		.cfi_startproc
+ 141              		@ args = 0, pretend = 0, frame = 0
+ 142              		@ frame_needed = 1, uses_anonymous_args = 0
+ 143              		@ link register save eliminated.
+ 144 0060 80B4     		push	{r7}
+ 145              	.LCFI9:
+ 146              		.cfi_def_cfa_offset 4
+ 147              		.cfi_offset 7, -4
+ 148 0062 00AF     		add	r7, sp, #0
+ 149              	.LCFI10:
+ 150              		.cfi_def_cfa_register 7
+ 188:../src/stm32f30x_iwdg.c ****   IWDG->KR = KR_KEY_RELOAD;
+ 151              		.loc 1 188 0
+ 152 0064 4FF44053 		mov	r3, #12288
+ 153 0068 C4F20003 		movt	r3, 16384
+ 154 006c 4AF6AA22 		movw	r2, #43690
+ 155 0070 1A60     		str	r2, [r3, #0]
+ 189:../src/stm32f30x_iwdg.c **** }
+ 156              		.loc 1 189 0
+ 157 0072 BD46     		mov	sp, r7
+ 158 0074 80BC     		pop	{r7}
+ 159 0076 7047     		bx	lr
+ 160              		.cfi_endproc
+ 161              	.LFE114:
+ 163              		.align	2
+ 164              		.global	IWDG_SetWindowValue
+ 165              		.thumb
+ 166              		.thumb_func
+ 168              	IWDG_SetWindowValue:
+ 169              	.LFB115:
+ 190:../src/stm32f30x_iwdg.c **** 
+ 191:../src/stm32f30x_iwdg.c **** 
+ 192:../src/stm32f30x_iwdg.c **** /**
+ 193:../src/stm32f30x_iwdg.c ****   * @brief  Sets the IWDG window value.
+ 194:../src/stm32f30x_iwdg.c ****   * @param  WindowValue: specifies the window value to be compared to the downcounter.
+ 195:../src/stm32f30x_iwdg.c ****   * @retval None
+ 196:../src/stm32f30x_iwdg.c ****   */
+ 197:../src/stm32f30x_iwdg.c **** void IWDG_SetWindowValue(uint16_t WindowValue)
+ 198:../src/stm32f30x_iwdg.c **** {
+ 170              		.loc 1 198 0
+ 171              		.cfi_startproc
+ 172              		@ args = 0, pretend = 0, frame = 8
+ 173              		@ frame_needed = 1, uses_anonymous_args = 0
+ 174              		@ link register save eliminated.
+ 175 0078 80B4     		push	{r7}
+ 176              	.LCFI11:
+ 177              		.cfi_def_cfa_offset 4
+ 178              		.cfi_offset 7, -4
+ 179 007a 83B0     		sub	sp, sp, #12
+ 180              	.LCFI12:
+ 181              		.cfi_def_cfa_offset 16
+ 182 007c 00AF     		add	r7, sp, #0
+ 183              	.LCFI13:
+ 184              		.cfi_def_cfa_register 7
+ 185 007e 0346     		mov	r3, r0
+ 186 0080 FB80     		strh	r3, [r7, #6]	@ movhi
+ 199:../src/stm32f30x_iwdg.c ****   /* Check the parameters */
+ 200:../src/stm32f30x_iwdg.c ****   assert_param(IS_IWDG_WINDOW_VALUE(WindowValue));
+ 201:../src/stm32f30x_iwdg.c ****   IWDG->WINR = WindowValue;
+ 187              		.loc 1 201 0
+ 188 0082 4FF44053 		mov	r3, #12288
+ 189 0086 C4F20003 		movt	r3, 16384
+ 190 008a FA88     		ldrh	r2, [r7, #6]
+ 191 008c 1A61     		str	r2, [r3, #16]
+ 202:../src/stm32f30x_iwdg.c **** }
+ 192              		.loc 1 202 0
+ 193 008e 07F10C07 		add	r7, r7, #12
+ 194 0092 BD46     		mov	sp, r7
+ 195 0094 80BC     		pop	{r7}
+ 196 0096 7047     		bx	lr
+ 197              		.cfi_endproc
+ 198              	.LFE115:
+ 200              		.align	2
+ 201              		.global	IWDG_Enable
+ 202              		.thumb
+ 203              		.thumb_func
+ 205              	IWDG_Enable:
+ 206              	.LFB116:
+ 203:../src/stm32f30x_iwdg.c **** 
+ 204:../src/stm32f30x_iwdg.c **** /**
+ 205:../src/stm32f30x_iwdg.c ****   * @}
+ 206:../src/stm32f30x_iwdg.c ****   */
+ 207:../src/stm32f30x_iwdg.c **** 
+ 208:../src/stm32f30x_iwdg.c **** /** @defgroup IWDG_Group2 IWDG activation function
+ 209:../src/stm32f30x_iwdg.c ****  *  @brief   IWDG activation function 
+ 210:../src/stm32f30x_iwdg.c ****  *
+ 211:../src/stm32f30x_iwdg.c **** @verbatim   
+ 212:../src/stm32f30x_iwdg.c ****  ===============================================================================
+ 213:../src/stm32f30x_iwdg.c ****                     ##### IWDG activation function #####
+ 214:../src/stm32f30x_iwdg.c ****  ===============================================================================  
+ 215:../src/stm32f30x_iwdg.c **** 
+ 216:../src/stm32f30x_iwdg.c **** @endverbatim
+ 217:../src/stm32f30x_iwdg.c ****   * @{
+ 218:../src/stm32f30x_iwdg.c ****   */
+ 219:../src/stm32f30x_iwdg.c **** 
+ 220:../src/stm32f30x_iwdg.c **** /**
+ 221:../src/stm32f30x_iwdg.c ****   * @brief  Enables IWDG (write access to IWDG_PR and IWDG_RLR registers disabled).
+ 222:../src/stm32f30x_iwdg.c ****   * @param  None
+ 223:../src/stm32f30x_iwdg.c ****   * @retval None
+ 224:../src/stm32f30x_iwdg.c ****   */
+ 225:../src/stm32f30x_iwdg.c **** void IWDG_Enable(void)
+ 226:../src/stm32f30x_iwdg.c **** {
+ 207              		.loc 1 226 0
+ 208              		.cfi_startproc
+ 209              		@ args = 0, pretend = 0, frame = 0
+ 210              		@ frame_needed = 1, uses_anonymous_args = 0
+ 211              		@ link register save eliminated.
+ 212 0098 80B4     		push	{r7}
+ 213              	.LCFI14:
+ 214              		.cfi_def_cfa_offset 4
+ 215              		.cfi_offset 7, -4
+ 216 009a 00AF     		add	r7, sp, #0
+ 217              	.LCFI15:
+ 218              		.cfi_def_cfa_register 7
+ 227:../src/stm32f30x_iwdg.c ****   IWDG->KR = KR_KEY_ENABLE;
+ 219              		.loc 1 227 0
+ 220 009c 4FF44053 		mov	r3, #12288
+ 221 00a0 C4F20003 		movt	r3, 16384
+ 222 00a4 4CF6CC42 		movw	r2, #52428
+ 223 00a8 1A60     		str	r2, [r3, #0]
+ 228:../src/stm32f30x_iwdg.c **** }
+ 224              		.loc 1 228 0
+ 225 00aa BD46     		mov	sp, r7
+ 226 00ac 80BC     		pop	{r7}
+ 227 00ae 7047     		bx	lr
+ 228              		.cfi_endproc
+ 229              	.LFE116:
+ 231              		.align	2
+ 232              		.global	IWDG_GetFlagStatus
+ 233              		.thumb
+ 234              		.thumb_func
+ 236              	IWDG_GetFlagStatus:
+ 237              	.LFB117:
+ 229:../src/stm32f30x_iwdg.c **** 
+ 230:../src/stm32f30x_iwdg.c **** /**
+ 231:../src/stm32f30x_iwdg.c ****   * @}
+ 232:../src/stm32f30x_iwdg.c ****   */
+ 233:../src/stm32f30x_iwdg.c **** 
+ 234:../src/stm32f30x_iwdg.c **** /** @defgroup IWDG_Group3 Flag management function 
+ 235:../src/stm32f30x_iwdg.c ****  *  @brief  Flag management function  
+ 236:../src/stm32f30x_iwdg.c ****  *
+ 237:../src/stm32f30x_iwdg.c **** @verbatim   
+ 238:../src/stm32f30x_iwdg.c ****  ===============================================================================
+ 239:../src/stm32f30x_iwdg.c ****                      ##### Flag management function ##### 
+ 240:../src/stm32f30x_iwdg.c ****  ===============================================================================  
+ 241:../src/stm32f30x_iwdg.c **** 
+ 242:../src/stm32f30x_iwdg.c **** @endverbatim
+ 243:../src/stm32f30x_iwdg.c ****   * @{
+ 244:../src/stm32f30x_iwdg.c ****   */
+ 245:../src/stm32f30x_iwdg.c **** 
+ 246:../src/stm32f30x_iwdg.c **** /**
+ 247:../src/stm32f30x_iwdg.c ****   * @brief  Checks whether the specified IWDG flag is set or not.
+ 248:../src/stm32f30x_iwdg.c ****   * @param  IWDG_FLAG: specifies the flag to check.
+ 249:../src/stm32f30x_iwdg.c ****   *   This parameter can be one of the following values:
+ 250:../src/stm32f30x_iwdg.c ****   *     @arg IWDG_FLAG_PVU: Prescaler Value Update on going
+ 251:../src/stm32f30x_iwdg.c ****   *     @arg IWDG_FLAG_RVU: Reload Value Update on going
+ 252:../src/stm32f30x_iwdg.c ****   *     @arg IWDG_FLAG_WVU: Counter Window Value Update on going
+ 253:../src/stm32f30x_iwdg.c ****   * @retval The new state of IWDG_FLAG (SET or RESET).
+ 254:../src/stm32f30x_iwdg.c ****   */
+ 255:../src/stm32f30x_iwdg.c **** FlagStatus IWDG_GetFlagStatus(uint16_t IWDG_FLAG)
+ 256:../src/stm32f30x_iwdg.c **** {
+ 238              		.loc 1 256 0
+ 239              		.cfi_startproc
+ 240              		@ args = 0, pretend = 0, frame = 16
+ 241              		@ frame_needed = 1, uses_anonymous_args = 0
+ 242              		@ link register save eliminated.
+ 243 00b0 80B4     		push	{r7}
+ 244              	.LCFI16:
+ 245              		.cfi_def_cfa_offset 4
+ 246              		.cfi_offset 7, -4
+ 247 00b2 85B0     		sub	sp, sp, #20
+ 248              	.LCFI17:
+ 249              		.cfi_def_cfa_offset 24
+ 250 00b4 00AF     		add	r7, sp, #0
+ 251              	.LCFI18:
+ 252              		.cfi_def_cfa_register 7
+ 253 00b6 0346     		mov	r3, r0
+ 254 00b8 FB80     		strh	r3, [r7, #6]	@ movhi
+ 257:../src/stm32f30x_iwdg.c ****   FlagStatus bitstatus = RESET;
+ 255              		.loc 1 257 0
+ 256 00ba 4FF00003 		mov	r3, #0
+ 257 00be FB73     		strb	r3, [r7, #15]
+ 258:../src/stm32f30x_iwdg.c ****   /* Check the parameters */
+ 259:../src/stm32f30x_iwdg.c ****   assert_param(IS_IWDG_FLAG(IWDG_FLAG));
+ 260:../src/stm32f30x_iwdg.c ****   if ((IWDG->SR & IWDG_FLAG) != (uint32_t)RESET)
+ 258              		.loc 1 260 0
+ 259 00c0 4FF44053 		mov	r3, #12288
+ 260 00c4 C4F20003 		movt	r3, 16384
+ 261 00c8 DA68     		ldr	r2, [r3, #12]
+ 262 00ca FB88     		ldrh	r3, [r7, #6]
+ 263 00cc 1340     		ands	r3, r3, r2
+ 264 00ce 002B     		cmp	r3, #0
+ 265 00d0 03D0     		beq	.L8
+ 261:../src/stm32f30x_iwdg.c ****   {
+ 262:../src/stm32f30x_iwdg.c ****     bitstatus = SET;
+ 266              		.loc 1 262 0
+ 267 00d2 4FF00103 		mov	r3, #1
+ 268 00d6 FB73     		strb	r3, [r7, #15]
+ 269 00d8 02E0     		b	.L9
+ 270              	.L8:
+ 263:../src/stm32f30x_iwdg.c ****   }
+ 264:../src/stm32f30x_iwdg.c ****   else
+ 265:../src/stm32f30x_iwdg.c ****   {
+ 266:../src/stm32f30x_iwdg.c ****     bitstatus = RESET;
+ 271              		.loc 1 266 0
+ 272 00da 4FF00003 		mov	r3, #0
+ 273 00de FB73     		strb	r3, [r7, #15]
+ 274              	.L9:
+ 267:../src/stm32f30x_iwdg.c ****   }
+ 268:../src/stm32f30x_iwdg.c ****   /* Return the flag status */
+ 269:../src/stm32f30x_iwdg.c ****   return bitstatus;
+ 275              		.loc 1 269 0
+ 276 00e0 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 270:../src/stm32f30x_iwdg.c **** }
+ 277              		.loc 1 270 0
+ 278 00e2 1846     		mov	r0, r3
+ 279 00e4 07F11407 		add	r7, r7, #20
+ 280 00e8 BD46     		mov	sp, r7
+ 281 00ea 80BC     		pop	{r7}
+ 282 00ec 7047     		bx	lr
+ 283              		.cfi_endproc
+ 284              	.LFE117:
+ 286              	.Letext0:
+ 287              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
+ 288              		.file 3 "/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/stm32f30x.h"
+ 289              		.file 4 "/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cm4.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 stm32f30x_iwdg.c
+     /tmp/ccMNVGIe.s:20     .text:00000000 $t
+     /tmp/ccMNVGIe.s:25     .text:00000000 IWDG_WriteAccessCmd
+     /tmp/ccMNVGIe.s:63     .text:00000020 IWDG_SetPrescaler
+     /tmp/ccMNVGIe.s:100    .text:00000040 IWDG_SetReload
+     /tmp/ccMNVGIe.s:137    .text:00000060 IWDG_ReloadCounter
+     /tmp/ccMNVGIe.s:168    .text:00000078 IWDG_SetWindowValue
+     /tmp/ccMNVGIe.s:205    .text:00000098 IWDG_Enable
+     /tmp/ccMNVGIe.s:236    .text:000000b0 IWDG_GetFlagStatus
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.743cd71370ebc432b539c5dba7924ecc
+                           .group:00000000 wm4.stm32f30x.h.56.6f19c65e98e3319a61449cb2b2455af5
+                           .group:00000000 wm4.core_cm4.h.32.1434cd257ff5806b1b03cd32ab0641e9
+                           .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05
+                           .group:00000000 wm4.core_cmInstr.h.25.d8165482ef3061013a2fc83e2d85f3d9
+                           .group:00000000 wm4.core_cm4_simd.h.29.013e5bcf58dba2d27c60184174208e07
+                           .group:00000000 wm4.core_cm4.h.155.cf7c793e178943e1bbf613f1b21cd51a
+                           .group:00000000 wm4.stm32f30x.h.294.d8a54360eca16e4157694b52a095202d
+                           .group:00000000 wm4.stm32f30x_adc.h.130.cbebad91f78fb87381fe0860eea6104e
+                           .group:00000000 wm4.stm32f30x_can.h.50.8b8f5d301152c422a6e50622b33ef620
+                           .group:00000000 wm4.stm32f30x_crc.h.54.66d4c5e565e18566aebd9abfd4bcd4b0
+                           .group:00000000 wm4.stm32f30x_comp.h.91.06ae44150aaaa82c077b71df8db3541a
+                           .group:00000000 wm4.stm32f30x_dac.h.49.b1b5b26e4ca241dbe67fa16dc86a615f
+                           .group:00000000 wm4.stm32f30x_dbgmcu.h.53.b238a263ce6a2cc83f610cc35302a38b
+                           .group:00000000 wm4.stm32f30x_dma.h.96.d7a2ddd10023e12781aa8ff5ac15d212
+                           .group:00000000 wm4.stm32f30x_exti.h.60.8ca0809491a21dec6fc69cf7471e2bab
+                           .group:00000000 wm4.stm32f30x_flash.h.70.32613455dfe7328932f786a224daac23
+                           .group:00000000 wm4.stm32f30x_gpio.h.50.408e1f6250246e4cc28221970909d34c
+                           .group:00000000 wm4.stm32f30x_syscfg.h.58.4cadeb4ec8e47d36b972bbb6b96b7161
+                           .group:00000000 wm4.stm32f30x_i2c.h.86.3d51d4edc0e3b9ee9aae045ccbb7739a
+                           .group:00000000 wm4.stm32f30x_opamp.h.75.704e2e5e2aab039de307aaa2dcc99fa5
+                           .group:00000000 wm4.stm32f30x_pwr.h.59.5c85acff2a3e3c5085b2140c06025cfc
+                           .group:00000000 wm4.stm32f30x_rcc.h.79.5ba7cac1e74879861a72556c25322aa4
+                           .group:00000000 wm4.stm32f30x_rtc.h.133.d184e08ff40bda44db4bed94f9633384
+                           .group:00000000 wm4.stm32f30x_spi.h.119.4d21ec94ec14f3553a127e61c0a9874f
+                           .group:00000000 wm4.stm32f30x_tim.h.175.d4a93cff2e7924577147254e501271b6
+                           .group:00000000 wm4.stm32f30x_usart.h.110.c89016273702821ff4f9fe43881f70b5
+                           .group:00000000 wm4.stm32f30x_wwdg.h.58.4688eee61a2709866472b4b4c07d9275
+                           .group:00000000 wm4.stm32f30x_misc.h.113.6a52e4fe7c3825a3ab05990f30dddf92
+                           .group:00000000 wm4.stm32f30x_iwdg.h.59.467d704fb073a015941f19b50fa6470a
+
+NO UNDEFINED SYMBOLS

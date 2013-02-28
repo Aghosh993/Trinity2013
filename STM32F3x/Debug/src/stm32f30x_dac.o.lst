@@ -1,0 +1,1673 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.eabi_attribute 28, 1
+   5              		.fpu fpv4-sp-d16
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 6
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.thumb
+  16              		.file	"stm32f30x_dac.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.align	2
+  21              		.global	DAC_DeInit
+  22              		.thumb
+  23              		.thumb_func
+  25              	DAC_DeInit:
+  26              	.LFB111:
+  27              		.file 1 "../src/stm32f30x_dac.c"
+   1:../src/stm32f30x_dac.c **** /**
+   2:../src/stm32f30x_dac.c ****   ******************************************************************************
+   3:../src/stm32f30x_dac.c ****   * @file    stm32f30x_dac.c
+   4:../src/stm32f30x_dac.c ****   * @author  MCD Application Team
+   5:../src/stm32f30x_dac.c ****   * @version V1.0.1
+   6:../src/stm32f30x_dac.c ****   * @date    23-October-2012
+   7:../src/stm32f30x_dac.c ****   * @brief   This file provides firmware functions to manage the following 
+   8:../src/stm32f30x_dac.c ****   *          functionalities of the Digital-to-Analog Converter (DAC) peripheral: 
+   9:../src/stm32f30x_dac.c ****   *           + DAC channels configuration: trigger, output buffer, data format
+  10:../src/stm32f30x_dac.c ****   *           + DMA management      
+  11:../src/stm32f30x_dac.c ****   *           + Interrupts and flags management
+  12:../src/stm32f30x_dac.c ****   *
+  13:../src/stm32f30x_dac.c ****   @verbatim
+  14:../src/stm32f30x_dac.c ****     
+  15:../src/stm32f30x_dac.c ****  ===============================================================================
+  16:../src/stm32f30x_dac.c ****                       ##### DAC Peripheral features #####
+  17:../src/stm32f30x_dac.c ****  ===============================================================================
+  18:../src/stm32f30x_dac.c ****     [..] The device integrates two 12-bit Digital Analog Converters that can 
+  19:../src/stm32f30x_dac.c ****          be used independently or simultaneously (dual mode):
+  20:../src/stm32f30x_dac.c ****          (#) DAC channel1 with DAC_OUT1 as output
+  21:../src/stm32f30x_dac.c ****          (#) DAC channel2 with DAC_OUT2 as output
+  22:../src/stm32f30x_dac.c ****     [..] Digital to Analog conversion can be non-triggered using DAC_Trigger_None
+  23:../src/stm32f30x_dac.c ****          and DAC_OUT1/DAC_OUT2 is available once writing to DHRx register using 
+  24:../src/stm32f30x_dac.c ****          DAC_SetChannel1Data()/DAC_SetChannel2Data.
+  25:../src/stm32f30x_dac.c ****     [..] Digital to Analog conversion can be triggered by:
+  26:../src/stm32f30x_dac.c ****          (#) External event: EXTI Line 9 (any GPIOx_Pin9) using DAC_Trigger_Ext_IT9.
+  27:../src/stm32f30x_dac.c ****              The used pin (GPIOx_Pin9) must be configured in input mode.
+  28:../src/stm32f30x_dac.c ****          (#) Timers TRGO: TIM2, TIM8/TIM3, TIM4, TIM6, TIM7, and TIM15 
+  29:../src/stm32f30x_dac.c ****              (DAC_Trigger_T2_TRGO, DAC_Trigger_T4_TRGO...)
+  30:../src/stm32f30x_dac.c ****              The timer TRGO event should be selected using TIM_SelectOutputTrigger()
+  31:../src/stm32f30x_dac.c ****              (++) To trigger DAC conversions by TIM3 instead of TIM8 follow
+  32:../src/stm32f30x_dac.c ****                  this sequence:
+  33:../src/stm32f30x_dac.c ****                  (+++) Enable SYSCFG APB clock by calling
+  34:../src/stm32f30x_dac.c ****                        RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+  35:../src/stm32f30x_dac.c ****                  (+++) Select DAC_Trigger_T3_TRGO when calling DAC_Init()
+  36:../src/stm32f30x_dac.c ****                  (+++) Remap the DAC trigger from TIM8 to TIM3 by calling
+  37:../src/stm32f30x_dac.c ****                        SYSCFG_TriggerRemapConfig(SYSCFG_TriggerRemap_DACTIM3, ENABLE)
+  38:../src/stm32f30x_dac.c ****          (#) Software using DAC_Trigger_Software
+  39:../src/stm32f30x_dac.c ****     [..] Each DAC channel integrates an output buffer that can be used to 
+  40:../src/stm32f30x_dac.c ****          reduce the output impedance, and to drive external loads directly
+  41:../src/stm32f30x_dac.c ****          without having to add an external operational amplifier.
+  42:../src/stm32f30x_dac.c ****          To enable, the output buffer use  
+  43:../src/stm32f30x_dac.c ****          DAC_InitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Enable;
+  44:../src/stm32f30x_dac.c ****     [..] Refer to the device datasheet for more details about output impedance
+  45:../src/stm32f30x_dac.c ****          value with and without output buffer.
+  46:../src/stm32f30x_dac.c ****     [..] Both DAC channels can be used to generate:
+  47:../src/stm32f30x_dac.c ****          (+) Noise wave using DAC_WaveGeneration_Noise
+  48:../src/stm32f30x_dac.c ****          (+) Triangle wave using DAC_WaveGeneration_Triangle
+  49:../src/stm32f30x_dac.c ****     [..] Wave generation can be disabled using DAC_WaveGeneration_None
+  50:../src/stm32f30x_dac.c ****     [..] The DAC data format can be:
+  51:../src/stm32f30x_dac.c ****          (+) 8-bit right alignment using DAC_Align_8b_R
+  52:../src/stm32f30x_dac.c ****          (+) 12-bit left alignment using DAC_Align_12b_L
+  53:../src/stm32f30x_dac.c ****          (+) 12-bit right alignment using DAC_Align_12b_R
+  54:../src/stm32f30x_dac.c ****     [..] The analog output voltage on each DAC channel pin is determined
+  55:../src/stm32f30x_dac.c ****          by the following equation: 
+  56:../src/stm32f30x_dac.c ****          (+) DAC_OUTx = VREF+ * DOR / 4095 with DOR is the Data Output Register. 
+  57:../src/stm32f30x_dac.c ****          VREF+ is the input voltage reference (refer to the device datasheet)
+  58:../src/stm32f30x_dac.c ****          e.g. To set DAC_OUT1 to 0.7V, use DAC_SetChannel1Data(DAC_Align_12b_R, 868);
+  59:../src/stm32f30x_dac.c ****          Assuming that VREF+ = 3.3, DAC_OUT1 = (3.3 * 868) / 4095 = 0.7V
+  60:../src/stm32f30x_dac.c ****     [..] A DMA request can be generated when an external trigger (but not
+  61:../src/stm32f30x_dac.c ****          a software trigger) occurs if DMA2 requests are enabled using
+  62:../src/stm32f30x_dac.c ****          DAC_DMACmd();
+  63:../src/stm32f30x_dac.c ****          DMA requests are mapped as following:
+  64:../src/stm32f30x_dac.c ****          (+) DAC channel1 is mapped on DMA2 channel3 which must be already 
+  65:../src/stm32f30x_dac.c ****              configured.
+  66:../src/stm32f30x_dac.c ****          (+) DAC channel2 is mapped on DMA2 channel4 which must be already 
+  67:../src/stm32f30x_dac.c ****              configured.
+  68:../src/stm32f30x_dac.c ****  
+  69:../src/stm32f30x_dac.c ****                     ##### How to use this driver #####
+  70:../src/stm32f30x_dac.c ****  ===============================================================================          
+  71:../src/stm32f30x_dac.c ****     [..]
+  72:../src/stm32f30x_dac.c ****     (+) DAC APB clock must be enabled to get write access to DAC
+  73:../src/stm32f30x_dac.c ****         registers using RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC, ENABLE);
+  74:../src/stm32f30x_dac.c ****     (+) Configure DAC_OUTx (DAC_OUT1: PA4, DAC_OUT2: PA5) in analog mode.
+  75:../src/stm32f30x_dac.c ****     (+) Configure the DAC channel using DAC_Init();
+  76:../src/stm32f30x_dac.c ****     (+) Enable the DAC channel using DAC_Cmd();
+  77:../src/stm32f30x_dac.c ****  
+  78:../src/stm32f30x_dac.c ****   @endverbatim
+  79:../src/stm32f30x_dac.c ****     
+  80:../src/stm32f30x_dac.c ****   ******************************************************************************
+  81:../src/stm32f30x_dac.c ****   * @attention
+  82:../src/stm32f30x_dac.c ****   *
+  83:../src/stm32f30x_dac.c ****   * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  84:../src/stm32f30x_dac.c ****   *
+  85:../src/stm32f30x_dac.c ****   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  86:../src/stm32f30x_dac.c ****   * You may not use this file except in compliance with the License.
+  87:../src/stm32f30x_dac.c ****   * You may obtain a copy of the License at:
+  88:../src/stm32f30x_dac.c ****   *
+  89:../src/stm32f30x_dac.c ****   *        http://www.st.com/software_license_agreement_liberty_v2
+  90:../src/stm32f30x_dac.c ****   *
+  91:../src/stm32f30x_dac.c ****   * Unless required by applicable law or agreed to in writing, software 
+  92:../src/stm32f30x_dac.c ****   * distributed under the License is distributed on an "AS IS" BASIS, 
+  93:../src/stm32f30x_dac.c ****   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  94:../src/stm32f30x_dac.c ****   * See the License for the specific language governing permissions and
+  95:../src/stm32f30x_dac.c ****   * limitations under the License.
+  96:../src/stm32f30x_dac.c ****   *
+  97:../src/stm32f30x_dac.c ****   ******************************************************************************
+  98:../src/stm32f30x_dac.c ****   */
+  99:../src/stm32f30x_dac.c **** 
+ 100:../src/stm32f30x_dac.c **** 
+ 101:../src/stm32f30x_dac.c **** /* Includes ------------------------------------------------------------------*/
+ 102:../src/stm32f30x_dac.c **** #include "stm32f30x_dac.h"
+ 103:../src/stm32f30x_dac.c **** #include "stm32f30x_rcc.h"
+ 104:../src/stm32f30x_dac.c **** 
+ 105:../src/stm32f30x_dac.c **** /** @addtogroup STM32F30x_StdPeriph_Driver
+ 106:../src/stm32f30x_dac.c ****   * @{
+ 107:../src/stm32f30x_dac.c ****   */
+ 108:../src/stm32f30x_dac.c **** 
+ 109:../src/stm32f30x_dac.c **** /** @defgroup DAC 
+ 110:../src/stm32f30x_dac.c ****   * @brief DAC driver modules
+ 111:../src/stm32f30x_dac.c ****   * @{
+ 112:../src/stm32f30x_dac.c ****   */ 
+ 113:../src/stm32f30x_dac.c **** 
+ 114:../src/stm32f30x_dac.c **** /* Private typedef -----------------------------------------------------------*/
+ 115:../src/stm32f30x_dac.c **** /* Private define ------------------------------------------------------------*/
+ 116:../src/stm32f30x_dac.c **** 
+ 117:../src/stm32f30x_dac.c **** /* CR register Mask */
+ 118:../src/stm32f30x_dac.c **** #define CR_CLEAR_MASK              ((uint32_t)0x00000FFE)
+ 119:../src/stm32f30x_dac.c **** 
+ 120:../src/stm32f30x_dac.c **** /* DAC Dual Channels SWTRIG masks */
+ 121:../src/stm32f30x_dac.c **** #define DUAL_SWTRIG_SET            ((uint32_t)0x00000003)
+ 122:../src/stm32f30x_dac.c **** #define DUAL_SWTRIG_RESET          ((uint32_t)0xFFFFFFFC)
+ 123:../src/stm32f30x_dac.c **** 
+ 124:../src/stm32f30x_dac.c **** /* DHR registers offsets */
+ 125:../src/stm32f30x_dac.c **** #define DHR12R1_OFFSET             ((uint32_t)0x00000008)
+ 126:../src/stm32f30x_dac.c **** #define DHR12R2_OFFSET             ((uint32_t)0x00000014)
+ 127:../src/stm32f30x_dac.c **** #define DHR12RD_OFFSET             ((uint32_t)0x00000020)
+ 128:../src/stm32f30x_dac.c **** 
+ 129:../src/stm32f30x_dac.c **** /* DOR register offset */
+ 130:../src/stm32f30x_dac.c **** #define DOR_OFFSET                 ((uint32_t)0x0000002C)
+ 131:../src/stm32f30x_dac.c **** 
+ 132:../src/stm32f30x_dac.c **** /* Private macro -------------------------------------------------------------*/
+ 133:../src/stm32f30x_dac.c **** /* Private variables ---------------------------------------------------------*/
+ 134:../src/stm32f30x_dac.c **** /* Private function prototypes -----------------------------------------------*/
+ 135:../src/stm32f30x_dac.c **** /* Private functions ---------------------------------------------------------*/
+ 136:../src/stm32f30x_dac.c **** 
+ 137:../src/stm32f30x_dac.c **** /** @defgroup DAC_Private_Functions
+ 138:../src/stm32f30x_dac.c ****   * @{
+ 139:../src/stm32f30x_dac.c ****   */
+ 140:../src/stm32f30x_dac.c **** 
+ 141:../src/stm32f30x_dac.c **** /** @defgroup DAC_Group1 DAC channels configuration
+ 142:../src/stm32f30x_dac.c ****  *  @brief   DAC channels configuration: trigger, output buffer, data format 
+ 143:../src/stm32f30x_dac.c ****  *
+ 144:../src/stm32f30x_dac.c **** @verbatim   
+ 145:../src/stm32f30x_dac.c ****  ===============================================================================
+ 146:../src/stm32f30x_dac.c ****     ##### DAC channels configuration: trigger, output buffer, data format #####
+ 147:../src/stm32f30x_dac.c ****  ===============================================================================  
+ 148:../src/stm32f30x_dac.c **** 
+ 149:../src/stm32f30x_dac.c **** @endverbatim
+ 150:../src/stm32f30x_dac.c ****   * @{
+ 151:../src/stm32f30x_dac.c ****   */
+ 152:../src/stm32f30x_dac.c **** 
+ 153:../src/stm32f30x_dac.c **** /**
+ 154:../src/stm32f30x_dac.c ****   * @brief  Deinitializes the DAC peripheral registers to their default reset values.
+ 155:../src/stm32f30x_dac.c ****   * @param  None
+ 156:../src/stm32f30x_dac.c ****   * @retval None
+ 157:../src/stm32f30x_dac.c ****   */
+ 158:../src/stm32f30x_dac.c **** void DAC_DeInit(void)
+ 159:../src/stm32f30x_dac.c **** {
+  28              		.loc 1 159 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32 0000 80B5     		push	{r7, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 7, -8
+  36              		.cfi_offset 14, -4
+  37 0002 00AF     		add	r7, sp, #0
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_register 7
+ 160:../src/stm32f30x_dac.c ****   /* Enable DAC reset state */
+ 161:../src/stm32f30x_dac.c ****   RCC_APB1PeriphResetCmd(RCC_APB1Periph_DAC, ENABLE);
+  40              		.loc 1 161 0
+  41 0004 4FF00050 		mov	r0, #536870912
+  42 0008 4FF00101 		mov	r1, #1
+  43 000c FFF7FEFF 		bl	RCC_APB1PeriphResetCmd
+ 162:../src/stm32f30x_dac.c ****   /* Release DAC from reset state */
+ 163:../src/stm32f30x_dac.c ****   RCC_APB1PeriphResetCmd(RCC_APB1Periph_DAC, DISABLE);
+  44              		.loc 1 163 0
+  45 0010 4FF00050 		mov	r0, #536870912
+  46 0014 4FF00001 		mov	r1, #0
+  47 0018 FFF7FEFF 		bl	RCC_APB1PeriphResetCmd
+ 164:../src/stm32f30x_dac.c **** }
+  48              		.loc 1 164 0
+  49 001c 80BD     		pop	{r7, pc}
+  50              		.cfi_endproc
+  51              	.LFE111:
+  53 001e 00BF     		.align	2
+  54              		.global	DAC_Init
+  55              		.thumb
+  56              		.thumb_func
+  58              	DAC_Init:
+  59              	.LFB112:
+ 165:../src/stm32f30x_dac.c **** 
+ 166:../src/stm32f30x_dac.c **** /**
+ 167:../src/stm32f30x_dac.c ****   * @brief  Initializes the DAC peripheral according to the specified parameters
+ 168:../src/stm32f30x_dac.c ****   *         in the DAC_InitStruct.
+ 169:../src/stm32f30x_dac.c ****   * @param  DAC_Channel: the selected DAC channel. 
+ 170:../src/stm32f30x_dac.c ****   *          This parameter can be:
+ 171:../src/stm32f30x_dac.c ****   *            @arg DAC_Channel_1: DAC Channel1 selected
+ 172:../src/stm32f30x_dac.c ****   *            @arg DAC_Channel_2: DAC Channel2 selected
+ 173:../src/stm32f30x_dac.c ****   * @param  DAC_InitStruct: pointer to a DAC_InitTypeDef structure that contains
+ 174:../src/stm32f30x_dac.c ****   *         the configuration information for the  specified DAC channel.
+ 175:../src/stm32f30x_dac.c ****   * @retval None
+ 176:../src/stm32f30x_dac.c ****   */
+ 177:../src/stm32f30x_dac.c **** void DAC_Init(uint32_t DAC_Channel, DAC_InitTypeDef* DAC_InitStruct)
+ 178:../src/stm32f30x_dac.c **** {
+  60              		.loc 1 178 0
+  61              		.cfi_startproc
+  62              		@ args = 0, pretend = 0, frame = 16
+  63              		@ frame_needed = 1, uses_anonymous_args = 0
+  64              		@ link register save eliminated.
+  65 0020 80B4     		push	{r7}
+  66              	.LCFI2:
+  67              		.cfi_def_cfa_offset 4
+  68              		.cfi_offset 7, -4
+  69 0022 85B0     		sub	sp, sp, #20
+  70              	.LCFI3:
+  71              		.cfi_def_cfa_offset 24
+  72 0024 00AF     		add	r7, sp, #0
+  73              	.LCFI4:
+  74              		.cfi_def_cfa_register 7
+  75 0026 7860     		str	r0, [r7, #4]
+  76 0028 3960     		str	r1, [r7, #0]
+ 179:../src/stm32f30x_dac.c ****   uint32_t tmpreg1 = 0, tmpreg2 = 0;
+  77              		.loc 1 179 0
+  78 002a 4FF00003 		mov	r3, #0
+  79 002e FB60     		str	r3, [r7, #12]
+  80 0030 4FF00003 		mov	r3, #0
+  81 0034 BB60     		str	r3, [r7, #8]
+ 180:../src/stm32f30x_dac.c **** 
+ 181:../src/stm32f30x_dac.c ****   /* Check the DAC parameters */
+ 182:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_TRIGGER(DAC_InitStruct->DAC_Trigger));
+ 183:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_GENERATE_WAVE(DAC_InitStruct->DAC_WaveGeneration));
+ 184:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_LFSR_UNMASK_TRIANGLE_AMPLITUDE(DAC_InitStruct->DAC_LFSRUnmask_TriangleAmplitu
+ 185:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_OUTPUT_BUFFER_STATE(DAC_InitStruct->DAC_OutputBuffer));
+ 186:../src/stm32f30x_dac.c **** 
+ 187:../src/stm32f30x_dac.c **** /*---------------------------- DAC CR Configuration --------------------------*/
+ 188:../src/stm32f30x_dac.c ****   /* Get the DAC CR value */
+ 189:../src/stm32f30x_dac.c ****   tmpreg1 = DAC->CR;
+  82              		.loc 1 189 0
+  83 0036 4FF4E843 		mov	r3, #29696
+  84 003a C4F20003 		movt	r3, 16384
+  85 003e 1B68     		ldr	r3, [r3, #0]
+  86 0040 FB60     		str	r3, [r7, #12]
+ 190:../src/stm32f30x_dac.c ****   /* Clear BOFFx, TENx, TSELx, WAVEx and MAMPx bits */
+ 191:../src/stm32f30x_dac.c ****   tmpreg1 &= ~(CR_CLEAR_MASK << DAC_Channel);
+  87              		.loc 1 191 0
+  88 0042 7B68     		ldr	r3, [r7, #4]
+  89 0044 40F6FE72 		movw	r2, #4094
+  90 0048 02FA03F3 		lsl	r3, r2, r3
+  91 004c 6FEA0303 		mvn	r3, r3
+  92 0050 FA68     		ldr	r2, [r7, #12]
+  93 0052 1340     		ands	r3, r3, r2
+  94 0054 FB60     		str	r3, [r7, #12]
+ 192:../src/stm32f30x_dac.c ****   /* Configure for the selected DAC channel: buffer output, trigger, 
+ 193:../src/stm32f30x_dac.c ****      wave generation, mask/amplitude for wave generation */
+ 194:../src/stm32f30x_dac.c ****   /* Set TSELx and TENx bits according to DAC_Trigger value */
+ 195:../src/stm32f30x_dac.c ****   /* Set WAVEx bits according to DAC_WaveGeneration value */
+ 196:../src/stm32f30x_dac.c ****   /* Set MAMPx bits according to DAC_LFSRUnmask_TriangleAmplitude value */ 
+ 197:../src/stm32f30x_dac.c ****   /* Set BOFFx bit according to DAC_OutputBuffer value */   
+ 198:../src/stm32f30x_dac.c ****   tmpreg2 = (DAC_InitStruct->DAC_Trigger | DAC_InitStruct->DAC_WaveGeneration |
+  95              		.loc 1 198 0
+  96 0056 3B68     		ldr	r3, [r7, #0]
+  97 0058 1A68     		ldr	r2, [r3, #0]
+  98 005a 3B68     		ldr	r3, [r7, #0]
+  99 005c 5B68     		ldr	r3, [r3, #4]
+ 100 005e 1A43     		orrs	r2, r2, r3
+ 199:../src/stm32f30x_dac.c ****              DAC_InitStruct->DAC_LFSRUnmask_TriangleAmplitude | \
+ 101              		.loc 1 199 0
+ 102 0060 3B68     		ldr	r3, [r7, #0]
+ 103 0062 9B68     		ldr	r3, [r3, #8]
+ 198:../src/stm32f30x_dac.c ****   tmpreg2 = (DAC_InitStruct->DAC_Trigger | DAC_InitStruct->DAC_WaveGeneration |
+ 104              		.loc 1 198 0
+ 105 0064 1A43     		orrs	r2, r2, r3
+ 200:../src/stm32f30x_dac.c ****              DAC_InitStruct->DAC_OutputBuffer);
+ 106              		.loc 1 200 0
+ 107 0066 3B68     		ldr	r3, [r7, #0]
+ 108 0068 DB68     		ldr	r3, [r3, #12]
+ 198:../src/stm32f30x_dac.c ****   tmpreg2 = (DAC_InitStruct->DAC_Trigger | DAC_InitStruct->DAC_WaveGeneration |
+ 109              		.loc 1 198 0
+ 110 006a 1343     		orrs	r3, r3, r2
+ 111 006c BB60     		str	r3, [r7, #8]
+ 201:../src/stm32f30x_dac.c ****   /* Calculate CR register value depending on DAC_Channel */
+ 202:../src/stm32f30x_dac.c ****   tmpreg1 |= tmpreg2 << DAC_Channel;
+ 112              		.loc 1 202 0
+ 113 006e 7B68     		ldr	r3, [r7, #4]
+ 114 0070 BA68     		ldr	r2, [r7, #8]
+ 115 0072 02FA03F3 		lsl	r3, r2, r3
+ 116 0076 FA68     		ldr	r2, [r7, #12]
+ 117 0078 1343     		orrs	r3, r3, r2
+ 118 007a FB60     		str	r3, [r7, #12]
+ 203:../src/stm32f30x_dac.c ****   /* Write to DAC CR */
+ 204:../src/stm32f30x_dac.c ****   DAC->CR = tmpreg1;
+ 119              		.loc 1 204 0
+ 120 007c 4FF4E843 		mov	r3, #29696
+ 121 0080 C4F20003 		movt	r3, 16384
+ 122 0084 FA68     		ldr	r2, [r7, #12]
+ 123 0086 1A60     		str	r2, [r3, #0]
+ 205:../src/stm32f30x_dac.c **** }
+ 124              		.loc 1 205 0
+ 125 0088 07F11407 		add	r7, r7, #20
+ 126 008c BD46     		mov	sp, r7
+ 127 008e 80BC     		pop	{r7}
+ 128 0090 7047     		bx	lr
+ 129              		.cfi_endproc
+ 130              	.LFE112:
+ 132 0092 00BF     		.align	2
+ 133              		.global	DAC_StructInit
+ 134              		.thumb
+ 135              		.thumb_func
+ 137              	DAC_StructInit:
+ 138              	.LFB113:
+ 206:../src/stm32f30x_dac.c **** 
+ 207:../src/stm32f30x_dac.c **** /**
+ 208:../src/stm32f30x_dac.c ****   * @brief  Fills each DAC_InitStruct member with its default value.
+ 209:../src/stm32f30x_dac.c ****   * @param  DAC_InitStruct: pointer to a DAC_InitTypeDef structure which will 
+ 210:../src/stm32f30x_dac.c ****   *         be initialized.
+ 211:../src/stm32f30x_dac.c ****   * @retval None
+ 212:../src/stm32f30x_dac.c ****   */
+ 213:../src/stm32f30x_dac.c **** void DAC_StructInit(DAC_InitTypeDef* DAC_InitStruct)
+ 214:../src/stm32f30x_dac.c **** {
+ 139              		.loc 1 214 0
+ 140              		.cfi_startproc
+ 141              		@ args = 0, pretend = 0, frame = 8
+ 142              		@ frame_needed = 1, uses_anonymous_args = 0
+ 143              		@ link register save eliminated.
+ 144 0094 80B4     		push	{r7}
+ 145              	.LCFI5:
+ 146              		.cfi_def_cfa_offset 4
+ 147              		.cfi_offset 7, -4
+ 148 0096 83B0     		sub	sp, sp, #12
+ 149              	.LCFI6:
+ 150              		.cfi_def_cfa_offset 16
+ 151 0098 00AF     		add	r7, sp, #0
+ 152              	.LCFI7:
+ 153              		.cfi_def_cfa_register 7
+ 154 009a 7860     		str	r0, [r7, #4]
+ 215:../src/stm32f30x_dac.c **** /*--------------- Reset DAC init structure parameters values -----------------*/
+ 216:../src/stm32f30x_dac.c ****   /* Initialize the DAC_Trigger member */
+ 217:../src/stm32f30x_dac.c ****   DAC_InitStruct->DAC_Trigger = DAC_Trigger_None;
+ 155              		.loc 1 217 0
+ 156 009c 7B68     		ldr	r3, [r7, #4]
+ 157 009e 4FF00002 		mov	r2, #0
+ 158 00a2 1A60     		str	r2, [r3, #0]
+ 218:../src/stm32f30x_dac.c ****   /* Initialize the DAC_WaveGeneration member */
+ 219:../src/stm32f30x_dac.c ****   DAC_InitStruct->DAC_WaveGeneration = DAC_WaveGeneration_None;
+ 159              		.loc 1 219 0
+ 160 00a4 7B68     		ldr	r3, [r7, #4]
+ 161 00a6 4FF00002 		mov	r2, #0
+ 162 00aa 5A60     		str	r2, [r3, #4]
+ 220:../src/stm32f30x_dac.c ****   /* Initialize the DAC_LFSRUnmask_TriangleAmplitude member */
+ 221:../src/stm32f30x_dac.c ****   DAC_InitStruct->DAC_LFSRUnmask_TriangleAmplitude = DAC_LFSRUnmask_Bit0;
+ 163              		.loc 1 221 0
+ 164 00ac 7B68     		ldr	r3, [r7, #4]
+ 165 00ae 4FF00002 		mov	r2, #0
+ 166 00b2 9A60     		str	r2, [r3, #8]
+ 222:../src/stm32f30x_dac.c ****   /* Initialize the DAC_OutputBuffer member */
+ 223:../src/stm32f30x_dac.c ****   DAC_InitStruct->DAC_OutputBuffer = DAC_OutputBuffer_Enable;
+ 167              		.loc 1 223 0
+ 168 00b4 7B68     		ldr	r3, [r7, #4]
+ 169 00b6 4FF00002 		mov	r2, #0
+ 170 00ba DA60     		str	r2, [r3, #12]
+ 224:../src/stm32f30x_dac.c **** }
+ 171              		.loc 1 224 0
+ 172 00bc 07F10C07 		add	r7, r7, #12
+ 173 00c0 BD46     		mov	sp, r7
+ 174 00c2 80BC     		pop	{r7}
+ 175 00c4 7047     		bx	lr
+ 176              		.cfi_endproc
+ 177              	.LFE113:
+ 179 00c6 00BF     		.align	2
+ 180              		.global	DAC_Cmd
+ 181              		.thumb
+ 182              		.thumb_func
+ 184              	DAC_Cmd:
+ 185              	.LFB114:
+ 225:../src/stm32f30x_dac.c **** 
+ 226:../src/stm32f30x_dac.c **** /**
+ 227:../src/stm32f30x_dac.c ****   * @brief  Enables or disables the specified DAC channel.
+ 228:../src/stm32f30x_dac.c ****   * @param  DAC_Channel: The selected DAC channel. 
+ 229:../src/stm32f30x_dac.c ****   *          This parameter can be:
+ 230:../src/stm32f30x_dac.c ****   *            @arg DAC_Channel_1: DAC Channel1 selected
+ 231:../src/stm32f30x_dac.c ****   *            @arg DAC_Channel_2: DAC Channel2 selected
+ 232:../src/stm32f30x_dac.c ****   * @param  NewState: new state of the DAC channel. 
+ 233:../src/stm32f30x_dac.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 234:../src/stm32f30x_dac.c ****   * @note   When the DAC channel is enabled the trigger source can no more be modified.
+ 235:../src/stm32f30x_dac.c ****   * @retval None
+ 236:../src/stm32f30x_dac.c ****   */
+ 237:../src/stm32f30x_dac.c **** void DAC_Cmd(uint32_t DAC_Channel, FunctionalState NewState)
+ 238:../src/stm32f30x_dac.c **** {
+ 186              		.loc 1 238 0
+ 187              		.cfi_startproc
+ 188              		@ args = 0, pretend = 0, frame = 8
+ 189              		@ frame_needed = 1, uses_anonymous_args = 0
+ 190              		@ link register save eliminated.
+ 191 00c8 80B4     		push	{r7}
+ 192              	.LCFI8:
+ 193              		.cfi_def_cfa_offset 4
+ 194              		.cfi_offset 7, -4
+ 195 00ca 83B0     		sub	sp, sp, #12
+ 196              	.LCFI9:
+ 197              		.cfi_def_cfa_offset 16
+ 198 00cc 00AF     		add	r7, sp, #0
+ 199              	.LCFI10:
+ 200              		.cfi_def_cfa_register 7
+ 201 00ce 7860     		str	r0, [r7, #4]
+ 202 00d0 0B46     		mov	r3, r1
+ 203 00d2 FB70     		strb	r3, [r7, #3]
+ 239:../src/stm32f30x_dac.c ****   /* Check the parameters */
+ 240:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_CHANNEL(DAC_Channel));
+ 241:../src/stm32f30x_dac.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 242:../src/stm32f30x_dac.c **** 
+ 243:../src/stm32f30x_dac.c ****   if (NewState != DISABLE)
+ 204              		.loc 1 243 0
+ 205 00d4 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 206 00d6 002B     		cmp	r3, #0
+ 207 00d8 10D0     		beq	.L5
+ 244:../src/stm32f30x_dac.c ****   {
+ 245:../src/stm32f30x_dac.c ****     /* Enable the selected DAC channel */
+ 246:../src/stm32f30x_dac.c ****     DAC->CR |= (DAC_CR_EN1 << DAC_Channel);
+ 208              		.loc 1 246 0
+ 209 00da 4FF4E843 		mov	r3, #29696
+ 210 00de C4F20003 		movt	r3, 16384
+ 211 00e2 4FF4E842 		mov	r2, #29696
+ 212 00e6 C4F20002 		movt	r2, 16384
+ 213 00ea 1168     		ldr	r1, [r2, #0]
+ 214 00ec 7A68     		ldr	r2, [r7, #4]
+ 215 00ee 4FF00100 		mov	r0, #1
+ 216 00f2 00FA02F2 		lsl	r2, r0, r2
+ 217 00f6 0A43     		orrs	r2, r2, r1
+ 218 00f8 1A60     		str	r2, [r3, #0]
+ 219 00fa 11E0     		b	.L4
+ 220              	.L5:
+ 247:../src/stm32f30x_dac.c ****   }
+ 248:../src/stm32f30x_dac.c ****   else
+ 249:../src/stm32f30x_dac.c ****   {
+ 250:../src/stm32f30x_dac.c ****     /* Disable the selected DAC channel */
+ 251:../src/stm32f30x_dac.c ****     DAC->CR &= (~(DAC_CR_EN1 << DAC_Channel));
+ 221              		.loc 1 251 0
+ 222 00fc 4FF4E843 		mov	r3, #29696
+ 223 0100 C4F20003 		movt	r3, 16384
+ 224 0104 4FF4E842 		mov	r2, #29696
+ 225 0108 C4F20002 		movt	r2, 16384
+ 226 010c 1168     		ldr	r1, [r2, #0]
+ 227 010e 7A68     		ldr	r2, [r7, #4]
+ 228 0110 4FF00100 		mov	r0, #1
+ 229 0114 00FA02F2 		lsl	r2, r0, r2
+ 230 0118 6FEA0202 		mvn	r2, r2
+ 231 011c 0A40     		ands	r2, r2, r1
+ 232 011e 1A60     		str	r2, [r3, #0]
+ 233              	.L4:
+ 252:../src/stm32f30x_dac.c ****   }
+ 253:../src/stm32f30x_dac.c **** }
+ 234              		.loc 1 253 0
+ 235 0120 07F10C07 		add	r7, r7, #12
+ 236 0124 BD46     		mov	sp, r7
+ 237 0126 80BC     		pop	{r7}
+ 238 0128 7047     		bx	lr
+ 239              		.cfi_endproc
+ 240              	.LFE114:
+ 242 012a 00BF     		.align	2
+ 243              		.global	DAC_SoftwareTriggerCmd
+ 244              		.thumb
+ 245              		.thumb_func
+ 247              	DAC_SoftwareTriggerCmd:
+ 248              	.LFB115:
+ 254:../src/stm32f30x_dac.c **** 
+ 255:../src/stm32f30x_dac.c **** /**
+ 256:../src/stm32f30x_dac.c ****   * @brief  Enables or disables the selected DAC channel software trigger.
+ 257:../src/stm32f30x_dac.c ****   * @param  DAC_Channel: The selected DAC channel. 
+ 258:../src/stm32f30x_dac.c ****   *          This parameter can be:
+ 259:../src/stm32f30x_dac.c ****   *            @arg DAC_Channel_1: DAC Channel1 selected
+ 260:../src/stm32f30x_dac.c ****   *            @arg DAC_Channel_2: DAC Channel2 selected
+ 261:../src/stm32f30x_dac.c ****   * @param  NewState: new state of the selected DAC channel software trigger.
+ 262:../src/stm32f30x_dac.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 263:../src/stm32f30x_dac.c ****   * @retval None
+ 264:../src/stm32f30x_dac.c ****   */
+ 265:../src/stm32f30x_dac.c **** void DAC_SoftwareTriggerCmd(uint32_t DAC_Channel, FunctionalState NewState)
+ 266:../src/stm32f30x_dac.c **** {
+ 249              		.loc 1 266 0
+ 250              		.cfi_startproc
+ 251              		@ args = 0, pretend = 0, frame = 8
+ 252              		@ frame_needed = 1, uses_anonymous_args = 0
+ 253              		@ link register save eliminated.
+ 254 012c 80B4     		push	{r7}
+ 255              	.LCFI11:
+ 256              		.cfi_def_cfa_offset 4
+ 257              		.cfi_offset 7, -4
+ 258 012e 83B0     		sub	sp, sp, #12
+ 259              	.LCFI12:
+ 260              		.cfi_def_cfa_offset 16
+ 261 0130 00AF     		add	r7, sp, #0
+ 262              	.LCFI13:
+ 263              		.cfi_def_cfa_register 7
+ 264 0132 7860     		str	r0, [r7, #4]
+ 265 0134 0B46     		mov	r3, r1
+ 266 0136 FB70     		strb	r3, [r7, #3]
+ 267:../src/stm32f30x_dac.c ****   /* Check the parameters */
+ 268:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_CHANNEL(DAC_Channel));
+ 269:../src/stm32f30x_dac.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 270:../src/stm32f30x_dac.c **** 
+ 271:../src/stm32f30x_dac.c ****   if (NewState != DISABLE)
+ 267              		.loc 1 271 0
+ 268 0138 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 269 013a 002B     		cmp	r3, #0
+ 270 013c 12D0     		beq	.L8
+ 272:../src/stm32f30x_dac.c ****   {
+ 273:../src/stm32f30x_dac.c ****     /* Enable software trigger for the selected DAC channel */
+ 274:../src/stm32f30x_dac.c ****     DAC->SWTRIGR |= (uint32_t)DAC_SWTRIGR_SWTRIG1 << (DAC_Channel >> 4);
+ 271              		.loc 1 274 0
+ 272 013e 4FF4E843 		mov	r3, #29696
+ 273 0142 C4F20003 		movt	r3, 16384
+ 274 0146 4FF4E842 		mov	r2, #29696
+ 275 014a C4F20002 		movt	r2, 16384
+ 276 014e 5168     		ldr	r1, [r2, #4]
+ 277 0150 7A68     		ldr	r2, [r7, #4]
+ 278 0152 4FEA1212 		lsr	r2, r2, #4
+ 279 0156 4FF00100 		mov	r0, #1
+ 280 015a 00FA02F2 		lsl	r2, r0, r2
+ 281 015e 0A43     		orrs	r2, r2, r1
+ 282 0160 5A60     		str	r2, [r3, #4]
+ 283 0162 13E0     		b	.L7
+ 284              	.L8:
+ 275:../src/stm32f30x_dac.c ****   }
+ 276:../src/stm32f30x_dac.c ****   else
+ 277:../src/stm32f30x_dac.c ****   {
+ 278:../src/stm32f30x_dac.c ****     /* Disable software trigger for the selected DAC channel */
+ 279:../src/stm32f30x_dac.c ****     DAC->SWTRIGR &= ~((uint32_t)DAC_SWTRIGR_SWTRIG1 << (DAC_Channel >> 4));
+ 285              		.loc 1 279 0
+ 286 0164 4FF4E843 		mov	r3, #29696
+ 287 0168 C4F20003 		movt	r3, 16384
+ 288 016c 4FF4E842 		mov	r2, #29696
+ 289 0170 C4F20002 		movt	r2, 16384
+ 290 0174 5168     		ldr	r1, [r2, #4]
+ 291 0176 7A68     		ldr	r2, [r7, #4]
+ 292 0178 4FEA1212 		lsr	r2, r2, #4
+ 293 017c 4FF00100 		mov	r0, #1
+ 294 0180 00FA02F2 		lsl	r2, r0, r2
+ 295 0184 6FEA0202 		mvn	r2, r2
+ 296 0188 0A40     		ands	r2, r2, r1
+ 297 018a 5A60     		str	r2, [r3, #4]
+ 298              	.L7:
+ 280:../src/stm32f30x_dac.c ****   }
+ 281:../src/stm32f30x_dac.c **** }
+ 299              		.loc 1 281 0
+ 300 018c 07F10C07 		add	r7, r7, #12
+ 301 0190 BD46     		mov	sp, r7
+ 302 0192 80BC     		pop	{r7}
+ 303 0194 7047     		bx	lr
+ 304              		.cfi_endproc
+ 305              	.LFE115:
+ 307 0196 00BF     		.align	2
+ 308              		.global	DAC_DualSoftwareTriggerCmd
+ 309              		.thumb
+ 310              		.thumb_func
+ 312              	DAC_DualSoftwareTriggerCmd:
+ 313              	.LFB116:
+ 282:../src/stm32f30x_dac.c **** 
+ 283:../src/stm32f30x_dac.c **** /**
+ 284:../src/stm32f30x_dac.c ****   * @brief  Enables or disables simultaneously the two DAC channels software triggers.
+ 285:../src/stm32f30x_dac.c ****   * @param  NewState: new state of the DAC channels software triggers.
+ 286:../src/stm32f30x_dac.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 287:../src/stm32f30x_dac.c ****   * @retval None
+ 288:../src/stm32f30x_dac.c ****   */
+ 289:../src/stm32f30x_dac.c **** void DAC_DualSoftwareTriggerCmd(FunctionalState NewState)
+ 290:../src/stm32f30x_dac.c **** {
+ 314              		.loc 1 290 0
+ 315              		.cfi_startproc
+ 316              		@ args = 0, pretend = 0, frame = 8
+ 317              		@ frame_needed = 1, uses_anonymous_args = 0
+ 318              		@ link register save eliminated.
+ 319 0198 80B4     		push	{r7}
+ 320              	.LCFI14:
+ 321              		.cfi_def_cfa_offset 4
+ 322              		.cfi_offset 7, -4
+ 323 019a 83B0     		sub	sp, sp, #12
+ 324              	.LCFI15:
+ 325              		.cfi_def_cfa_offset 16
+ 326 019c 00AF     		add	r7, sp, #0
+ 327              	.LCFI16:
+ 328              		.cfi_def_cfa_register 7
+ 329 019e 0346     		mov	r3, r0
+ 330 01a0 FB71     		strb	r3, [r7, #7]
+ 291:../src/stm32f30x_dac.c ****   /* Check the parameters */
+ 292:../src/stm32f30x_dac.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 293:../src/stm32f30x_dac.c **** 
+ 294:../src/stm32f30x_dac.c ****   if (NewState != DISABLE)
+ 331              		.loc 1 294 0
+ 332 01a2 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 333 01a4 002B     		cmp	r3, #0
+ 334 01a6 0CD0     		beq	.L11
+ 295:../src/stm32f30x_dac.c ****   {
+ 296:../src/stm32f30x_dac.c ****     /* Enable software trigger for both DAC channels */
+ 297:../src/stm32f30x_dac.c ****     DAC->SWTRIGR |= DUAL_SWTRIG_SET;
+ 335              		.loc 1 297 0
+ 336 01a8 4FF4E843 		mov	r3, #29696
+ 337 01ac C4F20003 		movt	r3, 16384
+ 338 01b0 4FF4E842 		mov	r2, #29696
+ 339 01b4 C4F20002 		movt	r2, 16384
+ 340 01b8 5268     		ldr	r2, [r2, #4]
+ 341 01ba 42F00302 		orr	r2, r2, #3
+ 342 01be 5A60     		str	r2, [r3, #4]
+ 343 01c0 0BE0     		b	.L10
+ 344              	.L11:
+ 298:../src/stm32f30x_dac.c ****   }
+ 299:../src/stm32f30x_dac.c ****   else
+ 300:../src/stm32f30x_dac.c ****   {
+ 301:../src/stm32f30x_dac.c ****     /* Disable software trigger for both DAC channels */
+ 302:../src/stm32f30x_dac.c ****     DAC->SWTRIGR &= DUAL_SWTRIG_RESET;
+ 345              		.loc 1 302 0
+ 346 01c2 4FF4E843 		mov	r3, #29696
+ 347 01c6 C4F20003 		movt	r3, 16384
+ 348 01ca 4FF4E842 		mov	r2, #29696
+ 349 01ce C4F20002 		movt	r2, 16384
+ 350 01d2 5268     		ldr	r2, [r2, #4]
+ 351 01d4 22F00302 		bic	r2, r2, #3
+ 352 01d8 5A60     		str	r2, [r3, #4]
+ 353              	.L10:
+ 303:../src/stm32f30x_dac.c ****   }
+ 304:../src/stm32f30x_dac.c **** }
+ 354              		.loc 1 304 0
+ 355 01da 07F10C07 		add	r7, r7, #12
+ 356 01de BD46     		mov	sp, r7
+ 357 01e0 80BC     		pop	{r7}
+ 358 01e2 7047     		bx	lr
+ 359              		.cfi_endproc
+ 360              	.LFE116:
+ 362              		.align	2
+ 363              		.global	DAC_WaveGenerationCmd
+ 364              		.thumb
+ 365              		.thumb_func
+ 367              	DAC_WaveGenerationCmd:
+ 368              	.LFB117:
+ 305:../src/stm32f30x_dac.c **** 
+ 306:../src/stm32f30x_dac.c **** /**
+ 307:../src/stm32f30x_dac.c ****   * @brief  Enables or disables the selected DAC channel wave generation.
+ 308:../src/stm32f30x_dac.c ****   * @param  DAC_Channel: The selected DAC channel. 
+ 309:../src/stm32f30x_dac.c ****   *          This parameter can be:
+ 310:../src/stm32f30x_dac.c ****   *            @arg DAC_Channel_1: DAC Channel1 selected
+ 311:../src/stm32f30x_dac.c ****   *            @arg DAC_Channel_2: DAC Channel2 selected
+ 312:../src/stm32f30x_dac.c ****   * @param  DAC_Wave: specifies the wave type to enable or disable.
+ 313:../src/stm32f30x_dac.c ****   *          This parameter can be:
+ 314:../src/stm32f30x_dac.c ****   *            @arg DAC_Wave_Noise: noise wave generation
+ 315:../src/stm32f30x_dac.c ****   *            @arg DAC_Wave_Triangle: triangle wave generation
+ 316:../src/stm32f30x_dac.c ****   * @param  NewState: new state of the selected DAC channel wave generation.
+ 317:../src/stm32f30x_dac.c ****   *          This parameter can be: ENABLE or DISABLE.  
+ 318:../src/stm32f30x_dac.c ****   * @retval None
+ 319:../src/stm32f30x_dac.c ****   */
+ 320:../src/stm32f30x_dac.c **** void DAC_WaveGenerationCmd(uint32_t DAC_Channel, uint32_t DAC_Wave, FunctionalState NewState)
+ 321:../src/stm32f30x_dac.c **** {
+ 369              		.loc 1 321 0
+ 370              		.cfi_startproc
+ 371              		@ args = 0, pretend = 0, frame = 16
+ 372              		@ frame_needed = 1, uses_anonymous_args = 0
+ 373              		@ link register save eliminated.
+ 374 01e4 80B4     		push	{r7}
+ 375              	.LCFI17:
+ 376              		.cfi_def_cfa_offset 4
+ 377              		.cfi_offset 7, -4
+ 378 01e6 85B0     		sub	sp, sp, #20
+ 379              	.LCFI18:
+ 380              		.cfi_def_cfa_offset 24
+ 381 01e8 00AF     		add	r7, sp, #0
+ 382              	.LCFI19:
+ 383              		.cfi_def_cfa_register 7
+ 384 01ea F860     		str	r0, [r7, #12]
+ 385 01ec B960     		str	r1, [r7, #8]
+ 386 01ee 1346     		mov	r3, r2
+ 387 01f0 FB71     		strb	r3, [r7, #7]
+ 322:../src/stm32f30x_dac.c ****   /* Check the parameters */
+ 323:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_CHANNEL(DAC_Channel));
+ 324:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_WAVE(DAC_Wave)); 
+ 325:../src/stm32f30x_dac.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 326:../src/stm32f30x_dac.c **** 
+ 327:../src/stm32f30x_dac.c ****   if (NewState != DISABLE)
+ 388              		.loc 1 327 0
+ 389 01f2 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 390 01f4 002B     		cmp	r3, #0
+ 391 01f6 0FD0     		beq	.L14
+ 328:../src/stm32f30x_dac.c ****   {
+ 329:../src/stm32f30x_dac.c ****     /* Enable the selected wave generation for the selected DAC channel */
+ 330:../src/stm32f30x_dac.c ****     DAC->CR |= DAC_Wave << DAC_Channel;
+ 392              		.loc 1 330 0
+ 393 01f8 4FF4E843 		mov	r3, #29696
+ 394 01fc C4F20003 		movt	r3, 16384
+ 395 0200 4FF4E842 		mov	r2, #29696
+ 396 0204 C4F20002 		movt	r2, 16384
+ 397 0208 1168     		ldr	r1, [r2, #0]
+ 398 020a FA68     		ldr	r2, [r7, #12]
+ 399 020c B868     		ldr	r0, [r7, #8]
+ 400 020e 00FA02F2 		lsl	r2, r0, r2
+ 401 0212 0A43     		orrs	r2, r2, r1
+ 402 0214 1A60     		str	r2, [r3, #0]
+ 403 0216 10E0     		b	.L13
+ 404              	.L14:
+ 331:../src/stm32f30x_dac.c ****   }
+ 332:../src/stm32f30x_dac.c ****   else
+ 333:../src/stm32f30x_dac.c ****   {
+ 334:../src/stm32f30x_dac.c ****     /* Disable the selected wave generation for the selected DAC channel */
+ 335:../src/stm32f30x_dac.c ****     DAC->CR &= ~(DAC_Wave << DAC_Channel);
+ 405              		.loc 1 335 0
+ 406 0218 4FF4E843 		mov	r3, #29696
+ 407 021c C4F20003 		movt	r3, 16384
+ 408 0220 4FF4E842 		mov	r2, #29696
+ 409 0224 C4F20002 		movt	r2, 16384
+ 410 0228 1168     		ldr	r1, [r2, #0]
+ 411 022a FA68     		ldr	r2, [r7, #12]
+ 412 022c B868     		ldr	r0, [r7, #8]
+ 413 022e 00FA02F2 		lsl	r2, r0, r2
+ 414 0232 6FEA0202 		mvn	r2, r2
+ 415 0236 0A40     		ands	r2, r2, r1
+ 416 0238 1A60     		str	r2, [r3, #0]
+ 417              	.L13:
+ 336:../src/stm32f30x_dac.c ****   }
+ 337:../src/stm32f30x_dac.c **** }
+ 418              		.loc 1 337 0
+ 419 023a 07F11407 		add	r7, r7, #20
+ 420 023e BD46     		mov	sp, r7
+ 421 0240 80BC     		pop	{r7}
+ 422 0242 7047     		bx	lr
+ 423              		.cfi_endproc
+ 424              	.LFE117:
+ 426              		.align	2
+ 427              		.global	DAC_SetChannel1Data
+ 428              		.thumb
+ 429              		.thumb_func
+ 431              	DAC_SetChannel1Data:
+ 432              	.LFB118:
+ 338:../src/stm32f30x_dac.c **** 
+ 339:../src/stm32f30x_dac.c **** /**
+ 340:../src/stm32f30x_dac.c ****   * @brief  Sets the specified data holding register value for DAC channel1.
+ 341:../src/stm32f30x_dac.c ****   * @param  DAC_Align: Specifies the data alignment for DAC channel1.
+ 342:../src/stm32f30x_dac.c ****   *          This parameter can be:
+ 343:../src/stm32f30x_dac.c ****   *            @arg DAC_Align_8b_R: 8bit right data alignment selected
+ 344:../src/stm32f30x_dac.c ****   *            @arg DAC_Align_12b_L: 12bit left data alignment selected
+ 345:../src/stm32f30x_dac.c ****   *            @arg DAC_Align_12b_R: 12bit right data alignment selected
+ 346:../src/stm32f30x_dac.c ****   * @param  Data: Data to be loaded in the selected data holding register.
+ 347:../src/stm32f30x_dac.c ****   * @retval None
+ 348:../src/stm32f30x_dac.c ****   */
+ 349:../src/stm32f30x_dac.c **** void DAC_SetChannel1Data(uint32_t DAC_Align, uint16_t Data)
+ 350:../src/stm32f30x_dac.c **** {  
+ 433              		.loc 1 350 0
+ 434              		.cfi_startproc
+ 435              		@ args = 0, pretend = 0, frame = 16
+ 436              		@ frame_needed = 1, uses_anonymous_args = 0
+ 437              		@ link register save eliminated.
+ 438 0244 80B4     		push	{r7}
+ 439              	.LCFI20:
+ 440              		.cfi_def_cfa_offset 4
+ 441              		.cfi_offset 7, -4
+ 442 0246 85B0     		sub	sp, sp, #20
+ 443              	.LCFI21:
+ 444              		.cfi_def_cfa_offset 24
+ 445 0248 00AF     		add	r7, sp, #0
+ 446              	.LCFI22:
+ 447              		.cfi_def_cfa_register 7
+ 448 024a 7860     		str	r0, [r7, #4]
+ 449 024c 0B46     		mov	r3, r1
+ 450 024e 7B80     		strh	r3, [r7, #2]	@ movhi
+ 351:../src/stm32f30x_dac.c ****   __IO uint32_t tmp = 0;
+ 451              		.loc 1 351 0
+ 452 0250 4FF00003 		mov	r3, #0
+ 453 0254 FB60     		str	r3, [r7, #12]
+ 352:../src/stm32f30x_dac.c ****   
+ 353:../src/stm32f30x_dac.c ****   /* Check the parameters */
+ 354:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_ALIGN(DAC_Align));
+ 355:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_DATA(Data));
+ 356:../src/stm32f30x_dac.c ****   
+ 357:../src/stm32f30x_dac.c ****   tmp = (uint32_t)DAC_BASE; 
+ 454              		.loc 1 357 0
+ 455 0256 4FF4E843 		mov	r3, #29696
+ 456 025a C4F20003 		movt	r3, 16384
+ 457 025e FB60     		str	r3, [r7, #12]
+ 358:../src/stm32f30x_dac.c ****   tmp += DHR12R1_OFFSET + DAC_Align;
+ 458              		.loc 1 358 0
+ 459 0260 FA68     		ldr	r2, [r7, #12]
+ 460 0262 7B68     		ldr	r3, [r7, #4]
+ 461 0264 D318     		adds	r3, r2, r3
+ 462 0266 03F10803 		add	r3, r3, #8
+ 463 026a FB60     		str	r3, [r7, #12]
+ 359:../src/stm32f30x_dac.c **** 
+ 360:../src/stm32f30x_dac.c ****   /* Set the DAC channel1 selected data holding register */
+ 361:../src/stm32f30x_dac.c ****   *(__IO uint32_t *) tmp = Data;
+ 464              		.loc 1 361 0
+ 465 026c FB68     		ldr	r3, [r7, #12]
+ 466 026e 7A88     		ldrh	r2, [r7, #2]
+ 467 0270 1A60     		str	r2, [r3, #0]
+ 362:../src/stm32f30x_dac.c **** }
+ 468              		.loc 1 362 0
+ 469 0272 07F11407 		add	r7, r7, #20
+ 470 0276 BD46     		mov	sp, r7
+ 471 0278 80BC     		pop	{r7}
+ 472 027a 7047     		bx	lr
+ 473              		.cfi_endproc
+ 474              	.LFE118:
+ 476              		.align	2
+ 477              		.global	DAC_SetChannel2Data
+ 478              		.thumb
+ 479              		.thumb_func
+ 481              	DAC_SetChannel2Data:
+ 482              	.LFB119:
+ 363:../src/stm32f30x_dac.c **** 
+ 364:../src/stm32f30x_dac.c **** /**
+ 365:../src/stm32f30x_dac.c ****   * @brief  Sets the specified data holding register value for DAC channel2.
+ 366:../src/stm32f30x_dac.c ****   * @param  DAC_Align: Specifies the data alignment for DAC channel2.
+ 367:../src/stm32f30x_dac.c ****   *          This parameter can be:
+ 368:../src/stm32f30x_dac.c ****   *            @arg DAC_Align_8b_R: 8bit right data alignment selected
+ 369:../src/stm32f30x_dac.c ****   *            @arg DAC_Align_12b_L: 12bit left data alignment selected
+ 370:../src/stm32f30x_dac.c ****   *            @arg DAC_Align_12b_R: 12bit right data alignment selected
+ 371:../src/stm32f30x_dac.c ****   * @param  Data: Data to be loaded in the selected data holding register.
+ 372:../src/stm32f30x_dac.c ****   * @retval None
+ 373:../src/stm32f30x_dac.c ****   */
+ 374:../src/stm32f30x_dac.c **** void DAC_SetChannel2Data(uint32_t DAC_Align, uint16_t Data)
+ 375:../src/stm32f30x_dac.c **** {
+ 483              		.loc 1 375 0
+ 484              		.cfi_startproc
+ 485              		@ args = 0, pretend = 0, frame = 16
+ 486              		@ frame_needed = 1, uses_anonymous_args = 0
+ 487              		@ link register save eliminated.
+ 488 027c 80B4     		push	{r7}
+ 489              	.LCFI23:
+ 490              		.cfi_def_cfa_offset 4
+ 491              		.cfi_offset 7, -4
+ 492 027e 85B0     		sub	sp, sp, #20
+ 493              	.LCFI24:
+ 494              		.cfi_def_cfa_offset 24
+ 495 0280 00AF     		add	r7, sp, #0
+ 496              	.LCFI25:
+ 497              		.cfi_def_cfa_register 7
+ 498 0282 7860     		str	r0, [r7, #4]
+ 499 0284 0B46     		mov	r3, r1
+ 500 0286 7B80     		strh	r3, [r7, #2]	@ movhi
+ 376:../src/stm32f30x_dac.c ****   __IO uint32_t tmp = 0;
+ 501              		.loc 1 376 0
+ 502 0288 4FF00003 		mov	r3, #0
+ 503 028c FB60     		str	r3, [r7, #12]
+ 377:../src/stm32f30x_dac.c **** 
+ 378:../src/stm32f30x_dac.c ****   /* Check the parameters */
+ 379:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_ALIGN(DAC_Align));
+ 380:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_DATA(Data));
+ 381:../src/stm32f30x_dac.c ****   
+ 382:../src/stm32f30x_dac.c ****   tmp = (uint32_t)DAC_BASE;
+ 504              		.loc 1 382 0
+ 505 028e 4FF4E843 		mov	r3, #29696
+ 506 0292 C4F20003 		movt	r3, 16384
+ 507 0296 FB60     		str	r3, [r7, #12]
+ 383:../src/stm32f30x_dac.c ****   tmp += DHR12R2_OFFSET + DAC_Align;
+ 508              		.loc 1 383 0
+ 509 0298 FA68     		ldr	r2, [r7, #12]
+ 510 029a 7B68     		ldr	r3, [r7, #4]
+ 511 029c D318     		adds	r3, r2, r3
+ 512 029e 03F11403 		add	r3, r3, #20
+ 513 02a2 FB60     		str	r3, [r7, #12]
+ 384:../src/stm32f30x_dac.c **** 
+ 385:../src/stm32f30x_dac.c ****   /* Set the DAC channel2 selected data holding register */
+ 386:../src/stm32f30x_dac.c ****   *(__IO uint32_t *)tmp = Data;
+ 514              		.loc 1 386 0
+ 515 02a4 FB68     		ldr	r3, [r7, #12]
+ 516 02a6 7A88     		ldrh	r2, [r7, #2]
+ 517 02a8 1A60     		str	r2, [r3, #0]
+ 387:../src/stm32f30x_dac.c **** }
+ 518              		.loc 1 387 0
+ 519 02aa 07F11407 		add	r7, r7, #20
+ 520 02ae BD46     		mov	sp, r7
+ 521 02b0 80BC     		pop	{r7}
+ 522 02b2 7047     		bx	lr
+ 523              		.cfi_endproc
+ 524              	.LFE119:
+ 526              		.align	2
+ 527              		.global	DAC_SetDualChannelData
+ 528              		.thumb
+ 529              		.thumb_func
+ 531              	DAC_SetDualChannelData:
+ 532              	.LFB120:
+ 388:../src/stm32f30x_dac.c **** 
+ 389:../src/stm32f30x_dac.c **** /**
+ 390:../src/stm32f30x_dac.c ****   * @brief  Sets the specified data holding register value for dual channel DAC.
+ 391:../src/stm32f30x_dac.c ****   * @param  DAC_Align: Specifies the data alignment for dual channel DAC.
+ 392:../src/stm32f30x_dac.c ****   *          This parameter can be:
+ 393:../src/stm32f30x_dac.c ****   *            @arg DAC_Align_8b_R: 8bit right data alignment selected
+ 394:../src/stm32f30x_dac.c ****   *            @arg DAC_Align_12b_L: 12bit left data alignment selected
+ 395:../src/stm32f30x_dac.c ****   *            @arg DAC_Align_12b_R: 12bit right data alignment selected
+ 396:../src/stm32f30x_dac.c ****   * @param  Data2: Data for DAC Channel2 to be loaded in the selected data holding register.
+ 397:../src/stm32f30x_dac.c ****   * @param  Data1: Data for DAC Channel1 to be loaded in the selected data  holding register.
+ 398:../src/stm32f30x_dac.c ****   * @note   In dual mode, a unique register access is required to write in both
+ 399:../src/stm32f30x_dac.c ****   *          DAC channels at the same time.
+ 400:../src/stm32f30x_dac.c ****   * @retval None
+ 401:../src/stm32f30x_dac.c ****   */
+ 402:../src/stm32f30x_dac.c **** void DAC_SetDualChannelData(uint32_t DAC_Align, uint16_t Data2, uint16_t Data1)
+ 403:../src/stm32f30x_dac.c **** {
+ 533              		.loc 1 403 0
+ 534              		.cfi_startproc
+ 535              		@ args = 0, pretend = 0, frame = 16
+ 536              		@ frame_needed = 1, uses_anonymous_args = 0
+ 537              		@ link register save eliminated.
+ 538 02b4 80B4     		push	{r7}
+ 539              	.LCFI26:
+ 540              		.cfi_def_cfa_offset 4
+ 541              		.cfi_offset 7, -4
+ 542 02b6 85B0     		sub	sp, sp, #20
+ 543              	.LCFI27:
+ 544              		.cfi_def_cfa_offset 24
+ 545 02b8 00AF     		add	r7, sp, #0
+ 546              	.LCFI28:
+ 547              		.cfi_def_cfa_register 7
+ 548 02ba 7860     		str	r0, [r7, #4]
+ 549 02bc 1346     		mov	r3, r2
+ 550 02be 0A46     		mov	r2, r1	@ movhi
+ 551 02c0 7A80     		strh	r2, [r7, #2]	@ movhi
+ 552 02c2 3B80     		strh	r3, [r7, #0]	@ movhi
+ 404:../src/stm32f30x_dac.c ****   uint32_t data = 0, tmp = 0;
+ 553              		.loc 1 404 0
+ 554 02c4 4FF00003 		mov	r3, #0
+ 555 02c8 FB60     		str	r3, [r7, #12]
+ 556 02ca 4FF00003 		mov	r3, #0
+ 557 02ce BB60     		str	r3, [r7, #8]
+ 405:../src/stm32f30x_dac.c ****   
+ 406:../src/stm32f30x_dac.c ****   /* Check the parameters */
+ 407:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_ALIGN(DAC_Align));
+ 408:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_DATA(Data1));
+ 409:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_DATA(Data2));
+ 410:../src/stm32f30x_dac.c ****   
+ 411:../src/stm32f30x_dac.c ****   /* Calculate and set dual DAC data holding register value */
+ 412:../src/stm32f30x_dac.c ****   if (DAC_Align == DAC_Align_8b_R)
+ 558              		.loc 1 412 0
+ 559 02d0 7B68     		ldr	r3, [r7, #4]
+ 560 02d2 082B     		cmp	r3, #8
+ 561 02d4 06D1     		bne	.L19
+ 413:../src/stm32f30x_dac.c ****   {
+ 414:../src/stm32f30x_dac.c ****     data = ((uint32_t)Data2 << 8) | Data1; 
+ 562              		.loc 1 414 0
+ 563 02d6 7B88     		ldrh	r3, [r7, #2]
+ 564 02d8 4FEA0322 		lsl	r2, r3, #8
+ 565 02dc 3B88     		ldrh	r3, [r7, #0]
+ 566 02de 1343     		orrs	r3, r3, r2
+ 567 02e0 FB60     		str	r3, [r7, #12]
+ 568 02e2 05E0     		b	.L20
+ 569              	.L19:
+ 415:../src/stm32f30x_dac.c ****   }
+ 416:../src/stm32f30x_dac.c ****   else
+ 417:../src/stm32f30x_dac.c ****   {
+ 418:../src/stm32f30x_dac.c ****     data = ((uint32_t)Data2 << 16) | Data1;
+ 570              		.loc 1 418 0
+ 571 02e4 7B88     		ldrh	r3, [r7, #2]
+ 572 02e6 4FEA0342 		lsl	r2, r3, #16
+ 573 02ea 3B88     		ldrh	r3, [r7, #0]
+ 574 02ec 1343     		orrs	r3, r3, r2
+ 575 02ee FB60     		str	r3, [r7, #12]
+ 576              	.L20:
+ 419:../src/stm32f30x_dac.c ****   }
+ 420:../src/stm32f30x_dac.c ****   
+ 421:../src/stm32f30x_dac.c ****   tmp = (uint32_t)DAC_BASE;
+ 577              		.loc 1 421 0
+ 578 02f0 4FF4E843 		mov	r3, #29696
+ 579 02f4 C4F20003 		movt	r3, 16384
+ 580 02f8 BB60     		str	r3, [r7, #8]
+ 422:../src/stm32f30x_dac.c ****   tmp += DHR12RD_OFFSET + DAC_Align;
+ 581              		.loc 1 422 0
+ 582 02fa 7A68     		ldr	r2, [r7, #4]
+ 583 02fc BB68     		ldr	r3, [r7, #8]
+ 584 02fe D318     		adds	r3, r2, r3
+ 585 0300 03F12003 		add	r3, r3, #32
+ 586 0304 BB60     		str	r3, [r7, #8]
+ 423:../src/stm32f30x_dac.c **** 
+ 424:../src/stm32f30x_dac.c ****   /* Set the dual DAC selected data holding register */
+ 425:../src/stm32f30x_dac.c ****   *(__IO uint32_t *)tmp = data;
+ 587              		.loc 1 425 0
+ 588 0306 BB68     		ldr	r3, [r7, #8]
+ 589 0308 FA68     		ldr	r2, [r7, #12]
+ 590 030a 1A60     		str	r2, [r3, #0]
+ 426:../src/stm32f30x_dac.c **** }
+ 591              		.loc 1 426 0
+ 592 030c 07F11407 		add	r7, r7, #20
+ 593 0310 BD46     		mov	sp, r7
+ 594 0312 80BC     		pop	{r7}
+ 595 0314 7047     		bx	lr
+ 596              		.cfi_endproc
+ 597              	.LFE120:
+ 599 0316 00BF     		.align	2
+ 600              		.global	DAC_GetDataOutputValue
+ 601              		.thumb
+ 602              		.thumb_func
+ 604              	DAC_GetDataOutputValue:
+ 605              	.LFB121:
+ 427:../src/stm32f30x_dac.c **** 
+ 428:../src/stm32f30x_dac.c **** /**
+ 429:../src/stm32f30x_dac.c ****   * @brief  Returns the last data output value of the selected DAC channel.
+ 430:../src/stm32f30x_dac.c ****   * @param  DAC_Channel: The selected DAC channel. 
+ 431:../src/stm32f30x_dac.c ****   *          This parameter can be:
+ 432:../src/stm32f30x_dac.c ****   *            @arg DAC_Channel_1: DAC Channel1 selected
+ 433:../src/stm32f30x_dac.c ****   *            @arg DAC_Channel_2: DAC Channel2 selected
+ 434:../src/stm32f30x_dac.c ****   * @retval The selected DAC channel data output value.
+ 435:../src/stm32f30x_dac.c ****   */
+ 436:../src/stm32f30x_dac.c **** uint16_t DAC_GetDataOutputValue(uint32_t DAC_Channel)
+ 437:../src/stm32f30x_dac.c **** {
+ 606              		.loc 1 437 0
+ 607              		.cfi_startproc
+ 608              		@ args = 0, pretend = 0, frame = 16
+ 609              		@ frame_needed = 1, uses_anonymous_args = 0
+ 610              		@ link register save eliminated.
+ 611 0318 80B4     		push	{r7}
+ 612              	.LCFI29:
+ 613              		.cfi_def_cfa_offset 4
+ 614              		.cfi_offset 7, -4
+ 615 031a 85B0     		sub	sp, sp, #20
+ 616              	.LCFI30:
+ 617              		.cfi_def_cfa_offset 24
+ 618 031c 00AF     		add	r7, sp, #0
+ 619              	.LCFI31:
+ 620              		.cfi_def_cfa_register 7
+ 621 031e 7860     		str	r0, [r7, #4]
+ 438:../src/stm32f30x_dac.c ****   __IO uint32_t tmp = 0;
+ 622              		.loc 1 438 0
+ 623 0320 4FF00003 		mov	r3, #0
+ 624 0324 FB60     		str	r3, [r7, #12]
+ 439:../src/stm32f30x_dac.c ****   
+ 440:../src/stm32f30x_dac.c ****   /* Check the parameters */
+ 441:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_CHANNEL(DAC_Channel));
+ 442:../src/stm32f30x_dac.c ****   
+ 443:../src/stm32f30x_dac.c ****   tmp = (uint32_t) DAC_BASE ;
+ 625              		.loc 1 443 0
+ 626 0326 4FF4E843 		mov	r3, #29696
+ 627 032a C4F20003 		movt	r3, 16384
+ 628 032e FB60     		str	r3, [r7, #12]
+ 444:../src/stm32f30x_dac.c ****   tmp += DOR_OFFSET + ((uint32_t)DAC_Channel >> 2);
+ 629              		.loc 1 444 0
+ 630 0330 7B68     		ldr	r3, [r7, #4]
+ 631 0332 4FEA9302 		lsr	r2, r3, #2
+ 632 0336 FB68     		ldr	r3, [r7, #12]
+ 633 0338 D318     		adds	r3, r2, r3
+ 634 033a 03F12C03 		add	r3, r3, #44
+ 635 033e FB60     		str	r3, [r7, #12]
+ 445:../src/stm32f30x_dac.c ****   
+ 446:../src/stm32f30x_dac.c ****   /* Returns the DAC channel data output register value */
+ 447:../src/stm32f30x_dac.c ****   return (uint16_t) (*(__IO uint32_t*) tmp);
+ 636              		.loc 1 447 0
+ 637 0340 FB68     		ldr	r3, [r7, #12]
+ 638 0342 1B68     		ldr	r3, [r3, #0]
+ 639 0344 9BB2     		uxth	r3, r3
+ 448:../src/stm32f30x_dac.c **** }
+ 640              		.loc 1 448 0
+ 641 0346 1846     		mov	r0, r3
+ 642 0348 07F11407 		add	r7, r7, #20
+ 643 034c BD46     		mov	sp, r7
+ 644 034e 80BC     		pop	{r7}
+ 645 0350 7047     		bx	lr
+ 646              		.cfi_endproc
+ 647              	.LFE121:
+ 649 0352 00BF     		.align	2
+ 650              		.global	DAC_DMACmd
+ 651              		.thumb
+ 652              		.thumb_func
+ 654              	DAC_DMACmd:
+ 655              	.LFB122:
+ 449:../src/stm32f30x_dac.c **** /**
+ 450:../src/stm32f30x_dac.c ****   * @}
+ 451:../src/stm32f30x_dac.c ****   */
+ 452:../src/stm32f30x_dac.c **** 
+ 453:../src/stm32f30x_dac.c **** /** @defgroup DAC_Group2 DMA management functions
+ 454:../src/stm32f30x_dac.c ****  *  @brief   DMA management functions
+ 455:../src/stm32f30x_dac.c ****  *
+ 456:../src/stm32f30x_dac.c **** @verbatim   
+ 457:../src/stm32f30x_dac.c ****  ===============================================================================
+ 458:../src/stm32f30x_dac.c ****                     ##### DMA management functions #####
+ 459:../src/stm32f30x_dac.c ****  ===============================================================================  
+ 460:../src/stm32f30x_dac.c **** 
+ 461:../src/stm32f30x_dac.c **** @endverbatim
+ 462:../src/stm32f30x_dac.c ****   * @{
+ 463:../src/stm32f30x_dac.c ****   */
+ 464:../src/stm32f30x_dac.c **** 
+ 465:../src/stm32f30x_dac.c **** /**
+ 466:../src/stm32f30x_dac.c ****   * @brief  Enables or disables the specified DAC channel DMA request.
+ 467:../src/stm32f30x_dac.c ****   * @note   When enabled DMA1 is generated when an external trigger (EXTI Line9,
+ 468:../src/stm32f30x_dac.c ****   *         TIM2, TIM4, TIM5, TIM6, TIM7 or TIM8  but not a software trigger) occurs.
+ 469:../src/stm32f30x_dac.c ****   * @param  DAC_Channel: The selected DAC channel. 
+ 470:../src/stm32f30x_dac.c ****   *          This parameter can be:
+ 471:../src/stm32f30x_dac.c ****   *            @arg DAC_Channel_1: DAC Channel1 selected
+ 472:../src/stm32f30x_dac.c ****   *            @arg DAC_Channel_2: DAC Channel2 selected
+ 473:../src/stm32f30x_dac.c ****   * @param  NewState: new state of the selected DAC channel DMA request.
+ 474:../src/stm32f30x_dac.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 475:../src/stm32f30x_dac.c ****   * @note   The DAC channel1 is mapped on DMA1 channel3 which must be
+ 476:../src/stm32f30x_dac.c ****   *          already configured.
+ 477:../src/stm32f30x_dac.c ****   * @note   The DAC channel2 is mapped on DMA1 channel4 which must be
+ 478:../src/stm32f30x_dac.c ****   *          already configured.    
+ 479:../src/stm32f30x_dac.c ****   * @retval None
+ 480:../src/stm32f30x_dac.c ****   */
+ 481:../src/stm32f30x_dac.c **** void DAC_DMACmd(uint32_t DAC_Channel, FunctionalState NewState)
+ 482:../src/stm32f30x_dac.c **** {
+ 656              		.loc 1 482 0
+ 657              		.cfi_startproc
+ 658              		@ args = 0, pretend = 0, frame = 8
+ 659              		@ frame_needed = 1, uses_anonymous_args = 0
+ 660              		@ link register save eliminated.
+ 661 0354 80B4     		push	{r7}
+ 662              	.LCFI32:
+ 663              		.cfi_def_cfa_offset 4
+ 664              		.cfi_offset 7, -4
+ 665 0356 83B0     		sub	sp, sp, #12
+ 666              	.LCFI33:
+ 667              		.cfi_def_cfa_offset 16
+ 668 0358 00AF     		add	r7, sp, #0
+ 669              	.LCFI34:
+ 670              		.cfi_def_cfa_register 7
+ 671 035a 7860     		str	r0, [r7, #4]
+ 672 035c 0B46     		mov	r3, r1
+ 673 035e FB70     		strb	r3, [r7, #3]
+ 483:../src/stm32f30x_dac.c ****   /* Check the parameters */
+ 484:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_CHANNEL(DAC_Channel));
+ 485:../src/stm32f30x_dac.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 486:../src/stm32f30x_dac.c **** 
+ 487:../src/stm32f30x_dac.c ****   if (NewState != DISABLE)
+ 674              		.loc 1 487 0
+ 675 0360 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 676 0362 002B     		cmp	r3, #0
+ 677 0364 10D0     		beq	.L24
+ 488:../src/stm32f30x_dac.c ****   {
+ 489:../src/stm32f30x_dac.c ****     /* Enable the selected DAC channel DMA request */
+ 490:../src/stm32f30x_dac.c ****     DAC->CR |= (DAC_CR_DMAEN1 << DAC_Channel);
+ 678              		.loc 1 490 0
+ 679 0366 4FF4E843 		mov	r3, #29696
+ 680 036a C4F20003 		movt	r3, 16384
+ 681 036e 4FF4E842 		mov	r2, #29696
+ 682 0372 C4F20002 		movt	r2, 16384
+ 683 0376 1168     		ldr	r1, [r2, #0]
+ 684 0378 7A68     		ldr	r2, [r7, #4]
+ 685 037a 4FF48050 		mov	r0, #4096
+ 686 037e 00FA02F2 		lsl	r2, r0, r2
+ 687 0382 0A43     		orrs	r2, r2, r1
+ 688 0384 1A60     		str	r2, [r3, #0]
+ 689 0386 11E0     		b	.L23
+ 690              	.L24:
+ 491:../src/stm32f30x_dac.c ****   }
+ 492:../src/stm32f30x_dac.c ****   else
+ 493:../src/stm32f30x_dac.c ****   {
+ 494:../src/stm32f30x_dac.c ****     /* Disable the selected DAC channel DMA request */
+ 495:../src/stm32f30x_dac.c ****     DAC->CR &= (~(DAC_CR_DMAEN1 << DAC_Channel));
+ 691              		.loc 1 495 0
+ 692 0388 4FF4E843 		mov	r3, #29696
+ 693 038c C4F20003 		movt	r3, 16384
+ 694 0390 4FF4E842 		mov	r2, #29696
+ 695 0394 C4F20002 		movt	r2, 16384
+ 696 0398 1168     		ldr	r1, [r2, #0]
+ 697 039a 7A68     		ldr	r2, [r7, #4]
+ 698 039c 4FF48050 		mov	r0, #4096
+ 699 03a0 00FA02F2 		lsl	r2, r0, r2
+ 700 03a4 6FEA0202 		mvn	r2, r2
+ 701 03a8 0A40     		ands	r2, r2, r1
+ 702 03aa 1A60     		str	r2, [r3, #0]
+ 703              	.L23:
+ 496:../src/stm32f30x_dac.c ****   }
+ 497:../src/stm32f30x_dac.c **** }
+ 704              		.loc 1 497 0
+ 705 03ac 07F10C07 		add	r7, r7, #12
+ 706 03b0 BD46     		mov	sp, r7
+ 707 03b2 80BC     		pop	{r7}
+ 708 03b4 7047     		bx	lr
+ 709              		.cfi_endproc
+ 710              	.LFE122:
+ 712 03b6 00BF     		.align	2
+ 713              		.global	DAC_ITConfig
+ 714              		.thumb
+ 715              		.thumb_func
+ 717              	DAC_ITConfig:
+ 718              	.LFB123:
+ 498:../src/stm32f30x_dac.c **** /**
+ 499:../src/stm32f30x_dac.c ****   * @}
+ 500:../src/stm32f30x_dac.c ****   */
+ 501:../src/stm32f30x_dac.c **** 
+ 502:../src/stm32f30x_dac.c **** /** @defgroup DAC_Group3 Interrupts and flags management functions
+ 503:../src/stm32f30x_dac.c ****  *  @brief   Interrupts and flags management functions
+ 504:../src/stm32f30x_dac.c ****  *
+ 505:../src/stm32f30x_dac.c **** @verbatim   
+ 506:../src/stm32f30x_dac.c ****  ===============================================================================
+ 507:../src/stm32f30x_dac.c ****               ##### Interrupts and flags management functions #####
+ 508:../src/stm32f30x_dac.c ****  ===============================================================================  
+ 509:../src/stm32f30x_dac.c **** 
+ 510:../src/stm32f30x_dac.c **** @endverbatim
+ 511:../src/stm32f30x_dac.c ****   * @{
+ 512:../src/stm32f30x_dac.c ****   */
+ 513:../src/stm32f30x_dac.c **** 
+ 514:../src/stm32f30x_dac.c **** /**
+ 515:../src/stm32f30x_dac.c ****   * @brief  Enables or disables the specified DAC interrupts.
+ 516:../src/stm32f30x_dac.c ****   * @param  DAC_Channel: The selected DAC channel. 
+ 517:../src/stm32f30x_dac.c ****   *          This parameter can be:
+ 518:../src/stm32f30x_dac.c ****   *            @arg DAC_Channel_1: DAC Channel1 selected
+ 519:../src/stm32f30x_dac.c ****   *            @arg DAC_Channel_2: DAC Channel2 selected
+ 520:../src/stm32f30x_dac.c ****   * @param  DAC_IT: specifies the DAC interrupt sources to be enabled or disabled. 
+ 521:../src/stm32f30x_dac.c ****   *          This parameter can be the following values:
+ 522:../src/stm32f30x_dac.c ****   *            @arg DAC_IT_DMAUDR: DMA underrun interrupt mask
+ 523:../src/stm32f30x_dac.c ****   * @note   The DMA underrun occurs when a second external trigger arrives before the 
+ 524:../src/stm32f30x_dac.c ****   *         acknowledgement for the first external trigger is received (first request).
+ 525:../src/stm32f30x_dac.c ****   * @param  NewState: new state of the specified DAC interrupts.
+ 526:../src/stm32f30x_dac.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 527:../src/stm32f30x_dac.c ****   * @retval None
+ 528:../src/stm32f30x_dac.c ****   */ 
+ 529:../src/stm32f30x_dac.c **** void DAC_ITConfig(uint32_t DAC_Channel, uint32_t DAC_IT, FunctionalState NewState)  
+ 530:../src/stm32f30x_dac.c **** {
+ 719              		.loc 1 530 0
+ 720              		.cfi_startproc
+ 721              		@ args = 0, pretend = 0, frame = 16
+ 722              		@ frame_needed = 1, uses_anonymous_args = 0
+ 723              		@ link register save eliminated.
+ 724 03b8 80B4     		push	{r7}
+ 725              	.LCFI35:
+ 726              		.cfi_def_cfa_offset 4
+ 727              		.cfi_offset 7, -4
+ 728 03ba 85B0     		sub	sp, sp, #20
+ 729              	.LCFI36:
+ 730              		.cfi_def_cfa_offset 24
+ 731 03bc 00AF     		add	r7, sp, #0
+ 732              	.LCFI37:
+ 733              		.cfi_def_cfa_register 7
+ 734 03be F860     		str	r0, [r7, #12]
+ 735 03c0 B960     		str	r1, [r7, #8]
+ 736 03c2 1346     		mov	r3, r2
+ 737 03c4 FB71     		strb	r3, [r7, #7]
+ 531:../src/stm32f30x_dac.c ****   /* Check the parameters */
+ 532:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_CHANNEL(DAC_Channel));
+ 533:../src/stm32f30x_dac.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 534:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_IT(DAC_IT)); 
+ 535:../src/stm32f30x_dac.c **** 
+ 536:../src/stm32f30x_dac.c ****   if (NewState != DISABLE)
+ 738              		.loc 1 536 0
+ 739 03c6 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 740 03c8 002B     		cmp	r3, #0
+ 741 03ca 0FD0     		beq	.L27
+ 537:../src/stm32f30x_dac.c ****   {
+ 538:../src/stm32f30x_dac.c ****     /* Enable the selected DAC interrupts */
+ 539:../src/stm32f30x_dac.c ****     DAC->CR |=  (DAC_IT << DAC_Channel);
+ 742              		.loc 1 539 0
+ 743 03cc 4FF4E843 		mov	r3, #29696
+ 744 03d0 C4F20003 		movt	r3, 16384
+ 745 03d4 4FF4E842 		mov	r2, #29696
+ 746 03d8 C4F20002 		movt	r2, 16384
+ 747 03dc 1168     		ldr	r1, [r2, #0]
+ 748 03de FA68     		ldr	r2, [r7, #12]
+ 749 03e0 B868     		ldr	r0, [r7, #8]
+ 750 03e2 00FA02F2 		lsl	r2, r0, r2
+ 751 03e6 0A43     		orrs	r2, r2, r1
+ 752 03e8 1A60     		str	r2, [r3, #0]
+ 753 03ea 10E0     		b	.L26
+ 754              	.L27:
+ 540:../src/stm32f30x_dac.c ****   }
+ 541:../src/stm32f30x_dac.c ****   else
+ 542:../src/stm32f30x_dac.c ****   {
+ 543:../src/stm32f30x_dac.c ****     /* Disable the selected DAC interrupts */
+ 544:../src/stm32f30x_dac.c ****     DAC->CR &= (~(uint32_t)(DAC_IT << DAC_Channel));
+ 755              		.loc 1 544 0
+ 756 03ec 4FF4E843 		mov	r3, #29696
+ 757 03f0 C4F20003 		movt	r3, 16384
+ 758 03f4 4FF4E842 		mov	r2, #29696
+ 759 03f8 C4F20002 		movt	r2, 16384
+ 760 03fc 1168     		ldr	r1, [r2, #0]
+ 761 03fe FA68     		ldr	r2, [r7, #12]
+ 762 0400 B868     		ldr	r0, [r7, #8]
+ 763 0402 00FA02F2 		lsl	r2, r0, r2
+ 764 0406 6FEA0202 		mvn	r2, r2
+ 765 040a 0A40     		ands	r2, r2, r1
+ 766 040c 1A60     		str	r2, [r3, #0]
+ 767              	.L26:
+ 545:../src/stm32f30x_dac.c ****   }
+ 546:../src/stm32f30x_dac.c **** }
+ 768              		.loc 1 546 0
+ 769 040e 07F11407 		add	r7, r7, #20
+ 770 0412 BD46     		mov	sp, r7
+ 771 0414 80BC     		pop	{r7}
+ 772 0416 7047     		bx	lr
+ 773              		.cfi_endproc
+ 774              	.LFE123:
+ 776              		.align	2
+ 777              		.global	DAC_GetFlagStatus
+ 778              		.thumb
+ 779              		.thumb_func
+ 781              	DAC_GetFlagStatus:
+ 782              	.LFB124:
+ 547:../src/stm32f30x_dac.c **** 
+ 548:../src/stm32f30x_dac.c **** /**
+ 549:../src/stm32f30x_dac.c ****   * @brief  Checks whether the specified DAC flag is set or not.
+ 550:../src/stm32f30x_dac.c ****   * @param  DAC_Channel: The selected DAC channel. 
+ 551:../src/stm32f30x_dac.c ****   *          This parameter can be:
+ 552:../src/stm32f30x_dac.c ****   *            @arg DAC_Channel_1: DAC Channel1 selected
+ 553:../src/stm32f30x_dac.c ****   *            @arg DAC_Channel_2: DAC Channel2 selected
+ 554:../src/stm32f30x_dac.c ****   * @param  DAC_FLAG: specifies the flag to check. 
+ 555:../src/stm32f30x_dac.c ****   *          This parameter can be only of the following value:
+ 556:../src/stm32f30x_dac.c ****   *            @arg DAC_FLAG_DMAUDR: DMA underrun flag
+ 557:../src/stm32f30x_dac.c ****   * @note   The DMA underrun occurs when a second external trigger arrives before the 
+ 558:../src/stm32f30x_dac.c ****   *         acknowledgement for the first external trigger is received (first request).
+ 559:../src/stm32f30x_dac.c ****   * @retval The new state of DAC_FLAG (SET or RESET).
+ 560:../src/stm32f30x_dac.c ****   */
+ 561:../src/stm32f30x_dac.c **** FlagStatus DAC_GetFlagStatus(uint32_t DAC_Channel, uint32_t DAC_FLAG)
+ 562:../src/stm32f30x_dac.c **** {
+ 783              		.loc 1 562 0
+ 784              		.cfi_startproc
+ 785              		@ args = 0, pretend = 0, frame = 16
+ 786              		@ frame_needed = 1, uses_anonymous_args = 0
+ 787              		@ link register save eliminated.
+ 788 0418 80B4     		push	{r7}
+ 789              	.LCFI38:
+ 790              		.cfi_def_cfa_offset 4
+ 791              		.cfi_offset 7, -4
+ 792 041a 85B0     		sub	sp, sp, #20
+ 793              	.LCFI39:
+ 794              		.cfi_def_cfa_offset 24
+ 795 041c 00AF     		add	r7, sp, #0
+ 796              	.LCFI40:
+ 797              		.cfi_def_cfa_register 7
+ 798 041e 7860     		str	r0, [r7, #4]
+ 799 0420 3960     		str	r1, [r7, #0]
+ 563:../src/stm32f30x_dac.c ****   FlagStatus bitstatus = RESET;
+ 800              		.loc 1 563 0
+ 801 0422 4FF00003 		mov	r3, #0
+ 802 0426 FB73     		strb	r3, [r7, #15]
+ 564:../src/stm32f30x_dac.c ****   /* Check the parameters */
+ 565:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_CHANNEL(DAC_Channel));
+ 566:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_FLAG(DAC_FLAG));
+ 567:../src/stm32f30x_dac.c **** 
+ 568:../src/stm32f30x_dac.c ****   /* Check the status of the specified DAC flag */
+ 569:../src/stm32f30x_dac.c ****   if ((DAC->SR & (DAC_FLAG << DAC_Channel)) != (uint8_t)RESET)
+ 803              		.loc 1 569 0
+ 804 0428 4FF4E843 		mov	r3, #29696
+ 805 042c C4F20003 		movt	r3, 16384
+ 806 0430 5A6B     		ldr	r2, [r3, #52]
+ 807 0432 7B68     		ldr	r3, [r7, #4]
+ 808 0434 3968     		ldr	r1, [r7, #0]
+ 809 0436 01FA03F3 		lsl	r3, r1, r3
+ 810 043a 1340     		ands	r3, r3, r2
+ 811 043c 002B     		cmp	r3, #0
+ 812 043e 03D0     		beq	.L30
+ 570:../src/stm32f30x_dac.c ****   {
+ 571:../src/stm32f30x_dac.c ****     /* DAC_FLAG is set */
+ 572:../src/stm32f30x_dac.c ****     bitstatus = SET;
+ 813              		.loc 1 572 0
+ 814 0440 4FF00103 		mov	r3, #1
+ 815 0444 FB73     		strb	r3, [r7, #15]
+ 816 0446 02E0     		b	.L31
+ 817              	.L30:
+ 573:../src/stm32f30x_dac.c ****   }
+ 574:../src/stm32f30x_dac.c ****   else
+ 575:../src/stm32f30x_dac.c ****   {
+ 576:../src/stm32f30x_dac.c ****     /* DAC_FLAG is reset */
+ 577:../src/stm32f30x_dac.c ****     bitstatus = RESET;
+ 818              		.loc 1 577 0
+ 819 0448 4FF00003 		mov	r3, #0
+ 820 044c FB73     		strb	r3, [r7, #15]
+ 821              	.L31:
+ 578:../src/stm32f30x_dac.c ****   }
+ 579:../src/stm32f30x_dac.c ****   /* Return the DAC_FLAG status */
+ 580:../src/stm32f30x_dac.c ****   return  bitstatus;
+ 822              		.loc 1 580 0
+ 823 044e FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 581:../src/stm32f30x_dac.c **** }
+ 824              		.loc 1 581 0
+ 825 0450 1846     		mov	r0, r3
+ 826 0452 07F11407 		add	r7, r7, #20
+ 827 0456 BD46     		mov	sp, r7
+ 828 0458 80BC     		pop	{r7}
+ 829 045a 7047     		bx	lr
+ 830              		.cfi_endproc
+ 831              	.LFE124:
+ 833              		.align	2
+ 834              		.global	DAC_ClearFlag
+ 835              		.thumb
+ 836              		.thumb_func
+ 838              	DAC_ClearFlag:
+ 839              	.LFB125:
+ 582:../src/stm32f30x_dac.c **** 
+ 583:../src/stm32f30x_dac.c **** /**
+ 584:../src/stm32f30x_dac.c ****   * @brief  Clears the DAC channel's pending flags.
+ 585:../src/stm32f30x_dac.c ****   * @param  DAC_Channel: The selected DAC channel. 
+ 586:../src/stm32f30x_dac.c ****   *          This parameter can be:
+ 587:../src/stm32f30x_dac.c ****   *            @arg DAC_Channel_1: DAC Channel1 selected
+ 588:../src/stm32f30x_dac.c ****   *            @arg DAC_Channel_2: DAC Channel2 selected
+ 589:../src/stm32f30x_dac.c ****   * @param  DAC_FLAG: specifies the flag to clear. 
+ 590:../src/stm32f30x_dac.c ****   *          This parameter can be of the following value:
+ 591:../src/stm32f30x_dac.c ****   *            @arg DAC_FLAG_DMAUDR: DMA underrun flag                           
+ 592:../src/stm32f30x_dac.c ****   * @retval None
+ 593:../src/stm32f30x_dac.c ****   */
+ 594:../src/stm32f30x_dac.c **** void DAC_ClearFlag(uint32_t DAC_Channel, uint32_t DAC_FLAG)
+ 595:../src/stm32f30x_dac.c **** {
+ 840              		.loc 1 595 0
+ 841              		.cfi_startproc
+ 842              		@ args = 0, pretend = 0, frame = 8
+ 843              		@ frame_needed = 1, uses_anonymous_args = 0
+ 844              		@ link register save eliminated.
+ 845 045c 80B4     		push	{r7}
+ 846              	.LCFI41:
+ 847              		.cfi_def_cfa_offset 4
+ 848              		.cfi_offset 7, -4
+ 849 045e 83B0     		sub	sp, sp, #12
+ 850              	.LCFI42:
+ 851              		.cfi_def_cfa_offset 16
+ 852 0460 00AF     		add	r7, sp, #0
+ 853              	.LCFI43:
+ 854              		.cfi_def_cfa_register 7
+ 855 0462 7860     		str	r0, [r7, #4]
+ 856 0464 3960     		str	r1, [r7, #0]
+ 596:../src/stm32f30x_dac.c ****   /* Check the parameters */
+ 597:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_CHANNEL(DAC_Channel));
+ 598:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_FLAG(DAC_FLAG));
+ 599:../src/stm32f30x_dac.c **** 
+ 600:../src/stm32f30x_dac.c ****   /* Clear the selected DAC flags */
+ 601:../src/stm32f30x_dac.c ****   DAC->SR = (DAC_FLAG << DAC_Channel);
+ 857              		.loc 1 601 0
+ 858 0466 4FF4E843 		mov	r3, #29696
+ 859 046a C4F20003 		movt	r3, 16384
+ 860 046e 7A68     		ldr	r2, [r7, #4]
+ 861 0470 3968     		ldr	r1, [r7, #0]
+ 862 0472 01FA02F2 		lsl	r2, r1, r2
+ 863 0476 5A63     		str	r2, [r3, #52]
+ 602:../src/stm32f30x_dac.c **** }
+ 864              		.loc 1 602 0
+ 865 0478 07F10C07 		add	r7, r7, #12
+ 866 047c BD46     		mov	sp, r7
+ 867 047e 80BC     		pop	{r7}
+ 868 0480 7047     		bx	lr
+ 869              		.cfi_endproc
+ 870              	.LFE125:
+ 872 0482 00BF     		.align	2
+ 873              		.global	DAC_GetITStatus
+ 874              		.thumb
+ 875              		.thumb_func
+ 877              	DAC_GetITStatus:
+ 878              	.LFB126:
+ 603:../src/stm32f30x_dac.c **** 
+ 604:../src/stm32f30x_dac.c **** /**
+ 605:../src/stm32f30x_dac.c ****   * @brief  Checks whether the specified DAC interrupt has occurred or not.
+ 606:../src/stm32f30x_dac.c ****   * @param  DAC_Channel: The selected DAC channel. 
+ 607:../src/stm32f30x_dac.c ****   *          This parameter can be:
+ 608:../src/stm32f30x_dac.c ****   *            @arg DAC_Channel_1: DAC Channel1 selected
+ 609:../src/stm32f30x_dac.c ****   *            @arg DAC_Channel_2: DAC Channel2 selected
+ 610:../src/stm32f30x_dac.c ****   * @param  DAC_IT: specifies the DAC interrupt source to check. 
+ 611:../src/stm32f30x_dac.c ****   *          This parameter can be the following values:
+ 612:../src/stm32f30x_dac.c ****   *            @arg DAC_IT_DMAUDR: DMA underrun interrupt mask
+ 613:../src/stm32f30x_dac.c ****   * @note   The DMA underrun occurs when a second external trigger arrives before the 
+ 614:../src/stm32f30x_dac.c ****   *         acknowledgement for the first external trigger is received (first request).
+ 615:../src/stm32f30x_dac.c ****   * @retval The new state of DAC_IT (SET or RESET).
+ 616:../src/stm32f30x_dac.c ****   */
+ 617:../src/stm32f30x_dac.c **** ITStatus DAC_GetITStatus(uint32_t DAC_Channel, uint32_t DAC_IT)
+ 618:../src/stm32f30x_dac.c **** {
+ 879              		.loc 1 618 0
+ 880              		.cfi_startproc
+ 881              		@ args = 0, pretend = 0, frame = 16
+ 882              		@ frame_needed = 1, uses_anonymous_args = 0
+ 883              		@ link register save eliminated.
+ 884 0484 80B4     		push	{r7}
+ 885              	.LCFI44:
+ 886              		.cfi_def_cfa_offset 4
+ 887              		.cfi_offset 7, -4
+ 888 0486 85B0     		sub	sp, sp, #20
+ 889              	.LCFI45:
+ 890              		.cfi_def_cfa_offset 24
+ 891 0488 00AF     		add	r7, sp, #0
+ 892              	.LCFI46:
+ 893              		.cfi_def_cfa_register 7
+ 894 048a 7860     		str	r0, [r7, #4]
+ 895 048c 3960     		str	r1, [r7, #0]
+ 619:../src/stm32f30x_dac.c ****   ITStatus bitstatus = RESET;
+ 896              		.loc 1 619 0
+ 897 048e 4FF00003 		mov	r3, #0
+ 898 0492 FB73     		strb	r3, [r7, #15]
+ 620:../src/stm32f30x_dac.c ****   uint32_t enablestatus = 0;
+ 899              		.loc 1 620 0
+ 900 0494 4FF00003 		mov	r3, #0
+ 901 0498 BB60     		str	r3, [r7, #8]
+ 621:../src/stm32f30x_dac.c ****   
+ 622:../src/stm32f30x_dac.c ****   /* Check the parameters */
+ 623:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_CHANNEL(DAC_Channel));
+ 624:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_IT(DAC_IT));
+ 625:../src/stm32f30x_dac.c **** 
+ 626:../src/stm32f30x_dac.c ****   /* Get the DAC_IT enable bit status */
+ 627:../src/stm32f30x_dac.c ****   enablestatus = (DAC->CR & (DAC_IT << DAC_Channel)) ;
+ 902              		.loc 1 627 0
+ 903 049a 4FF4E843 		mov	r3, #29696
+ 904 049e C4F20003 		movt	r3, 16384
+ 905 04a2 1A68     		ldr	r2, [r3, #0]
+ 906 04a4 7B68     		ldr	r3, [r7, #4]
+ 907 04a6 3968     		ldr	r1, [r7, #0]
+ 908 04a8 01FA03F3 		lsl	r3, r1, r3
+ 909 04ac 1340     		ands	r3, r3, r2
+ 910 04ae BB60     		str	r3, [r7, #8]
+ 628:../src/stm32f30x_dac.c ****   
+ 629:../src/stm32f30x_dac.c ****   /* Check the status of the specified DAC interrupt */
+ 630:../src/stm32f30x_dac.c ****   if (((DAC->SR & (DAC_IT << DAC_Channel)) != (uint32_t)RESET) && enablestatus)
+ 911              		.loc 1 630 0
+ 912 04b0 4FF4E843 		mov	r3, #29696
+ 913 04b4 C4F20003 		movt	r3, 16384
+ 914 04b8 5A6B     		ldr	r2, [r3, #52]
+ 915 04ba 7B68     		ldr	r3, [r7, #4]
+ 916 04bc 3968     		ldr	r1, [r7, #0]
+ 917 04be 01FA03F3 		lsl	r3, r1, r3
+ 918 04c2 1340     		ands	r3, r3, r2
+ 919 04c4 002B     		cmp	r3, #0
+ 920 04c6 06D0     		beq	.L35
+ 921              		.loc 1 630 0 is_stmt 0 discriminator 1
+ 922 04c8 BB68     		ldr	r3, [r7, #8]
+ 923 04ca 002B     		cmp	r3, #0
+ 924 04cc 03D0     		beq	.L35
+ 631:../src/stm32f30x_dac.c ****   {
+ 632:../src/stm32f30x_dac.c ****     /* DAC_IT is set */
+ 633:../src/stm32f30x_dac.c ****     bitstatus = SET;
+ 925              		.loc 1 633 0 is_stmt 1
+ 926 04ce 4FF00103 		mov	r3, #1
+ 927 04d2 FB73     		strb	r3, [r7, #15]
+ 928 04d4 02E0     		b	.L36
+ 929              	.L35:
+ 634:../src/stm32f30x_dac.c ****   }
+ 635:../src/stm32f30x_dac.c ****   else
+ 636:../src/stm32f30x_dac.c ****   {
+ 637:../src/stm32f30x_dac.c ****     /* DAC_IT is reset */
+ 638:../src/stm32f30x_dac.c ****     bitstatus = RESET;
+ 930              		.loc 1 638 0
+ 931 04d6 4FF00003 		mov	r3, #0
+ 932 04da FB73     		strb	r3, [r7, #15]
+ 933              	.L36:
+ 639:../src/stm32f30x_dac.c ****   }
+ 640:../src/stm32f30x_dac.c ****   /* Return the DAC_IT status */
+ 641:../src/stm32f30x_dac.c ****   return  bitstatus;
+ 934              		.loc 1 641 0
+ 935 04dc FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 642:../src/stm32f30x_dac.c **** }
+ 936              		.loc 1 642 0
+ 937 04de 1846     		mov	r0, r3
+ 938 04e0 07F11407 		add	r7, r7, #20
+ 939 04e4 BD46     		mov	sp, r7
+ 940 04e6 80BC     		pop	{r7}
+ 941 04e8 7047     		bx	lr
+ 942              		.cfi_endproc
+ 943              	.LFE126:
+ 945 04ea 00BF     		.align	2
+ 946              		.global	DAC_ClearITPendingBit
+ 947              		.thumb
+ 948              		.thumb_func
+ 950              	DAC_ClearITPendingBit:
+ 951              	.LFB127:
+ 643:../src/stm32f30x_dac.c **** 
+ 644:../src/stm32f30x_dac.c **** /**
+ 645:../src/stm32f30x_dac.c ****   * @brief  Clears the DAC channel's interrupt pending bits.
+ 646:../src/stm32f30x_dac.c ****   * @param  DAC_Channel: The selected DAC channel. 
+ 647:../src/stm32f30x_dac.c ****   *          This parameter can be:
+ 648:../src/stm32f30x_dac.c ****   *            @arg DAC_Channel_1: DAC Channel1 selected
+ 649:../src/stm32f30x_dac.c ****   *            @arg DAC_Channel_2: DAC Channel2 selected
+ 650:../src/stm32f30x_dac.c ****   * @param  DAC_IT: specifies the DAC interrupt pending bit to clear.
+ 651:../src/stm32f30x_dac.c ****   *          This parameter can be the following values:
+ 652:../src/stm32f30x_dac.c ****   *            @arg DAC_IT_DMAUDR: DMA underrun interrupt mask                                     
+ 653:../src/stm32f30x_dac.c ****   * @retval None
+ 654:../src/stm32f30x_dac.c ****   */
+ 655:../src/stm32f30x_dac.c **** void DAC_ClearITPendingBit(uint32_t DAC_Channel, uint32_t DAC_IT)
+ 656:../src/stm32f30x_dac.c **** {
+ 952              		.loc 1 656 0
+ 953              		.cfi_startproc
+ 954              		@ args = 0, pretend = 0, frame = 8
+ 955              		@ frame_needed = 1, uses_anonymous_args = 0
+ 956              		@ link register save eliminated.
+ 957 04ec 80B4     		push	{r7}
+ 958              	.LCFI47:
+ 959              		.cfi_def_cfa_offset 4
+ 960              		.cfi_offset 7, -4
+ 961 04ee 83B0     		sub	sp, sp, #12
+ 962              	.LCFI48:
+ 963              		.cfi_def_cfa_offset 16
+ 964 04f0 00AF     		add	r7, sp, #0
+ 965              	.LCFI49:
+ 966              		.cfi_def_cfa_register 7
+ 967 04f2 7860     		str	r0, [r7, #4]
+ 968 04f4 3960     		str	r1, [r7, #0]
+ 657:../src/stm32f30x_dac.c ****   /* Check the parameters */
+ 658:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_CHANNEL(DAC_Channel));
+ 659:../src/stm32f30x_dac.c ****   assert_param(IS_DAC_IT(DAC_IT)); 
+ 660:../src/stm32f30x_dac.c **** 
+ 661:../src/stm32f30x_dac.c ****   /* Clear the selected DAC interrupt pending bits */
+ 662:../src/stm32f30x_dac.c ****   DAC->SR = (DAC_IT << DAC_Channel);
+ 969              		.loc 1 662 0
+ 970 04f6 4FF4E843 		mov	r3, #29696
+ 971 04fa C4F20003 		movt	r3, 16384
+ 972 04fe 7A68     		ldr	r2, [r7, #4]
+ 973 0500 3968     		ldr	r1, [r7, #0]
+ 974 0502 01FA02F2 		lsl	r2, r1, r2
+ 975 0506 5A63     		str	r2, [r3, #52]
+ 663:../src/stm32f30x_dac.c **** }
+ 976              		.loc 1 663 0
+ 977 0508 07F10C07 		add	r7, r7, #12
+ 978 050c BD46     		mov	sp, r7
+ 979 050e 80BC     		pop	{r7}
+ 980 0510 7047     		bx	lr
+ 981              		.cfi_endproc
+ 982              	.LFE127:
+ 984              	.Letext0:
+ 985              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
+ 986              		.file 3 "/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/stm32f30x.h"
+ 987              		.file 4 "/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/stm32f30x_dac.h"
+ 988              		.file 5 "/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cm4.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 stm32f30x_dac.c
+     /tmp/ccWyXqVe.s:20     .text:00000000 $t
+     /tmp/ccWyXqVe.s:25     .text:00000000 DAC_DeInit
+     /tmp/ccWyXqVe.s:58     .text:00000020 DAC_Init
+     /tmp/ccWyXqVe.s:137    .text:00000094 DAC_StructInit
+     /tmp/ccWyXqVe.s:184    .text:000000c8 DAC_Cmd
+     /tmp/ccWyXqVe.s:247    .text:0000012c DAC_SoftwareTriggerCmd
+     /tmp/ccWyXqVe.s:312    .text:00000198 DAC_DualSoftwareTriggerCmd
+     /tmp/ccWyXqVe.s:367    .text:000001e4 DAC_WaveGenerationCmd
+     /tmp/ccWyXqVe.s:431    .text:00000244 DAC_SetChannel1Data
+     /tmp/ccWyXqVe.s:481    .text:0000027c DAC_SetChannel2Data
+     /tmp/ccWyXqVe.s:531    .text:000002b4 DAC_SetDualChannelData
+     /tmp/ccWyXqVe.s:604    .text:00000318 DAC_GetDataOutputValue
+     /tmp/ccWyXqVe.s:654    .text:00000354 DAC_DMACmd
+     /tmp/ccWyXqVe.s:717    .text:000003b8 DAC_ITConfig
+     /tmp/ccWyXqVe.s:781    .text:00000418 DAC_GetFlagStatus
+     /tmp/ccWyXqVe.s:838    .text:0000045c DAC_ClearFlag
+     /tmp/ccWyXqVe.s:877    .text:00000484 DAC_GetITStatus
+     /tmp/ccWyXqVe.s:950    .text:000004ec DAC_ClearITPendingBit
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.743cd71370ebc432b539c5dba7924ecc
+                           .group:00000000 wm4.stm32f30x.h.56.6f19c65e98e3319a61449cb2b2455af5
+                           .group:00000000 wm4.core_cm4.h.32.1434cd257ff5806b1b03cd32ab0641e9
+                           .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05
+                           .group:00000000 wm4.core_cmInstr.h.25.d8165482ef3061013a2fc83e2d85f3d9
+                           .group:00000000 wm4.core_cm4_simd.h.29.013e5bcf58dba2d27c60184174208e07
+                           .group:00000000 wm4.core_cm4.h.155.cf7c793e178943e1bbf613f1b21cd51a
+                           .group:00000000 wm4.stm32f30x.h.294.d8a54360eca16e4157694b52a095202d
+                           .group:00000000 wm4.stm32f30x_adc.h.130.cbebad91f78fb87381fe0860eea6104e
+                           .group:00000000 wm4.stm32f30x_can.h.50.8b8f5d301152c422a6e50622b33ef620
+                           .group:00000000 wm4.stm32f30x_crc.h.54.66d4c5e565e18566aebd9abfd4bcd4b0
+                           .group:00000000 wm4.stm32f30x_comp.h.91.06ae44150aaaa82c077b71df8db3541a
+                           .group:00000000 wm4.stm32f30x_dbgmcu.h.53.b238a263ce6a2cc83f610cc35302a38b
+                           .group:00000000 wm4.stm32f30x_dma.h.96.d7a2ddd10023e12781aa8ff5ac15d212
+                           .group:00000000 wm4.stm32f30x_exti.h.60.8ca0809491a21dec6fc69cf7471e2bab
+                           .group:00000000 wm4.stm32f30x_flash.h.70.32613455dfe7328932f786a224daac23
+                           .group:00000000 wm4.stm32f30x_gpio.h.50.408e1f6250246e4cc28221970909d34c
+                           .group:00000000 wm4.stm32f30x_syscfg.h.58.4cadeb4ec8e47d36b972bbb6b96b7161
+                           .group:00000000 wm4.stm32f30x_i2c.h.86.3d51d4edc0e3b9ee9aae045ccbb7739a
+                           .group:00000000 wm4.stm32f30x_iwdg.h.59.467d704fb073a015941f19b50fa6470a
+                           .group:00000000 wm4.stm32f30x_opamp.h.75.704e2e5e2aab039de307aaa2dcc99fa5
+                           .group:00000000 wm4.stm32f30x_pwr.h.59.5c85acff2a3e3c5085b2140c06025cfc
+                           .group:00000000 wm4.stm32f30x_rcc.h.79.5ba7cac1e74879861a72556c25322aa4
+                           .group:00000000 wm4.stm32f30x_rtc.h.133.d184e08ff40bda44db4bed94f9633384
+                           .group:00000000 wm4.stm32f30x_spi.h.119.4d21ec94ec14f3553a127e61c0a9874f
+                           .group:00000000 wm4.stm32f30x_tim.h.175.d4a93cff2e7924577147254e501271b6
+                           .group:00000000 wm4.stm32f30x_usart.h.110.c89016273702821ff4f9fe43881f70b5
+                           .group:00000000 wm4.stm32f30x_wwdg.h.58.4688eee61a2709866472b4b4c07d9275
+                           .group:00000000 wm4.stm32f30x_misc.h.113.6a52e4fe7c3825a3ab05990f30dddf92
+                           .group:00000000 wm4.stm32f30x_dac.h.49.b1b5b26e4ca241dbe67fa16dc86a615f
+
+UNDEFINED SYMBOLS
+RCC_APB1PeriphResetCmd

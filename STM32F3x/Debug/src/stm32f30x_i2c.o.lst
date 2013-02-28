@@ -1,0 +1,3883 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.eabi_attribute 28, 1
+   5              		.fpu fpv4-sp-d16
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 6
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.thumb
+  16              		.file	"stm32f30x_i2c.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.align	2
+  21              		.global	I2C_DeInit
+  22              		.thumb
+  23              		.thumb_func
+  25              	I2C_DeInit:
+  26              	.LFB111:
+  27              		.file 1 "../src/stm32f30x_i2c.c"
+   1:../src/stm32f30x_i2c.c **** /**
+   2:../src/stm32f30x_i2c.c ****   ******************************************************************************
+   3:../src/stm32f30x_i2c.c ****   * @file    stm32f30x_i2c.c
+   4:../src/stm32f30x_i2c.c ****   * @author  MCD Application Team
+   5:../src/stm32f30x_i2c.c ****   * @version V1.0.1
+   6:../src/stm32f30x_i2c.c ****   * @date    23-October-2012
+   7:../src/stm32f30x_i2c.c ****   * @brief   This file provides firmware functions to manage the following 
+   8:../src/stm32f30x_i2c.c ****   *          functionalities of the Inter-Integrated circuit (I2C):
+   9:../src/stm32f30x_i2c.c ****   *           + Initialization and Configuration
+  10:../src/stm32f30x_i2c.c ****   *           + Communications handling
+  11:../src/stm32f30x_i2c.c ****   *           + SMBUS management
+  12:../src/stm32f30x_i2c.c ****   *           + I2C registers management
+  13:../src/stm32f30x_i2c.c ****   *           + Data transfers management
+  14:../src/stm32f30x_i2c.c ****   *           + DMA transfers management
+  15:../src/stm32f30x_i2c.c ****   *           + Interrupts and flags management
+  16:../src/stm32f30x_i2c.c ****   *
+  17:../src/stm32f30x_i2c.c ****   *  @verbatim
+  18:../src/stm32f30x_i2c.c ****  ============================================================================
+  19:../src/stm32f30x_i2c.c ****                      ##### How to use this driver #####
+  20:../src/stm32f30x_i2c.c ****  ============================================================================
+  21:../src/stm32f30x_i2c.c ****    [..]
+  22:../src/stm32f30x_i2c.c ****    (#) Enable peripheral clock using RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2Cx, ENABLE)
+  23:../src/stm32f30x_i2c.c ****        function for I2C1 or I2C2.
+  24:../src/stm32f30x_i2c.c ****    (#) Enable SDA, SCL  and SMBA (when used) GPIO clocks using 
+  25:../src/stm32f30x_i2c.c ****        RCC_AHBPeriphClockCmd() function. 
+  26:../src/stm32f30x_i2c.c ****    (#) Peripherals alternate function: 
+  27:../src/stm32f30x_i2c.c ****        (++) Connect the pin to the desired peripherals' Alternate 
+  28:../src/stm32f30x_i2c.c ****             Function (AF) using GPIO_PinAFConfig() function.
+  29:../src/stm32f30x_i2c.c ****        (++) Configure the desired pin in alternate function by:
+  30:../src/stm32f30x_i2c.c ****             GPIO_InitStruct->GPIO_Mode = GPIO_Mode_AF
+  31:../src/stm32f30x_i2c.c ****        (++) Select the type, OpenDrain and speed via 
+  32:../src/stm32f30x_i2c.c ****             GPIO_PuPd, GPIO_OType and GPIO_Speed members
+  33:../src/stm32f30x_i2c.c ****        (++) Call GPIO_Init() function.
+  34:../src/stm32f30x_i2c.c ****    (#) Program the Mode, Timing , Own address, Ack and Acknowledged Address 
+  35:../src/stm32f30x_i2c.c ****        using the I2C_Init() function.
+  36:../src/stm32f30x_i2c.c ****    (#) Optionally you can enable/configure the following parameters without
+  37:../src/stm32f30x_i2c.c ****        re-initialization (i.e there is no need to call again I2C_Init() function):
+  38:../src/stm32f30x_i2c.c ****        (++) Enable the acknowledge feature using I2C_AcknowledgeConfig() function.
+  39:../src/stm32f30x_i2c.c ****        (++) Enable the dual addressing mode using I2C_DualAddressCmd() function.
+  40:../src/stm32f30x_i2c.c ****        (++) Enable the general call using the I2C_GeneralCallCmd() function.
+  41:../src/stm32f30x_i2c.c ****        (++) Enable the clock stretching using I2C_StretchClockCmd() function.
+  42:../src/stm32f30x_i2c.c ****        (++) Enable the PEC Calculation using I2C_CalculatePEC() function.
+  43:../src/stm32f30x_i2c.c ****        (++) For SMBus Mode: 
+  44:../src/stm32f30x_i2c.c ****             (+++) Enable the SMBusAlert pin using I2C_SMBusAlertCmd() function.
+  45:../src/stm32f30x_i2c.c ****    (#) Enable the NVIC and the corresponding interrupt using the function
+  46:../src/stm32f30x_i2c.c ****        I2C_ITConfig() if you need to use interrupt mode.
+  47:../src/stm32f30x_i2c.c ****    (#) When using the DMA mode 
+  48:../src/stm32f30x_i2c.c ****       (++) Configure the DMA using DMA_Init() function.
+  49:../src/stm32f30x_i2c.c ****       (++) Active the needed channel Request using I2C_DMACmd() function.
+  50:../src/stm32f30x_i2c.c ****    (#) Enable the I2C using the I2C_Cmd() function.
+  51:../src/stm32f30x_i2c.c ****    (#) Enable the DMA using the DMA_Cmd() function when using DMA mode in the 
+  52:../src/stm32f30x_i2c.c ****        transfers.
+  53:../src/stm32f30x_i2c.c ****    [..]        
+  54:../src/stm32f30x_i2c.c ****    (@) When using I2C in Fast Mode Plus, SCL and SDA pin 20mA current drive capability
+  55:../src/stm32f30x_i2c.c ****        must be enabled by setting the driving capability control bit in SYSCFG.
+  56:../src/stm32f30x_i2c.c ****        
+  57:../src/stm32f30x_i2c.c ****     @endverbatim
+  58:../src/stm32f30x_i2c.c ****   ******************************************************************************
+  59:../src/stm32f30x_i2c.c ****   * @attention
+  60:../src/stm32f30x_i2c.c ****   *
+  61:../src/stm32f30x_i2c.c ****   * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  62:../src/stm32f30x_i2c.c ****   *
+  63:../src/stm32f30x_i2c.c ****   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  64:../src/stm32f30x_i2c.c ****   * You may not use this file except in compliance with the License.
+  65:../src/stm32f30x_i2c.c ****   * You may obtain a copy of the License at:
+  66:../src/stm32f30x_i2c.c ****   *
+  67:../src/stm32f30x_i2c.c ****   *        http://www.st.com/software_license_agreement_liberty_v2
+  68:../src/stm32f30x_i2c.c ****   *
+  69:../src/stm32f30x_i2c.c ****   * Unless required by applicable law or agreed to in writing, software 
+  70:../src/stm32f30x_i2c.c ****   * distributed under the License is distributed on an "AS IS" BASIS, 
+  71:../src/stm32f30x_i2c.c ****   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  72:../src/stm32f30x_i2c.c ****   * See the License for the specific language governing permissions and
+  73:../src/stm32f30x_i2c.c ****   * limitations under the License.
+  74:../src/stm32f30x_i2c.c ****   *
+  75:../src/stm32f30x_i2c.c ****   ******************************************************************************
+  76:../src/stm32f30x_i2c.c ****   */
+  77:../src/stm32f30x_i2c.c **** 
+  78:../src/stm32f30x_i2c.c **** /* Includes ------------------------------------------------------------------*/
+  79:../src/stm32f30x_i2c.c **** #include "stm32f30x_i2c.h"
+  80:../src/stm32f30x_i2c.c **** #include "stm32f30x_rcc.h"
+  81:../src/stm32f30x_i2c.c **** 
+  82:../src/stm32f30x_i2c.c **** /** @addtogroup STM32F30x_StdPeriph_Driver
+  83:../src/stm32f30x_i2c.c ****   * @{
+  84:../src/stm32f30x_i2c.c ****   */
+  85:../src/stm32f30x_i2c.c **** 
+  86:../src/stm32f30x_i2c.c **** /** @defgroup I2C 
+  87:../src/stm32f30x_i2c.c ****   * @brief I2C driver modules
+  88:../src/stm32f30x_i2c.c ****   * @{
+  89:../src/stm32f30x_i2c.c ****   */
+  90:../src/stm32f30x_i2c.c **** 
+  91:../src/stm32f30x_i2c.c **** /* Private typedef -----------------------------------------------------------*/
+  92:../src/stm32f30x_i2c.c **** /* Private define ------------------------------------------------------------*/
+  93:../src/stm32f30x_i2c.c **** 
+  94:../src/stm32f30x_i2c.c **** #define CR1_CLEAR_MASK          ((uint32_t)0x00CFE0FF)  /*<! I2C CR1 clear register Mask */
+  95:../src/stm32f30x_i2c.c **** #define CR2_CLEAR_MASK          ((uint32_t)0x07FF7FFF)  /*<! I2C CR2 clear register Mask */
+  96:../src/stm32f30x_i2c.c **** #define TIMING_CLEAR_MASK       ((uint32_t)0xF0FFFFFF)  /*<! I2C TIMING clear register Mask */
+  97:../src/stm32f30x_i2c.c **** #define ERROR_IT_MASK           ((uint32_t)0x00003F00)  /*<! I2C Error interrupt register Mask */
+  98:../src/stm32f30x_i2c.c **** #define TC_IT_MASK              ((uint32_t)0x000000C0)  /*<! I2C TC interrupt register Mask */
+  99:../src/stm32f30x_i2c.c **** 
+ 100:../src/stm32f30x_i2c.c **** /* Private macro -------------------------------------------------------------*/
+ 101:../src/stm32f30x_i2c.c **** /* Private variables ---------------------------------------------------------*/
+ 102:../src/stm32f30x_i2c.c **** /* Private function prototypes -----------------------------------------------*/
+ 103:../src/stm32f30x_i2c.c **** /* Private functions ---------------------------------------------------------*/
+ 104:../src/stm32f30x_i2c.c **** 
+ 105:../src/stm32f30x_i2c.c **** /** @defgroup I2C_Private_Functions
+ 106:../src/stm32f30x_i2c.c ****   * @{
+ 107:../src/stm32f30x_i2c.c ****   */
+ 108:../src/stm32f30x_i2c.c **** 
+ 109:../src/stm32f30x_i2c.c **** 
+ 110:../src/stm32f30x_i2c.c **** /** @defgroup I2C_Group1 Initialization and Configuration functions
+ 111:../src/stm32f30x_i2c.c ****  *  @brief   Initialization and Configuration functions 
+ 112:../src/stm32f30x_i2c.c ****  *
+ 113:../src/stm32f30x_i2c.c **** @verbatim   
+ 114:../src/stm32f30x_i2c.c ****  ===============================================================================
+ 115:../src/stm32f30x_i2c.c ****            ##### Initialization and Configuration functions #####
+ 116:../src/stm32f30x_i2c.c ****  ===============================================================================
+ 117:../src/stm32f30x_i2c.c ****     [..] This section provides a set of functions allowing to initialize the I2C Mode,
+ 118:../src/stm32f30x_i2c.c ****          I2C Timing, I2C filters, I2C Addressing mode, I2C OwnAddress1.
+ 119:../src/stm32f30x_i2c.c **** 
+ 120:../src/stm32f30x_i2c.c ****     [..] The I2C_Init() function follows the I2C configuration procedures (these procedures 
+ 121:../src/stm32f30x_i2c.c ****          are available in reference manual).
+ 122:../src/stm32f30x_i2c.c ****          
+ 123:../src/stm32f30x_i2c.c ****     [..] When the Software Reset is performed using I2C_SoftwareResetCmd() function, the internal
+ 124:../src/stm32f30x_i2c.c ****          states machines are reset and communication control bits, as well as status bits come 
+ 125:../src/stm32f30x_i2c.c ****          back to their reset value.
+ 126:../src/stm32f30x_i2c.c ****          
+ 127:../src/stm32f30x_i2c.c ****     [..] Before enabling Stop mode using I2C_StopModeCmd() I2C Clock source must be set to
+ 128:../src/stm32f30x_i2c.c ****          HSI and Digital filters must be disabled.
+ 129:../src/stm32f30x_i2c.c ****          
+ 130:../src/stm32f30x_i2c.c ****     [..] Before enabling Own Address 2 via I2C_DualAddressCmd() function, OA2 and mask should be
+ 131:../src/stm32f30x_i2c.c ****          configured using I2C_OwnAddress2Config() function.
+ 132:../src/stm32f30x_i2c.c ****          
+ 133:../src/stm32f30x_i2c.c ****     [..] I2C_SlaveByteControlCmd() enable Slave byte control that allow user to get control of 
+ 134:../src/stm32f30x_i2c.c ****          each byte in slave mode when NBYTES is set to 0x01. 
+ 135:../src/stm32f30x_i2c.c ****              
+ 136:../src/stm32f30x_i2c.c **** @endverbatim
+ 137:../src/stm32f30x_i2c.c ****   * @{
+ 138:../src/stm32f30x_i2c.c ****   */
+ 139:../src/stm32f30x_i2c.c **** 
+ 140:../src/stm32f30x_i2c.c **** /**
+ 141:../src/stm32f30x_i2c.c ****   * @brief  Deinitializes the I2Cx peripheral registers to their default reset values.
+ 142:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 143:../src/stm32f30x_i2c.c ****   * @retval None
+ 144:../src/stm32f30x_i2c.c ****   */
+ 145:../src/stm32f30x_i2c.c **** void I2C_DeInit(I2C_TypeDef* I2Cx)
+ 146:../src/stm32f30x_i2c.c **** {
+  28              		.loc 1 146 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 8
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32 0000 80B5     		push	{r7, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 7, -8
+  36              		.cfi_offset 14, -4
+  37 0002 82B0     		sub	sp, sp, #8
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_offset 16
+  40 0004 00AF     		add	r7, sp, #0
+  41              	.LCFI2:
+  42              		.cfi_def_cfa_register 7
+  43 0006 7860     		str	r0, [r7, #4]
+ 147:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+ 148:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 149:../src/stm32f30x_i2c.c **** 
+ 150:../src/stm32f30x_i2c.c ****   if (I2Cx == I2C1)
+  44              		.loc 1 150 0
+  45 0008 7A68     		ldr	r2, [r7, #4]
+  46 000a 4FF4A843 		mov	r3, #21504
+  47 000e C4F20003 		movt	r3, 16384
+  48 0012 9A42     		cmp	r2, r3
+  49 0014 0CD1     		bne	.L2
+ 151:../src/stm32f30x_i2c.c ****   {
+ 152:../src/stm32f30x_i2c.c ****     /* Enable I2C1 reset state */
+ 153:../src/stm32f30x_i2c.c ****     RCC_APB1PeriphResetCmd(RCC_APB1Periph_I2C1, ENABLE);
+  50              		.loc 1 153 0
+  51 0016 4FF40010 		mov	r0, #2097152
+  52 001a 4FF00101 		mov	r1, #1
+  53 001e FFF7FEFF 		bl	RCC_APB1PeriphResetCmd
+ 154:../src/stm32f30x_i2c.c ****     /* Release I2C1 from reset state */
+ 155:../src/stm32f30x_i2c.c ****     RCC_APB1PeriphResetCmd(RCC_APB1Periph_I2C1, DISABLE);
+  54              		.loc 1 155 0
+  55 0022 4FF40010 		mov	r0, #2097152
+  56 0026 4FF00001 		mov	r1, #0
+  57 002a FFF7FEFF 		bl	RCC_APB1PeriphResetCmd
+  58 002e 0BE0     		b	.L1
+  59              	.L2:
+ 156:../src/stm32f30x_i2c.c ****   }
+ 157:../src/stm32f30x_i2c.c ****   else
+ 158:../src/stm32f30x_i2c.c ****   {
+ 159:../src/stm32f30x_i2c.c ****     /* Enable I2C2 reset state */
+ 160:../src/stm32f30x_i2c.c ****     RCC_APB1PeriphResetCmd(RCC_APB1Periph_I2C2, ENABLE);
+  60              		.loc 1 160 0
+  61 0030 4FF48000 		mov	r0, #4194304
+  62 0034 4FF00101 		mov	r1, #1
+  63 0038 FFF7FEFF 		bl	RCC_APB1PeriphResetCmd
+ 161:../src/stm32f30x_i2c.c ****     /* Release I2C2 from reset state */
+ 162:../src/stm32f30x_i2c.c ****     RCC_APB1PeriphResetCmd(RCC_APB1Periph_I2C2, DISABLE);
+  64              		.loc 1 162 0
+  65 003c 4FF48000 		mov	r0, #4194304
+  66 0040 4FF00001 		mov	r1, #0
+  67 0044 FFF7FEFF 		bl	RCC_APB1PeriphResetCmd
+  68              	.L1:
+ 163:../src/stm32f30x_i2c.c ****   }
+ 164:../src/stm32f30x_i2c.c **** }
+  69              		.loc 1 164 0
+  70 0048 07F10807 		add	r7, r7, #8
+  71 004c BD46     		mov	sp, r7
+  72 004e 80BD     		pop	{r7, pc}
+  73              		.cfi_endproc
+  74              	.LFE111:
+  76              		.align	2
+  77              		.global	I2C_Init
+  78              		.thumb
+  79              		.thumb_func
+  81              	I2C_Init:
+  82              	.LFB112:
+ 165:../src/stm32f30x_i2c.c **** 
+ 166:../src/stm32f30x_i2c.c **** /**
+ 167:../src/stm32f30x_i2c.c ****   * @brief  Initializes the I2Cx peripheral according to the specified
+ 168:../src/stm32f30x_i2c.c ****   *         parameters in the I2C_InitStruct.
+ 169:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 170:../src/stm32f30x_i2c.c ****   * @param  I2C_InitStruct: pointer to a I2C_InitTypeDef structure that
+ 171:../src/stm32f30x_i2c.c ****   *         contains the configuration information for the specified I2C peripheral.
+ 172:../src/stm32f30x_i2c.c ****   * @retval None
+ 173:../src/stm32f30x_i2c.c ****   */
+ 174:../src/stm32f30x_i2c.c **** void I2C_Init(I2C_TypeDef* I2Cx, I2C_InitTypeDef* I2C_InitStruct)
+ 175:../src/stm32f30x_i2c.c **** {
+  83              		.loc 1 175 0
+  84              		.cfi_startproc
+  85              		@ args = 0, pretend = 0, frame = 16
+  86              		@ frame_needed = 1, uses_anonymous_args = 0
+  87              		@ link register save eliminated.
+  88 0050 80B4     		push	{r7}
+  89              	.LCFI3:
+  90              		.cfi_def_cfa_offset 4
+  91              		.cfi_offset 7, -4
+  92 0052 85B0     		sub	sp, sp, #20
+  93              	.LCFI4:
+  94              		.cfi_def_cfa_offset 24
+  95 0054 00AF     		add	r7, sp, #0
+  96              	.LCFI5:
+  97              		.cfi_def_cfa_register 7
+  98 0056 7860     		str	r0, [r7, #4]
+  99 0058 3960     		str	r1, [r7, #0]
+ 176:../src/stm32f30x_i2c.c ****   uint32_t tmpreg = 0;
+ 100              		.loc 1 176 0
+ 101 005a 4FF00003 		mov	r3, #0
+ 102 005e FB60     		str	r3, [r7, #12]
+ 177:../src/stm32f30x_i2c.c **** 
+ 178:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+ 179:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 180:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ANALOG_FILTER(I2C_InitStruct->I2C_AnalogFilter));
+ 181:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_DIGITAL_FILTER(I2C_InitStruct->I2C_DigitalFilter));
+ 182:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_MODE(I2C_InitStruct->I2C_Mode));
+ 183:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_OWN_ADDRESS1(I2C_InitStruct->I2C_OwnAddress1));
+ 184:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ACK(I2C_InitStruct->I2C_Ack));
+ 185:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ACKNOWLEDGE_ADDRESS(I2C_InitStruct->I2C_AcknowledgedAddress));
+ 186:../src/stm32f30x_i2c.c **** 
+ 187:../src/stm32f30x_i2c.c ****   /* Disable I2Cx Peripheral */
+ 188:../src/stm32f30x_i2c.c ****   I2Cx->CR1 &= (uint32_t)~((uint32_t)I2C_CR1_PE);
+ 103              		.loc 1 188 0
+ 104 0060 7B68     		ldr	r3, [r7, #4]
+ 105 0062 1B68     		ldr	r3, [r3, #0]
+ 106 0064 23F00102 		bic	r2, r3, #1
+ 107 0068 7B68     		ldr	r3, [r7, #4]
+ 108 006a 1A60     		str	r2, [r3, #0]
+ 189:../src/stm32f30x_i2c.c **** 
+ 190:../src/stm32f30x_i2c.c ****   /*---------------------------- I2Cx FILTERS Configuration ------------------*/
+ 191:../src/stm32f30x_i2c.c ****   /* Get the I2Cx CR1 value */
+ 192:../src/stm32f30x_i2c.c ****   tmpreg = I2Cx->CR1;
+ 109              		.loc 1 192 0
+ 110 006c 7B68     		ldr	r3, [r7, #4]
+ 111 006e 1B68     		ldr	r3, [r3, #0]
+ 112 0070 FB60     		str	r3, [r7, #12]
+ 193:../src/stm32f30x_i2c.c ****   /* Clear I2Cx CR1 register */
+ 194:../src/stm32f30x_i2c.c ****   tmpreg &= CR1_CLEAR_MASK;
+ 113              		.loc 1 194 0
+ 114 0072 FA68     		ldr	r2, [r7, #12]
+ 115 0074 4EF2FF03 		movw	r3, #57599
+ 116 0078 C0F2CF03 		movt	r3, 207
+ 117 007c 1340     		ands	r3, r3, r2
+ 118 007e FB60     		str	r3, [r7, #12]
+ 195:../src/stm32f30x_i2c.c ****   /* Configure I2Cx: analog and digital filter */
+ 196:../src/stm32f30x_i2c.c ****   /* Set ANFOFF bit according to I2C_AnalogFilter value */
+ 197:../src/stm32f30x_i2c.c ****   /* Set DFN bits according to I2C_DigitalFilter value */
+ 198:../src/stm32f30x_i2c.c ****   tmpreg |= (uint32_t)I2C_InitStruct->I2C_AnalogFilter |(I2C_InitStruct->I2C_DigitalFilter << 8);
+ 119              		.loc 1 198 0
+ 120 0080 3B68     		ldr	r3, [r7, #0]
+ 121 0082 5A68     		ldr	r2, [r3, #4]
+ 122 0084 3B68     		ldr	r3, [r7, #0]
+ 123 0086 9B68     		ldr	r3, [r3, #8]
+ 124 0088 4FEA0323 		lsl	r3, r3, #8
+ 125 008c 1343     		orrs	r3, r3, r2
+ 126 008e FA68     		ldr	r2, [r7, #12]
+ 127 0090 1343     		orrs	r3, r3, r2
+ 128 0092 FB60     		str	r3, [r7, #12]
+ 199:../src/stm32f30x_i2c.c ****   
+ 200:../src/stm32f30x_i2c.c ****   /* Write to I2Cx CR1 */
+ 201:../src/stm32f30x_i2c.c ****   I2Cx->CR1 = tmpreg;
+ 129              		.loc 1 201 0
+ 130 0094 7B68     		ldr	r3, [r7, #4]
+ 131 0096 FA68     		ldr	r2, [r7, #12]
+ 132 0098 1A60     		str	r2, [r3, #0]
+ 202:../src/stm32f30x_i2c.c **** 
+ 203:../src/stm32f30x_i2c.c ****   /*---------------------------- I2Cx TIMING Configuration -------------------*/
+ 204:../src/stm32f30x_i2c.c ****   /* Configure I2Cx: Timing */
+ 205:../src/stm32f30x_i2c.c ****   /* Set TIMINGR bits according to I2C_Timing */
+ 206:../src/stm32f30x_i2c.c ****   /* Write to I2Cx TIMING */
+ 207:../src/stm32f30x_i2c.c ****   I2Cx->TIMINGR = I2C_InitStruct->I2C_Timing & TIMING_CLEAR_MASK;
+ 133              		.loc 1 207 0
+ 134 009a 3B68     		ldr	r3, [r7, #0]
+ 135 009c 1B68     		ldr	r3, [r3, #0]
+ 136 009e 23F07062 		bic	r2, r3, #251658240
+ 137 00a2 7B68     		ldr	r3, [r7, #4]
+ 138 00a4 1A61     		str	r2, [r3, #16]
+ 208:../src/stm32f30x_i2c.c **** 
+ 209:../src/stm32f30x_i2c.c ****   /* Enable I2Cx Peripheral */
+ 210:../src/stm32f30x_i2c.c ****   I2Cx->CR1 |= I2C_CR1_PE;
+ 139              		.loc 1 210 0
+ 140 00a6 7B68     		ldr	r3, [r7, #4]
+ 141 00a8 1B68     		ldr	r3, [r3, #0]
+ 142 00aa 43F00102 		orr	r2, r3, #1
+ 143 00ae 7B68     		ldr	r3, [r7, #4]
+ 144 00b0 1A60     		str	r2, [r3, #0]
+ 211:../src/stm32f30x_i2c.c **** 
+ 212:../src/stm32f30x_i2c.c ****   /*---------------------------- I2Cx OAR1 Configuration ---------------------*/
+ 213:../src/stm32f30x_i2c.c ****   /* Clear tmpreg local variable */
+ 214:../src/stm32f30x_i2c.c ****   tmpreg = 0;
+ 145              		.loc 1 214 0
+ 146 00b2 4FF00003 		mov	r3, #0
+ 147 00b6 FB60     		str	r3, [r7, #12]
+ 215:../src/stm32f30x_i2c.c ****   /* Clear OAR1 register */
+ 216:../src/stm32f30x_i2c.c ****   I2Cx->OAR1 = (uint32_t)tmpreg;
+ 148              		.loc 1 216 0
+ 149 00b8 7B68     		ldr	r3, [r7, #4]
+ 150 00ba FA68     		ldr	r2, [r7, #12]
+ 151 00bc 9A60     		str	r2, [r3, #8]
+ 217:../src/stm32f30x_i2c.c ****   /* Clear OAR2 register */
+ 218:../src/stm32f30x_i2c.c ****   I2Cx->OAR2 = (uint32_t)tmpreg;
+ 152              		.loc 1 218 0
+ 153 00be 7B68     		ldr	r3, [r7, #4]
+ 154 00c0 FA68     		ldr	r2, [r7, #12]
+ 155 00c2 DA60     		str	r2, [r3, #12]
+ 219:../src/stm32f30x_i2c.c ****   /* Configure I2Cx: Own Address1 and acknowledged address */
+ 220:../src/stm32f30x_i2c.c ****   /* Set OA1MODE bit according to I2C_AcknowledgedAddress value */
+ 221:../src/stm32f30x_i2c.c ****   /* Set OA1 bits according to I2C_OwnAddress1 value */
+ 222:../src/stm32f30x_i2c.c ****   tmpreg = (uint32_t)((uint32_t)I2C_InitStruct->I2C_AcknowledgedAddress | \
+ 156              		.loc 1 222 0
+ 157 00c4 3B68     		ldr	r3, [r7, #0]
+ 158 00c6 9A69     		ldr	r2, [r3, #24]
+ 223:../src/stm32f30x_i2c.c ****                       (uint32_t)I2C_InitStruct->I2C_OwnAddress1);
+ 159              		.loc 1 223 0
+ 160 00c8 3B68     		ldr	r3, [r7, #0]
+ 161 00ca 1B69     		ldr	r3, [r3, #16]
+ 222:../src/stm32f30x_i2c.c ****   tmpreg = (uint32_t)((uint32_t)I2C_InitStruct->I2C_AcknowledgedAddress | \
+ 162              		.loc 1 222 0
+ 163 00cc 1343     		orrs	r3, r3, r2
+ 164 00ce FB60     		str	r3, [r7, #12]
+ 224:../src/stm32f30x_i2c.c ****   /* Write to I2Cx OAR1 */
+ 225:../src/stm32f30x_i2c.c ****   I2Cx->OAR1 = tmpreg;
+ 165              		.loc 1 225 0
+ 166 00d0 7B68     		ldr	r3, [r7, #4]
+ 167 00d2 FA68     		ldr	r2, [r7, #12]
+ 168 00d4 9A60     		str	r2, [r3, #8]
+ 226:../src/stm32f30x_i2c.c ****   /* Enable Own Address1 acknowledgement */
+ 227:../src/stm32f30x_i2c.c ****   I2Cx->OAR1 |= I2C_OAR1_OA1EN;
+ 169              		.loc 1 227 0
+ 170 00d6 7B68     		ldr	r3, [r7, #4]
+ 171 00d8 9B68     		ldr	r3, [r3, #8]
+ 172 00da 43F40042 		orr	r2, r3, #32768
+ 173 00de 7B68     		ldr	r3, [r7, #4]
+ 174 00e0 9A60     		str	r2, [r3, #8]
+ 228:../src/stm32f30x_i2c.c **** 
+ 229:../src/stm32f30x_i2c.c ****   /*---------------------------- I2Cx MODE Configuration ---------------------*/
+ 230:../src/stm32f30x_i2c.c ****   /* Configure I2Cx: mode */
+ 231:../src/stm32f30x_i2c.c ****   /* Set SMBDEN and SMBHEN bits according to I2C_Mode value */
+ 232:../src/stm32f30x_i2c.c ****   tmpreg = I2C_InitStruct->I2C_Mode;
+ 175              		.loc 1 232 0
+ 176 00e2 3B68     		ldr	r3, [r7, #0]
+ 177 00e4 DB68     		ldr	r3, [r3, #12]
+ 178 00e6 FB60     		str	r3, [r7, #12]
+ 233:../src/stm32f30x_i2c.c ****   /* Write to I2Cx CR1 */
+ 234:../src/stm32f30x_i2c.c ****   I2Cx->CR1 |= tmpreg;
+ 179              		.loc 1 234 0
+ 180 00e8 7B68     		ldr	r3, [r7, #4]
+ 181 00ea 1A68     		ldr	r2, [r3, #0]
+ 182 00ec FB68     		ldr	r3, [r7, #12]
+ 183 00ee 1A43     		orrs	r2, r2, r3
+ 184 00f0 7B68     		ldr	r3, [r7, #4]
+ 185 00f2 1A60     		str	r2, [r3, #0]
+ 235:../src/stm32f30x_i2c.c **** 
+ 236:../src/stm32f30x_i2c.c ****   /*---------------------------- I2Cx ACK Configuration ----------------------*/
+ 237:../src/stm32f30x_i2c.c ****   /* Get the I2Cx CR2 value */
+ 238:../src/stm32f30x_i2c.c ****   tmpreg = I2Cx->CR2;
+ 186              		.loc 1 238 0
+ 187 00f4 7B68     		ldr	r3, [r7, #4]
+ 188 00f6 5B68     		ldr	r3, [r3, #4]
+ 189 00f8 FB60     		str	r3, [r7, #12]
+ 239:../src/stm32f30x_i2c.c ****   /* Clear I2Cx CR2 register */
+ 240:../src/stm32f30x_i2c.c ****   tmpreg &= CR2_CLEAR_MASK;
+ 190              		.loc 1 240 0
+ 191 00fa FB68     		ldr	r3, [r7, #12]
+ 192 00fc 23F07843 		bic	r3, r3, #-134217728
+ 193 0100 23F40043 		bic	r3, r3, #32768
+ 194 0104 FB60     		str	r3, [r7, #12]
+ 241:../src/stm32f30x_i2c.c ****   /* Configure I2Cx: acknowledgement */
+ 242:../src/stm32f30x_i2c.c ****   /* Set NACK bit according to I2C_Ack value */
+ 243:../src/stm32f30x_i2c.c ****   tmpreg |= I2C_InitStruct->I2C_Ack;
+ 195              		.loc 1 243 0
+ 196 0106 3B68     		ldr	r3, [r7, #0]
+ 197 0108 5B69     		ldr	r3, [r3, #20]
+ 198 010a FA68     		ldr	r2, [r7, #12]
+ 199 010c 1343     		orrs	r3, r3, r2
+ 200 010e FB60     		str	r3, [r7, #12]
+ 244:../src/stm32f30x_i2c.c ****   /* Write to I2Cx CR2 */
+ 245:../src/stm32f30x_i2c.c ****   I2Cx->CR2 = tmpreg;
+ 201              		.loc 1 245 0
+ 202 0110 7B68     		ldr	r3, [r7, #4]
+ 203 0112 FA68     		ldr	r2, [r7, #12]
+ 204 0114 5A60     		str	r2, [r3, #4]
+ 246:../src/stm32f30x_i2c.c **** }
+ 205              		.loc 1 246 0
+ 206 0116 07F11407 		add	r7, r7, #20
+ 207 011a BD46     		mov	sp, r7
+ 208 011c 80BC     		pop	{r7}
+ 209 011e 7047     		bx	lr
+ 210              		.cfi_endproc
+ 211              	.LFE112:
+ 213              		.align	2
+ 214              		.global	I2C_StructInit
+ 215              		.thumb
+ 216              		.thumb_func
+ 218              	I2C_StructInit:
+ 219              	.LFB113:
+ 247:../src/stm32f30x_i2c.c **** 
+ 248:../src/stm32f30x_i2c.c **** /**
+ 249:../src/stm32f30x_i2c.c ****   * @brief  Fills each I2C_InitStruct member with its default value.
+ 250:../src/stm32f30x_i2c.c ****   * @param  I2C_InitStruct: pointer to an I2C_InitTypeDef structure which will be initialized.
+ 251:../src/stm32f30x_i2c.c ****   * @retval None
+ 252:../src/stm32f30x_i2c.c ****   */
+ 253:../src/stm32f30x_i2c.c **** void I2C_StructInit(I2C_InitTypeDef* I2C_InitStruct)
+ 254:../src/stm32f30x_i2c.c **** {
+ 220              		.loc 1 254 0
+ 221              		.cfi_startproc
+ 222              		@ args = 0, pretend = 0, frame = 8
+ 223              		@ frame_needed = 1, uses_anonymous_args = 0
+ 224              		@ link register save eliminated.
+ 225 0120 80B4     		push	{r7}
+ 226              	.LCFI6:
+ 227              		.cfi_def_cfa_offset 4
+ 228              		.cfi_offset 7, -4
+ 229 0122 83B0     		sub	sp, sp, #12
+ 230              	.LCFI7:
+ 231              		.cfi_def_cfa_offset 16
+ 232 0124 00AF     		add	r7, sp, #0
+ 233              	.LCFI8:
+ 234              		.cfi_def_cfa_register 7
+ 235 0126 7860     		str	r0, [r7, #4]
+ 255:../src/stm32f30x_i2c.c ****   /*---------------- Reset I2C init structure parameters values --------------*/
+ 256:../src/stm32f30x_i2c.c ****   /* Initialize the I2C_Timing member */
+ 257:../src/stm32f30x_i2c.c ****   I2C_InitStruct->I2C_Timing = 0;
+ 236              		.loc 1 257 0
+ 237 0128 7B68     		ldr	r3, [r7, #4]
+ 238 012a 4FF00002 		mov	r2, #0
+ 239 012e 1A60     		str	r2, [r3, #0]
+ 258:../src/stm32f30x_i2c.c ****   /* Initialize the I2C_AnalogFilter member */
+ 259:../src/stm32f30x_i2c.c ****   I2C_InitStruct->I2C_AnalogFilter = I2C_AnalogFilter_Enable;
+ 240              		.loc 1 259 0
+ 241 0130 7B68     		ldr	r3, [r7, #4]
+ 242 0132 4FF00002 		mov	r2, #0
+ 243 0136 5A60     		str	r2, [r3, #4]
+ 260:../src/stm32f30x_i2c.c ****   /* Initialize the I2C_DigitalFilter member */
+ 261:../src/stm32f30x_i2c.c ****   I2C_InitStruct->I2C_DigitalFilter = 0;
+ 244              		.loc 1 261 0
+ 245 0138 7B68     		ldr	r3, [r7, #4]
+ 246 013a 4FF00002 		mov	r2, #0
+ 247 013e 9A60     		str	r2, [r3, #8]
+ 262:../src/stm32f30x_i2c.c ****   /* Initialize the I2C_Mode member */
+ 263:../src/stm32f30x_i2c.c ****   I2C_InitStruct->I2C_Mode = I2C_Mode_I2C;
+ 248              		.loc 1 263 0
+ 249 0140 7B68     		ldr	r3, [r7, #4]
+ 250 0142 4FF00002 		mov	r2, #0
+ 251 0146 DA60     		str	r2, [r3, #12]
+ 264:../src/stm32f30x_i2c.c ****   /* Initialize the I2C_OwnAddress1 member */
+ 265:../src/stm32f30x_i2c.c ****   I2C_InitStruct->I2C_OwnAddress1 = 0;
+ 252              		.loc 1 265 0
+ 253 0148 7B68     		ldr	r3, [r7, #4]
+ 254 014a 4FF00002 		mov	r2, #0
+ 255 014e 1A61     		str	r2, [r3, #16]
+ 266:../src/stm32f30x_i2c.c ****   /* Initialize the I2C_Ack member */
+ 267:../src/stm32f30x_i2c.c ****   I2C_InitStruct->I2C_Ack = I2C_Ack_Disable;
+ 256              		.loc 1 267 0
+ 257 0150 7B68     		ldr	r3, [r7, #4]
+ 258 0152 4FF40042 		mov	r2, #32768
+ 259 0156 5A61     		str	r2, [r3, #20]
+ 268:../src/stm32f30x_i2c.c ****   /* Initialize the I2C_AcknowledgedAddress member */
+ 269:../src/stm32f30x_i2c.c ****   I2C_InitStruct->I2C_AcknowledgedAddress = I2C_AcknowledgedAddress_7bit;
+ 260              		.loc 1 269 0
+ 261 0158 7B68     		ldr	r3, [r7, #4]
+ 262 015a 4FF00002 		mov	r2, #0
+ 263 015e 9A61     		str	r2, [r3, #24]
+ 270:../src/stm32f30x_i2c.c **** }
+ 264              		.loc 1 270 0
+ 265 0160 07F10C07 		add	r7, r7, #12
+ 266 0164 BD46     		mov	sp, r7
+ 267 0166 80BC     		pop	{r7}
+ 268 0168 7047     		bx	lr
+ 269              		.cfi_endproc
+ 270              	.LFE113:
+ 272 016a 00BF     		.align	2
+ 273              		.global	I2C_Cmd
+ 274              		.thumb
+ 275              		.thumb_func
+ 277              	I2C_Cmd:
+ 278              	.LFB114:
+ 271:../src/stm32f30x_i2c.c **** 
+ 272:../src/stm32f30x_i2c.c **** /**
+ 273:../src/stm32f30x_i2c.c ****   * @brief  Enables or disables the specified I2C peripheral.
+ 274:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 275:../src/stm32f30x_i2c.c ****   * @param  NewState: new state of the I2Cx peripheral. 
+ 276:../src/stm32f30x_i2c.c ****   *   This parameter can be: ENABLE or DISABLE.
+ 277:../src/stm32f30x_i2c.c ****   * @retval None
+ 278:../src/stm32f30x_i2c.c ****   */
+ 279:../src/stm32f30x_i2c.c **** void I2C_Cmd(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 280:../src/stm32f30x_i2c.c **** {
+ 279              		.loc 1 280 0
+ 280              		.cfi_startproc
+ 281              		@ args = 0, pretend = 0, frame = 8
+ 282              		@ frame_needed = 1, uses_anonymous_args = 0
+ 283              		@ link register save eliminated.
+ 284 016c 80B4     		push	{r7}
+ 285              	.LCFI9:
+ 286              		.cfi_def_cfa_offset 4
+ 287              		.cfi_offset 7, -4
+ 288 016e 83B0     		sub	sp, sp, #12
+ 289              	.LCFI10:
+ 290              		.cfi_def_cfa_offset 16
+ 291 0170 00AF     		add	r7, sp, #0
+ 292              	.LCFI11:
+ 293              		.cfi_def_cfa_register 7
+ 294 0172 7860     		str	r0, [r7, #4]
+ 295 0174 0B46     		mov	r3, r1
+ 296 0176 FB70     		strb	r3, [r7, #3]
+ 281:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+ 282:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 283:../src/stm32f30x_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 284:../src/stm32f30x_i2c.c ****   if (NewState != DISABLE)
+ 297              		.loc 1 284 0
+ 298 0178 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 299 017a 002B     		cmp	r3, #0
+ 300 017c 06D0     		beq	.L7
+ 285:../src/stm32f30x_i2c.c ****   {
+ 286:../src/stm32f30x_i2c.c ****     /* Enable the selected I2C peripheral */
+ 287:../src/stm32f30x_i2c.c ****     I2Cx->CR1 |= I2C_CR1_PE;
+ 301              		.loc 1 287 0
+ 302 017e 7B68     		ldr	r3, [r7, #4]
+ 303 0180 1B68     		ldr	r3, [r3, #0]
+ 304 0182 43F00102 		orr	r2, r3, #1
+ 305 0186 7B68     		ldr	r3, [r7, #4]
+ 306 0188 1A60     		str	r2, [r3, #0]
+ 307 018a 05E0     		b	.L6
+ 308              	.L7:
+ 288:../src/stm32f30x_i2c.c ****   }
+ 289:../src/stm32f30x_i2c.c ****   else
+ 290:../src/stm32f30x_i2c.c ****   {
+ 291:../src/stm32f30x_i2c.c ****     /* Disable the selected I2C peripheral */
+ 292:../src/stm32f30x_i2c.c ****     I2Cx->CR1 &= (uint32_t)~((uint32_t)I2C_CR1_PE);
+ 309              		.loc 1 292 0
+ 310 018c 7B68     		ldr	r3, [r7, #4]
+ 311 018e 1B68     		ldr	r3, [r3, #0]
+ 312 0190 23F00102 		bic	r2, r3, #1
+ 313 0194 7B68     		ldr	r3, [r7, #4]
+ 314 0196 1A60     		str	r2, [r3, #0]
+ 315              	.L6:
+ 293:../src/stm32f30x_i2c.c ****   }
+ 294:../src/stm32f30x_i2c.c **** }
+ 316              		.loc 1 294 0
+ 317 0198 07F10C07 		add	r7, r7, #12
+ 318 019c BD46     		mov	sp, r7
+ 319 019e 80BC     		pop	{r7}
+ 320 01a0 7047     		bx	lr
+ 321              		.cfi_endproc
+ 322              	.LFE114:
+ 324 01a2 00BF     		.align	2
+ 325              		.global	I2C_SoftwareResetCmd
+ 326              		.thumb
+ 327              		.thumb_func
+ 329              	I2C_SoftwareResetCmd:
+ 330              	.LFB115:
+ 295:../src/stm32f30x_i2c.c **** 
+ 296:../src/stm32f30x_i2c.c **** 
+ 297:../src/stm32f30x_i2c.c **** /**
+ 298:../src/stm32f30x_i2c.c ****   * @brief  Enables or disables the specified I2C software reset.
+ 299:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 300:../src/stm32f30x_i2c.c ****   * @retval None
+ 301:../src/stm32f30x_i2c.c ****   */
+ 302:../src/stm32f30x_i2c.c **** void I2C_SoftwareResetCmd(I2C_TypeDef* I2Cx)
+ 303:../src/stm32f30x_i2c.c **** {
+ 331              		.loc 1 303 0
+ 332              		.cfi_startproc
+ 333              		@ args = 0, pretend = 0, frame = 8
+ 334              		@ frame_needed = 1, uses_anonymous_args = 0
+ 335              		@ link register save eliminated.
+ 336 01a4 80B4     		push	{r7}
+ 337              	.LCFI12:
+ 338              		.cfi_def_cfa_offset 4
+ 339              		.cfi_offset 7, -4
+ 340 01a6 83B0     		sub	sp, sp, #12
+ 341              	.LCFI13:
+ 342              		.cfi_def_cfa_offset 16
+ 343 01a8 00AF     		add	r7, sp, #0
+ 344              	.LCFI14:
+ 345              		.cfi_def_cfa_register 7
+ 346 01aa 7860     		str	r0, [r7, #4]
+ 304:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+ 305:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 306:../src/stm32f30x_i2c.c **** 
+ 307:../src/stm32f30x_i2c.c ****   /* Disable peripheral */
+ 308:../src/stm32f30x_i2c.c ****   I2Cx->CR1 &= (uint32_t)~((uint32_t)I2C_CR1_PE);
+ 347              		.loc 1 308 0
+ 348 01ac 7B68     		ldr	r3, [r7, #4]
+ 349 01ae 1B68     		ldr	r3, [r3, #0]
+ 350 01b0 23F00102 		bic	r2, r3, #1
+ 351 01b4 7B68     		ldr	r3, [r7, #4]
+ 352 01b6 1A60     		str	r2, [r3, #0]
+ 309:../src/stm32f30x_i2c.c **** 
+ 310:../src/stm32f30x_i2c.c ****   /* Perform a dummy read to delay the disable of peripheral for minimum
+ 311:../src/stm32f30x_i2c.c ****      3 APB clock cycles to perform the software reset functionality */
+ 312:../src/stm32f30x_i2c.c ****   *(__IO uint32_t *)(uint32_t)I2Cx; 
+ 353              		.loc 1 312 0
+ 354 01b8 7B68     		ldr	r3, [r7, #4]
+ 355 01ba 1B68     		ldr	r3, [r3, #0]
+ 313:../src/stm32f30x_i2c.c **** 
+ 314:../src/stm32f30x_i2c.c ****   /* Enable peripheral */
+ 315:../src/stm32f30x_i2c.c ****   I2Cx->CR1 |= I2C_CR1_PE;
+ 356              		.loc 1 315 0
+ 357 01bc 7B68     		ldr	r3, [r7, #4]
+ 358 01be 1B68     		ldr	r3, [r3, #0]
+ 359 01c0 43F00102 		orr	r2, r3, #1
+ 360 01c4 7B68     		ldr	r3, [r7, #4]
+ 361 01c6 1A60     		str	r2, [r3, #0]
+ 316:../src/stm32f30x_i2c.c **** }
+ 362              		.loc 1 316 0
+ 363 01c8 07F10C07 		add	r7, r7, #12
+ 364 01cc BD46     		mov	sp, r7
+ 365 01ce 80BC     		pop	{r7}
+ 366 01d0 7047     		bx	lr
+ 367              		.cfi_endproc
+ 368              	.LFE115:
+ 370 01d2 00BF     		.align	2
+ 371              		.global	I2C_ITConfig
+ 372              		.thumb
+ 373              		.thumb_func
+ 375              	I2C_ITConfig:
+ 376              	.LFB116:
+ 317:../src/stm32f30x_i2c.c **** 
+ 318:../src/stm32f30x_i2c.c **** /**
+ 319:../src/stm32f30x_i2c.c ****   * @brief  Enables or disables the specified I2C interrupts.
+ 320:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 321:../src/stm32f30x_i2c.c ****   * @param  I2C_IT: specifies the I2C interrupts sources to be enabled or disabled. 
+ 322:../src/stm32f30x_i2c.c ****   *   This parameter can be any combination of the following values:
+ 323:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_ERRI: Error interrupt mask
+ 324:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_TCI: Transfer Complete interrupt mask
+ 325:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_STOPI: Stop Detection interrupt mask
+ 326:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_NACKI: Not Acknowledge received interrupt mask
+ 327:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_ADDRI: Address Match interrupt mask  
+ 328:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_RXI: RX interrupt mask
+ 329:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_TXI: TX interrupt mask
+ 330:../src/stm32f30x_i2c.c ****   * @param  NewState: new state of the specified I2C interrupts.
+ 331:../src/stm32f30x_i2c.c ****   *   This parameter can be: ENABLE or DISABLE.
+ 332:../src/stm32f30x_i2c.c ****   * @retval None
+ 333:../src/stm32f30x_i2c.c ****   */
+ 334:../src/stm32f30x_i2c.c **** void I2C_ITConfig(I2C_TypeDef* I2Cx, uint32_t I2C_IT, FunctionalState NewState)
+ 335:../src/stm32f30x_i2c.c **** {
+ 377              		.loc 1 335 0
+ 378              		.cfi_startproc
+ 379              		@ args = 0, pretend = 0, frame = 16
+ 380              		@ frame_needed = 1, uses_anonymous_args = 0
+ 381              		@ link register save eliminated.
+ 382 01d4 80B4     		push	{r7}
+ 383              	.LCFI15:
+ 384              		.cfi_def_cfa_offset 4
+ 385              		.cfi_offset 7, -4
+ 386 01d6 85B0     		sub	sp, sp, #20
+ 387              	.LCFI16:
+ 388              		.cfi_def_cfa_offset 24
+ 389 01d8 00AF     		add	r7, sp, #0
+ 390              	.LCFI17:
+ 391              		.cfi_def_cfa_register 7
+ 392 01da F860     		str	r0, [r7, #12]
+ 393 01dc B960     		str	r1, [r7, #8]
+ 394 01de 1346     		mov	r3, r2
+ 395 01e0 FB71     		strb	r3, [r7, #7]
+ 336:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+ 337:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 338:../src/stm32f30x_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 339:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_CONFIG_IT(I2C_IT));
+ 340:../src/stm32f30x_i2c.c ****   
+ 341:../src/stm32f30x_i2c.c ****   if (NewState != DISABLE)
+ 396              		.loc 1 341 0
+ 397 01e2 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 398 01e4 002B     		cmp	r3, #0
+ 399 01e6 06D0     		beq	.L11
+ 342:../src/stm32f30x_i2c.c ****   {
+ 343:../src/stm32f30x_i2c.c ****     /* Enable the selected I2C interrupts */
+ 344:../src/stm32f30x_i2c.c ****     I2Cx->CR1 |= I2C_IT;
+ 400              		.loc 1 344 0
+ 401 01e8 FB68     		ldr	r3, [r7, #12]
+ 402 01ea 1A68     		ldr	r2, [r3, #0]
+ 403 01ec BB68     		ldr	r3, [r7, #8]
+ 404 01ee 1A43     		orrs	r2, r2, r3
+ 405 01f0 FB68     		ldr	r3, [r7, #12]
+ 406 01f2 1A60     		str	r2, [r3, #0]
+ 407 01f4 07E0     		b	.L10
+ 408              	.L11:
+ 345:../src/stm32f30x_i2c.c ****   }
+ 346:../src/stm32f30x_i2c.c ****   else
+ 347:../src/stm32f30x_i2c.c ****   {
+ 348:../src/stm32f30x_i2c.c ****     /* Disable the selected I2C interrupts */
+ 349:../src/stm32f30x_i2c.c ****     I2Cx->CR1 &= (uint32_t)~((uint32_t)I2C_IT);
+ 409              		.loc 1 349 0
+ 410 01f6 FB68     		ldr	r3, [r7, #12]
+ 411 01f8 1A68     		ldr	r2, [r3, #0]
+ 412 01fa BB68     		ldr	r3, [r7, #8]
+ 413 01fc 6FEA0303 		mvn	r3, r3
+ 414 0200 1A40     		ands	r2, r2, r3
+ 415 0202 FB68     		ldr	r3, [r7, #12]
+ 416 0204 1A60     		str	r2, [r3, #0]
+ 417              	.L10:
+ 350:../src/stm32f30x_i2c.c ****   }
+ 351:../src/stm32f30x_i2c.c **** }
+ 418              		.loc 1 351 0
+ 419 0206 07F11407 		add	r7, r7, #20
+ 420 020a BD46     		mov	sp, r7
+ 421 020c 80BC     		pop	{r7}
+ 422 020e 7047     		bx	lr
+ 423              		.cfi_endproc
+ 424              	.LFE116:
+ 426              		.align	2
+ 427              		.global	I2C_StretchClockCmd
+ 428              		.thumb
+ 429              		.thumb_func
+ 431              	I2C_StretchClockCmd:
+ 432              	.LFB117:
+ 352:../src/stm32f30x_i2c.c **** 
+ 353:../src/stm32f30x_i2c.c **** /**
+ 354:../src/stm32f30x_i2c.c ****   * @brief  Enables or disables the I2C Clock stretching.
+ 355:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 356:../src/stm32f30x_i2c.c ****   * @param  NewState: new state of the I2Cx Clock stretching.
+ 357:../src/stm32f30x_i2c.c ****   *   This parameter can be: ENABLE or DISABLE.
+ 358:../src/stm32f30x_i2c.c ****   * @retval None
+ 359:../src/stm32f30x_i2c.c ****   */
+ 360:../src/stm32f30x_i2c.c **** void I2C_StretchClockCmd(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 361:../src/stm32f30x_i2c.c **** {
+ 433              		.loc 1 361 0
+ 434              		.cfi_startproc
+ 435              		@ args = 0, pretend = 0, frame = 8
+ 436              		@ frame_needed = 1, uses_anonymous_args = 0
+ 437              		@ link register save eliminated.
+ 438 0210 80B4     		push	{r7}
+ 439              	.LCFI18:
+ 440              		.cfi_def_cfa_offset 4
+ 441              		.cfi_offset 7, -4
+ 442 0212 83B0     		sub	sp, sp, #12
+ 443              	.LCFI19:
+ 444              		.cfi_def_cfa_offset 16
+ 445 0214 00AF     		add	r7, sp, #0
+ 446              	.LCFI20:
+ 447              		.cfi_def_cfa_register 7
+ 448 0216 7860     		str	r0, [r7, #4]
+ 449 0218 0B46     		mov	r3, r1
+ 450 021a FB70     		strb	r3, [r7, #3]
+ 362:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+ 363:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 364:../src/stm32f30x_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 365:../src/stm32f30x_i2c.c ****   
+ 366:../src/stm32f30x_i2c.c ****   if (NewState != DISABLE)
+ 451              		.loc 1 366 0
+ 452 021c FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 453 021e 002B     		cmp	r3, #0
+ 454 0220 06D0     		beq	.L14
+ 367:../src/stm32f30x_i2c.c ****   {
+ 368:../src/stm32f30x_i2c.c ****     /* Enable clock stretching */
+ 369:../src/stm32f30x_i2c.c ****     I2Cx->CR1 &= (uint32_t)~((uint32_t)I2C_CR1_NOSTRETCH);    
+ 455              		.loc 1 369 0
+ 456 0222 7B68     		ldr	r3, [r7, #4]
+ 457 0224 1B68     		ldr	r3, [r3, #0]
+ 458 0226 23F40032 		bic	r2, r3, #131072
+ 459 022a 7B68     		ldr	r3, [r7, #4]
+ 460 022c 1A60     		str	r2, [r3, #0]
+ 461 022e 05E0     		b	.L13
+ 462              	.L14:
+ 370:../src/stm32f30x_i2c.c ****   }
+ 371:../src/stm32f30x_i2c.c ****   else
+ 372:../src/stm32f30x_i2c.c ****   {
+ 373:../src/stm32f30x_i2c.c ****     /* Disable clock stretching  */
+ 374:../src/stm32f30x_i2c.c ****     I2Cx->CR1 |= I2C_CR1_NOSTRETCH;
+ 463              		.loc 1 374 0
+ 464 0230 7B68     		ldr	r3, [r7, #4]
+ 465 0232 1B68     		ldr	r3, [r3, #0]
+ 466 0234 43F40032 		orr	r2, r3, #131072
+ 467 0238 7B68     		ldr	r3, [r7, #4]
+ 468 023a 1A60     		str	r2, [r3, #0]
+ 469              	.L13:
+ 375:../src/stm32f30x_i2c.c ****   }
+ 376:../src/stm32f30x_i2c.c **** }
+ 470              		.loc 1 376 0
+ 471 023c 07F10C07 		add	r7, r7, #12
+ 472 0240 BD46     		mov	sp, r7
+ 473 0242 80BC     		pop	{r7}
+ 474 0244 7047     		bx	lr
+ 475              		.cfi_endproc
+ 476              	.LFE117:
+ 478 0246 00BF     		.align	2
+ 479              		.global	I2C_StopModeCmd
+ 480              		.thumb
+ 481              		.thumb_func
+ 483              	I2C_StopModeCmd:
+ 484              	.LFB118:
+ 377:../src/stm32f30x_i2c.c **** 
+ 378:../src/stm32f30x_i2c.c **** /**
+ 379:../src/stm32f30x_i2c.c ****   * @brief  Enables or disables I2C wakeup from stop mode.
+ 380:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 381:../src/stm32f30x_i2c.c ****   * @param  NewState: new state of the I2Cx stop mode.
+ 382:../src/stm32f30x_i2c.c ****   *   This parameter can be: ENABLE or DISABLE.
+ 383:../src/stm32f30x_i2c.c ****   * @retval None
+ 384:../src/stm32f30x_i2c.c ****   */
+ 385:../src/stm32f30x_i2c.c **** void I2C_StopModeCmd(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 386:../src/stm32f30x_i2c.c **** {
+ 485              		.loc 1 386 0
+ 486              		.cfi_startproc
+ 487              		@ args = 0, pretend = 0, frame = 8
+ 488              		@ frame_needed = 1, uses_anonymous_args = 0
+ 489              		@ link register save eliminated.
+ 490 0248 80B4     		push	{r7}
+ 491              	.LCFI21:
+ 492              		.cfi_def_cfa_offset 4
+ 493              		.cfi_offset 7, -4
+ 494 024a 83B0     		sub	sp, sp, #12
+ 495              	.LCFI22:
+ 496              		.cfi_def_cfa_offset 16
+ 497 024c 00AF     		add	r7, sp, #0
+ 498              	.LCFI23:
+ 499              		.cfi_def_cfa_register 7
+ 500 024e 7860     		str	r0, [r7, #4]
+ 501 0250 0B46     		mov	r3, r1
+ 502 0252 FB70     		strb	r3, [r7, #3]
+ 387:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+ 388:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 389:../src/stm32f30x_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 390:../src/stm32f30x_i2c.c ****   
+ 391:../src/stm32f30x_i2c.c ****   if (NewState != DISABLE)
+ 503              		.loc 1 391 0
+ 504 0254 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 505 0256 002B     		cmp	r3, #0
+ 506 0258 06D0     		beq	.L17
+ 392:../src/stm32f30x_i2c.c ****   {
+ 393:../src/stm32f30x_i2c.c ****     /* Enable wakeup from stop mode */
+ 394:../src/stm32f30x_i2c.c ****     I2Cx->CR1 |= I2C_CR1_WUPEN;   
+ 507              		.loc 1 394 0
+ 508 025a 7B68     		ldr	r3, [r7, #4]
+ 509 025c 1B68     		ldr	r3, [r3, #0]
+ 510 025e 43F48022 		orr	r2, r3, #262144
+ 511 0262 7B68     		ldr	r3, [r7, #4]
+ 512 0264 1A60     		str	r2, [r3, #0]
+ 513 0266 05E0     		b	.L16
+ 514              	.L17:
+ 395:../src/stm32f30x_i2c.c ****   }
+ 396:../src/stm32f30x_i2c.c ****   else
+ 397:../src/stm32f30x_i2c.c ****   {
+ 398:../src/stm32f30x_i2c.c ****     /* Disable wakeup from stop mode */    
+ 399:../src/stm32f30x_i2c.c ****     I2Cx->CR1 &= (uint32_t)~((uint32_t)I2C_CR1_WUPEN); 
+ 515              		.loc 1 399 0
+ 516 0268 7B68     		ldr	r3, [r7, #4]
+ 517 026a 1B68     		ldr	r3, [r3, #0]
+ 518 026c 23F48022 		bic	r2, r3, #262144
+ 519 0270 7B68     		ldr	r3, [r7, #4]
+ 520 0272 1A60     		str	r2, [r3, #0]
+ 521              	.L16:
+ 400:../src/stm32f30x_i2c.c ****   }
+ 401:../src/stm32f30x_i2c.c **** }
+ 522              		.loc 1 401 0
+ 523 0274 07F10C07 		add	r7, r7, #12
+ 524 0278 BD46     		mov	sp, r7
+ 525 027a 80BC     		pop	{r7}
+ 526 027c 7047     		bx	lr
+ 527              		.cfi_endproc
+ 528              	.LFE118:
+ 530 027e 00BF     		.align	2
+ 531              		.global	I2C_DualAddressCmd
+ 532              		.thumb
+ 533              		.thumb_func
+ 535              	I2C_DualAddressCmd:
+ 536              	.LFB119:
+ 402:../src/stm32f30x_i2c.c **** 
+ 403:../src/stm32f30x_i2c.c **** /**
+ 404:../src/stm32f30x_i2c.c ****   * @brief  Enables or disables the I2C own address 2.
+ 405:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 406:../src/stm32f30x_i2c.c ****   * @param  NewState: new state of the I2C own address 2.
+ 407:../src/stm32f30x_i2c.c ****   *   This parameter can be: ENABLE or DISABLE.  
+ 408:../src/stm32f30x_i2c.c ****   * @retval None
+ 409:../src/stm32f30x_i2c.c ****   */
+ 410:../src/stm32f30x_i2c.c **** void I2C_DualAddressCmd(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 411:../src/stm32f30x_i2c.c **** {
+ 537              		.loc 1 411 0
+ 538              		.cfi_startproc
+ 539              		@ args = 0, pretend = 0, frame = 8
+ 540              		@ frame_needed = 1, uses_anonymous_args = 0
+ 541              		@ link register save eliminated.
+ 542 0280 80B4     		push	{r7}
+ 543              	.LCFI24:
+ 544              		.cfi_def_cfa_offset 4
+ 545              		.cfi_offset 7, -4
+ 546 0282 83B0     		sub	sp, sp, #12
+ 547              	.LCFI25:
+ 548              		.cfi_def_cfa_offset 16
+ 549 0284 00AF     		add	r7, sp, #0
+ 550              	.LCFI26:
+ 551              		.cfi_def_cfa_register 7
+ 552 0286 7860     		str	r0, [r7, #4]
+ 553 0288 0B46     		mov	r3, r1
+ 554 028a FB70     		strb	r3, [r7, #3]
+ 412:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+ 413:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 414:../src/stm32f30x_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 415:../src/stm32f30x_i2c.c ****   
+ 416:../src/stm32f30x_i2c.c ****   if (NewState != DISABLE)
+ 555              		.loc 1 416 0
+ 556 028c FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 557 028e 002B     		cmp	r3, #0
+ 558 0290 06D0     		beq	.L20
+ 417:../src/stm32f30x_i2c.c ****   {
+ 418:../src/stm32f30x_i2c.c ****     /* Enable own address 2 */
+ 419:../src/stm32f30x_i2c.c ****     I2Cx->OAR2 |= I2C_OAR2_OA2EN;
+ 559              		.loc 1 419 0
+ 560 0292 7B68     		ldr	r3, [r7, #4]
+ 561 0294 DB68     		ldr	r3, [r3, #12]
+ 562 0296 43F40042 		orr	r2, r3, #32768
+ 563 029a 7B68     		ldr	r3, [r7, #4]
+ 564 029c DA60     		str	r2, [r3, #12]
+ 565 029e 05E0     		b	.L19
+ 566              	.L20:
+ 420:../src/stm32f30x_i2c.c ****   }
+ 421:../src/stm32f30x_i2c.c ****   else
+ 422:../src/stm32f30x_i2c.c ****   {
+ 423:../src/stm32f30x_i2c.c ****     /* Disable own address 2 */
+ 424:../src/stm32f30x_i2c.c ****     I2Cx->OAR2 &= (uint32_t)~((uint32_t)I2C_OAR2_OA2EN);
+ 567              		.loc 1 424 0
+ 568 02a0 7B68     		ldr	r3, [r7, #4]
+ 569 02a2 DB68     		ldr	r3, [r3, #12]
+ 570 02a4 23F40042 		bic	r2, r3, #32768
+ 571 02a8 7B68     		ldr	r3, [r7, #4]
+ 572 02aa DA60     		str	r2, [r3, #12]
+ 573              	.L19:
+ 425:../src/stm32f30x_i2c.c ****   }
+ 426:../src/stm32f30x_i2c.c **** }    
+ 574              		.loc 1 426 0
+ 575 02ac 07F10C07 		add	r7, r7, #12
+ 576 02b0 BD46     		mov	sp, r7
+ 577 02b2 80BC     		pop	{r7}
+ 578 02b4 7047     		bx	lr
+ 579              		.cfi_endproc
+ 580              	.LFE119:
+ 582 02b6 00BF     		.align	2
+ 583              		.global	I2C_OwnAddress2Config
+ 584              		.thumb
+ 585              		.thumb_func
+ 587              	I2C_OwnAddress2Config:
+ 588              	.LFB120:
+ 427:../src/stm32f30x_i2c.c **** 
+ 428:../src/stm32f30x_i2c.c **** /**
+ 429:../src/stm32f30x_i2c.c ****   * @brief  Configures the I2C slave own address 2 and mask.
+ 430:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 431:../src/stm32f30x_i2c.c ****   * @param  Address: specifies the slave address to be programmed.
+ 432:../src/stm32f30x_i2c.c ****   * @param  Mask: specifies own address 2 mask to be programmed.
+ 433:../src/stm32f30x_i2c.c ****   *   This parameter can be one of the following values:
+ 434:../src/stm32f30x_i2c.c ****   *     @arg I2C_OA2_NoMask: no mask.
+ 435:../src/stm32f30x_i2c.c ****   *     @arg I2C_OA2_Mask01: OA2[1] is masked and don't care.
+ 436:../src/stm32f30x_i2c.c ****   *     @arg I2C_OA2_Mask02: OA2[2:1] are masked and don't care.
+ 437:../src/stm32f30x_i2c.c ****   *     @arg I2C_OA2_Mask03: OA2[3:1] are masked and don't care.
+ 438:../src/stm32f30x_i2c.c ****   *     @arg I2C_OA2_Mask04: OA2[4:1] are masked and don't care.
+ 439:../src/stm32f30x_i2c.c ****   *     @arg I2C_OA2_Mask05: OA2[5:1] are masked and don't care.
+ 440:../src/stm32f30x_i2c.c ****   *     @arg I2C_OA2_Mask06: OA2[6:1] are masked and don't care.
+ 441:../src/stm32f30x_i2c.c ****   *     @arg I2C_OA2_Mask07: OA2[7:1] are masked and don't care.
+ 442:../src/stm32f30x_i2c.c ****   * @retval None
+ 443:../src/stm32f30x_i2c.c ****   */
+ 444:../src/stm32f30x_i2c.c **** void I2C_OwnAddress2Config(I2C_TypeDef* I2Cx, uint16_t Address, uint8_t Mask)
+ 445:../src/stm32f30x_i2c.c **** {
+ 589              		.loc 1 445 0
+ 590              		.cfi_startproc
+ 591              		@ args = 0, pretend = 0, frame = 16
+ 592              		@ frame_needed = 1, uses_anonymous_args = 0
+ 593              		@ link register save eliminated.
+ 594 02b8 80B4     		push	{r7}
+ 595              	.LCFI27:
+ 596              		.cfi_def_cfa_offset 4
+ 597              		.cfi_offset 7, -4
+ 598 02ba 85B0     		sub	sp, sp, #20
+ 599              	.LCFI28:
+ 600              		.cfi_def_cfa_offset 24
+ 601 02bc 00AF     		add	r7, sp, #0
+ 602              	.LCFI29:
+ 603              		.cfi_def_cfa_register 7
+ 604 02be 7860     		str	r0, [r7, #4]
+ 605 02c0 1346     		mov	r3, r2
+ 606 02c2 0A46     		mov	r2, r1	@ movhi
+ 607 02c4 7A80     		strh	r2, [r7, #2]	@ movhi
+ 608 02c6 7B70     		strb	r3, [r7, #1]
+ 446:../src/stm32f30x_i2c.c ****   uint32_t tmpreg = 0;
+ 609              		.loc 1 446 0
+ 610 02c8 4FF00003 		mov	r3, #0
+ 611 02cc FB60     		str	r3, [r7, #12]
+ 447:../src/stm32f30x_i2c.c **** 
+ 448:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+ 449:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 450:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_OWN_ADDRESS2(Address));
+ 451:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_OWN_ADDRESS2_MASK(Mask));
+ 452:../src/stm32f30x_i2c.c ****   
+ 453:../src/stm32f30x_i2c.c ****   /* Get the old register value */
+ 454:../src/stm32f30x_i2c.c ****   tmpreg = I2Cx->OAR2;
+ 612              		.loc 1 454 0
+ 613 02ce 7B68     		ldr	r3, [r7, #4]
+ 614 02d0 DB68     		ldr	r3, [r3, #12]
+ 615 02d2 FB60     		str	r3, [r7, #12]
+ 455:../src/stm32f30x_i2c.c **** 
+ 456:../src/stm32f30x_i2c.c ****   /* Reset I2Cx OA2 bit [7:1] and OA2MSK bit [1:0]  */
+ 457:../src/stm32f30x_i2c.c ****   tmpreg &= (uint32_t)~((uint32_t)(I2C_OAR2_OA2 | I2C_OAR2_OA2MSK));
+ 616              		.loc 1 457 0
+ 617 02d4 FB68     		ldr	r3, [r7, #12]
+ 618 02d6 23F4FF63 		bic	r3, r3, #2040
+ 619 02da 23F00603 		bic	r3, r3, #6
+ 620 02de FB60     		str	r3, [r7, #12]
+ 458:../src/stm32f30x_i2c.c **** 
+ 459:../src/stm32f30x_i2c.c ****   /* Set I2Cx SADD */
+ 460:../src/stm32f30x_i2c.c ****   tmpreg |= (uint32_t)(((uint32_t)Address & I2C_OAR2_OA2) | \
+ 621              		.loc 1 460 0
+ 622 02e0 7B88     		ldrh	r3, [r7, #2]
+ 623 02e2 03F0FE02 		and	r2, r3, #254
+ 461:../src/stm32f30x_i2c.c ****             (((uint32_t)Mask << 8) & I2C_OAR2_OA2MSK)) ;
+ 624              		.loc 1 461 0
+ 625 02e6 7B78     		ldrb	r3, [r7, #1]	@ zero_extendqisi2
+ 626 02e8 4FEA0323 		lsl	r3, r3, #8
+ 627 02ec 03F4E063 		and	r3, r3, #1792
+ 460:../src/stm32f30x_i2c.c ****   tmpreg |= (uint32_t)(((uint32_t)Address & I2C_OAR2_OA2) | \
+ 628              		.loc 1 460 0
+ 629 02f0 1343     		orrs	r3, r3, r2
+ 630 02f2 FA68     		ldr	r2, [r7, #12]
+ 631 02f4 1343     		orrs	r3, r3, r2
+ 632 02f6 FB60     		str	r3, [r7, #12]
+ 462:../src/stm32f30x_i2c.c **** 
+ 463:../src/stm32f30x_i2c.c ****   /* Store the new register value */
+ 464:../src/stm32f30x_i2c.c ****   I2Cx->OAR2 = tmpreg;
+ 633              		.loc 1 464 0
+ 634 02f8 7B68     		ldr	r3, [r7, #4]
+ 635 02fa FA68     		ldr	r2, [r7, #12]
+ 636 02fc DA60     		str	r2, [r3, #12]
+ 465:../src/stm32f30x_i2c.c **** }
+ 637              		.loc 1 465 0
+ 638 02fe 07F11407 		add	r7, r7, #20
+ 639 0302 BD46     		mov	sp, r7
+ 640 0304 80BC     		pop	{r7}
+ 641 0306 7047     		bx	lr
+ 642              		.cfi_endproc
+ 643              	.LFE120:
+ 645              		.align	2
+ 646              		.global	I2C_GeneralCallCmd
+ 647              		.thumb
+ 648              		.thumb_func
+ 650              	I2C_GeneralCallCmd:
+ 651              	.LFB121:
+ 466:../src/stm32f30x_i2c.c **** 
+ 467:../src/stm32f30x_i2c.c **** /**
+ 468:../src/stm32f30x_i2c.c ****   * @brief  Enables or disables the I2C general call mode.
+ 469:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 470:../src/stm32f30x_i2c.c ****   * @param  NewState: new state of the I2C general call mode.
+ 471:../src/stm32f30x_i2c.c ****   *   This parameter can be: ENABLE or DISABLE.  
+ 472:../src/stm32f30x_i2c.c ****   * @retval None
+ 473:../src/stm32f30x_i2c.c ****   */
+ 474:../src/stm32f30x_i2c.c **** void I2C_GeneralCallCmd(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 475:../src/stm32f30x_i2c.c **** {
+ 652              		.loc 1 475 0
+ 653              		.cfi_startproc
+ 654              		@ args = 0, pretend = 0, frame = 8
+ 655              		@ frame_needed = 1, uses_anonymous_args = 0
+ 656              		@ link register save eliminated.
+ 657 0308 80B4     		push	{r7}
+ 658              	.LCFI30:
+ 659              		.cfi_def_cfa_offset 4
+ 660              		.cfi_offset 7, -4
+ 661 030a 83B0     		sub	sp, sp, #12
+ 662              	.LCFI31:
+ 663              		.cfi_def_cfa_offset 16
+ 664 030c 00AF     		add	r7, sp, #0
+ 665              	.LCFI32:
+ 666              		.cfi_def_cfa_register 7
+ 667 030e 7860     		str	r0, [r7, #4]
+ 668 0310 0B46     		mov	r3, r1
+ 669 0312 FB70     		strb	r3, [r7, #3]
+ 476:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+ 477:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 478:../src/stm32f30x_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 479:../src/stm32f30x_i2c.c ****   
+ 480:../src/stm32f30x_i2c.c ****   if (NewState != DISABLE)
+ 670              		.loc 1 480 0
+ 671 0314 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 672 0316 002B     		cmp	r3, #0
+ 673 0318 06D0     		beq	.L24
+ 481:../src/stm32f30x_i2c.c ****   {
+ 482:../src/stm32f30x_i2c.c ****     /* Enable general call mode */
+ 483:../src/stm32f30x_i2c.c ****     I2Cx->CR1 |= I2C_CR1_GCEN;
+ 674              		.loc 1 483 0
+ 675 031a 7B68     		ldr	r3, [r7, #4]
+ 676 031c 1B68     		ldr	r3, [r3, #0]
+ 677 031e 43F40022 		orr	r2, r3, #524288
+ 678 0322 7B68     		ldr	r3, [r7, #4]
+ 679 0324 1A60     		str	r2, [r3, #0]
+ 680 0326 05E0     		b	.L23
+ 681              	.L24:
+ 484:../src/stm32f30x_i2c.c ****   }
+ 485:../src/stm32f30x_i2c.c ****   else
+ 486:../src/stm32f30x_i2c.c ****   {
+ 487:../src/stm32f30x_i2c.c ****     /* Disable general call mode */
+ 488:../src/stm32f30x_i2c.c ****     I2Cx->CR1 &= (uint32_t)~((uint32_t)I2C_CR1_GCEN);
+ 682              		.loc 1 488 0
+ 683 0328 7B68     		ldr	r3, [r7, #4]
+ 684 032a 1B68     		ldr	r3, [r3, #0]
+ 685 032c 23F40022 		bic	r2, r3, #524288
+ 686 0330 7B68     		ldr	r3, [r7, #4]
+ 687 0332 1A60     		str	r2, [r3, #0]
+ 688              	.L23:
+ 489:../src/stm32f30x_i2c.c ****   }
+ 490:../src/stm32f30x_i2c.c **** } 
+ 689              		.loc 1 490 0
+ 690 0334 07F10C07 		add	r7, r7, #12
+ 691 0338 BD46     		mov	sp, r7
+ 692 033a 80BC     		pop	{r7}
+ 693 033c 7047     		bx	lr
+ 694              		.cfi_endproc
+ 695              	.LFE121:
+ 697 033e 00BF     		.align	2
+ 698              		.global	I2C_SlaveByteControlCmd
+ 699              		.thumb
+ 700              		.thumb_func
+ 702              	I2C_SlaveByteControlCmd:
+ 703              	.LFB122:
+ 491:../src/stm32f30x_i2c.c **** 
+ 492:../src/stm32f30x_i2c.c **** /**
+ 493:../src/stm32f30x_i2c.c ****   * @brief  Enables or disables the I2C slave byte control.
+ 494:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 495:../src/stm32f30x_i2c.c ****   * @param  NewState: new state of the I2C slave byte control.
+ 496:../src/stm32f30x_i2c.c ****   *   This parameter can be: ENABLE or DISABLE.  
+ 497:../src/stm32f30x_i2c.c ****   * @retval None
+ 498:../src/stm32f30x_i2c.c ****   */
+ 499:../src/stm32f30x_i2c.c **** void I2C_SlaveByteControlCmd(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 500:../src/stm32f30x_i2c.c **** {
+ 704              		.loc 1 500 0
+ 705              		.cfi_startproc
+ 706              		@ args = 0, pretend = 0, frame = 8
+ 707              		@ frame_needed = 1, uses_anonymous_args = 0
+ 708              		@ link register save eliminated.
+ 709 0340 80B4     		push	{r7}
+ 710              	.LCFI33:
+ 711              		.cfi_def_cfa_offset 4
+ 712              		.cfi_offset 7, -4
+ 713 0342 83B0     		sub	sp, sp, #12
+ 714              	.LCFI34:
+ 715              		.cfi_def_cfa_offset 16
+ 716 0344 00AF     		add	r7, sp, #0
+ 717              	.LCFI35:
+ 718              		.cfi_def_cfa_register 7
+ 719 0346 7860     		str	r0, [r7, #4]
+ 720 0348 0B46     		mov	r3, r1
+ 721 034a FB70     		strb	r3, [r7, #3]
+ 501:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+ 502:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 503:../src/stm32f30x_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 504:../src/stm32f30x_i2c.c ****   
+ 505:../src/stm32f30x_i2c.c ****   if (NewState != DISABLE)
+ 722              		.loc 1 505 0
+ 723 034c FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 724 034e 002B     		cmp	r3, #0
+ 725 0350 06D0     		beq	.L27
+ 506:../src/stm32f30x_i2c.c ****   {
+ 507:../src/stm32f30x_i2c.c ****     /* Enable slave byte control */
+ 508:../src/stm32f30x_i2c.c ****     I2Cx->CR1 |= I2C_CR1_SBC;
+ 726              		.loc 1 508 0
+ 727 0352 7B68     		ldr	r3, [r7, #4]
+ 728 0354 1B68     		ldr	r3, [r3, #0]
+ 729 0356 43F48032 		orr	r2, r3, #65536
+ 730 035a 7B68     		ldr	r3, [r7, #4]
+ 731 035c 1A60     		str	r2, [r3, #0]
+ 732 035e 05E0     		b	.L26
+ 733              	.L27:
+ 509:../src/stm32f30x_i2c.c ****   }
+ 510:../src/stm32f30x_i2c.c ****   else
+ 511:../src/stm32f30x_i2c.c ****   {
+ 512:../src/stm32f30x_i2c.c ****     /* Disable slave byte control */
+ 513:../src/stm32f30x_i2c.c ****     I2Cx->CR1 &= (uint32_t)~((uint32_t)I2C_CR1_SBC);
+ 734              		.loc 1 513 0
+ 735 0360 7B68     		ldr	r3, [r7, #4]
+ 736 0362 1B68     		ldr	r3, [r3, #0]
+ 737 0364 23F48032 		bic	r2, r3, #65536
+ 738 0368 7B68     		ldr	r3, [r7, #4]
+ 739 036a 1A60     		str	r2, [r3, #0]
+ 740              	.L26:
+ 514:../src/stm32f30x_i2c.c ****   }
+ 515:../src/stm32f30x_i2c.c **** }
+ 741              		.loc 1 515 0
+ 742 036c 07F10C07 		add	r7, r7, #12
+ 743 0370 BD46     		mov	sp, r7
+ 744 0372 80BC     		pop	{r7}
+ 745 0374 7047     		bx	lr
+ 746              		.cfi_endproc
+ 747              	.LFE122:
+ 749 0376 00BF     		.align	2
+ 750              		.global	I2C_SlaveAddressConfig
+ 751              		.thumb
+ 752              		.thumb_func
+ 754              	I2C_SlaveAddressConfig:
+ 755              	.LFB123:
+ 516:../src/stm32f30x_i2c.c **** 
+ 517:../src/stm32f30x_i2c.c **** /**
+ 518:../src/stm32f30x_i2c.c ****   * @brief  Configures the slave address to be transmitted after start generation.
+ 519:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 520:../src/stm32f30x_i2c.c ****   * @param  Address: specifies the slave address to be programmed.
+ 521:../src/stm32f30x_i2c.c ****   * @note   This function should be called before generating start condition.  
+ 522:../src/stm32f30x_i2c.c ****   * @retval None
+ 523:../src/stm32f30x_i2c.c ****   */
+ 524:../src/stm32f30x_i2c.c **** void I2C_SlaveAddressConfig(I2C_TypeDef* I2Cx, uint16_t Address)
+ 525:../src/stm32f30x_i2c.c **** {
+ 756              		.loc 1 525 0
+ 757              		.cfi_startproc
+ 758              		@ args = 0, pretend = 0, frame = 16
+ 759              		@ frame_needed = 1, uses_anonymous_args = 0
+ 760              		@ link register save eliminated.
+ 761 0378 80B4     		push	{r7}
+ 762              	.LCFI36:
+ 763              		.cfi_def_cfa_offset 4
+ 764              		.cfi_offset 7, -4
+ 765 037a 85B0     		sub	sp, sp, #20
+ 766              	.LCFI37:
+ 767              		.cfi_def_cfa_offset 24
+ 768 037c 00AF     		add	r7, sp, #0
+ 769              	.LCFI38:
+ 770              		.cfi_def_cfa_register 7
+ 771 037e 7860     		str	r0, [r7, #4]
+ 772 0380 0B46     		mov	r3, r1
+ 773 0382 7B80     		strh	r3, [r7, #2]	@ movhi
+ 526:../src/stm32f30x_i2c.c ****   uint32_t tmpreg = 0;
+ 774              		.loc 1 526 0
+ 775 0384 4FF00003 		mov	r3, #0
+ 776 0388 FB60     		str	r3, [r7, #12]
+ 527:../src/stm32f30x_i2c.c **** 
+ 528:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+ 529:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 530:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_SLAVE_ADDRESS(Address));
+ 531:../src/stm32f30x_i2c.c ****                
+ 532:../src/stm32f30x_i2c.c ****   /* Get the old register value */
+ 533:../src/stm32f30x_i2c.c ****   tmpreg = I2Cx->CR2;
+ 777              		.loc 1 533 0
+ 778 038a 7B68     		ldr	r3, [r7, #4]
+ 779 038c 5B68     		ldr	r3, [r3, #4]
+ 780 038e FB60     		str	r3, [r7, #12]
+ 534:../src/stm32f30x_i2c.c **** 
+ 535:../src/stm32f30x_i2c.c ****   /* Reset I2Cx SADD bit [9:0] */
+ 536:../src/stm32f30x_i2c.c ****   tmpreg &= (uint32_t)~((uint32_t)I2C_CR2_SADD);
+ 781              		.loc 1 536 0
+ 782 0390 FB68     		ldr	r3, [r7, #12]
+ 783 0392 23F47F73 		bic	r3, r3, #1020
+ 784 0396 23F00303 		bic	r3, r3, #3
+ 785 039a FB60     		str	r3, [r7, #12]
+ 537:../src/stm32f30x_i2c.c **** 
+ 538:../src/stm32f30x_i2c.c ****   /* Set I2Cx SADD */
+ 539:../src/stm32f30x_i2c.c ****   tmpreg |= (uint32_t)((uint32_t)Address & I2C_CR2_SADD);
+ 786              		.loc 1 539 0
+ 787 039c 7B88     		ldrh	r3, [r7, #2]
+ 788 039e 4FEA8353 		lsl	r3, r3, #22
+ 789 03a2 4FEA9353 		lsr	r3, r3, #22
+ 790 03a6 FA68     		ldr	r2, [r7, #12]
+ 791 03a8 1343     		orrs	r3, r3, r2
+ 792 03aa FB60     		str	r3, [r7, #12]
+ 540:../src/stm32f30x_i2c.c **** 
+ 541:../src/stm32f30x_i2c.c ****   /* Store the new register value */
+ 542:../src/stm32f30x_i2c.c ****   I2Cx->CR2 = tmpreg;
+ 793              		.loc 1 542 0
+ 794 03ac 7B68     		ldr	r3, [r7, #4]
+ 795 03ae FA68     		ldr	r2, [r7, #12]
+ 796 03b0 5A60     		str	r2, [r3, #4]
+ 543:../src/stm32f30x_i2c.c **** }
+ 797              		.loc 1 543 0
+ 798 03b2 07F11407 		add	r7, r7, #20
+ 799 03b6 BD46     		mov	sp, r7
+ 800 03b8 80BC     		pop	{r7}
+ 801 03ba 7047     		bx	lr
+ 802              		.cfi_endproc
+ 803              	.LFE123:
+ 805              		.align	2
+ 806              		.global	I2C_10BitAddressingModeCmd
+ 807              		.thumb
+ 808              		.thumb_func
+ 810              	I2C_10BitAddressingModeCmd:
+ 811              	.LFB124:
+ 544:../src/stm32f30x_i2c.c ****   
+ 545:../src/stm32f30x_i2c.c **** /**
+ 546:../src/stm32f30x_i2c.c ****   * @brief  Enables or disables the I2C 10-bit addressing mode for the master.
+ 547:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 548:../src/stm32f30x_i2c.c ****   * @param  NewState: new state of the I2C 10-bit addressing mode.
+ 549:../src/stm32f30x_i2c.c ****   *   This parameter can be: ENABLE or DISABLE.
+ 550:../src/stm32f30x_i2c.c ****   * @note   This function should be called before generating start condition.  
+ 551:../src/stm32f30x_i2c.c ****   * @retval None
+ 552:../src/stm32f30x_i2c.c ****   */
+ 553:../src/stm32f30x_i2c.c **** void I2C_10BitAddressingModeCmd(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 554:../src/stm32f30x_i2c.c **** {
+ 812              		.loc 1 554 0
+ 813              		.cfi_startproc
+ 814              		@ args = 0, pretend = 0, frame = 8
+ 815              		@ frame_needed = 1, uses_anonymous_args = 0
+ 816              		@ link register save eliminated.
+ 817 03bc 80B4     		push	{r7}
+ 818              	.LCFI39:
+ 819              		.cfi_def_cfa_offset 4
+ 820              		.cfi_offset 7, -4
+ 821 03be 83B0     		sub	sp, sp, #12
+ 822              	.LCFI40:
+ 823              		.cfi_def_cfa_offset 16
+ 824 03c0 00AF     		add	r7, sp, #0
+ 825              	.LCFI41:
+ 826              		.cfi_def_cfa_register 7
+ 827 03c2 7860     		str	r0, [r7, #4]
+ 828 03c4 0B46     		mov	r3, r1
+ 829 03c6 FB70     		strb	r3, [r7, #3]
+ 555:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+ 556:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 557:../src/stm32f30x_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 558:../src/stm32f30x_i2c.c ****   
+ 559:../src/stm32f30x_i2c.c ****   if (NewState != DISABLE)
+ 830              		.loc 1 559 0
+ 831 03c8 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 832 03ca 002B     		cmp	r3, #0
+ 833 03cc 06D0     		beq	.L31
+ 560:../src/stm32f30x_i2c.c ****   {
+ 561:../src/stm32f30x_i2c.c ****     /* Enable 10-bit addressing mode */
+ 562:../src/stm32f30x_i2c.c ****     I2Cx->CR2 |= I2C_CR2_ADD10;
+ 834              		.loc 1 562 0
+ 835 03ce 7B68     		ldr	r3, [r7, #4]
+ 836 03d0 5B68     		ldr	r3, [r3, #4]
+ 837 03d2 43F40062 		orr	r2, r3, #2048
+ 838 03d6 7B68     		ldr	r3, [r7, #4]
+ 839 03d8 5A60     		str	r2, [r3, #4]
+ 840 03da 05E0     		b	.L30
+ 841              	.L31:
+ 563:../src/stm32f30x_i2c.c ****   }
+ 564:../src/stm32f30x_i2c.c ****   else
+ 565:../src/stm32f30x_i2c.c ****   {
+ 566:../src/stm32f30x_i2c.c ****     /* Disable 10-bit addressing mode */
+ 567:../src/stm32f30x_i2c.c ****     I2Cx->CR2 &= (uint32_t)~((uint32_t)I2C_CR2_ADD10);
+ 842              		.loc 1 567 0
+ 843 03dc 7B68     		ldr	r3, [r7, #4]
+ 844 03de 5B68     		ldr	r3, [r3, #4]
+ 845 03e0 23F40062 		bic	r2, r3, #2048
+ 846 03e4 7B68     		ldr	r3, [r7, #4]
+ 847 03e6 5A60     		str	r2, [r3, #4]
+ 848              	.L30:
+ 568:../src/stm32f30x_i2c.c ****   }
+ 569:../src/stm32f30x_i2c.c **** } 
+ 849              		.loc 1 569 0
+ 850 03e8 07F10C07 		add	r7, r7, #12
+ 851 03ec BD46     		mov	sp, r7
+ 852 03ee 80BC     		pop	{r7}
+ 853 03f0 7047     		bx	lr
+ 854              		.cfi_endproc
+ 855              	.LFE124:
+ 857 03f2 00BF     		.align	2
+ 858              		.global	I2C_AutoEndCmd
+ 859              		.thumb
+ 860              		.thumb_func
+ 862              	I2C_AutoEndCmd:
+ 863              	.LFB125:
+ 570:../src/stm32f30x_i2c.c **** 
+ 571:../src/stm32f30x_i2c.c **** /**
+ 572:../src/stm32f30x_i2c.c ****   * @}
+ 573:../src/stm32f30x_i2c.c ****   */
+ 574:../src/stm32f30x_i2c.c **** 
+ 575:../src/stm32f30x_i2c.c **** 
+ 576:../src/stm32f30x_i2c.c **** /** @defgroup I2C_Group2 Communications handling functions
+ 577:../src/stm32f30x_i2c.c ****  *  @brief   Communications handling functions 
+ 578:../src/stm32f30x_i2c.c ****  *
+ 579:../src/stm32f30x_i2c.c **** @verbatim
+ 580:../src/stm32f30x_i2c.c ****  ===============================================================================
+ 581:../src/stm32f30x_i2c.c ****                   ##### Communications handling functions #####
+ 582:../src/stm32f30x_i2c.c ****  ===============================================================================  
+ 583:../src/stm32f30x_i2c.c ****     [..] This section provides a set of functions that handles I2C communication.
+ 584:../src/stm32f30x_i2c.c ****     
+ 585:../src/stm32f30x_i2c.c ****     [..] Automatic End mode is enabled using I2C_AutoEndCmd() function. When Reload
+ 586:../src/stm32f30x_i2c.c ****          mode is enabled via I2C_ReloadCmd() AutoEnd bit has no effect.
+ 587:../src/stm32f30x_i2c.c ****          
+ 588:../src/stm32f30x_i2c.c ****     [..] I2C_NumberOfBytesConfig() function set the number of bytes to be transferred,
+ 589:../src/stm32f30x_i2c.c ****          this configuration should be done before generating start condition in master 
+ 590:../src/stm32f30x_i2c.c ****          mode.
+ 591:../src/stm32f30x_i2c.c ****          
+ 592:../src/stm32f30x_i2c.c ****     [..] When switching from master write operation to read operation in 10Bit addressing
+ 593:../src/stm32f30x_i2c.c ****          mode, master can only sends the 1st 7 bits of the 10 bit address, followed by 
+ 594:../src/stm32f30x_i2c.c ****          Read direction by enabling HEADR bit using I2C_10BitAddressHeader() function.        
+ 595:../src/stm32f30x_i2c.c ****          
+ 596:../src/stm32f30x_i2c.c ****     [..] In master mode, when transferring more than 255 bytes Reload mode should be used
+ 597:../src/stm32f30x_i2c.c ****          to handle communication. In the first phase of transfer, Nbytes should be set to 
+ 598:../src/stm32f30x_i2c.c ****          255. After transferring these bytes TCR flag is set and I2C_TransferHandling()
+ 599:../src/stm32f30x_i2c.c ****          function should be called to handle remaining communication.
+ 600:../src/stm32f30x_i2c.c ****          
+ 601:../src/stm32f30x_i2c.c ****     [..] In master mode, when software end mode is selected when all data is transferred
+ 602:../src/stm32f30x_i2c.c ****          TC flag is set I2C_TransferHandling() function should be called to generate STOP
+ 603:../src/stm32f30x_i2c.c ****          or generate ReStart.                      
+ 604:../src/stm32f30x_i2c.c ****              
+ 605:../src/stm32f30x_i2c.c **** @endverbatim
+ 606:../src/stm32f30x_i2c.c ****   * @{
+ 607:../src/stm32f30x_i2c.c ****   */
+ 608:../src/stm32f30x_i2c.c ****   
+ 609:../src/stm32f30x_i2c.c **** /**
+ 610:../src/stm32f30x_i2c.c ****   * @brief  Enables or disables the I2C automatic end mode (stop condition is 
+ 611:../src/stm32f30x_i2c.c ****   *         automatically sent when nbytes data are transferred).
+ 612:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 613:../src/stm32f30x_i2c.c ****   * @param  NewState: new state of the I2C automatic end mode.
+ 614:../src/stm32f30x_i2c.c ****   *   This parameter can be: ENABLE or DISABLE.
+ 615:../src/stm32f30x_i2c.c ****   * @note   This function has effect if Reload mode is disabled.   
+ 616:../src/stm32f30x_i2c.c ****   * @retval None
+ 617:../src/stm32f30x_i2c.c ****   */
+ 618:../src/stm32f30x_i2c.c **** void I2C_AutoEndCmd(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 619:../src/stm32f30x_i2c.c **** {
+ 864              		.loc 1 619 0
+ 865              		.cfi_startproc
+ 866              		@ args = 0, pretend = 0, frame = 8
+ 867              		@ frame_needed = 1, uses_anonymous_args = 0
+ 868              		@ link register save eliminated.
+ 869 03f4 80B4     		push	{r7}
+ 870              	.LCFI42:
+ 871              		.cfi_def_cfa_offset 4
+ 872              		.cfi_offset 7, -4
+ 873 03f6 83B0     		sub	sp, sp, #12
+ 874              	.LCFI43:
+ 875              		.cfi_def_cfa_offset 16
+ 876 03f8 00AF     		add	r7, sp, #0
+ 877              	.LCFI44:
+ 878              		.cfi_def_cfa_register 7
+ 879 03fa 7860     		str	r0, [r7, #4]
+ 880 03fc 0B46     		mov	r3, r1
+ 881 03fe FB70     		strb	r3, [r7, #3]
+ 620:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+ 621:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 622:../src/stm32f30x_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 623:../src/stm32f30x_i2c.c ****   
+ 624:../src/stm32f30x_i2c.c ****   if (NewState != DISABLE)
+ 882              		.loc 1 624 0
+ 883 0400 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 884 0402 002B     		cmp	r3, #0
+ 885 0404 06D0     		beq	.L34
+ 625:../src/stm32f30x_i2c.c ****   {
+ 626:../src/stm32f30x_i2c.c ****     /* Enable Auto end mode */
+ 627:../src/stm32f30x_i2c.c ****     I2Cx->CR2 |= I2C_CR2_AUTOEND;
+ 886              		.loc 1 627 0
+ 887 0406 7B68     		ldr	r3, [r7, #4]
+ 888 0408 5B68     		ldr	r3, [r3, #4]
+ 889 040a 43F00072 		orr	r2, r3, #33554432
+ 890 040e 7B68     		ldr	r3, [r7, #4]
+ 891 0410 5A60     		str	r2, [r3, #4]
+ 892 0412 05E0     		b	.L33
+ 893              	.L34:
+ 628:../src/stm32f30x_i2c.c ****   }
+ 629:../src/stm32f30x_i2c.c ****   else
+ 630:../src/stm32f30x_i2c.c ****   {
+ 631:../src/stm32f30x_i2c.c ****     /* Disable Auto end mode */
+ 632:../src/stm32f30x_i2c.c ****     I2Cx->CR2 &= (uint32_t)~((uint32_t)I2C_CR2_AUTOEND);
+ 894              		.loc 1 632 0
+ 895 0414 7B68     		ldr	r3, [r7, #4]
+ 896 0416 5B68     		ldr	r3, [r3, #4]
+ 897 0418 23F00072 		bic	r2, r3, #33554432
+ 898 041c 7B68     		ldr	r3, [r7, #4]
+ 899 041e 5A60     		str	r2, [r3, #4]
+ 900              	.L33:
+ 633:../src/stm32f30x_i2c.c ****   }
+ 634:../src/stm32f30x_i2c.c **** } 
+ 901              		.loc 1 634 0
+ 902 0420 07F10C07 		add	r7, r7, #12
+ 903 0424 BD46     		mov	sp, r7
+ 904 0426 80BC     		pop	{r7}
+ 905 0428 7047     		bx	lr
+ 906              		.cfi_endproc
+ 907              	.LFE125:
+ 909 042a 00BF     		.align	2
+ 910              		.global	I2C_ReloadCmd
+ 911              		.thumb
+ 912              		.thumb_func
+ 914              	I2C_ReloadCmd:
+ 915              	.LFB126:
+ 635:../src/stm32f30x_i2c.c **** 
+ 636:../src/stm32f30x_i2c.c **** /**
+ 637:../src/stm32f30x_i2c.c ****   * @brief  Enables or disables the I2C nbytes reload mode.
+ 638:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 639:../src/stm32f30x_i2c.c ****   * @param  NewState: new state of the nbytes reload mode.
+ 640:../src/stm32f30x_i2c.c ****   *   This parameter can be: ENABLE or DISABLE.
+ 641:../src/stm32f30x_i2c.c ****   * @retval None
+ 642:../src/stm32f30x_i2c.c ****   */
+ 643:../src/stm32f30x_i2c.c **** void I2C_ReloadCmd(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 644:../src/stm32f30x_i2c.c **** {
+ 916              		.loc 1 644 0
+ 917              		.cfi_startproc
+ 918              		@ args = 0, pretend = 0, frame = 8
+ 919              		@ frame_needed = 1, uses_anonymous_args = 0
+ 920              		@ link register save eliminated.
+ 921 042c 80B4     		push	{r7}
+ 922              	.LCFI45:
+ 923              		.cfi_def_cfa_offset 4
+ 924              		.cfi_offset 7, -4
+ 925 042e 83B0     		sub	sp, sp, #12
+ 926              	.LCFI46:
+ 927              		.cfi_def_cfa_offset 16
+ 928 0430 00AF     		add	r7, sp, #0
+ 929              	.LCFI47:
+ 930              		.cfi_def_cfa_register 7
+ 931 0432 7860     		str	r0, [r7, #4]
+ 932 0434 0B46     		mov	r3, r1
+ 933 0436 FB70     		strb	r3, [r7, #3]
+ 645:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+ 646:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 647:../src/stm32f30x_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 648:../src/stm32f30x_i2c.c ****   
+ 649:../src/stm32f30x_i2c.c ****   if (NewState != DISABLE)
+ 934              		.loc 1 649 0
+ 935 0438 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 936 043a 002B     		cmp	r3, #0
+ 937 043c 06D0     		beq	.L37
+ 650:../src/stm32f30x_i2c.c ****   {
+ 651:../src/stm32f30x_i2c.c ****     /* Enable Auto Reload mode */
+ 652:../src/stm32f30x_i2c.c ****     I2Cx->CR2 |= I2C_CR2_RELOAD;
+ 938              		.loc 1 652 0
+ 939 043e 7B68     		ldr	r3, [r7, #4]
+ 940 0440 5B68     		ldr	r3, [r3, #4]
+ 941 0442 43F08072 		orr	r2, r3, #16777216
+ 942 0446 7B68     		ldr	r3, [r7, #4]
+ 943 0448 5A60     		str	r2, [r3, #4]
+ 944 044a 05E0     		b	.L36
+ 945              	.L37:
+ 653:../src/stm32f30x_i2c.c ****   }
+ 654:../src/stm32f30x_i2c.c ****   else
+ 655:../src/stm32f30x_i2c.c ****   {
+ 656:../src/stm32f30x_i2c.c ****     /* Disable Auto Reload mode */
+ 657:../src/stm32f30x_i2c.c ****     I2Cx->CR2 &= (uint32_t)~((uint32_t)I2C_CR2_RELOAD);
+ 946              		.loc 1 657 0
+ 947 044c 7B68     		ldr	r3, [r7, #4]
+ 948 044e 5B68     		ldr	r3, [r3, #4]
+ 949 0450 23F08072 		bic	r2, r3, #16777216
+ 950 0454 7B68     		ldr	r3, [r7, #4]
+ 951 0456 5A60     		str	r2, [r3, #4]
+ 952              	.L36:
+ 658:../src/stm32f30x_i2c.c ****   }
+ 659:../src/stm32f30x_i2c.c **** }
+ 953              		.loc 1 659 0
+ 954 0458 07F10C07 		add	r7, r7, #12
+ 955 045c BD46     		mov	sp, r7
+ 956 045e 80BC     		pop	{r7}
+ 957 0460 7047     		bx	lr
+ 958              		.cfi_endproc
+ 959              	.LFE126:
+ 961 0462 00BF     		.align	2
+ 962              		.global	I2C_NumberOfBytesConfig
+ 963              		.thumb
+ 964              		.thumb_func
+ 966              	I2C_NumberOfBytesConfig:
+ 967              	.LFB127:
+ 660:../src/stm32f30x_i2c.c **** 
+ 661:../src/stm32f30x_i2c.c **** /**
+ 662:../src/stm32f30x_i2c.c ****   * @brief  Configures the number of bytes to be transmitted/received.
+ 663:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 664:../src/stm32f30x_i2c.c ****   * @param  Number_Bytes: specifies the number of bytes to be programmed.
+ 665:../src/stm32f30x_i2c.c ****   * @retval None
+ 666:../src/stm32f30x_i2c.c ****   */
+ 667:../src/stm32f30x_i2c.c **** void I2C_NumberOfBytesConfig(I2C_TypeDef* I2Cx, uint8_t Number_Bytes)
+ 668:../src/stm32f30x_i2c.c **** {
+ 968              		.loc 1 668 0
+ 969              		.cfi_startproc
+ 970              		@ args = 0, pretend = 0, frame = 16
+ 971              		@ frame_needed = 1, uses_anonymous_args = 0
+ 972              		@ link register save eliminated.
+ 973 0464 80B4     		push	{r7}
+ 974              	.LCFI48:
+ 975              		.cfi_def_cfa_offset 4
+ 976              		.cfi_offset 7, -4
+ 977 0466 85B0     		sub	sp, sp, #20
+ 978              	.LCFI49:
+ 979              		.cfi_def_cfa_offset 24
+ 980 0468 00AF     		add	r7, sp, #0
+ 981              	.LCFI50:
+ 982              		.cfi_def_cfa_register 7
+ 983 046a 7860     		str	r0, [r7, #4]
+ 984 046c 0B46     		mov	r3, r1
+ 985 046e FB70     		strb	r3, [r7, #3]
+ 669:../src/stm32f30x_i2c.c ****   uint32_t tmpreg = 0;
+ 986              		.loc 1 669 0
+ 987 0470 4FF00003 		mov	r3, #0
+ 988 0474 FB60     		str	r3, [r7, #12]
+ 670:../src/stm32f30x_i2c.c **** 
+ 671:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+ 672:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 673:../src/stm32f30x_i2c.c **** 
+ 674:../src/stm32f30x_i2c.c ****   /* Get the old register value */
+ 675:../src/stm32f30x_i2c.c ****   tmpreg = I2Cx->CR2;
+ 989              		.loc 1 675 0
+ 990 0476 7B68     		ldr	r3, [r7, #4]
+ 991 0478 5B68     		ldr	r3, [r3, #4]
+ 992 047a FB60     		str	r3, [r7, #12]
+ 676:../src/stm32f30x_i2c.c **** 
+ 677:../src/stm32f30x_i2c.c ****   /* Reset I2Cx Nbytes bit [7:0] */
+ 678:../src/stm32f30x_i2c.c ****   tmpreg &= (uint32_t)~((uint32_t)I2C_CR2_NBYTES);
+ 993              		.loc 1 678 0
+ 994 047c FB68     		ldr	r3, [r7, #12]
+ 995 047e 23F47F03 		bic	r3, r3, #16711680
+ 996 0482 FB60     		str	r3, [r7, #12]
+ 679:../src/stm32f30x_i2c.c **** 
+ 680:../src/stm32f30x_i2c.c ****   /* Set I2Cx Nbytes */
+ 681:../src/stm32f30x_i2c.c ****   tmpreg |= (uint32_t)(((uint32_t)Number_Bytes << 16 ) & I2C_CR2_NBYTES);
+ 997              		.loc 1 681 0
+ 998 0484 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 999 0486 4FEA0343 		lsl	r3, r3, #16
+ 1000 048a 03F47F03 		and	r3, r3, #16711680
+ 1001 048e FA68     		ldr	r2, [r7, #12]
+ 1002 0490 1343     		orrs	r3, r3, r2
+ 1003 0492 FB60     		str	r3, [r7, #12]
+ 682:../src/stm32f30x_i2c.c **** 
+ 683:../src/stm32f30x_i2c.c ****   /* Store the new register value */
+ 684:../src/stm32f30x_i2c.c ****   I2Cx->CR2 = tmpreg;
+ 1004              		.loc 1 684 0
+ 1005 0494 7B68     		ldr	r3, [r7, #4]
+ 1006 0496 FA68     		ldr	r2, [r7, #12]
+ 1007 0498 5A60     		str	r2, [r3, #4]
+ 685:../src/stm32f30x_i2c.c **** }  
+ 1008              		.loc 1 685 0
+ 1009 049a 07F11407 		add	r7, r7, #20
+ 1010 049e BD46     		mov	sp, r7
+ 1011 04a0 80BC     		pop	{r7}
+ 1012 04a2 7047     		bx	lr
+ 1013              		.cfi_endproc
+ 1014              	.LFE127:
+ 1016              		.align	2
+ 1017              		.global	I2C_MasterRequestConfig
+ 1018              		.thumb
+ 1019              		.thumb_func
+ 1021              	I2C_MasterRequestConfig:
+ 1022              	.LFB128:
+ 686:../src/stm32f30x_i2c.c ****   
+ 687:../src/stm32f30x_i2c.c **** /**
+ 688:../src/stm32f30x_i2c.c ****   * @brief  Configures the type of transfer request for the master.
+ 689:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 690:../src/stm32f30x_i2c.c ****   * @param  I2C_Direction: specifies the transfer request direction to be programmed.
+ 691:../src/stm32f30x_i2c.c ****   *    This parameter can be one of the following values:
+ 692:../src/stm32f30x_i2c.c ****   *     @arg I2C_Direction_Transmitter: Master request a write transfer
+ 693:../src/stm32f30x_i2c.c ****   *     @arg I2C_Direction_Receiver: Master request a read transfer 
+ 694:../src/stm32f30x_i2c.c ****   * @retval None
+ 695:../src/stm32f30x_i2c.c ****   */
+ 696:../src/stm32f30x_i2c.c **** void I2C_MasterRequestConfig(I2C_TypeDef* I2Cx, uint16_t I2C_Direction)
+ 697:../src/stm32f30x_i2c.c **** {
+ 1023              		.loc 1 697 0
+ 1024              		.cfi_startproc
+ 1025              		@ args = 0, pretend = 0, frame = 8
+ 1026              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1027              		@ link register save eliminated.
+ 1028 04a4 80B4     		push	{r7}
+ 1029              	.LCFI51:
+ 1030              		.cfi_def_cfa_offset 4
+ 1031              		.cfi_offset 7, -4
+ 1032 04a6 83B0     		sub	sp, sp, #12
+ 1033              	.LCFI52:
+ 1034              		.cfi_def_cfa_offset 16
+ 1035 04a8 00AF     		add	r7, sp, #0
+ 1036              	.LCFI53:
+ 1037              		.cfi_def_cfa_register 7
+ 1038 04aa 7860     		str	r0, [r7, #4]
+ 1039 04ac 0B46     		mov	r3, r1
+ 1040 04ae 7B80     		strh	r3, [r7, #2]	@ movhi
+ 698:../src/stm32f30x_i2c.c **** /* Check the parameters */
+ 699:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 700:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_DIRECTION(I2C_Direction));
+ 701:../src/stm32f30x_i2c.c ****   
+ 702:../src/stm32f30x_i2c.c ****   /* Test on the direction to set/reset the read/write bit */
+ 703:../src/stm32f30x_i2c.c ****   if (I2C_Direction == I2C_Direction_Transmitter)
+ 1041              		.loc 1 703 0
+ 1042 04b0 7B88     		ldrh	r3, [r7, #2]
+ 1043 04b2 002B     		cmp	r3, #0
+ 1044 04b4 06D1     		bne	.L41
+ 704:../src/stm32f30x_i2c.c ****   {
+ 705:../src/stm32f30x_i2c.c ****     /* Request a write Transfer */
+ 706:../src/stm32f30x_i2c.c ****     I2Cx->CR2 &= (uint32_t)~((uint32_t)I2C_CR2_RD_WRN);
+ 1045              		.loc 1 706 0
+ 1046 04b6 7B68     		ldr	r3, [r7, #4]
+ 1047 04b8 5B68     		ldr	r3, [r3, #4]
+ 1048 04ba 23F48062 		bic	r2, r3, #1024
+ 1049 04be 7B68     		ldr	r3, [r7, #4]
+ 1050 04c0 5A60     		str	r2, [r3, #4]
+ 1051 04c2 05E0     		b	.L40
+ 1052              	.L41:
+ 707:../src/stm32f30x_i2c.c ****   }
+ 708:../src/stm32f30x_i2c.c ****   else
+ 709:../src/stm32f30x_i2c.c ****   {
+ 710:../src/stm32f30x_i2c.c ****     /* Request a read Transfer */
+ 711:../src/stm32f30x_i2c.c ****     I2Cx->CR2 |= I2C_CR2_RD_WRN;
+ 1053              		.loc 1 711 0
+ 1054 04c4 7B68     		ldr	r3, [r7, #4]
+ 1055 04c6 5B68     		ldr	r3, [r3, #4]
+ 1056 04c8 43F48062 		orr	r2, r3, #1024
+ 1057 04cc 7B68     		ldr	r3, [r7, #4]
+ 1058 04ce 5A60     		str	r2, [r3, #4]
+ 1059              	.L40:
+ 712:../src/stm32f30x_i2c.c ****   }
+ 713:../src/stm32f30x_i2c.c **** }  
+ 1060              		.loc 1 713 0
+ 1061 04d0 07F10C07 		add	r7, r7, #12
+ 1062 04d4 BD46     		mov	sp, r7
+ 1063 04d6 80BC     		pop	{r7}
+ 1064 04d8 7047     		bx	lr
+ 1065              		.cfi_endproc
+ 1066              	.LFE128:
+ 1068 04da 00BF     		.align	2
+ 1069              		.global	I2C_GenerateSTART
+ 1070              		.thumb
+ 1071              		.thumb_func
+ 1073              	I2C_GenerateSTART:
+ 1074              	.LFB129:
+ 714:../src/stm32f30x_i2c.c ****   
+ 715:../src/stm32f30x_i2c.c **** /**
+ 716:../src/stm32f30x_i2c.c ****   * @brief  Generates I2Cx communication START condition.
+ 717:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 718:../src/stm32f30x_i2c.c ****   * @param  NewState: new state of the I2C START condition generation.
+ 719:../src/stm32f30x_i2c.c ****   *   This parameter can be: ENABLE or DISABLE.
+ 720:../src/stm32f30x_i2c.c ****   * @retval None
+ 721:../src/stm32f30x_i2c.c ****   */
+ 722:../src/stm32f30x_i2c.c **** void I2C_GenerateSTART(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 723:../src/stm32f30x_i2c.c **** {
+ 1075              		.loc 1 723 0
+ 1076              		.cfi_startproc
+ 1077              		@ args = 0, pretend = 0, frame = 8
+ 1078              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1079              		@ link register save eliminated.
+ 1080 04dc 80B4     		push	{r7}
+ 1081              	.LCFI54:
+ 1082              		.cfi_def_cfa_offset 4
+ 1083              		.cfi_offset 7, -4
+ 1084 04de 83B0     		sub	sp, sp, #12
+ 1085              	.LCFI55:
+ 1086              		.cfi_def_cfa_offset 16
+ 1087 04e0 00AF     		add	r7, sp, #0
+ 1088              	.LCFI56:
+ 1089              		.cfi_def_cfa_register 7
+ 1090 04e2 7860     		str	r0, [r7, #4]
+ 1091 04e4 0B46     		mov	r3, r1
+ 1092 04e6 FB70     		strb	r3, [r7, #3]
+ 724:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+ 725:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 726:../src/stm32f30x_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 727:../src/stm32f30x_i2c.c ****   
+ 728:../src/stm32f30x_i2c.c ****   if (NewState != DISABLE)
+ 1093              		.loc 1 728 0
+ 1094 04e8 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 1095 04ea 002B     		cmp	r3, #0
+ 1096 04ec 06D0     		beq	.L44
+ 729:../src/stm32f30x_i2c.c ****   {
+ 730:../src/stm32f30x_i2c.c ****     /* Generate a START condition */
+ 731:../src/stm32f30x_i2c.c ****     I2Cx->CR2 |= I2C_CR2_START;
+ 1097              		.loc 1 731 0
+ 1098 04ee 7B68     		ldr	r3, [r7, #4]
+ 1099 04f0 5B68     		ldr	r3, [r3, #4]
+ 1100 04f2 43F40052 		orr	r2, r3, #8192
+ 1101 04f6 7B68     		ldr	r3, [r7, #4]
+ 1102 04f8 5A60     		str	r2, [r3, #4]
+ 1103 04fa 05E0     		b	.L43
+ 1104              	.L44:
+ 732:../src/stm32f30x_i2c.c ****   }
+ 733:../src/stm32f30x_i2c.c ****   else
+ 734:../src/stm32f30x_i2c.c ****   {
+ 735:../src/stm32f30x_i2c.c ****     /* Disable the START condition generation */
+ 736:../src/stm32f30x_i2c.c ****     I2Cx->CR2 &= (uint32_t)~((uint32_t)I2C_CR2_START);
+ 1105              		.loc 1 736 0
+ 1106 04fc 7B68     		ldr	r3, [r7, #4]
+ 1107 04fe 5B68     		ldr	r3, [r3, #4]
+ 1108 0500 23F40052 		bic	r2, r3, #8192
+ 1109 0504 7B68     		ldr	r3, [r7, #4]
+ 1110 0506 5A60     		str	r2, [r3, #4]
+ 1111              	.L43:
+ 737:../src/stm32f30x_i2c.c ****   }
+ 738:../src/stm32f30x_i2c.c **** }  
+ 1112              		.loc 1 738 0
+ 1113 0508 07F10C07 		add	r7, r7, #12
+ 1114 050c BD46     		mov	sp, r7
+ 1115 050e 80BC     		pop	{r7}
+ 1116 0510 7047     		bx	lr
+ 1117              		.cfi_endproc
+ 1118              	.LFE129:
+ 1120 0512 00BF     		.align	2
+ 1121              		.global	I2C_GenerateSTOP
+ 1122              		.thumb
+ 1123              		.thumb_func
+ 1125              	I2C_GenerateSTOP:
+ 1126              	.LFB130:
+ 739:../src/stm32f30x_i2c.c ****   
+ 740:../src/stm32f30x_i2c.c **** /**
+ 741:../src/stm32f30x_i2c.c ****   * @brief  Generates I2Cx communication STOP condition.
+ 742:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 743:../src/stm32f30x_i2c.c ****   * @param  NewState: new state of the I2C STOP condition generation.
+ 744:../src/stm32f30x_i2c.c ****   *   This parameter can be: ENABLE or DISABLE.
+ 745:../src/stm32f30x_i2c.c ****   * @retval None
+ 746:../src/stm32f30x_i2c.c ****   */
+ 747:../src/stm32f30x_i2c.c **** void I2C_GenerateSTOP(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 748:../src/stm32f30x_i2c.c **** {
+ 1127              		.loc 1 748 0
+ 1128              		.cfi_startproc
+ 1129              		@ args = 0, pretend = 0, frame = 8
+ 1130              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1131              		@ link register save eliminated.
+ 1132 0514 80B4     		push	{r7}
+ 1133              	.LCFI57:
+ 1134              		.cfi_def_cfa_offset 4
+ 1135              		.cfi_offset 7, -4
+ 1136 0516 83B0     		sub	sp, sp, #12
+ 1137              	.LCFI58:
+ 1138              		.cfi_def_cfa_offset 16
+ 1139 0518 00AF     		add	r7, sp, #0
+ 1140              	.LCFI59:
+ 1141              		.cfi_def_cfa_register 7
+ 1142 051a 7860     		str	r0, [r7, #4]
+ 1143 051c 0B46     		mov	r3, r1
+ 1144 051e FB70     		strb	r3, [r7, #3]
+ 749:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+ 750:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 751:../src/stm32f30x_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 752:../src/stm32f30x_i2c.c ****   
+ 753:../src/stm32f30x_i2c.c ****   if (NewState != DISABLE)
+ 1145              		.loc 1 753 0
+ 1146 0520 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 1147 0522 002B     		cmp	r3, #0
+ 1148 0524 06D0     		beq	.L47
+ 754:../src/stm32f30x_i2c.c ****   {
+ 755:../src/stm32f30x_i2c.c ****     /* Generate a STOP condition */
+ 756:../src/stm32f30x_i2c.c ****     I2Cx->CR2 |= I2C_CR2_STOP;
+ 1149              		.loc 1 756 0
+ 1150 0526 7B68     		ldr	r3, [r7, #4]
+ 1151 0528 5B68     		ldr	r3, [r3, #4]
+ 1152 052a 43F48042 		orr	r2, r3, #16384
+ 1153 052e 7B68     		ldr	r3, [r7, #4]
+ 1154 0530 5A60     		str	r2, [r3, #4]
+ 1155 0532 05E0     		b	.L46
+ 1156              	.L47:
+ 757:../src/stm32f30x_i2c.c ****   }
+ 758:../src/stm32f30x_i2c.c ****   else
+ 759:../src/stm32f30x_i2c.c ****   {
+ 760:../src/stm32f30x_i2c.c ****     /* Disable the STOP condition generation */
+ 761:../src/stm32f30x_i2c.c ****     I2Cx->CR2 &= (uint32_t)~((uint32_t)I2C_CR2_STOP);
+ 1157              		.loc 1 761 0
+ 1158 0534 7B68     		ldr	r3, [r7, #4]
+ 1159 0536 5B68     		ldr	r3, [r3, #4]
+ 1160 0538 23F48042 		bic	r2, r3, #16384
+ 1161 053c 7B68     		ldr	r3, [r7, #4]
+ 1162 053e 5A60     		str	r2, [r3, #4]
+ 1163              	.L46:
+ 762:../src/stm32f30x_i2c.c ****   }
+ 763:../src/stm32f30x_i2c.c **** }  
+ 1164              		.loc 1 763 0
+ 1165 0540 07F10C07 		add	r7, r7, #12
+ 1166 0544 BD46     		mov	sp, r7
+ 1167 0546 80BC     		pop	{r7}
+ 1168 0548 7047     		bx	lr
+ 1169              		.cfi_endproc
+ 1170              	.LFE130:
+ 1172 054a 00BF     		.align	2
+ 1173              		.global	I2C_10BitAddressHeaderCmd
+ 1174              		.thumb
+ 1175              		.thumb_func
+ 1177              	I2C_10BitAddressHeaderCmd:
+ 1178              	.LFB131:
+ 764:../src/stm32f30x_i2c.c **** 
+ 765:../src/stm32f30x_i2c.c **** /**
+ 766:../src/stm32f30x_i2c.c ****   * @brief  Enables or disables the I2C 10-bit header only mode with read direction.
+ 767:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 768:../src/stm32f30x_i2c.c ****   * @param  NewState: new state of the I2C 10-bit header only mode.
+ 769:../src/stm32f30x_i2c.c ****   *   This parameter can be: ENABLE or DISABLE.
+ 770:../src/stm32f30x_i2c.c ****   * @note   This mode can be used only when switching from master transmitter mode 
+ 771:../src/stm32f30x_i2c.c ****   *         to master receiver mode.        
+ 772:../src/stm32f30x_i2c.c ****   * @retval None
+ 773:../src/stm32f30x_i2c.c ****   */
+ 774:../src/stm32f30x_i2c.c **** void I2C_10BitAddressHeaderCmd(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 775:../src/stm32f30x_i2c.c **** {
+ 1179              		.loc 1 775 0
+ 1180              		.cfi_startproc
+ 1181              		@ args = 0, pretend = 0, frame = 8
+ 1182              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1183              		@ link register save eliminated.
+ 1184 054c 80B4     		push	{r7}
+ 1185              	.LCFI60:
+ 1186              		.cfi_def_cfa_offset 4
+ 1187              		.cfi_offset 7, -4
+ 1188 054e 83B0     		sub	sp, sp, #12
+ 1189              	.LCFI61:
+ 1190              		.cfi_def_cfa_offset 16
+ 1191 0550 00AF     		add	r7, sp, #0
+ 1192              	.LCFI62:
+ 1193              		.cfi_def_cfa_register 7
+ 1194 0552 7860     		str	r0, [r7, #4]
+ 1195 0554 0B46     		mov	r3, r1
+ 1196 0556 FB70     		strb	r3, [r7, #3]
+ 776:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+ 777:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 778:../src/stm32f30x_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 779:../src/stm32f30x_i2c.c ****   
+ 780:../src/stm32f30x_i2c.c ****   if (NewState != DISABLE)
+ 1197              		.loc 1 780 0
+ 1198 0558 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 1199 055a 002B     		cmp	r3, #0
+ 1200 055c 06D0     		beq	.L50
+ 781:../src/stm32f30x_i2c.c ****   {
+ 782:../src/stm32f30x_i2c.c ****     /* Enable 10-bit header only mode */
+ 783:../src/stm32f30x_i2c.c ****     I2Cx->CR2 |= I2C_CR2_HEAD10R;
+ 1201              		.loc 1 783 0
+ 1202 055e 7B68     		ldr	r3, [r7, #4]
+ 1203 0560 5B68     		ldr	r3, [r3, #4]
+ 1204 0562 43F48052 		orr	r2, r3, #4096
+ 1205 0566 7B68     		ldr	r3, [r7, #4]
+ 1206 0568 5A60     		str	r2, [r3, #4]
+ 1207 056a 05E0     		b	.L49
+ 1208              	.L50:
+ 784:../src/stm32f30x_i2c.c ****   }
+ 785:../src/stm32f30x_i2c.c ****   else
+ 786:../src/stm32f30x_i2c.c ****   {
+ 787:../src/stm32f30x_i2c.c ****     /* Disable 10-bit header only mode */
+ 788:../src/stm32f30x_i2c.c ****     I2Cx->CR2 &= (uint32_t)~((uint32_t)I2C_CR2_HEAD10R);
+ 1209              		.loc 1 788 0
+ 1210 056c 7B68     		ldr	r3, [r7, #4]
+ 1211 056e 5B68     		ldr	r3, [r3, #4]
+ 1212 0570 23F48052 		bic	r2, r3, #4096
+ 1213 0574 7B68     		ldr	r3, [r7, #4]
+ 1214 0576 5A60     		str	r2, [r3, #4]
+ 1215              	.L49:
+ 789:../src/stm32f30x_i2c.c ****   }
+ 790:../src/stm32f30x_i2c.c **** }    
+ 1216              		.loc 1 790 0
+ 1217 0578 07F10C07 		add	r7, r7, #12
+ 1218 057c BD46     		mov	sp, r7
+ 1219 057e 80BC     		pop	{r7}
+ 1220 0580 7047     		bx	lr
+ 1221              		.cfi_endproc
+ 1222              	.LFE131:
+ 1224 0582 00BF     		.align	2
+ 1225              		.global	I2C_AcknowledgeConfig
+ 1226              		.thumb
+ 1227              		.thumb_func
+ 1229              	I2C_AcknowledgeConfig:
+ 1230              	.LFB132:
+ 791:../src/stm32f30x_i2c.c **** 
+ 792:../src/stm32f30x_i2c.c **** /**
+ 793:../src/stm32f30x_i2c.c ****   * @brief  Generates I2C communication Acknowledge.
+ 794:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 795:../src/stm32f30x_i2c.c ****   * @param  NewState: new state of the Acknowledge.
+ 796:../src/stm32f30x_i2c.c ****   *   This parameter can be: ENABLE or DISABLE.  
+ 797:../src/stm32f30x_i2c.c ****   * @retval None
+ 798:../src/stm32f30x_i2c.c ****   */
+ 799:../src/stm32f30x_i2c.c **** void I2C_AcknowledgeConfig(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 800:../src/stm32f30x_i2c.c **** {
+ 1231              		.loc 1 800 0
+ 1232              		.cfi_startproc
+ 1233              		@ args = 0, pretend = 0, frame = 8
+ 1234              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1235              		@ link register save eliminated.
+ 1236 0584 80B4     		push	{r7}
+ 1237              	.LCFI63:
+ 1238              		.cfi_def_cfa_offset 4
+ 1239              		.cfi_offset 7, -4
+ 1240 0586 83B0     		sub	sp, sp, #12
+ 1241              	.LCFI64:
+ 1242              		.cfi_def_cfa_offset 16
+ 1243 0588 00AF     		add	r7, sp, #0
+ 1244              	.LCFI65:
+ 1245              		.cfi_def_cfa_register 7
+ 1246 058a 7860     		str	r0, [r7, #4]
+ 1247 058c 0B46     		mov	r3, r1
+ 1248 058e FB70     		strb	r3, [r7, #3]
+ 801:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+ 802:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 803:../src/stm32f30x_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 804:../src/stm32f30x_i2c.c ****   
+ 805:../src/stm32f30x_i2c.c ****   if (NewState != DISABLE)
+ 1249              		.loc 1 805 0
+ 1250 0590 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 1251 0592 002B     		cmp	r3, #0
+ 1252 0594 06D0     		beq	.L53
+ 806:../src/stm32f30x_i2c.c ****   {
+ 807:../src/stm32f30x_i2c.c ****     /* Enable ACK generation */
+ 808:../src/stm32f30x_i2c.c ****     I2Cx->CR2 &= (uint32_t)~((uint32_t)I2C_CR2_NACK);    
+ 1253              		.loc 1 808 0
+ 1254 0596 7B68     		ldr	r3, [r7, #4]
+ 1255 0598 5B68     		ldr	r3, [r3, #4]
+ 1256 059a 23F40042 		bic	r2, r3, #32768
+ 1257 059e 7B68     		ldr	r3, [r7, #4]
+ 1258 05a0 5A60     		str	r2, [r3, #4]
+ 1259 05a2 05E0     		b	.L52
+ 1260              	.L53:
+ 809:../src/stm32f30x_i2c.c ****   }
+ 810:../src/stm32f30x_i2c.c ****   else
+ 811:../src/stm32f30x_i2c.c ****   {
+ 812:../src/stm32f30x_i2c.c ****     /* Enable NACK generation */
+ 813:../src/stm32f30x_i2c.c ****     I2Cx->CR2 |= I2C_CR2_NACK;
+ 1261              		.loc 1 813 0
+ 1262 05a4 7B68     		ldr	r3, [r7, #4]
+ 1263 05a6 5B68     		ldr	r3, [r3, #4]
+ 1264 05a8 43F40042 		orr	r2, r3, #32768
+ 1265 05ac 7B68     		ldr	r3, [r7, #4]
+ 1266 05ae 5A60     		str	r2, [r3, #4]
+ 1267              	.L52:
+ 814:../src/stm32f30x_i2c.c ****   }
+ 815:../src/stm32f30x_i2c.c **** }
+ 1268              		.loc 1 815 0
+ 1269 05b0 07F10C07 		add	r7, r7, #12
+ 1270 05b4 BD46     		mov	sp, r7
+ 1271 05b6 80BC     		pop	{r7}
+ 1272 05b8 7047     		bx	lr
+ 1273              		.cfi_endproc
+ 1274              	.LFE132:
+ 1276 05ba 00BF     		.align	2
+ 1277              		.global	I2C_GetAddressMatched
+ 1278              		.thumb
+ 1279              		.thumb_func
+ 1281              	I2C_GetAddressMatched:
+ 1282              	.LFB133:
+ 816:../src/stm32f30x_i2c.c **** 
+ 817:../src/stm32f30x_i2c.c **** /**
+ 818:../src/stm32f30x_i2c.c ****   * @brief  Returns the I2C slave matched address .
+ 819:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 820:../src/stm32f30x_i2c.c ****   * @retval The value of the slave matched address .
+ 821:../src/stm32f30x_i2c.c ****   */
+ 822:../src/stm32f30x_i2c.c **** uint8_t I2C_GetAddressMatched(I2C_TypeDef* I2Cx)
+ 823:../src/stm32f30x_i2c.c **** {
+ 1283              		.loc 1 823 0
+ 1284              		.cfi_startproc
+ 1285              		@ args = 0, pretend = 0, frame = 8
+ 1286              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1287              		@ link register save eliminated.
+ 1288 05bc 80B4     		push	{r7}
+ 1289              	.LCFI66:
+ 1290              		.cfi_def_cfa_offset 4
+ 1291              		.cfi_offset 7, -4
+ 1292 05be 83B0     		sub	sp, sp, #12
+ 1293              	.LCFI67:
+ 1294              		.cfi_def_cfa_offset 16
+ 1295 05c0 00AF     		add	r7, sp, #0
+ 1296              	.LCFI68:
+ 1297              		.cfi_def_cfa_register 7
+ 1298 05c2 7860     		str	r0, [r7, #4]
+ 824:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+ 825:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 826:../src/stm32f30x_i2c.c ****   
+ 827:../src/stm32f30x_i2c.c ****   /* Return the slave matched address in the SR1 register */
+ 828:../src/stm32f30x_i2c.c ****   return (uint8_t)(((uint32_t)I2Cx->ISR & I2C_ISR_ADDCODE) >> 16) ;
+ 1299              		.loc 1 828 0
+ 1300 05c4 7B68     		ldr	r3, [r7, #4]
+ 1301 05c6 9B69     		ldr	r3, [r3, #24]
+ 1302 05c8 03F47E03 		and	r3, r3, #16646144
+ 1303 05cc 4FEA1343 		lsr	r3, r3, #16
+ 1304 05d0 DBB2     		uxtb	r3, r3
+ 829:../src/stm32f30x_i2c.c **** }
+ 1305              		.loc 1 829 0
+ 1306 05d2 1846     		mov	r0, r3
+ 1307 05d4 07F10C07 		add	r7, r7, #12
+ 1308 05d8 BD46     		mov	sp, r7
+ 1309 05da 80BC     		pop	{r7}
+ 1310 05dc 7047     		bx	lr
+ 1311              		.cfi_endproc
+ 1312              	.LFE133:
+ 1314 05de 00BF     		.align	2
+ 1315              		.global	I2C_GetTransferDirection
+ 1316              		.thumb
+ 1317              		.thumb_func
+ 1319              	I2C_GetTransferDirection:
+ 1320              	.LFB134:
+ 830:../src/stm32f30x_i2c.c **** 
+ 831:../src/stm32f30x_i2c.c **** /**
+ 832:../src/stm32f30x_i2c.c ****   * @brief  Returns the I2C slave received request.
+ 833:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 834:../src/stm32f30x_i2c.c ****   * @retval The value of the received request.
+ 835:../src/stm32f30x_i2c.c ****   */
+ 836:../src/stm32f30x_i2c.c **** uint16_t I2C_GetTransferDirection(I2C_TypeDef* I2Cx)
+ 837:../src/stm32f30x_i2c.c **** {
+ 1321              		.loc 1 837 0
+ 1322              		.cfi_startproc
+ 1323              		@ args = 0, pretend = 0, frame = 16
+ 1324              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1325              		@ link register save eliminated.
+ 1326 05e0 80B4     		push	{r7}
+ 1327              	.LCFI69:
+ 1328              		.cfi_def_cfa_offset 4
+ 1329              		.cfi_offset 7, -4
+ 1330 05e2 85B0     		sub	sp, sp, #20
+ 1331              	.LCFI70:
+ 1332              		.cfi_def_cfa_offset 24
+ 1333 05e4 00AF     		add	r7, sp, #0
+ 1334              	.LCFI71:
+ 1335              		.cfi_def_cfa_register 7
+ 1336 05e6 7860     		str	r0, [r7, #4]
+ 838:../src/stm32f30x_i2c.c ****   uint32_t tmpreg = 0;
+ 1337              		.loc 1 838 0
+ 1338 05e8 4FF00003 		mov	r3, #0
+ 1339 05ec BB60     		str	r3, [r7, #8]
+ 839:../src/stm32f30x_i2c.c ****   uint16_t direction = 0;
+ 1340              		.loc 1 839 0
+ 1341 05ee 4FF00003 		mov	r3, #0
+ 1342 05f2 FB81     		strh	r3, [r7, #14]	@ movhi
+ 840:../src/stm32f30x_i2c.c ****   
+ 841:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+ 842:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 843:../src/stm32f30x_i2c.c ****   
+ 844:../src/stm32f30x_i2c.c ****   /* Return the slave matched address in the SR1 register */
+ 845:../src/stm32f30x_i2c.c ****   tmpreg = (uint32_t)(I2Cx->ISR & I2C_ISR_DIR);
+ 1343              		.loc 1 845 0
+ 1344 05f4 7B68     		ldr	r3, [r7, #4]
+ 1345 05f6 9B69     		ldr	r3, [r3, #24]
+ 1346 05f8 03F48033 		and	r3, r3, #65536
+ 1347 05fc BB60     		str	r3, [r7, #8]
+ 846:../src/stm32f30x_i2c.c ****   
+ 847:../src/stm32f30x_i2c.c ****   /* If write transfer is requested */
+ 848:../src/stm32f30x_i2c.c ****   if (tmpreg == 0)
+ 1348              		.loc 1 848 0
+ 1349 05fe BB68     		ldr	r3, [r7, #8]
+ 1350 0600 002B     		cmp	r3, #0
+ 1351 0602 03D1     		bne	.L58
+ 849:../src/stm32f30x_i2c.c ****   {
+ 850:../src/stm32f30x_i2c.c ****     /* write transfer is requested */
+ 851:../src/stm32f30x_i2c.c ****     direction = I2C_Direction_Transmitter;
+ 1352              		.loc 1 851 0
+ 1353 0604 4FF00003 		mov	r3, #0
+ 1354 0608 FB81     		strh	r3, [r7, #14]	@ movhi
+ 1355 060a 02E0     		b	.L59
+ 1356              	.L58:
+ 852:../src/stm32f30x_i2c.c ****   }
+ 853:../src/stm32f30x_i2c.c ****   else
+ 854:../src/stm32f30x_i2c.c ****   {
+ 855:../src/stm32f30x_i2c.c ****     /* Read transfer is requested */
+ 856:../src/stm32f30x_i2c.c ****     direction = I2C_Direction_Receiver;
+ 1357              		.loc 1 856 0
+ 1358 060c 4FF48063 		mov	r3, #1024
+ 1359 0610 FB81     		strh	r3, [r7, #14]	@ movhi
+ 1360              	.L59:
+ 857:../src/stm32f30x_i2c.c ****   }  
+ 858:../src/stm32f30x_i2c.c ****   return direction;
+ 1361              		.loc 1 858 0
+ 1362 0612 FB89     		ldrh	r3, [r7, #14]
+ 859:../src/stm32f30x_i2c.c **** }
+ 1363              		.loc 1 859 0
+ 1364 0614 1846     		mov	r0, r3
+ 1365 0616 07F11407 		add	r7, r7, #20
+ 1366 061a BD46     		mov	sp, r7
+ 1367 061c 80BC     		pop	{r7}
+ 1368 061e 7047     		bx	lr
+ 1369              		.cfi_endproc
+ 1370              	.LFE134:
+ 1372              		.align	2
+ 1373              		.global	I2C_TransferHandling
+ 1374              		.thumb
+ 1375              		.thumb_func
+ 1377              	I2C_TransferHandling:
+ 1378              	.LFB135:
+ 860:../src/stm32f30x_i2c.c **** 
+ 861:../src/stm32f30x_i2c.c **** /**
+ 862:../src/stm32f30x_i2c.c ****   * @brief  Handles I2Cx communication when starting transfer or during transfer (TC or TCR flag ar
+ 863:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 864:../src/stm32f30x_i2c.c ****   * @param  Address: specifies the slave address to be programmed.
+ 865:../src/stm32f30x_i2c.c ****   * @param  Number_Bytes: specifies the number of bytes to be programmed.
+ 866:../src/stm32f30x_i2c.c ****   *   This parameter must be a value between 0 and 255.
+ 867:../src/stm32f30x_i2c.c ****   * @param  ReloadEndMode: new state of the I2C START condition generation.
+ 868:../src/stm32f30x_i2c.c ****   *   This parameter can be one of the following values:
+ 869:../src/stm32f30x_i2c.c ****   *     @arg I2C_Reload_Mode: Enable Reload mode .
+ 870:../src/stm32f30x_i2c.c ****   *     @arg I2C_AutoEnd_Mode: Enable Automatic end mode.
+ 871:../src/stm32f30x_i2c.c ****   *     @arg I2C_SoftEnd_Mode: Enable Software end mode.
+ 872:../src/stm32f30x_i2c.c ****   * @param  StartStopMode: new state of the I2C START condition generation.
+ 873:../src/stm32f30x_i2c.c ****   *   This parameter can be one of the following values:
+ 874:../src/stm32f30x_i2c.c ****   *     @arg I2C_No_StartStop: Don't Generate stop and start condition.
+ 875:../src/stm32f30x_i2c.c ****   *     @arg I2C_Generate_Stop: Generate stop condition (Number_Bytes should be set to 0).
+ 876:../src/stm32f30x_i2c.c ****   *     @arg I2C_Generate_Start_Read: Generate Restart for read request.
+ 877:../src/stm32f30x_i2c.c ****   *     @arg I2C_Generate_Start_Write: Generate Restart for write request.
+ 878:../src/stm32f30x_i2c.c ****   * @retval None
+ 879:../src/stm32f30x_i2c.c ****   */
+ 880:../src/stm32f30x_i2c.c **** void I2C_TransferHandling(I2C_TypeDef* I2Cx, uint16_t Address, uint8_t Number_Bytes, uint32_t Reloa
+ 881:../src/stm32f30x_i2c.c **** {
+ 1379              		.loc 1 881 0
+ 1380              		.cfi_startproc
+ 1381              		@ args = 4, pretend = 0, frame = 24
+ 1382              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1383              		@ link register save eliminated.
+ 1384 0620 80B4     		push	{r7}
+ 1385              	.LCFI72:
+ 1386              		.cfi_def_cfa_offset 4
+ 1387              		.cfi_offset 7, -4
+ 1388 0622 87B0     		sub	sp, sp, #28
+ 1389              	.LCFI73:
+ 1390              		.cfi_def_cfa_offset 32
+ 1391 0624 00AF     		add	r7, sp, #0
+ 1392              	.LCFI74:
+ 1393              		.cfi_def_cfa_register 7
+ 1394 0626 F860     		str	r0, [r7, #12]
+ 1395 0628 7B60     		str	r3, [r7, #4]
+ 1396 062a 0B46     		mov	r3, r1	@ movhi
+ 1397 062c 7B81     		strh	r3, [r7, #10]	@ movhi
+ 1398 062e 1346     		mov	r3, r2
+ 1399 0630 7B72     		strb	r3, [r7, #9]
+ 882:../src/stm32f30x_i2c.c ****   uint32_t tmpreg = 0;
+ 1400              		.loc 1 882 0
+ 1401 0632 4FF00003 		mov	r3, #0
+ 1402 0636 7B61     		str	r3, [r7, #20]
+ 883:../src/stm32f30x_i2c.c ****   
+ 884:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+ 885:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 886:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_SLAVE_ADDRESS(Address));  
+ 887:../src/stm32f30x_i2c.c ****   assert_param(IS_RELOAD_END_MODE(ReloadEndMode));
+ 888:../src/stm32f30x_i2c.c ****   assert_param(IS_START_STOP_MODE(StartStopMode));
+ 889:../src/stm32f30x_i2c.c ****     
+ 890:../src/stm32f30x_i2c.c ****   /* Get the CR2 register value */
+ 891:../src/stm32f30x_i2c.c ****   tmpreg = I2Cx->CR2;
+ 1403              		.loc 1 891 0
+ 1404 0638 FB68     		ldr	r3, [r7, #12]
+ 1405 063a 5B68     		ldr	r3, [r3, #4]
+ 1406 063c 7B61     		str	r3, [r7, #20]
+ 892:../src/stm32f30x_i2c.c ****   
+ 893:../src/stm32f30x_i2c.c ****   /* clear tmpreg specific bits */
+ 894:../src/stm32f30x_i2c.c ****   tmpreg &= (uint32_t)~((uint32_t)(I2C_CR2_SADD | I2C_CR2_NBYTES | I2C_CR2_RELOAD | I2C_CR2_AUTOEND
+ 1407              		.loc 1 894 0
+ 1408 063e 7A69     		ldr	r2, [r7, #20]
+ 1409 0640 4FF41843 		mov	r3, #38912
+ 1410 0644 CFF60043 		movt	r3, 64512
+ 1411 0648 1340     		ands	r3, r3, r2
+ 1412 064a 7B61     		str	r3, [r7, #20]
+ 895:../src/stm32f30x_i2c.c ****   
+ 896:../src/stm32f30x_i2c.c ****   /* update tmpreg */
+ 897:../src/stm32f30x_i2c.c ****   tmpreg |= (uint32_t)(((uint32_t)Address & I2C_CR2_SADD) | (((uint32_t)Number_Bytes << 16 ) & I2C_
+ 1413              		.loc 1 897 0
+ 1414 064c 7B89     		ldrh	r3, [r7, #10]
+ 1415 064e 4FEA8353 		lsl	r3, r3, #22
+ 1416 0652 4FEA9353 		lsr	r3, r3, #22
+ 1417 0656 7A7A     		ldrb	r2, [r7, #9]	@ zero_extendqisi2
+ 1418 0658 4FEA0242 		lsl	r2, r2, #16
+ 1419 065c 02F47F02 		and	r2, r2, #16711680
+ 1420 0660 1A43     		orrs	r2, r2, r3
+ 1421 0662 7B68     		ldr	r3, [r7, #4]
+ 1422 0664 1A43     		orrs	r2, r2, r3
+ 1423 0666 3B6A     		ldr	r3, [r7, #32]
+ 1424 0668 1343     		orrs	r3, r3, r2
+ 1425 066a 7A69     		ldr	r2, [r7, #20]
+ 1426 066c 1343     		orrs	r3, r3, r2
+ 1427 066e 7B61     		str	r3, [r7, #20]
+ 898:../src/stm32f30x_i2c.c ****             (uint32_t)ReloadEndMode | (uint32_t)StartStopMode);
+ 899:../src/stm32f30x_i2c.c ****   
+ 900:../src/stm32f30x_i2c.c ****   /* update CR2 register */
+ 901:../src/stm32f30x_i2c.c ****   I2Cx->CR2 = tmpreg;  
+ 1428              		.loc 1 901 0
+ 1429 0670 FB68     		ldr	r3, [r7, #12]
+ 1430 0672 7A69     		ldr	r2, [r7, #20]
+ 1431 0674 5A60     		str	r2, [r3, #4]
+ 902:../src/stm32f30x_i2c.c **** }  
+ 1432              		.loc 1 902 0
+ 1433 0676 07F11C07 		add	r7, r7, #28
+ 1434 067a BD46     		mov	sp, r7
+ 1435 067c 80BC     		pop	{r7}
+ 1436 067e 7047     		bx	lr
+ 1437              		.cfi_endproc
+ 1438              	.LFE135:
+ 1440              		.align	2
+ 1441              		.global	I2C_SMBusAlertCmd
+ 1442              		.thumb
+ 1443              		.thumb_func
+ 1445              	I2C_SMBusAlertCmd:
+ 1446              	.LFB136:
+ 903:../src/stm32f30x_i2c.c **** 
+ 904:../src/stm32f30x_i2c.c **** /**
+ 905:../src/stm32f30x_i2c.c ****   * @}
+ 906:../src/stm32f30x_i2c.c ****   */
+ 907:../src/stm32f30x_i2c.c **** 
+ 908:../src/stm32f30x_i2c.c **** 
+ 909:../src/stm32f30x_i2c.c **** /** @defgroup I2C_Group3 SMBUS management functions
+ 910:../src/stm32f30x_i2c.c ****  *  @brief   SMBUS management functions 
+ 911:../src/stm32f30x_i2c.c ****  *
+ 912:../src/stm32f30x_i2c.c **** @verbatim
+ 913:../src/stm32f30x_i2c.c ****  ===============================================================================
+ 914:../src/stm32f30x_i2c.c ****                       ##### SMBUS management functions #####
+ 915:../src/stm32f30x_i2c.c ****  ===============================================================================   
+ 916:../src/stm32f30x_i2c.c ****     [..] This section provides a set of functions that handles SMBus communication
+ 917:../src/stm32f30x_i2c.c ****          and timeouts detection.
+ 918:../src/stm32f30x_i2c.c ****     
+ 919:../src/stm32f30x_i2c.c ****     [..] The SMBus Device default address (0b1100 001) is enabled by calling I2C_Init()
+ 920:../src/stm32f30x_i2c.c ****          function and setting I2C_Mode member of I2C_InitTypeDef() structure to 
+ 921:../src/stm32f30x_i2c.c ****          I2C_Mode_SMBusDevice.
+ 922:../src/stm32f30x_i2c.c ****          
+ 923:../src/stm32f30x_i2c.c ****     [..] The SMBus Host address (0b0001 000) is enabled by calling I2C_Init()
+ 924:../src/stm32f30x_i2c.c ****          function and setting I2C_Mode member of I2C_InitTypeDef() structure to 
+ 925:../src/stm32f30x_i2c.c ****          I2C_Mode_SMBusHost.         
+ 926:../src/stm32f30x_i2c.c ****          
+ 927:../src/stm32f30x_i2c.c ****     [..] The Alert Response Address (0b0001 100) is enabled using I2C_SMBusAlertCmd()
+ 928:../src/stm32f30x_i2c.c ****          function.
+ 929:../src/stm32f30x_i2c.c ****          
+ 930:../src/stm32f30x_i2c.c ****     [..] To detect cumulative SCL stretch in master and slave mode, TIMEOUTB should be 
+ 931:../src/stm32f30x_i2c.c ****          configured (in accordance to SMBus specification) using I2C_TimeoutBConfig() 
+ 932:../src/stm32f30x_i2c.c ****          function then I2C_ExtendedClockTimeoutCmd() function should be called to enable
+ 933:../src/stm32f30x_i2c.c ****          the detection.
+ 934:../src/stm32f30x_i2c.c ****          
+ 935:../src/stm32f30x_i2c.c ****     [..] SCL low timeout is detected by configuring TIMEOUTB using I2C_TimeoutBConfig()
+ 936:../src/stm32f30x_i2c.c ****          function followed by the call of I2C_ClockTimeoutCmd(). When adding to this 
+ 937:../src/stm32f30x_i2c.c ****          procedure the call of I2C_IdleClockTimeoutCmd() function, Bus Idle condition 
+ 938:../src/stm32f30x_i2c.c ****          (both SCL and SDA high) is detected also.                
+ 939:../src/stm32f30x_i2c.c ****                           
+ 940:../src/stm32f30x_i2c.c **** @endverbatim
+ 941:../src/stm32f30x_i2c.c ****   * @{
+ 942:../src/stm32f30x_i2c.c ****   */
+ 943:../src/stm32f30x_i2c.c **** 
+ 944:../src/stm32f30x_i2c.c **** /**
+ 945:../src/stm32f30x_i2c.c ****   * @brief  Enables or disables I2C SMBus alert.
+ 946:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 947:../src/stm32f30x_i2c.c ****   * @param  NewState: new state of the I2Cx SMBus alert.
+ 948:../src/stm32f30x_i2c.c ****   *   This parameter can be: ENABLE or DISABLE.
+ 949:../src/stm32f30x_i2c.c ****   * @retval None
+ 950:../src/stm32f30x_i2c.c ****   */
+ 951:../src/stm32f30x_i2c.c **** void I2C_SMBusAlertCmd(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 952:../src/stm32f30x_i2c.c **** {
+ 1447              		.loc 1 952 0
+ 1448              		.cfi_startproc
+ 1449              		@ args = 0, pretend = 0, frame = 8
+ 1450              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1451              		@ link register save eliminated.
+ 1452 0680 80B4     		push	{r7}
+ 1453              	.LCFI75:
+ 1454              		.cfi_def_cfa_offset 4
+ 1455              		.cfi_offset 7, -4
+ 1456 0682 83B0     		sub	sp, sp, #12
+ 1457              	.LCFI76:
+ 1458              		.cfi_def_cfa_offset 16
+ 1459 0684 00AF     		add	r7, sp, #0
+ 1460              	.LCFI77:
+ 1461              		.cfi_def_cfa_register 7
+ 1462 0686 7860     		str	r0, [r7, #4]
+ 1463 0688 0B46     		mov	r3, r1
+ 1464 068a FB70     		strb	r3, [r7, #3]
+ 953:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+ 954:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 955:../src/stm32f30x_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 956:../src/stm32f30x_i2c.c ****   
+ 957:../src/stm32f30x_i2c.c ****   if (NewState != DISABLE)
+ 1465              		.loc 1 957 0
+ 1466 068c FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 1467 068e 002B     		cmp	r3, #0
+ 1468 0690 06D0     		beq	.L63
+ 958:../src/stm32f30x_i2c.c ****   {
+ 959:../src/stm32f30x_i2c.c ****     /* Enable SMBus alert */
+ 960:../src/stm32f30x_i2c.c ****     I2Cx->CR1 |= I2C_CR1_ALERTEN;   
+ 1469              		.loc 1 960 0
+ 1470 0692 7B68     		ldr	r3, [r7, #4]
+ 1471 0694 1B68     		ldr	r3, [r3, #0]
+ 1472 0696 43F48002 		orr	r2, r3, #4194304
+ 1473 069a 7B68     		ldr	r3, [r7, #4]
+ 1474 069c 1A60     		str	r2, [r3, #0]
+ 1475 069e 05E0     		b	.L62
+ 1476              	.L63:
+ 961:../src/stm32f30x_i2c.c ****   }
+ 962:../src/stm32f30x_i2c.c ****   else
+ 963:../src/stm32f30x_i2c.c ****   {
+ 964:../src/stm32f30x_i2c.c ****     /* Disable SMBus alert */    
+ 965:../src/stm32f30x_i2c.c ****     I2Cx->CR1 &= (uint32_t)~((uint32_t)I2C_CR1_ALERTEN); 
+ 1477              		.loc 1 965 0
+ 1478 06a0 7B68     		ldr	r3, [r7, #4]
+ 1479 06a2 1B68     		ldr	r3, [r3, #0]
+ 1480 06a4 23F48002 		bic	r2, r3, #4194304
+ 1481 06a8 7B68     		ldr	r3, [r7, #4]
+ 1482 06aa 1A60     		str	r2, [r3, #0]
+ 1483              	.L62:
+ 966:../src/stm32f30x_i2c.c ****   }
+ 967:../src/stm32f30x_i2c.c **** }
+ 1484              		.loc 1 967 0
+ 1485 06ac 07F10C07 		add	r7, r7, #12
+ 1486 06b0 BD46     		mov	sp, r7
+ 1487 06b2 80BC     		pop	{r7}
+ 1488 06b4 7047     		bx	lr
+ 1489              		.cfi_endproc
+ 1490              	.LFE136:
+ 1492 06b6 00BF     		.align	2
+ 1493              		.global	I2C_ClockTimeoutCmd
+ 1494              		.thumb
+ 1495              		.thumb_func
+ 1497              	I2C_ClockTimeoutCmd:
+ 1498              	.LFB137:
+ 968:../src/stm32f30x_i2c.c **** 
+ 969:../src/stm32f30x_i2c.c **** /**
+ 970:../src/stm32f30x_i2c.c ****   * @brief  Enables or disables I2C Clock Timeout (SCL Timeout detection).
+ 971:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 972:../src/stm32f30x_i2c.c ****   * @param  NewState: new state of the I2Cx clock Timeout.
+ 973:../src/stm32f30x_i2c.c ****   *   This parameter can be: ENABLE or DISABLE.
+ 974:../src/stm32f30x_i2c.c ****   * @retval None
+ 975:../src/stm32f30x_i2c.c ****   */
+ 976:../src/stm32f30x_i2c.c **** void I2C_ClockTimeoutCmd(I2C_TypeDef* I2Cx, FunctionalState NewState)
+ 977:../src/stm32f30x_i2c.c **** {
+ 1499              		.loc 1 977 0
+ 1500              		.cfi_startproc
+ 1501              		@ args = 0, pretend = 0, frame = 8
+ 1502              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1503              		@ link register save eliminated.
+ 1504 06b8 80B4     		push	{r7}
+ 1505              	.LCFI78:
+ 1506              		.cfi_def_cfa_offset 4
+ 1507              		.cfi_offset 7, -4
+ 1508 06ba 83B0     		sub	sp, sp, #12
+ 1509              	.LCFI79:
+ 1510              		.cfi_def_cfa_offset 16
+ 1511 06bc 00AF     		add	r7, sp, #0
+ 1512              	.LCFI80:
+ 1513              		.cfi_def_cfa_register 7
+ 1514 06be 7860     		str	r0, [r7, #4]
+ 1515 06c0 0B46     		mov	r3, r1
+ 1516 06c2 FB70     		strb	r3, [r7, #3]
+ 978:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+ 979:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+ 980:../src/stm32f30x_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 981:../src/stm32f30x_i2c.c ****   
+ 982:../src/stm32f30x_i2c.c ****   if (NewState != DISABLE)
+ 1517              		.loc 1 982 0
+ 1518 06c4 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 1519 06c6 002B     		cmp	r3, #0
+ 1520 06c8 06D0     		beq	.L66
+ 983:../src/stm32f30x_i2c.c ****   {
+ 984:../src/stm32f30x_i2c.c ****     /* Enable Clock Timeout */
+ 985:../src/stm32f30x_i2c.c ****     I2Cx->TIMEOUTR |= I2C_TIMEOUTR_TIMOUTEN;   
+ 1521              		.loc 1 985 0
+ 1522 06ca 7B68     		ldr	r3, [r7, #4]
+ 1523 06cc 5B69     		ldr	r3, [r3, #20]
+ 1524 06ce 43F40042 		orr	r2, r3, #32768
+ 1525 06d2 7B68     		ldr	r3, [r7, #4]
+ 1526 06d4 5A61     		str	r2, [r3, #20]
+ 1527 06d6 05E0     		b	.L65
+ 1528              	.L66:
+ 986:../src/stm32f30x_i2c.c ****   }
+ 987:../src/stm32f30x_i2c.c ****   else
+ 988:../src/stm32f30x_i2c.c ****   {
+ 989:../src/stm32f30x_i2c.c ****     /* Disable Clock Timeout */    
+ 990:../src/stm32f30x_i2c.c ****     I2Cx->TIMEOUTR &= (uint32_t)~((uint32_t)I2C_TIMEOUTR_TIMOUTEN); 
+ 1529              		.loc 1 990 0
+ 1530 06d8 7B68     		ldr	r3, [r7, #4]
+ 1531 06da 5B69     		ldr	r3, [r3, #20]
+ 1532 06dc 23F40042 		bic	r2, r3, #32768
+ 1533 06e0 7B68     		ldr	r3, [r7, #4]
+ 1534 06e2 5A61     		str	r2, [r3, #20]
+ 1535              	.L65:
+ 991:../src/stm32f30x_i2c.c ****   }
+ 992:../src/stm32f30x_i2c.c **** }
+ 1536              		.loc 1 992 0
+ 1537 06e4 07F10C07 		add	r7, r7, #12
+ 1538 06e8 BD46     		mov	sp, r7
+ 1539 06ea 80BC     		pop	{r7}
+ 1540 06ec 7047     		bx	lr
+ 1541              		.cfi_endproc
+ 1542              	.LFE137:
+ 1544 06ee 00BF     		.align	2
+ 1545              		.global	I2C_ExtendedClockTimeoutCmd
+ 1546              		.thumb
+ 1547              		.thumb_func
+ 1549              	I2C_ExtendedClockTimeoutCmd:
+ 1550              	.LFB138:
+ 993:../src/stm32f30x_i2c.c **** 
+ 994:../src/stm32f30x_i2c.c **** /**
+ 995:../src/stm32f30x_i2c.c ****   * @brief  Enables or disables I2C Extended Clock Timeout (SCL cumulative Timeout detection).
+ 996:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+ 997:../src/stm32f30x_i2c.c ****   * @param  NewState: new state of the I2Cx Extended clock Timeout.
+ 998:../src/stm32f30x_i2c.c ****   *   This parameter can be: ENABLE or DISABLE.
+ 999:../src/stm32f30x_i2c.c ****   * @retval None
+1000:../src/stm32f30x_i2c.c ****   */
+1001:../src/stm32f30x_i2c.c **** void I2C_ExtendedClockTimeoutCmd(I2C_TypeDef* I2Cx, FunctionalState NewState)
+1002:../src/stm32f30x_i2c.c **** {
+ 1551              		.loc 1 1002 0
+ 1552              		.cfi_startproc
+ 1553              		@ args = 0, pretend = 0, frame = 8
+ 1554              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1555              		@ link register save eliminated.
+ 1556 06f0 80B4     		push	{r7}
+ 1557              	.LCFI81:
+ 1558              		.cfi_def_cfa_offset 4
+ 1559              		.cfi_offset 7, -4
+ 1560 06f2 83B0     		sub	sp, sp, #12
+ 1561              	.LCFI82:
+ 1562              		.cfi_def_cfa_offset 16
+ 1563 06f4 00AF     		add	r7, sp, #0
+ 1564              	.LCFI83:
+ 1565              		.cfi_def_cfa_register 7
+ 1566 06f6 7860     		str	r0, [r7, #4]
+ 1567 06f8 0B46     		mov	r3, r1
+ 1568 06fa FB70     		strb	r3, [r7, #3]
+1003:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+1004:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+1005:../src/stm32f30x_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+1006:../src/stm32f30x_i2c.c ****   
+1007:../src/stm32f30x_i2c.c ****   if (NewState != DISABLE)
+ 1569              		.loc 1 1007 0
+ 1570 06fc FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 1571 06fe 002B     		cmp	r3, #0
+ 1572 0700 06D0     		beq	.L69
+1008:../src/stm32f30x_i2c.c ****   {
+1009:../src/stm32f30x_i2c.c ****     /* Enable Clock Timeout */
+1010:../src/stm32f30x_i2c.c ****     I2Cx->TIMEOUTR |= I2C_TIMEOUTR_TEXTEN;   
+ 1573              		.loc 1 1010 0
+ 1574 0702 7B68     		ldr	r3, [r7, #4]
+ 1575 0704 5B69     		ldr	r3, [r3, #20]
+ 1576 0706 43F00042 		orr	r2, r3, #-2147483648
+ 1577 070a 7B68     		ldr	r3, [r7, #4]
+ 1578 070c 5A61     		str	r2, [r3, #20]
+ 1579 070e 05E0     		b	.L68
+ 1580              	.L69:
+1011:../src/stm32f30x_i2c.c ****   }
+1012:../src/stm32f30x_i2c.c ****   else
+1013:../src/stm32f30x_i2c.c ****   {
+1014:../src/stm32f30x_i2c.c ****     /* Disable Clock Timeout */    
+1015:../src/stm32f30x_i2c.c ****     I2Cx->TIMEOUTR &= (uint32_t)~((uint32_t)I2C_TIMEOUTR_TEXTEN); 
+ 1581              		.loc 1 1015 0
+ 1582 0710 7B68     		ldr	r3, [r7, #4]
+ 1583 0712 5B69     		ldr	r3, [r3, #20]
+ 1584 0714 23F00042 		bic	r2, r3, #-2147483648
+ 1585 0718 7B68     		ldr	r3, [r7, #4]
+ 1586 071a 5A61     		str	r2, [r3, #20]
+ 1587              	.L68:
+1016:../src/stm32f30x_i2c.c ****   }
+1017:../src/stm32f30x_i2c.c **** }
+ 1588              		.loc 1 1017 0
+ 1589 071c 07F10C07 		add	r7, r7, #12
+ 1590 0720 BD46     		mov	sp, r7
+ 1591 0722 80BC     		pop	{r7}
+ 1592 0724 7047     		bx	lr
+ 1593              		.cfi_endproc
+ 1594              	.LFE138:
+ 1596 0726 00BF     		.align	2
+ 1597              		.global	I2C_IdleClockTimeoutCmd
+ 1598              		.thumb
+ 1599              		.thumb_func
+ 1601              	I2C_IdleClockTimeoutCmd:
+ 1602              	.LFB139:
+1018:../src/stm32f30x_i2c.c **** 
+1019:../src/stm32f30x_i2c.c **** /**
+1020:../src/stm32f30x_i2c.c ****   * @brief  Enables or disables I2C Idle Clock Timeout (Bus idle SCL and SDA 
+1021:../src/stm32f30x_i2c.c ****   *         high detection).
+1022:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+1023:../src/stm32f30x_i2c.c ****   * @param  NewState: new state of the I2Cx Idle clock Timeout.
+1024:../src/stm32f30x_i2c.c ****   *   This parameter can be: ENABLE or DISABLE.
+1025:../src/stm32f30x_i2c.c ****   * @retval None
+1026:../src/stm32f30x_i2c.c ****   */
+1027:../src/stm32f30x_i2c.c **** void I2C_IdleClockTimeoutCmd(I2C_TypeDef* I2Cx, FunctionalState NewState)
+1028:../src/stm32f30x_i2c.c **** {
+ 1603              		.loc 1 1028 0
+ 1604              		.cfi_startproc
+ 1605              		@ args = 0, pretend = 0, frame = 8
+ 1606              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1607              		@ link register save eliminated.
+ 1608 0728 80B4     		push	{r7}
+ 1609              	.LCFI84:
+ 1610              		.cfi_def_cfa_offset 4
+ 1611              		.cfi_offset 7, -4
+ 1612 072a 83B0     		sub	sp, sp, #12
+ 1613              	.LCFI85:
+ 1614              		.cfi_def_cfa_offset 16
+ 1615 072c 00AF     		add	r7, sp, #0
+ 1616              	.LCFI86:
+ 1617              		.cfi_def_cfa_register 7
+ 1618 072e 7860     		str	r0, [r7, #4]
+ 1619 0730 0B46     		mov	r3, r1
+ 1620 0732 FB70     		strb	r3, [r7, #3]
+1029:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+1030:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+1031:../src/stm32f30x_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+1032:../src/stm32f30x_i2c.c ****   
+1033:../src/stm32f30x_i2c.c ****   if (NewState != DISABLE)
+ 1621              		.loc 1 1033 0
+ 1622 0734 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 1623 0736 002B     		cmp	r3, #0
+ 1624 0738 06D0     		beq	.L72
+1034:../src/stm32f30x_i2c.c ****   {
+1035:../src/stm32f30x_i2c.c ****     /* Enable Clock Timeout */
+1036:../src/stm32f30x_i2c.c ****     I2Cx->TIMEOUTR |= I2C_TIMEOUTR_TIDLE;   
+ 1625              		.loc 1 1036 0
+ 1626 073a 7B68     		ldr	r3, [r7, #4]
+ 1627 073c 5B69     		ldr	r3, [r3, #20]
+ 1628 073e 43F48052 		orr	r2, r3, #4096
+ 1629 0742 7B68     		ldr	r3, [r7, #4]
+ 1630 0744 5A61     		str	r2, [r3, #20]
+ 1631 0746 05E0     		b	.L71
+ 1632              	.L72:
+1037:../src/stm32f30x_i2c.c ****   }
+1038:../src/stm32f30x_i2c.c ****   else
+1039:../src/stm32f30x_i2c.c ****   {
+1040:../src/stm32f30x_i2c.c ****     /* Disable Clock Timeout */    
+1041:../src/stm32f30x_i2c.c ****     I2Cx->TIMEOUTR &= (uint32_t)~((uint32_t)I2C_TIMEOUTR_TIDLE); 
+ 1633              		.loc 1 1041 0
+ 1634 0748 7B68     		ldr	r3, [r7, #4]
+ 1635 074a 5B69     		ldr	r3, [r3, #20]
+ 1636 074c 23F48052 		bic	r2, r3, #4096
+ 1637 0750 7B68     		ldr	r3, [r7, #4]
+ 1638 0752 5A61     		str	r2, [r3, #20]
+ 1639              	.L71:
+1042:../src/stm32f30x_i2c.c ****   }
+1043:../src/stm32f30x_i2c.c **** }
+ 1640              		.loc 1 1043 0
+ 1641 0754 07F10C07 		add	r7, r7, #12
+ 1642 0758 BD46     		mov	sp, r7
+ 1643 075a 80BC     		pop	{r7}
+ 1644 075c 7047     		bx	lr
+ 1645              		.cfi_endproc
+ 1646              	.LFE139:
+ 1648 075e 00BF     		.align	2
+ 1649              		.global	I2C_TimeoutAConfig
+ 1650              		.thumb
+ 1651              		.thumb_func
+ 1653              	I2C_TimeoutAConfig:
+ 1654              	.LFB140:
+1044:../src/stm32f30x_i2c.c **** 
+1045:../src/stm32f30x_i2c.c **** /**
+1046:../src/stm32f30x_i2c.c ****   * @brief  Configures the I2C Bus Timeout A (SCL Timeout when TIDLE = 0 or Bus 
+1047:../src/stm32f30x_i2c.c ****   *   idle SCL and SDA high when TIDLE = 1).
+1048:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+1049:../src/stm32f30x_i2c.c ****   * @param  Timeout: specifies the TimeoutA to be programmed. 
+1050:../src/stm32f30x_i2c.c ****   * @retval None
+1051:../src/stm32f30x_i2c.c ****   */
+1052:../src/stm32f30x_i2c.c **** void I2C_TimeoutAConfig(I2C_TypeDef* I2Cx, uint16_t Timeout)
+1053:../src/stm32f30x_i2c.c **** {
+ 1655              		.loc 1 1053 0
+ 1656              		.cfi_startproc
+ 1657              		@ args = 0, pretend = 0, frame = 16
+ 1658              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1659              		@ link register save eliminated.
+ 1660 0760 80B4     		push	{r7}
+ 1661              	.LCFI87:
+ 1662              		.cfi_def_cfa_offset 4
+ 1663              		.cfi_offset 7, -4
+ 1664 0762 85B0     		sub	sp, sp, #20
+ 1665              	.LCFI88:
+ 1666              		.cfi_def_cfa_offset 24
+ 1667 0764 00AF     		add	r7, sp, #0
+ 1668              	.LCFI89:
+ 1669              		.cfi_def_cfa_register 7
+ 1670 0766 7860     		str	r0, [r7, #4]
+ 1671 0768 0B46     		mov	r3, r1
+ 1672 076a 7B80     		strh	r3, [r7, #2]	@ movhi
+1054:../src/stm32f30x_i2c.c ****   uint32_t tmpreg = 0;
+ 1673              		.loc 1 1054 0
+ 1674 076c 4FF00003 		mov	r3, #0
+ 1675 0770 FB60     		str	r3, [r7, #12]
+1055:../src/stm32f30x_i2c.c **** 
+1056:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+1057:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+1058:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_TIMEOUT(Timeout));
+1059:../src/stm32f30x_i2c.c ****     
+1060:../src/stm32f30x_i2c.c ****   /* Get the old register value */
+1061:../src/stm32f30x_i2c.c ****   tmpreg = I2Cx->TIMEOUTR;
+ 1676              		.loc 1 1061 0
+ 1677 0772 7B68     		ldr	r3, [r7, #4]
+ 1678 0774 5B69     		ldr	r3, [r3, #20]
+ 1679 0776 FB60     		str	r3, [r7, #12]
+1062:../src/stm32f30x_i2c.c **** 
+1063:../src/stm32f30x_i2c.c ****   /* Reset I2Cx TIMEOUTA bit [11:0] */
+1064:../src/stm32f30x_i2c.c ****   tmpreg &= (uint32_t)~((uint32_t)I2C_TIMEOUTR_TIMEOUTA);
+ 1680              		.loc 1 1064 0
+ 1681 0778 FB68     		ldr	r3, [r7, #12]
+ 1682 077a 23F47F63 		bic	r3, r3, #4080
+ 1683 077e 23F00F03 		bic	r3, r3, #15
+ 1684 0782 FB60     		str	r3, [r7, #12]
+1065:../src/stm32f30x_i2c.c **** 
+1066:../src/stm32f30x_i2c.c ****   /* Set I2Cx TIMEOUTA */
+1067:../src/stm32f30x_i2c.c ****   tmpreg |= (uint32_t)((uint32_t)Timeout & I2C_TIMEOUTR_TIMEOUTA) ;
+ 1685              		.loc 1 1067 0
+ 1686 0784 7B88     		ldrh	r3, [r7, #2]
+ 1687 0786 4FEA0353 		lsl	r3, r3, #20
+ 1688 078a 4FEA1353 		lsr	r3, r3, #20
+ 1689 078e FA68     		ldr	r2, [r7, #12]
+ 1690 0790 1343     		orrs	r3, r3, r2
+ 1691 0792 FB60     		str	r3, [r7, #12]
+1068:../src/stm32f30x_i2c.c **** 
+1069:../src/stm32f30x_i2c.c ****   /* Store the new register value */
+1070:../src/stm32f30x_i2c.c ****   I2Cx->TIMEOUTR = tmpreg;
+ 1692              		.loc 1 1070 0
+ 1693 0794 7B68     		ldr	r3, [r7, #4]
+ 1694 0796 FA68     		ldr	r2, [r7, #12]
+ 1695 0798 5A61     		str	r2, [r3, #20]
+1071:../src/stm32f30x_i2c.c **** }
+ 1696              		.loc 1 1071 0
+ 1697 079a 07F11407 		add	r7, r7, #20
+ 1698 079e BD46     		mov	sp, r7
+ 1699 07a0 80BC     		pop	{r7}
+ 1700 07a2 7047     		bx	lr
+ 1701              		.cfi_endproc
+ 1702              	.LFE140:
+ 1704              		.align	2
+ 1705              		.global	I2C_TimeoutBConfig
+ 1706              		.thumb
+ 1707              		.thumb_func
+ 1709              	I2C_TimeoutBConfig:
+ 1710              	.LFB141:
+1072:../src/stm32f30x_i2c.c **** 
+1073:../src/stm32f30x_i2c.c **** /**
+1074:../src/stm32f30x_i2c.c ****   * @brief  Configures the I2C Bus Timeout B (SCL cumulative Timeout).
+1075:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+1076:../src/stm32f30x_i2c.c ****   * @param  Timeout: specifies the TimeoutB to be programmed. 
+1077:../src/stm32f30x_i2c.c ****   * @retval None
+1078:../src/stm32f30x_i2c.c ****   */
+1079:../src/stm32f30x_i2c.c **** void I2C_TimeoutBConfig(I2C_TypeDef* I2Cx, uint16_t Timeout)
+1080:../src/stm32f30x_i2c.c **** {
+ 1711              		.loc 1 1080 0
+ 1712              		.cfi_startproc
+ 1713              		@ args = 0, pretend = 0, frame = 16
+ 1714              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1715              		@ link register save eliminated.
+ 1716 07a4 80B4     		push	{r7}
+ 1717              	.LCFI90:
+ 1718              		.cfi_def_cfa_offset 4
+ 1719              		.cfi_offset 7, -4
+ 1720 07a6 85B0     		sub	sp, sp, #20
+ 1721              	.LCFI91:
+ 1722              		.cfi_def_cfa_offset 24
+ 1723 07a8 00AF     		add	r7, sp, #0
+ 1724              	.LCFI92:
+ 1725              		.cfi_def_cfa_register 7
+ 1726 07aa 7860     		str	r0, [r7, #4]
+ 1727 07ac 0B46     		mov	r3, r1
+ 1728 07ae 7B80     		strh	r3, [r7, #2]	@ movhi
+1081:../src/stm32f30x_i2c.c ****   uint32_t tmpreg = 0;
+ 1729              		.loc 1 1081 0
+ 1730 07b0 4FF00003 		mov	r3, #0
+ 1731 07b4 FB60     		str	r3, [r7, #12]
+1082:../src/stm32f30x_i2c.c **** 
+1083:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+1084:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+1085:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_TIMEOUT(Timeout));
+1086:../src/stm32f30x_i2c.c **** 
+1087:../src/stm32f30x_i2c.c ****   /* Get the old register value */
+1088:../src/stm32f30x_i2c.c ****   tmpreg = I2Cx->TIMEOUTR;
+ 1732              		.loc 1 1088 0
+ 1733 07b6 7B68     		ldr	r3, [r7, #4]
+ 1734 07b8 5B69     		ldr	r3, [r3, #20]
+ 1735 07ba FB60     		str	r3, [r7, #12]
+1089:../src/stm32f30x_i2c.c **** 
+1090:../src/stm32f30x_i2c.c ****   /* Reset I2Cx TIMEOUTB bit [11:0] */
+1091:../src/stm32f30x_i2c.c ****   tmpreg &= (uint32_t)~((uint32_t)I2C_TIMEOUTR_TIMEOUTB);
+ 1736              		.loc 1 1091 0
+ 1737 07bc FB68     		ldr	r3, [r7, #12]
+ 1738 07be 23F07F63 		bic	r3, r3, #267386880
+ 1739 07c2 23F47023 		bic	r3, r3, #983040
+ 1740 07c6 FB60     		str	r3, [r7, #12]
+1092:../src/stm32f30x_i2c.c **** 
+1093:../src/stm32f30x_i2c.c ****   /* Set I2Cx TIMEOUTB */
+1094:../src/stm32f30x_i2c.c ****   tmpreg |= (uint32_t)(((uint32_t)Timeout << 16) & I2C_TIMEOUTR_TIMEOUTB) ;
+ 1741              		.loc 1 1094 0
+ 1742 07c8 7B88     		ldrh	r3, [r7, #2]
+ 1743 07ca 4FEA0342 		lsl	r2, r3, #16
+ 1744 07ce 4FF00003 		mov	r3, #0
+ 1745 07d2 C0F6FF73 		movt	r3, 4095
+ 1746 07d6 1340     		ands	r3, r3, r2
+ 1747 07d8 FA68     		ldr	r2, [r7, #12]
+ 1748 07da 1343     		orrs	r3, r3, r2
+ 1749 07dc FB60     		str	r3, [r7, #12]
+1095:../src/stm32f30x_i2c.c **** 
+1096:../src/stm32f30x_i2c.c ****   /* Store the new register value */
+1097:../src/stm32f30x_i2c.c ****   I2Cx->TIMEOUTR = tmpreg;
+ 1750              		.loc 1 1097 0
+ 1751 07de 7B68     		ldr	r3, [r7, #4]
+ 1752 07e0 FA68     		ldr	r2, [r7, #12]
+ 1753 07e2 5A61     		str	r2, [r3, #20]
+1098:../src/stm32f30x_i2c.c **** }
+ 1754              		.loc 1 1098 0
+ 1755 07e4 07F11407 		add	r7, r7, #20
+ 1756 07e8 BD46     		mov	sp, r7
+ 1757 07ea 80BC     		pop	{r7}
+ 1758 07ec 7047     		bx	lr
+ 1759              		.cfi_endproc
+ 1760              	.LFE141:
+ 1762 07ee 00BF     		.align	2
+ 1763              		.global	I2C_CalculatePEC
+ 1764              		.thumb
+ 1765              		.thumb_func
+ 1767              	I2C_CalculatePEC:
+ 1768              	.LFB142:
+1099:../src/stm32f30x_i2c.c **** 
+1100:../src/stm32f30x_i2c.c **** /**
+1101:../src/stm32f30x_i2c.c ****   * @brief  Enables or disables I2C PEC calculation.
+1102:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+1103:../src/stm32f30x_i2c.c ****   * @param  NewState: new state of the I2Cx PEC calculation.
+1104:../src/stm32f30x_i2c.c ****   *   This parameter can be: ENABLE or DISABLE.
+1105:../src/stm32f30x_i2c.c ****   * @retval None
+1106:../src/stm32f30x_i2c.c ****   */
+1107:../src/stm32f30x_i2c.c **** void I2C_CalculatePEC(I2C_TypeDef* I2Cx, FunctionalState NewState)
+1108:../src/stm32f30x_i2c.c **** {
+ 1769              		.loc 1 1108 0
+ 1770              		.cfi_startproc
+ 1771              		@ args = 0, pretend = 0, frame = 8
+ 1772              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1773              		@ link register save eliminated.
+ 1774 07f0 80B4     		push	{r7}
+ 1775              	.LCFI93:
+ 1776              		.cfi_def_cfa_offset 4
+ 1777              		.cfi_offset 7, -4
+ 1778 07f2 83B0     		sub	sp, sp, #12
+ 1779              	.LCFI94:
+ 1780              		.cfi_def_cfa_offset 16
+ 1781 07f4 00AF     		add	r7, sp, #0
+ 1782              	.LCFI95:
+ 1783              		.cfi_def_cfa_register 7
+ 1784 07f6 7860     		str	r0, [r7, #4]
+ 1785 07f8 0B46     		mov	r3, r1
+ 1786 07fa FB70     		strb	r3, [r7, #3]
+1109:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+1110:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+1111:../src/stm32f30x_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+1112:../src/stm32f30x_i2c.c ****   
+1113:../src/stm32f30x_i2c.c ****   if (NewState != DISABLE)
+ 1787              		.loc 1 1113 0
+ 1788 07fc FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 1789 07fe 002B     		cmp	r3, #0
+ 1790 0800 06D0     		beq	.L77
+1114:../src/stm32f30x_i2c.c ****   {
+1115:../src/stm32f30x_i2c.c ****     /* Enable PEC calculation */
+1116:../src/stm32f30x_i2c.c ****     I2Cx->CR1 |= I2C_CR1_PECEN;   
+ 1791              		.loc 1 1116 0
+ 1792 0802 7B68     		ldr	r3, [r7, #4]
+ 1793 0804 1B68     		ldr	r3, [r3, #0]
+ 1794 0806 43F40002 		orr	r2, r3, #8388608
+ 1795 080a 7B68     		ldr	r3, [r7, #4]
+ 1796 080c 1A60     		str	r2, [r3, #0]
+ 1797 080e 05E0     		b	.L76
+ 1798              	.L77:
+1117:../src/stm32f30x_i2c.c ****   }
+1118:../src/stm32f30x_i2c.c ****   else
+1119:../src/stm32f30x_i2c.c ****   {
+1120:../src/stm32f30x_i2c.c ****     /* Disable PEC calculation */    
+1121:../src/stm32f30x_i2c.c ****     I2Cx->CR1 &= (uint32_t)~((uint32_t)I2C_CR1_PECEN); 
+ 1799              		.loc 1 1121 0
+ 1800 0810 7B68     		ldr	r3, [r7, #4]
+ 1801 0812 1B68     		ldr	r3, [r3, #0]
+ 1802 0814 23F40002 		bic	r2, r3, #8388608
+ 1803 0818 7B68     		ldr	r3, [r7, #4]
+ 1804 081a 1A60     		str	r2, [r3, #0]
+ 1805              	.L76:
+1122:../src/stm32f30x_i2c.c ****   }
+1123:../src/stm32f30x_i2c.c **** }
+ 1806              		.loc 1 1123 0
+ 1807 081c 07F10C07 		add	r7, r7, #12
+ 1808 0820 BD46     		mov	sp, r7
+ 1809 0822 80BC     		pop	{r7}
+ 1810 0824 7047     		bx	lr
+ 1811              		.cfi_endproc
+ 1812              	.LFE142:
+ 1814 0826 00BF     		.align	2
+ 1815              		.global	I2C_PECRequestCmd
+ 1816              		.thumb
+ 1817              		.thumb_func
+ 1819              	I2C_PECRequestCmd:
+ 1820              	.LFB143:
+1124:../src/stm32f30x_i2c.c **** 
+1125:../src/stm32f30x_i2c.c **** /**
+1126:../src/stm32f30x_i2c.c ****   * @brief  Enables or disables I2C PEC transmission/reception request.
+1127:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+1128:../src/stm32f30x_i2c.c ****   * @param  NewState: new state of the I2Cx PEC request.
+1129:../src/stm32f30x_i2c.c ****   *   This parameter can be: ENABLE or DISABLE.
+1130:../src/stm32f30x_i2c.c ****   * @retval None
+1131:../src/stm32f30x_i2c.c ****   */
+1132:../src/stm32f30x_i2c.c **** void I2C_PECRequestCmd(I2C_TypeDef* I2Cx, FunctionalState NewState)
+1133:../src/stm32f30x_i2c.c **** {
+ 1821              		.loc 1 1133 0
+ 1822              		.cfi_startproc
+ 1823              		@ args = 0, pretend = 0, frame = 8
+ 1824              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1825              		@ link register save eliminated.
+ 1826 0828 80B4     		push	{r7}
+ 1827              	.LCFI96:
+ 1828              		.cfi_def_cfa_offset 4
+ 1829              		.cfi_offset 7, -4
+ 1830 082a 83B0     		sub	sp, sp, #12
+ 1831              	.LCFI97:
+ 1832              		.cfi_def_cfa_offset 16
+ 1833 082c 00AF     		add	r7, sp, #0
+ 1834              	.LCFI98:
+ 1835              		.cfi_def_cfa_register 7
+ 1836 082e 7860     		str	r0, [r7, #4]
+ 1837 0830 0B46     		mov	r3, r1
+ 1838 0832 FB70     		strb	r3, [r7, #3]
+1134:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+1135:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+1136:../src/stm32f30x_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+1137:../src/stm32f30x_i2c.c ****   
+1138:../src/stm32f30x_i2c.c ****   if (NewState != DISABLE)
+ 1839              		.loc 1 1138 0
+ 1840 0834 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 1841 0836 002B     		cmp	r3, #0
+ 1842 0838 06D0     		beq	.L80
+1139:../src/stm32f30x_i2c.c ****   {
+1140:../src/stm32f30x_i2c.c ****     /* Enable PEC transmission/reception request */
+1141:../src/stm32f30x_i2c.c ****     I2Cx->CR1 |= I2C_CR2_PECBYTE;   
+ 1843              		.loc 1 1141 0
+ 1844 083a 7B68     		ldr	r3, [r7, #4]
+ 1845 083c 1B68     		ldr	r3, [r3, #0]
+ 1846 083e 43F08062 		orr	r2, r3, #67108864
+ 1847 0842 7B68     		ldr	r3, [r7, #4]
+ 1848 0844 1A60     		str	r2, [r3, #0]
+ 1849 0846 05E0     		b	.L79
+ 1850              	.L80:
+1142:../src/stm32f30x_i2c.c ****   }
+1143:../src/stm32f30x_i2c.c ****   else
+1144:../src/stm32f30x_i2c.c ****   {
+1145:../src/stm32f30x_i2c.c ****     /* Disable PEC transmission/reception request */    
+1146:../src/stm32f30x_i2c.c ****     I2Cx->CR1 &= (uint32_t)~((uint32_t)I2C_CR2_PECBYTE); 
+ 1851              		.loc 1 1146 0
+ 1852 0848 7B68     		ldr	r3, [r7, #4]
+ 1853 084a 1B68     		ldr	r3, [r3, #0]
+ 1854 084c 23F08062 		bic	r2, r3, #67108864
+ 1855 0850 7B68     		ldr	r3, [r7, #4]
+ 1856 0852 1A60     		str	r2, [r3, #0]
+ 1857              	.L79:
+1147:../src/stm32f30x_i2c.c ****   }
+1148:../src/stm32f30x_i2c.c **** }
+ 1858              		.loc 1 1148 0
+ 1859 0854 07F10C07 		add	r7, r7, #12
+ 1860 0858 BD46     		mov	sp, r7
+ 1861 085a 80BC     		pop	{r7}
+ 1862 085c 7047     		bx	lr
+ 1863              		.cfi_endproc
+ 1864              	.LFE143:
+ 1866 085e 00BF     		.align	2
+ 1867              		.global	I2C_GetPEC
+ 1868              		.thumb
+ 1869              		.thumb_func
+ 1871              	I2C_GetPEC:
+ 1872              	.LFB144:
+1149:../src/stm32f30x_i2c.c **** 
+1150:../src/stm32f30x_i2c.c **** /**
+1151:../src/stm32f30x_i2c.c ****   * @brief  Returns the I2C PEC.
+1152:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+1153:../src/stm32f30x_i2c.c ****   * @retval The value of the PEC .
+1154:../src/stm32f30x_i2c.c ****   */
+1155:../src/stm32f30x_i2c.c **** uint8_t I2C_GetPEC(I2C_TypeDef* I2Cx)
+1156:../src/stm32f30x_i2c.c **** {
+ 1873              		.loc 1 1156 0
+ 1874              		.cfi_startproc
+ 1875              		@ args = 0, pretend = 0, frame = 8
+ 1876              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1877              		@ link register save eliminated.
+ 1878 0860 80B4     		push	{r7}
+ 1879              	.LCFI99:
+ 1880              		.cfi_def_cfa_offset 4
+ 1881              		.cfi_offset 7, -4
+ 1882 0862 83B0     		sub	sp, sp, #12
+ 1883              	.LCFI100:
+ 1884              		.cfi_def_cfa_offset 16
+ 1885 0864 00AF     		add	r7, sp, #0
+ 1886              	.LCFI101:
+ 1887              		.cfi_def_cfa_register 7
+ 1888 0866 7860     		str	r0, [r7, #4]
+1157:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+1158:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+1159:../src/stm32f30x_i2c.c ****   
+1160:../src/stm32f30x_i2c.c ****   /* Return the slave matched address in the SR1 register */
+1161:../src/stm32f30x_i2c.c ****   return (uint8_t)((uint32_t)I2Cx->PECR & I2C_PECR_PEC);
+ 1889              		.loc 1 1161 0
+ 1890 0868 7B68     		ldr	r3, [r7, #4]
+ 1891 086a 1B6A     		ldr	r3, [r3, #32]
+ 1892 086c DBB2     		uxtb	r3, r3
+1162:../src/stm32f30x_i2c.c **** }
+ 1893              		.loc 1 1162 0
+ 1894 086e 1846     		mov	r0, r3
+ 1895 0870 07F10C07 		add	r7, r7, #12
+ 1896 0874 BD46     		mov	sp, r7
+ 1897 0876 80BC     		pop	{r7}
+ 1898 0878 7047     		bx	lr
+ 1899              		.cfi_endproc
+ 1900              	.LFE144:
+ 1902 087a 00BF     		.align	2
+ 1903              		.global	I2C_ReadRegister
+ 1904              		.thumb
+ 1905              		.thumb_func
+ 1907              	I2C_ReadRegister:
+ 1908              	.LFB145:
+1163:../src/stm32f30x_i2c.c **** 
+1164:../src/stm32f30x_i2c.c **** /**
+1165:../src/stm32f30x_i2c.c ****   * @}
+1166:../src/stm32f30x_i2c.c ****   */  
+1167:../src/stm32f30x_i2c.c ****   
+1168:../src/stm32f30x_i2c.c ****   
+1169:../src/stm32f30x_i2c.c **** /** @defgroup I2C_Group4 I2C registers management functions
+1170:../src/stm32f30x_i2c.c ****  *  @brief   I2C registers management functions 
+1171:../src/stm32f30x_i2c.c ****  *
+1172:../src/stm32f30x_i2c.c **** @verbatim
+1173:../src/stm32f30x_i2c.c ****  ===============================================================================
+1174:../src/stm32f30x_i2c.c ****                 ##### I2C registers management functions #####
+1175:../src/stm32f30x_i2c.c ****  ===============================================================================  
+1176:../src/stm32f30x_i2c.c ****     [..] This section provides a functions that allow user the management of 
+1177:../src/stm32f30x_i2c.c ****          I2C registers.
+1178:../src/stm32f30x_i2c.c ****          
+1179:../src/stm32f30x_i2c.c **** @endverbatim
+1180:../src/stm32f30x_i2c.c ****   * @{
+1181:../src/stm32f30x_i2c.c ****   */
+1182:../src/stm32f30x_i2c.c **** 
+1183:../src/stm32f30x_i2c.c ****   /**
+1184:../src/stm32f30x_i2c.c ****   * @brief  Reads the specified I2C register and returns its value.
+1185:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+1186:../src/stm32f30x_i2c.c ****   * @param  I2C_Register: specifies the register to read.
+1187:../src/stm32f30x_i2c.c ****   *   This parameter can be one of the following values:
+1188:../src/stm32f30x_i2c.c ****   *     @arg I2C_Register_CR1: CR1 register.
+1189:../src/stm32f30x_i2c.c ****   *     @arg I2C_Register_CR2: CR2 register.
+1190:../src/stm32f30x_i2c.c ****   *     @arg I2C_Register_OAR1: OAR1 register.
+1191:../src/stm32f30x_i2c.c ****   *     @arg I2C_Register_OAR2: OAR2 register.
+1192:../src/stm32f30x_i2c.c ****   *     @arg I2C_Register_TIMINGR: TIMING register.
+1193:../src/stm32f30x_i2c.c ****   *     @arg I2C_Register_TIMEOUTR: TIMEOUTR register.
+1194:../src/stm32f30x_i2c.c ****   *     @arg I2C_Register_ISR: ISR register.
+1195:../src/stm32f30x_i2c.c ****   *     @arg I2C_Register_ICR: ICR register.
+1196:../src/stm32f30x_i2c.c ****   *     @arg I2C_Register_PECR: PECR register.
+1197:../src/stm32f30x_i2c.c ****   *     @arg I2C_Register_RXDR: RXDR register.
+1198:../src/stm32f30x_i2c.c ****   *     @arg I2C_Register_TXDR: TXDR register.
+1199:../src/stm32f30x_i2c.c ****   * @retval The value of the read register.
+1200:../src/stm32f30x_i2c.c ****   */
+1201:../src/stm32f30x_i2c.c **** uint32_t I2C_ReadRegister(I2C_TypeDef* I2Cx, uint8_t I2C_Register)
+1202:../src/stm32f30x_i2c.c **** {
+ 1909              		.loc 1 1202 0
+ 1910              		.cfi_startproc
+ 1911              		@ args = 0, pretend = 0, frame = 16
+ 1912              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1913              		@ link register save eliminated.
+ 1914 087c 80B4     		push	{r7}
+ 1915              	.LCFI102:
+ 1916              		.cfi_def_cfa_offset 4
+ 1917              		.cfi_offset 7, -4
+ 1918 087e 85B0     		sub	sp, sp, #20
+ 1919              	.LCFI103:
+ 1920              		.cfi_def_cfa_offset 24
+ 1921 0880 00AF     		add	r7, sp, #0
+ 1922              	.LCFI104:
+ 1923              		.cfi_def_cfa_register 7
+ 1924 0882 7860     		str	r0, [r7, #4]
+ 1925 0884 0B46     		mov	r3, r1
+ 1926 0886 FB70     		strb	r3, [r7, #3]
+1203:../src/stm32f30x_i2c.c ****   __IO uint32_t tmp = 0;
+ 1927              		.loc 1 1203 0
+ 1928 0888 4FF00003 		mov	r3, #0
+ 1929 088c FB60     		str	r3, [r7, #12]
+1204:../src/stm32f30x_i2c.c **** 
+1205:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+1206:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+1207:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_REGISTER(I2C_Register));
+1208:../src/stm32f30x_i2c.c **** 
+1209:../src/stm32f30x_i2c.c ****   tmp = (uint32_t)I2Cx;
+ 1930              		.loc 1 1209 0
+ 1931 088e 7B68     		ldr	r3, [r7, #4]
+ 1932 0890 FB60     		str	r3, [r7, #12]
+1210:../src/stm32f30x_i2c.c ****   tmp += I2C_Register;
+ 1933              		.loc 1 1210 0
+ 1934 0892 FA78     		ldrb	r2, [r7, #3]	@ zero_extendqisi2
+ 1935 0894 FB68     		ldr	r3, [r7, #12]
+ 1936 0896 D318     		adds	r3, r2, r3
+ 1937 0898 FB60     		str	r3, [r7, #12]
+1211:../src/stm32f30x_i2c.c **** 
+1212:../src/stm32f30x_i2c.c ****   /* Return the selected register value */
+1213:../src/stm32f30x_i2c.c ****   return (*(__IO uint32_t *) tmp);
+ 1938              		.loc 1 1213 0
+ 1939 089a FB68     		ldr	r3, [r7, #12]
+ 1940 089c 1B68     		ldr	r3, [r3, #0]
+1214:../src/stm32f30x_i2c.c **** }
+ 1941              		.loc 1 1214 0
+ 1942 089e 1846     		mov	r0, r3
+ 1943 08a0 07F11407 		add	r7, r7, #20
+ 1944 08a4 BD46     		mov	sp, r7
+ 1945 08a6 80BC     		pop	{r7}
+ 1946 08a8 7047     		bx	lr
+ 1947              		.cfi_endproc
+ 1948              	.LFE145:
+ 1950 08aa 00BF     		.align	2
+ 1951              		.global	I2C_SendData
+ 1952              		.thumb
+ 1953              		.thumb_func
+ 1955              	I2C_SendData:
+ 1956              	.LFB146:
+1215:../src/stm32f30x_i2c.c **** 
+1216:../src/stm32f30x_i2c.c **** /**
+1217:../src/stm32f30x_i2c.c ****   * @}
+1218:../src/stm32f30x_i2c.c ****   */  
+1219:../src/stm32f30x_i2c.c ****   
+1220:../src/stm32f30x_i2c.c **** /** @defgroup I2C_Group5 Data transfers management functions
+1221:../src/stm32f30x_i2c.c ****  *  @brief   Data transfers management functions 
+1222:../src/stm32f30x_i2c.c ****  *
+1223:../src/stm32f30x_i2c.c **** @verbatim
+1224:../src/stm32f30x_i2c.c ****  ===============================================================================
+1225:../src/stm32f30x_i2c.c ****                 ##### Data transfers management functions #####
+1226:../src/stm32f30x_i2c.c ****  =============================================================================== 
+1227:../src/stm32f30x_i2c.c ****     [..] This subsection provides a set of functions allowing to manage 
+1228:../src/stm32f30x_i2c.c ****          the I2C data transfers.
+1229:../src/stm32f30x_i2c.c ****          
+1230:../src/stm32f30x_i2c.c ****     [..] The read access of the I2C_RXDR register can be done using 
+1231:../src/stm32f30x_i2c.c ****          the I2C_ReceiveData() function and returns the received value.
+1232:../src/stm32f30x_i2c.c ****          Whereas a write access to the I2C_TXDR can be done using I2C_SendData()
+1233:../src/stm32f30x_i2c.c ****          function and stores the written data into TXDR.
+1234:../src/stm32f30x_i2c.c **** @endverbatim
+1235:../src/stm32f30x_i2c.c ****   * @{
+1236:../src/stm32f30x_i2c.c ****   */  
+1237:../src/stm32f30x_i2c.c ****   
+1238:../src/stm32f30x_i2c.c **** /**
+1239:../src/stm32f30x_i2c.c ****   * @brief  Sends a data byte through the I2Cx peripheral.
+1240:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+1241:../src/stm32f30x_i2c.c ****   * @param  Data: Byte to be transmitted..
+1242:../src/stm32f30x_i2c.c ****   * @retval None
+1243:../src/stm32f30x_i2c.c ****   */
+1244:../src/stm32f30x_i2c.c **** void I2C_SendData(I2C_TypeDef* I2Cx, uint8_t Data)
+1245:../src/stm32f30x_i2c.c **** {
+ 1957              		.loc 1 1245 0
+ 1958              		.cfi_startproc
+ 1959              		@ args = 0, pretend = 0, frame = 8
+ 1960              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1961              		@ link register save eliminated.
+ 1962 08ac 80B4     		push	{r7}
+ 1963              	.LCFI105:
+ 1964              		.cfi_def_cfa_offset 4
+ 1965              		.cfi_offset 7, -4
+ 1966 08ae 83B0     		sub	sp, sp, #12
+ 1967              	.LCFI106:
+ 1968              		.cfi_def_cfa_offset 16
+ 1969 08b0 00AF     		add	r7, sp, #0
+ 1970              	.LCFI107:
+ 1971              		.cfi_def_cfa_register 7
+ 1972 08b2 7860     		str	r0, [r7, #4]
+ 1973 08b4 0B46     		mov	r3, r1
+ 1974 08b6 FB70     		strb	r3, [r7, #3]
+1246:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+1247:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+1248:../src/stm32f30x_i2c.c ****   
+1249:../src/stm32f30x_i2c.c ****   /* Write in the DR register the data to be sent */
+1250:../src/stm32f30x_i2c.c ****   I2Cx->TXDR = (uint8_t)Data;
+ 1975              		.loc 1 1250 0
+ 1976 08b8 FA78     		ldrb	r2, [r7, #3]	@ zero_extendqisi2
+ 1977 08ba 7B68     		ldr	r3, [r7, #4]
+ 1978 08bc 9A62     		str	r2, [r3, #40]
+1251:../src/stm32f30x_i2c.c **** }
+ 1979              		.loc 1 1251 0
+ 1980 08be 07F10C07 		add	r7, r7, #12
+ 1981 08c2 BD46     		mov	sp, r7
+ 1982 08c4 80BC     		pop	{r7}
+ 1983 08c6 7047     		bx	lr
+ 1984              		.cfi_endproc
+ 1985              	.LFE146:
+ 1987              		.align	2
+ 1988              		.global	I2C_ReceiveData
+ 1989              		.thumb
+ 1990              		.thumb_func
+ 1992              	I2C_ReceiveData:
+ 1993              	.LFB147:
+1252:../src/stm32f30x_i2c.c **** 
+1253:../src/stm32f30x_i2c.c **** /**
+1254:../src/stm32f30x_i2c.c ****   * @brief  Returns the most recent received data by the I2Cx peripheral.
+1255:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+1256:../src/stm32f30x_i2c.c ****   * @retval The value of the received data.
+1257:../src/stm32f30x_i2c.c ****   */
+1258:../src/stm32f30x_i2c.c **** uint8_t I2C_ReceiveData(I2C_TypeDef* I2Cx)
+1259:../src/stm32f30x_i2c.c **** {
+ 1994              		.loc 1 1259 0
+ 1995              		.cfi_startproc
+ 1996              		@ args = 0, pretend = 0, frame = 8
+ 1997              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1998              		@ link register save eliminated.
+ 1999 08c8 80B4     		push	{r7}
+ 2000              	.LCFI108:
+ 2001              		.cfi_def_cfa_offset 4
+ 2002              		.cfi_offset 7, -4
+ 2003 08ca 83B0     		sub	sp, sp, #12
+ 2004              	.LCFI109:
+ 2005              		.cfi_def_cfa_offset 16
+ 2006 08cc 00AF     		add	r7, sp, #0
+ 2007              	.LCFI110:
+ 2008              		.cfi_def_cfa_register 7
+ 2009 08ce 7860     		str	r0, [r7, #4]
+1260:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+1261:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+1262:../src/stm32f30x_i2c.c ****   
+1263:../src/stm32f30x_i2c.c ****   /* Return the data in the DR register */
+1264:../src/stm32f30x_i2c.c ****   return (uint8_t)I2Cx->RXDR;
+ 2010              		.loc 1 1264 0
+ 2011 08d0 7B68     		ldr	r3, [r7, #4]
+ 2012 08d2 5B6A     		ldr	r3, [r3, #36]
+ 2013 08d4 DBB2     		uxtb	r3, r3
+1265:../src/stm32f30x_i2c.c **** }  
+ 2014              		.loc 1 1265 0
+ 2015 08d6 1846     		mov	r0, r3
+ 2016 08d8 07F10C07 		add	r7, r7, #12
+ 2017 08dc BD46     		mov	sp, r7
+ 2018 08de 80BC     		pop	{r7}
+ 2019 08e0 7047     		bx	lr
+ 2020              		.cfi_endproc
+ 2021              	.LFE147:
+ 2023 08e2 00BF     		.align	2
+ 2024              		.global	I2C_DMACmd
+ 2025              		.thumb
+ 2026              		.thumb_func
+ 2028              	I2C_DMACmd:
+ 2029              	.LFB148:
+1266:../src/stm32f30x_i2c.c **** 
+1267:../src/stm32f30x_i2c.c **** /**
+1268:../src/stm32f30x_i2c.c ****   * @}
+1269:../src/stm32f30x_i2c.c ****   */ 
+1270:../src/stm32f30x_i2c.c ****   
+1271:../src/stm32f30x_i2c.c ****   
+1272:../src/stm32f30x_i2c.c **** /** @defgroup I2C_Group6 DMA transfers management functions
+1273:../src/stm32f30x_i2c.c ****  *  @brief   DMA transfers management functions 
+1274:../src/stm32f30x_i2c.c ****  *
+1275:../src/stm32f30x_i2c.c **** @verbatim
+1276:../src/stm32f30x_i2c.c ****  ===============================================================================
+1277:../src/stm32f30x_i2c.c ****                ##### DMA transfers management functions #####
+1278:../src/stm32f30x_i2c.c ****  ===============================================================================  
+1279:../src/stm32f30x_i2c.c ****     [..] This section provides two functions that can be used only in DMA mode.
+1280:../src/stm32f30x_i2c.c ****     [..] In DMA Mode, the I2C communication can be managed by 2 DMA Channel 
+1281:../src/stm32f30x_i2c.c ****          requests:
+1282:../src/stm32f30x_i2c.c ****          (#) I2C_DMAReq_Tx: specifies the Tx buffer DMA transfer request.
+1283:../src/stm32f30x_i2c.c ****          (#) I2C_DMAReq_Rx: specifies the Rx buffer DMA transfer request.
+1284:../src/stm32f30x_i2c.c ****     [..] In this Mode it is advised to use the following function:
+1285:../src/stm32f30x_i2c.c ****          (+) I2C_DMACmd(I2C_TypeDef* I2Cx, uint32_t I2C_DMAReq, FunctionalState NewState);
+1286:../src/stm32f30x_i2c.c **** @endverbatim
+1287:../src/stm32f30x_i2c.c ****   * @{
+1288:../src/stm32f30x_i2c.c ****   */  
+1289:../src/stm32f30x_i2c.c ****     
+1290:../src/stm32f30x_i2c.c **** /**
+1291:../src/stm32f30x_i2c.c ****   * @brief  Enables or disables the I2C DMA interface.
+1292:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+1293:../src/stm32f30x_i2c.c ****   * @param  I2C_DMAReq: specifies the I2C DMA transfer request to be enabled or disabled. 
+1294:../src/stm32f30x_i2c.c ****   *   This parameter can be any combination of the following values:
+1295:../src/stm32f30x_i2c.c ****   *     @arg I2C_DMAReq_Tx: Tx DMA transfer request
+1296:../src/stm32f30x_i2c.c ****   *     @arg I2C_DMAReq_Rx: Rx DMA transfer request
+1297:../src/stm32f30x_i2c.c ****   * @param  NewState: new state of the selected I2C DMA transfer request.
+1298:../src/stm32f30x_i2c.c ****   *         This parameter can be: ENABLE or DISABLE.
+1299:../src/stm32f30x_i2c.c ****   * @retval None
+1300:../src/stm32f30x_i2c.c ****   */
+1301:../src/stm32f30x_i2c.c **** void I2C_DMACmd(I2C_TypeDef* I2Cx, uint32_t I2C_DMAReq, FunctionalState NewState)
+1302:../src/stm32f30x_i2c.c **** {
+ 2030              		.loc 1 1302 0
+ 2031              		.cfi_startproc
+ 2032              		@ args = 0, pretend = 0, frame = 16
+ 2033              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2034              		@ link register save eliminated.
+ 2035 08e4 80B4     		push	{r7}
+ 2036              	.LCFI111:
+ 2037              		.cfi_def_cfa_offset 4
+ 2038              		.cfi_offset 7, -4
+ 2039 08e6 85B0     		sub	sp, sp, #20
+ 2040              	.LCFI112:
+ 2041              		.cfi_def_cfa_offset 24
+ 2042 08e8 00AF     		add	r7, sp, #0
+ 2043              	.LCFI113:
+ 2044              		.cfi_def_cfa_register 7
+ 2045 08ea F860     		str	r0, [r7, #12]
+ 2046 08ec B960     		str	r1, [r7, #8]
+ 2047 08ee 1346     		mov	r3, r2
+ 2048 08f0 FB71     		strb	r3, [r7, #7]
+1303:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+1304:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+1305:../src/stm32f30x_i2c.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+1306:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_DMA_REQ(I2C_DMAReq));
+1307:../src/stm32f30x_i2c.c **** 
+1308:../src/stm32f30x_i2c.c ****   if (NewState != DISABLE)
+ 2049              		.loc 1 1308 0
+ 2050 08f2 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 2051 08f4 002B     		cmp	r3, #0
+ 2052 08f6 06D0     		beq	.L90
+1309:../src/stm32f30x_i2c.c ****   {
+1310:../src/stm32f30x_i2c.c ****     /* Enable the selected I2C DMA requests */
+1311:../src/stm32f30x_i2c.c ****     I2Cx->CR1 |= I2C_DMAReq;
+ 2053              		.loc 1 1311 0
+ 2054 08f8 FB68     		ldr	r3, [r7, #12]
+ 2055 08fa 1A68     		ldr	r2, [r3, #0]
+ 2056 08fc BB68     		ldr	r3, [r7, #8]
+ 2057 08fe 1A43     		orrs	r2, r2, r3
+ 2058 0900 FB68     		ldr	r3, [r7, #12]
+ 2059 0902 1A60     		str	r2, [r3, #0]
+ 2060 0904 07E0     		b	.L89
+ 2061              	.L90:
+1312:../src/stm32f30x_i2c.c ****   }
+1313:../src/stm32f30x_i2c.c ****   else
+1314:../src/stm32f30x_i2c.c ****   {
+1315:../src/stm32f30x_i2c.c ****     /* Disable the selected I2C DMA requests */
+1316:../src/stm32f30x_i2c.c ****     I2Cx->CR1 &= (uint32_t)~I2C_DMAReq;
+ 2062              		.loc 1 1316 0
+ 2063 0906 FB68     		ldr	r3, [r7, #12]
+ 2064 0908 1A68     		ldr	r2, [r3, #0]
+ 2065 090a BB68     		ldr	r3, [r7, #8]
+ 2066 090c 6FEA0303 		mvn	r3, r3
+ 2067 0910 1A40     		ands	r2, r2, r3
+ 2068 0912 FB68     		ldr	r3, [r7, #12]
+ 2069 0914 1A60     		str	r2, [r3, #0]
+ 2070              	.L89:
+1317:../src/stm32f30x_i2c.c ****   }
+1318:../src/stm32f30x_i2c.c **** }
+ 2071              		.loc 1 1318 0
+ 2072 0916 07F11407 		add	r7, r7, #20
+ 2073 091a BD46     		mov	sp, r7
+ 2074 091c 80BC     		pop	{r7}
+ 2075 091e 7047     		bx	lr
+ 2076              		.cfi_endproc
+ 2077              	.LFE148:
+ 2079              		.align	2
+ 2080              		.global	I2C_GetFlagStatus
+ 2081              		.thumb
+ 2082              		.thumb_func
+ 2084              	I2C_GetFlagStatus:
+ 2085              	.LFB149:
+1319:../src/stm32f30x_i2c.c **** /**
+1320:../src/stm32f30x_i2c.c ****   * @}
+1321:../src/stm32f30x_i2c.c ****   */  
+1322:../src/stm32f30x_i2c.c **** 
+1323:../src/stm32f30x_i2c.c **** 
+1324:../src/stm32f30x_i2c.c **** /** @defgroup I2C_Group7 Interrupts and flags management functions
+1325:../src/stm32f30x_i2c.c ****  *  @brief   Interrupts and flags management functions 
+1326:../src/stm32f30x_i2c.c ****  *
+1327:../src/stm32f30x_i2c.c **** @verbatim
+1328:../src/stm32f30x_i2c.c ****  ===============================================================================
+1329:../src/stm32f30x_i2c.c ****              ##### Interrupts and flags management functions  #####
+1330:../src/stm32f30x_i2c.c ****  =============================================================================== 
+1331:../src/stm32f30x_i2c.c ****     [..] This section provides functions allowing to configure the I2C Interrupts 
+1332:../src/stm32f30x_i2c.c ****          sources and check or clear the flags or pending bits status.
+1333:../src/stm32f30x_i2c.c ****          The user should identify which mode will be used in his application to manage 
+1334:../src/stm32f30x_i2c.c ****          the communication: Polling mode, Interrupt mode or DMA mode(refer I2C_Group6) .
+1335:../src/stm32f30x_i2c.c **** 
+1336:../src/stm32f30x_i2c.c ****   *** Polling Mode ***
+1337:../src/stm32f30x_i2c.c ****   ====================
+1338:../src/stm32f30x_i2c.c ****     [..] In Polling Mode, the I2C communication can be managed by 15 flags:
+1339:../src/stm32f30x_i2c.c ****         (#) I2C_FLAG_TXE: to indicate the status of Transmit data register empty flag.
+1340:../src/stm32f30x_i2c.c ****         (#) I2C_FLAG_TXIS: to indicate the status of Transmit interrupt status flag .
+1341:../src/stm32f30x_i2c.c ****         (#) I2C_FLAG_RXNE: to indicate the status of Receive data register not empty flag.
+1342:../src/stm32f30x_i2c.c ****         (#) I2C_FLAG_ADDR: to indicate the status of Address matched flag (slave mode).
+1343:../src/stm32f30x_i2c.c ****         (#) I2C_FLAG_NACKF: to indicate the status of NACK received flag.
+1344:../src/stm32f30x_i2c.c ****         (#) I2C_FLAG_STOPF: to indicate the status of STOP detection flag.
+1345:../src/stm32f30x_i2c.c ****         (#) I2C_FLAG_TC: to indicate the status of Transfer complete flag(master mode).
+1346:../src/stm32f30x_i2c.c ****         (#) I2C_FLAG_TCR: to indicate the status of Transfer complete reload flag.
+1347:../src/stm32f30x_i2c.c ****         (#) I2C_FLAG_BERR: to indicate the status of Bus error flag.
+1348:../src/stm32f30x_i2c.c ****         (#) I2C_FLAG_ARLO: to indicate the status of Arbitration lost flag.
+1349:../src/stm32f30x_i2c.c ****         (#) I2C_FLAG_OVR: to indicate the status of Overrun/Underrun flag.
+1350:../src/stm32f30x_i2c.c ****         (#) I2C_FLAG_PECERR: to indicate the status of PEC error in reception flag.
+1351:../src/stm32f30x_i2c.c ****         (#) I2C_FLAG_TIMEOUT: to indicate the status of Timeout or Tlow detection flag.
+1352:../src/stm32f30x_i2c.c ****         (#) I2C_FLAG_ALERT: to indicate the status of SMBus Alert flag.
+1353:../src/stm32f30x_i2c.c ****         (#) I2C_FLAG_BUSY: to indicate the status of Bus busy flag.
+1354:../src/stm32f30x_i2c.c **** 
+1355:../src/stm32f30x_i2c.c ****     [..] In this Mode it is advised to use the following functions:
+1356:../src/stm32f30x_i2c.c ****         (+) FlagStatus I2C_GetFlagStatus(I2C_TypeDef* I2Cx, uint32_t I2C_FLAG);
+1357:../src/stm32f30x_i2c.c ****         (+) void I2C_ClearFlag(I2C_TypeDef* I2Cx, uint32_t I2C_FLAG);
+1358:../src/stm32f30x_i2c.c **** 
+1359:../src/stm32f30x_i2c.c ****     [..]
+1360:../src/stm32f30x_i2c.c ****         (@)Do not use the BUSY flag to handle each data transmission or reception.It is 
+1361:../src/stm32f30x_i2c.c ****            better to use the TXIS and RXNE flags instead.
+1362:../src/stm32f30x_i2c.c **** 
+1363:../src/stm32f30x_i2c.c ****   *** Interrupt Mode ***
+1364:../src/stm32f30x_i2c.c ****   ======================
+1365:../src/stm32f30x_i2c.c ****     [..] In Interrupt Mode, the I2C communication can be managed by 7 interrupt sources
+1366:../src/stm32f30x_i2c.c ****          and 15 pending bits: 
+1367:../src/stm32f30x_i2c.c ****     [..] Interrupt Source:
+1368:../src/stm32f30x_i2c.c ****         (#) I2C_IT_ERRI: specifies the interrupt source for the Error interrupt.
+1369:../src/stm32f30x_i2c.c ****         (#) I2C_IT_TCI: specifies the interrupt source for the Transfer Complete interrupt.
+1370:../src/stm32f30x_i2c.c ****         (#) I2C_IT_STOPI: specifies the interrupt source for the Stop Detection interrupt.
+1371:../src/stm32f30x_i2c.c ****         (#) I2C_IT_NACKI: specifies the interrupt source for the Not Acknowledge received interrupt
+1372:../src/stm32f30x_i2c.c ****         (#) I2C_IT_ADDRI: specifies the interrupt source for the Address Match interrupt.  
+1373:../src/stm32f30x_i2c.c ****         (#) I2C_IT_RXI: specifies the interrupt source for the RX interrupt.
+1374:../src/stm32f30x_i2c.c ****         (#) I2C_IT_TXI: specifies the interrupt source for the TX interrupt.
+1375:../src/stm32f30x_i2c.c **** 
+1376:../src/stm32f30x_i2c.c ****     [..] Pending Bits:
+1377:../src/stm32f30x_i2c.c ****         (#) I2C_IT_TXIS: to indicate the status of Transmit interrupt status flag.
+1378:../src/stm32f30x_i2c.c ****         (#) I2C_IT_RXNE: to indicate the status of Receive data register not empty flag.
+1379:../src/stm32f30x_i2c.c ****         (#) I2C_IT_ADDR: to indicate the status of Address matched flag (slave mode).
+1380:../src/stm32f30x_i2c.c ****         (#) I2C_IT_NACKF: to indicate the status of NACK received flag.
+1381:../src/stm32f30x_i2c.c ****         (#) I2C_IT_STOPF: to indicate the status of STOP detection flag.
+1382:../src/stm32f30x_i2c.c ****         (#) I2C_IT_TC: to indicate the status of Transfer complete flag (master mode).
+1383:../src/stm32f30x_i2c.c ****         (#) I2C_IT_TCR: to indicate the status of Transfer complete reload flag.
+1384:../src/stm32f30x_i2c.c ****         (#) I2C_IT_BERR: to indicate the status of Bus error flag.
+1385:../src/stm32f30x_i2c.c ****         (#) I2C_IT_ARLO: to indicate the status of Arbitration lost flag.
+1386:../src/stm32f30x_i2c.c ****         (#) I2C_IT_OVR: to indicate the status of Overrun/Underrun flag.
+1387:../src/stm32f30x_i2c.c ****         (#) I2C_IT_PECERR: to indicate the status of PEC error in reception flag.
+1388:../src/stm32f30x_i2c.c ****         (#) I2C_IT_TIMEOUT: to indicate the status of Timeout or Tlow detection flag.
+1389:../src/stm32f30x_i2c.c ****         (#) I2C_IT_ALERT: to indicate the status of SMBus Alert flag.
+1390:../src/stm32f30x_i2c.c **** 
+1391:../src/stm32f30x_i2c.c ****     [..] In this Mode it is advised to use the following functions:
+1392:../src/stm32f30x_i2c.c ****          (+) void I2C_ClearITPendingBit(I2C_TypeDef* I2Cx, uint32_t I2C_IT);
+1393:../src/stm32f30x_i2c.c ****          (+) ITStatus I2C_GetITStatus(I2C_TypeDef* I2Cx, uint32_t I2C_IT);
+1394:../src/stm32f30x_i2c.c **** 
+1395:../src/stm32f30x_i2c.c **** @endverbatim
+1396:../src/stm32f30x_i2c.c ****   * @{
+1397:../src/stm32f30x_i2c.c ****   */  
+1398:../src/stm32f30x_i2c.c **** 
+1399:../src/stm32f30x_i2c.c **** /**
+1400:../src/stm32f30x_i2c.c ****   * @brief  Checks whether the specified I2C flag is set or not.
+1401:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+1402:../src/stm32f30x_i2c.c ****   * @param  I2C_FLAG: specifies the flag to check. 
+1403:../src/stm32f30x_i2c.c ****   *   This parameter can be one of the following values:
+1404:../src/stm32f30x_i2c.c ****   *     @arg I2C_FLAG_TXE: Transmit data register empty
+1405:../src/stm32f30x_i2c.c ****   *     @arg I2C_FLAG_TXIS: Transmit interrupt status
+1406:../src/stm32f30x_i2c.c ****   *     @arg I2C_FLAG_RXNE: Receive data register not empty
+1407:../src/stm32f30x_i2c.c ****   *     @arg I2C_FLAG_ADDR: Address matched (slave mode)
+1408:../src/stm32f30x_i2c.c ****   *     @arg I2C_FLAG_NACKF: NACK received flag
+1409:../src/stm32f30x_i2c.c ****   *     @arg I2C_FLAG_STOPF: STOP detection flag
+1410:../src/stm32f30x_i2c.c ****   *     @arg I2C_FLAG_TC: Transfer complete (master mode)
+1411:../src/stm32f30x_i2c.c ****   *     @arg I2C_FLAG_TCR: Transfer complete reload
+1412:../src/stm32f30x_i2c.c ****   *     @arg I2C_FLAG_BERR: Bus error
+1413:../src/stm32f30x_i2c.c ****   *     @arg I2C_FLAG_ARLO: Arbitration lost
+1414:../src/stm32f30x_i2c.c ****   *     @arg I2C_FLAG_OVR: Overrun/Underrun
+1415:../src/stm32f30x_i2c.c ****   *     @arg I2C_FLAG_PECERR: PEC error in reception
+1416:../src/stm32f30x_i2c.c ****   *     @arg I2C_FLAG_TIMEOUT: Timeout or Tlow detection flag
+1417:../src/stm32f30x_i2c.c ****   *     @arg I2C_FLAG_ALERT: SMBus Alert
+1418:../src/stm32f30x_i2c.c ****   *     @arg I2C_FLAG_BUSY: Bus busy
+1419:../src/stm32f30x_i2c.c ****   * @retval The new state of I2C_FLAG (SET or RESET).
+1420:../src/stm32f30x_i2c.c ****   */
+1421:../src/stm32f30x_i2c.c **** FlagStatus I2C_GetFlagStatus(I2C_TypeDef* I2Cx, uint32_t I2C_FLAG)
+1422:../src/stm32f30x_i2c.c **** {
+ 2086              		.loc 1 1422 0
+ 2087              		.cfi_startproc
+ 2088              		@ args = 0, pretend = 0, frame = 16
+ 2089              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2090              		@ link register save eliminated.
+ 2091 0920 80B4     		push	{r7}
+ 2092              	.LCFI114:
+ 2093              		.cfi_def_cfa_offset 4
+ 2094              		.cfi_offset 7, -4
+ 2095 0922 85B0     		sub	sp, sp, #20
+ 2096              	.LCFI115:
+ 2097              		.cfi_def_cfa_offset 24
+ 2098 0924 00AF     		add	r7, sp, #0
+ 2099              	.LCFI116:
+ 2100              		.cfi_def_cfa_register 7
+ 2101 0926 7860     		str	r0, [r7, #4]
+ 2102 0928 3960     		str	r1, [r7, #0]
+1423:../src/stm32f30x_i2c.c ****   uint32_t tmpreg = 0;
+ 2103              		.loc 1 1423 0
+ 2104 092a 4FF00003 		mov	r3, #0
+ 2105 092e BB60     		str	r3, [r7, #8]
+1424:../src/stm32f30x_i2c.c ****   FlagStatus bitstatus = RESET;
+ 2106              		.loc 1 1424 0
+ 2107 0930 4FF00003 		mov	r3, #0
+ 2108 0934 FB73     		strb	r3, [r7, #15]
+1425:../src/stm32f30x_i2c.c ****   
+1426:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+1427:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+1428:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_GET_FLAG(I2C_FLAG));
+1429:../src/stm32f30x_i2c.c ****   
+1430:../src/stm32f30x_i2c.c ****   /* Get the ISR register value */
+1431:../src/stm32f30x_i2c.c ****   tmpreg = I2Cx->ISR;
+ 2109              		.loc 1 1431 0
+ 2110 0936 7B68     		ldr	r3, [r7, #4]
+ 2111 0938 9B69     		ldr	r3, [r3, #24]
+ 2112 093a BB60     		str	r3, [r7, #8]
+1432:../src/stm32f30x_i2c.c ****   
+1433:../src/stm32f30x_i2c.c ****   /* Get flag status */
+1434:../src/stm32f30x_i2c.c ****   tmpreg &= I2C_FLAG;
+ 2113              		.loc 1 1434 0
+ 2114 093c BA68     		ldr	r2, [r7, #8]
+ 2115 093e 3B68     		ldr	r3, [r7, #0]
+ 2116 0940 1340     		ands	r3, r3, r2
+ 2117 0942 BB60     		str	r3, [r7, #8]
+1435:../src/stm32f30x_i2c.c ****   
+1436:../src/stm32f30x_i2c.c ****   if(tmpreg != 0)
+ 2118              		.loc 1 1436 0
+ 2119 0944 BB68     		ldr	r3, [r7, #8]
+ 2120 0946 002B     		cmp	r3, #0
+ 2121 0948 03D0     		beq	.L93
+1437:../src/stm32f30x_i2c.c ****   {
+1438:../src/stm32f30x_i2c.c ****     /* I2C_FLAG is set */
+1439:../src/stm32f30x_i2c.c ****     bitstatus = SET;
+ 2122              		.loc 1 1439 0
+ 2123 094a 4FF00103 		mov	r3, #1
+ 2124 094e FB73     		strb	r3, [r7, #15]
+ 2125 0950 02E0     		b	.L94
+ 2126              	.L93:
+1440:../src/stm32f30x_i2c.c ****   }
+1441:../src/stm32f30x_i2c.c ****   else
+1442:../src/stm32f30x_i2c.c ****   {
+1443:../src/stm32f30x_i2c.c ****     /* I2C_FLAG is reset */
+1444:../src/stm32f30x_i2c.c ****     bitstatus = RESET;
+ 2127              		.loc 1 1444 0
+ 2128 0952 4FF00003 		mov	r3, #0
+ 2129 0956 FB73     		strb	r3, [r7, #15]
+ 2130              	.L94:
+1445:../src/stm32f30x_i2c.c ****   }
+1446:../src/stm32f30x_i2c.c ****   return bitstatus;
+ 2131              		.loc 1 1446 0
+ 2132 0958 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+1447:../src/stm32f30x_i2c.c **** }  
+ 2133              		.loc 1 1447 0
+ 2134 095a 1846     		mov	r0, r3
+ 2135 095c 07F11407 		add	r7, r7, #20
+ 2136 0960 BD46     		mov	sp, r7
+ 2137 0962 80BC     		pop	{r7}
+ 2138 0964 7047     		bx	lr
+ 2139              		.cfi_endproc
+ 2140              	.LFE149:
+ 2142 0966 00BF     		.align	2
+ 2143              		.global	I2C_ClearFlag
+ 2144              		.thumb
+ 2145              		.thumb_func
+ 2147              	I2C_ClearFlag:
+ 2148              	.LFB150:
+1448:../src/stm32f30x_i2c.c ****   
+1449:../src/stm32f30x_i2c.c **** /**
+1450:../src/stm32f30x_i2c.c ****   * @brief  Clears the I2Cx's pending flags.
+1451:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+1452:../src/stm32f30x_i2c.c ****   * @param  I2C_FLAG: specifies the flag to clear. 
+1453:../src/stm32f30x_i2c.c ****   *   This parameter can be any combination of the following values:
+1454:../src/stm32f30x_i2c.c ****   *     @arg I2C_FLAG_ADDR: Address matched (slave mode)
+1455:../src/stm32f30x_i2c.c ****   *     @arg I2C_FLAG_NACKF: NACK received flag
+1456:../src/stm32f30x_i2c.c ****   *     @arg I2C_FLAG_STOPF: STOP detection flag
+1457:../src/stm32f30x_i2c.c ****   *     @arg I2C_FLAG_BERR: Bus error
+1458:../src/stm32f30x_i2c.c ****   *     @arg I2C_FLAG_ARLO: Arbitration lost
+1459:../src/stm32f30x_i2c.c ****   *     @arg I2C_FLAG_OVR: Overrun/Underrun
+1460:../src/stm32f30x_i2c.c ****   *     @arg I2C_FLAG_PECERR: PEC error in reception
+1461:../src/stm32f30x_i2c.c ****   *     @arg I2C_FLAG_TIMEOUT: Timeout or Tlow detection flag
+1462:../src/stm32f30x_i2c.c ****   *     @arg I2C_FLAG_ALERT: SMBus Alert
+1463:../src/stm32f30x_i2c.c ****   * @retval The new state of I2C_FLAG (SET or RESET).
+1464:../src/stm32f30x_i2c.c ****   */
+1465:../src/stm32f30x_i2c.c **** void I2C_ClearFlag(I2C_TypeDef* I2Cx, uint32_t I2C_FLAG)
+1466:../src/stm32f30x_i2c.c **** { 
+ 2149              		.loc 1 1466 0
+ 2150              		.cfi_startproc
+ 2151              		@ args = 0, pretend = 0, frame = 8
+ 2152              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2153              		@ link register save eliminated.
+ 2154 0968 80B4     		push	{r7}
+ 2155              	.LCFI117:
+ 2156              		.cfi_def_cfa_offset 4
+ 2157              		.cfi_offset 7, -4
+ 2158 096a 83B0     		sub	sp, sp, #12
+ 2159              	.LCFI118:
+ 2160              		.cfi_def_cfa_offset 16
+ 2161 096c 00AF     		add	r7, sp, #0
+ 2162              	.LCFI119:
+ 2163              		.cfi_def_cfa_register 7
+ 2164 096e 7860     		str	r0, [r7, #4]
+ 2165 0970 3960     		str	r1, [r7, #0]
+1467:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+1468:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+1469:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_CLEAR_FLAG(I2C_FLAG));
+1470:../src/stm32f30x_i2c.c **** 
+1471:../src/stm32f30x_i2c.c ****   /* Clear the selected flag */
+1472:../src/stm32f30x_i2c.c ****   I2Cx->ICR = I2C_FLAG;
+ 2166              		.loc 1 1472 0
+ 2167 0972 7B68     		ldr	r3, [r7, #4]
+ 2168 0974 3A68     		ldr	r2, [r7, #0]
+ 2169 0976 DA61     		str	r2, [r3, #28]
+1473:../src/stm32f30x_i2c.c ****   }
+ 2170              		.loc 1 1473 0
+ 2171 0978 07F10C07 		add	r7, r7, #12
+ 2172 097c BD46     		mov	sp, r7
+ 2173 097e 80BC     		pop	{r7}
+ 2174 0980 7047     		bx	lr
+ 2175              		.cfi_endproc
+ 2176              	.LFE150:
+ 2178 0982 00BF     		.align	2
+ 2179              		.global	I2C_GetITStatus
+ 2180              		.thumb
+ 2181              		.thumb_func
+ 2183              	I2C_GetITStatus:
+ 2184              	.LFB151:
+1474:../src/stm32f30x_i2c.c **** 
+1475:../src/stm32f30x_i2c.c **** /**
+1476:../src/stm32f30x_i2c.c ****   * @brief  Checks whether the specified I2C interrupt has occurred or not.
+1477:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+1478:../src/stm32f30x_i2c.c ****   * @param  I2C_IT: specifies the interrupt source to check.
+1479:../src/stm32f30x_i2c.c ****   *   This parameter can be one of the following values:
+1480:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_TXIS: Transmit interrupt status
+1481:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_RXNE: Receive data register not empty
+1482:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_ADDR: Address matched (slave mode)
+1483:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_NACKF: NACK received flag
+1484:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_STOPF: STOP detection flag
+1485:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_TC: Transfer complete (master mode)
+1486:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_TCR: Transfer complete reload
+1487:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_BERR: Bus error
+1488:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_ARLO: Arbitration lost
+1489:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_OVR: Overrun/Underrun
+1490:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_PECERR: PEC error in reception
+1491:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_TIMEOUT: Timeout or Tlow detection flag
+1492:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_ALERT: SMBus Alert
+1493:../src/stm32f30x_i2c.c ****   * @retval The new state of I2C_IT (SET or RESET).
+1494:../src/stm32f30x_i2c.c ****   */
+1495:../src/stm32f30x_i2c.c **** ITStatus I2C_GetITStatus(I2C_TypeDef* I2Cx, uint32_t I2C_IT)
+1496:../src/stm32f30x_i2c.c **** {
+ 2185              		.loc 1 1496 0
+ 2186              		.cfi_startproc
+ 2187              		@ args = 0, pretend = 0, frame = 24
+ 2188              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2189              		@ link register save eliminated.
+ 2190 0984 80B4     		push	{r7}
+ 2191              	.LCFI120:
+ 2192              		.cfi_def_cfa_offset 4
+ 2193              		.cfi_offset 7, -4
+ 2194 0986 87B0     		sub	sp, sp, #28
+ 2195              	.LCFI121:
+ 2196              		.cfi_def_cfa_offset 32
+ 2197 0988 00AF     		add	r7, sp, #0
+ 2198              	.LCFI122:
+ 2199              		.cfi_def_cfa_register 7
+ 2200 098a 7860     		str	r0, [r7, #4]
+ 2201 098c 3960     		str	r1, [r7, #0]
+1497:../src/stm32f30x_i2c.c ****   uint32_t tmpreg = 0;
+ 2202              		.loc 1 1497 0
+ 2203 098e 4FF00003 		mov	r3, #0
+ 2204 0992 FB60     		str	r3, [r7, #12]
+1498:../src/stm32f30x_i2c.c ****   ITStatus bitstatus = RESET;
+ 2205              		.loc 1 1498 0
+ 2206 0994 4FF00003 		mov	r3, #0
+ 2207 0998 FB75     		strb	r3, [r7, #23]
+1499:../src/stm32f30x_i2c.c ****   uint32_t enablestatus = 0;
+ 2208              		.loc 1 1499 0
+ 2209 099a 4FF00003 		mov	r3, #0
+ 2210 099e 3B61     		str	r3, [r7, #16]
+1500:../src/stm32f30x_i2c.c **** 
+1501:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+1502:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+1503:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_GET_IT(I2C_IT));
+1504:../src/stm32f30x_i2c.c **** 
+1505:../src/stm32f30x_i2c.c ****   /* Check if the interrupt source is enabled or not */
+1506:../src/stm32f30x_i2c.c ****   /* If Error interrupt */
+1507:../src/stm32f30x_i2c.c ****   if((uint32_t)(I2C_IT & ERROR_IT_MASK))
+ 2211              		.loc 1 1507 0
+ 2212 09a0 3B68     		ldr	r3, [r7, #0]
+ 2213 09a2 03F47C53 		and	r3, r3, #16128
+ 2214 09a6 002B     		cmp	r3, #0
+ 2215 09a8 05D0     		beq	.L98
+1508:../src/stm32f30x_i2c.c ****   {
+1509:../src/stm32f30x_i2c.c ****     enablestatus = (uint32_t)((I2C_CR1_ERRIE) & (I2Cx->CR1));
+ 2216              		.loc 1 1509 0
+ 2217 09aa 7B68     		ldr	r3, [r7, #4]
+ 2218 09ac 1B68     		ldr	r3, [r3, #0]
+ 2219 09ae 03F08003 		and	r3, r3, #128
+ 2220 09b2 3B61     		str	r3, [r7, #16]
+ 2221 09b4 0FE0     		b	.L99
+ 2222              	.L98:
+1510:../src/stm32f30x_i2c.c ****   }
+1511:../src/stm32f30x_i2c.c ****   /* If TC interrupt */
+1512:../src/stm32f30x_i2c.c ****   else if((uint32_t)(I2C_IT & TC_IT_MASK))
+ 2223              		.loc 1 1512 0
+ 2224 09b6 3B68     		ldr	r3, [r7, #0]
+ 2225 09b8 03F0C003 		and	r3, r3, #192
+ 2226 09bc 002B     		cmp	r3, #0
+ 2227 09be 05D0     		beq	.L100
+1513:../src/stm32f30x_i2c.c ****   {
+1514:../src/stm32f30x_i2c.c ****     enablestatus = (uint32_t)((I2C_CR1_TCIE) & (I2Cx->CR1));
+ 2228              		.loc 1 1514 0
+ 2229 09c0 7B68     		ldr	r3, [r7, #4]
+ 2230 09c2 1B68     		ldr	r3, [r3, #0]
+ 2231 09c4 03F04003 		and	r3, r3, #64
+ 2232 09c8 3B61     		str	r3, [r7, #16]
+ 2233 09ca 04E0     		b	.L99
+ 2234              	.L100:
+1515:../src/stm32f30x_i2c.c ****   }
+1516:../src/stm32f30x_i2c.c ****   else
+1517:../src/stm32f30x_i2c.c ****   {
+1518:../src/stm32f30x_i2c.c ****     enablestatus = (uint32_t)((I2C_IT) & (I2Cx->CR1));
+ 2235              		.loc 1 1518 0
+ 2236 09cc 7B68     		ldr	r3, [r7, #4]
+ 2237 09ce 1A68     		ldr	r2, [r3, #0]
+ 2238 09d0 3B68     		ldr	r3, [r7, #0]
+ 2239 09d2 1340     		ands	r3, r3, r2
+ 2240 09d4 3B61     		str	r3, [r7, #16]
+ 2241              	.L99:
+1519:../src/stm32f30x_i2c.c ****   }
+1520:../src/stm32f30x_i2c.c ****   
+1521:../src/stm32f30x_i2c.c ****   /* Get the ISR register value */
+1522:../src/stm32f30x_i2c.c ****   tmpreg = I2Cx->ISR;
+ 2242              		.loc 1 1522 0
+ 2243 09d6 7B68     		ldr	r3, [r7, #4]
+ 2244 09d8 9B69     		ldr	r3, [r3, #24]
+ 2245 09da FB60     		str	r3, [r7, #12]
+1523:../src/stm32f30x_i2c.c **** 
+1524:../src/stm32f30x_i2c.c ****   /* Get flag status */
+1525:../src/stm32f30x_i2c.c ****   tmpreg &= I2C_IT;
+ 2246              		.loc 1 1525 0
+ 2247 09dc FA68     		ldr	r2, [r7, #12]
+ 2248 09de 3B68     		ldr	r3, [r7, #0]
+ 2249 09e0 1340     		ands	r3, r3, r2
+ 2250 09e2 FB60     		str	r3, [r7, #12]
+1526:../src/stm32f30x_i2c.c **** 
+1527:../src/stm32f30x_i2c.c ****   /* Check the status of the specified I2C flag */
+1528:../src/stm32f30x_i2c.c ****   if((tmpreg != RESET) && enablestatus)
+ 2251              		.loc 1 1528 0
+ 2252 09e4 FB68     		ldr	r3, [r7, #12]
+ 2253 09e6 002B     		cmp	r3, #0
+ 2254 09e8 06D0     		beq	.L101
+ 2255              		.loc 1 1528 0 is_stmt 0 discriminator 1
+ 2256 09ea 3B69     		ldr	r3, [r7, #16]
+ 2257 09ec 002B     		cmp	r3, #0
+ 2258 09ee 03D0     		beq	.L101
+1529:../src/stm32f30x_i2c.c ****   {
+1530:../src/stm32f30x_i2c.c ****     /* I2C_IT is set */
+1531:../src/stm32f30x_i2c.c ****     bitstatus = SET;
+ 2259              		.loc 1 1531 0 is_stmt 1
+ 2260 09f0 4FF00103 		mov	r3, #1
+ 2261 09f4 FB75     		strb	r3, [r7, #23]
+ 2262 09f6 02E0     		b	.L102
+ 2263              	.L101:
+1532:../src/stm32f30x_i2c.c ****   }
+1533:../src/stm32f30x_i2c.c ****   else
+1534:../src/stm32f30x_i2c.c ****   {
+1535:../src/stm32f30x_i2c.c ****     /* I2C_IT is reset */
+1536:../src/stm32f30x_i2c.c ****     bitstatus = RESET;
+ 2264              		.loc 1 1536 0
+ 2265 09f8 4FF00003 		mov	r3, #0
+ 2266 09fc FB75     		strb	r3, [r7, #23]
+ 2267              	.L102:
+1537:../src/stm32f30x_i2c.c ****   }
+1538:../src/stm32f30x_i2c.c **** 
+1539:../src/stm32f30x_i2c.c ****   /* Return the I2C_IT status */
+1540:../src/stm32f30x_i2c.c ****   return bitstatus;
+ 2268              		.loc 1 1540 0
+ 2269 09fe FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+1541:../src/stm32f30x_i2c.c **** }
+ 2270              		.loc 1 1541 0
+ 2271 0a00 1846     		mov	r0, r3
+ 2272 0a02 07F11C07 		add	r7, r7, #28
+ 2273 0a06 BD46     		mov	sp, r7
+ 2274 0a08 80BC     		pop	{r7}
+ 2275 0a0a 7047     		bx	lr
+ 2276              		.cfi_endproc
+ 2277              	.LFE151:
+ 2279              		.align	2
+ 2280              		.global	I2C_ClearITPendingBit
+ 2281              		.thumb
+ 2282              		.thumb_func
+ 2284              	I2C_ClearITPendingBit:
+ 2285              	.LFB152:
+1542:../src/stm32f30x_i2c.c ****   
+1543:../src/stm32f30x_i2c.c **** /**
+1544:../src/stm32f30x_i2c.c ****   * @brief  Clears the I2Cx's interrupt pending bits.
+1545:../src/stm32f30x_i2c.c ****   * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
+1546:../src/stm32f30x_i2c.c ****   * @param  I2C_IT: specifies the interrupt pending bit to clear.
+1547:../src/stm32f30x_i2c.c ****   *   This parameter can be any combination of the following values:
+1548:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_ADDR: Address matched (slave mode)
+1549:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_NACKF: NACK received flag
+1550:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_STOPF: STOP detection flag
+1551:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_BERR: Bus error
+1552:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_ARLO: Arbitration lost
+1553:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_OVR: Overrun/Underrun
+1554:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_PECERR: PEC error in reception
+1555:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_TIMEOUT: Timeout or Tlow detection flag
+1556:../src/stm32f30x_i2c.c ****   *     @arg I2C_IT_ALERT: SMBus Alert
+1557:../src/stm32f30x_i2c.c ****   * @retval The new state of I2C_IT (SET or RESET).
+1558:../src/stm32f30x_i2c.c ****   */
+1559:../src/stm32f30x_i2c.c **** void I2C_ClearITPendingBit(I2C_TypeDef* I2Cx, uint32_t I2C_IT)
+1560:../src/stm32f30x_i2c.c **** {
+ 2286              		.loc 1 1560 0
+ 2287              		.cfi_startproc
+ 2288              		@ args = 0, pretend = 0, frame = 8
+ 2289              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2290              		@ link register save eliminated.
+ 2291 0a0c 80B4     		push	{r7}
+ 2292              	.LCFI123:
+ 2293              		.cfi_def_cfa_offset 4
+ 2294              		.cfi_offset 7, -4
+ 2295 0a0e 83B0     		sub	sp, sp, #12
+ 2296              	.LCFI124:
+ 2297              		.cfi_def_cfa_offset 16
+ 2298 0a10 00AF     		add	r7, sp, #0
+ 2299              	.LCFI125:
+ 2300              		.cfi_def_cfa_register 7
+ 2301 0a12 7860     		str	r0, [r7, #4]
+ 2302 0a14 3960     		str	r1, [r7, #0]
+1561:../src/stm32f30x_i2c.c ****   /* Check the parameters */
+1562:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+1563:../src/stm32f30x_i2c.c ****   assert_param(IS_I2C_CLEAR_IT(I2C_IT));
+1564:../src/stm32f30x_i2c.c **** 
+1565:../src/stm32f30x_i2c.c ****   /* Clear the selected flag */
+1566:../src/stm32f30x_i2c.c ****   I2Cx->ICR = I2C_IT;
+ 2303              		.loc 1 1566 0
+ 2304 0a16 7B68     		ldr	r3, [r7, #4]
+ 2305 0a18 3A68     		ldr	r2, [r7, #0]
+ 2306 0a1a DA61     		str	r2, [r3, #28]
+1567:../src/stm32f30x_i2c.c **** }
+ 2307              		.loc 1 1567 0
+ 2308 0a1c 07F10C07 		add	r7, r7, #12
+ 2309 0a20 BD46     		mov	sp, r7
+ 2310 0a22 80BC     		pop	{r7}
+ 2311 0a24 7047     		bx	lr
+ 2312              		.cfi_endproc
+ 2313              	.LFE152:
+ 2315              	.Letext0:
+ 2316              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
+ 2317              		.file 3 "/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/stm32f30x.h"
+ 2318              		.file 4 "/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/stm32f30x_i2c.h"
+ 2319              		.file 5 "/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cm4.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 stm32f30x_i2c.c
+     /tmp/ccMWVMXQ.s:20     .text:00000000 $t
+     /tmp/ccMWVMXQ.s:25     .text:00000000 I2C_DeInit
+     /tmp/ccMWVMXQ.s:81     .text:00000050 I2C_Init
+     /tmp/ccMWVMXQ.s:218    .text:00000120 I2C_StructInit
+     /tmp/ccMWVMXQ.s:277    .text:0000016c I2C_Cmd
+     /tmp/ccMWVMXQ.s:329    .text:000001a4 I2C_SoftwareResetCmd
+     /tmp/ccMWVMXQ.s:375    .text:000001d4 I2C_ITConfig
+     /tmp/ccMWVMXQ.s:431    .text:00000210 I2C_StretchClockCmd
+     /tmp/ccMWVMXQ.s:483    .text:00000248 I2C_StopModeCmd
+     /tmp/ccMWVMXQ.s:535    .text:00000280 I2C_DualAddressCmd
+     /tmp/ccMWVMXQ.s:587    .text:000002b8 I2C_OwnAddress2Config
+     /tmp/ccMWVMXQ.s:650    .text:00000308 I2C_GeneralCallCmd
+     /tmp/ccMWVMXQ.s:702    .text:00000340 I2C_SlaveByteControlCmd
+     /tmp/ccMWVMXQ.s:754    .text:00000378 I2C_SlaveAddressConfig
+     /tmp/ccMWVMXQ.s:810    .text:000003bc I2C_10BitAddressingModeCmd
+     /tmp/ccMWVMXQ.s:862    .text:000003f4 I2C_AutoEndCmd
+     /tmp/ccMWVMXQ.s:914    .text:0000042c I2C_ReloadCmd
+     /tmp/ccMWVMXQ.s:966    .text:00000464 I2C_NumberOfBytesConfig
+     /tmp/ccMWVMXQ.s:1021   .text:000004a4 I2C_MasterRequestConfig
+     /tmp/ccMWVMXQ.s:1073   .text:000004dc I2C_GenerateSTART
+     /tmp/ccMWVMXQ.s:1125   .text:00000514 I2C_GenerateSTOP
+     /tmp/ccMWVMXQ.s:1177   .text:0000054c I2C_10BitAddressHeaderCmd
+     /tmp/ccMWVMXQ.s:1229   .text:00000584 I2C_AcknowledgeConfig
+     /tmp/ccMWVMXQ.s:1281   .text:000005bc I2C_GetAddressMatched
+     /tmp/ccMWVMXQ.s:1319   .text:000005e0 I2C_GetTransferDirection
+     /tmp/ccMWVMXQ.s:1377   .text:00000620 I2C_TransferHandling
+     /tmp/ccMWVMXQ.s:1445   .text:00000680 I2C_SMBusAlertCmd
+     /tmp/ccMWVMXQ.s:1497   .text:000006b8 I2C_ClockTimeoutCmd
+     /tmp/ccMWVMXQ.s:1549   .text:000006f0 I2C_ExtendedClockTimeoutCmd
+     /tmp/ccMWVMXQ.s:1601   .text:00000728 I2C_IdleClockTimeoutCmd
+     /tmp/ccMWVMXQ.s:1653   .text:00000760 I2C_TimeoutAConfig
+     /tmp/ccMWVMXQ.s:1709   .text:000007a4 I2C_TimeoutBConfig
+     /tmp/ccMWVMXQ.s:1767   .text:000007f0 I2C_CalculatePEC
+     /tmp/ccMWVMXQ.s:1819   .text:00000828 I2C_PECRequestCmd
+     /tmp/ccMWVMXQ.s:1871   .text:00000860 I2C_GetPEC
+     /tmp/ccMWVMXQ.s:1907   .text:0000087c I2C_ReadRegister
+     /tmp/ccMWVMXQ.s:1955   .text:000008ac I2C_SendData
+     /tmp/ccMWVMXQ.s:1992   .text:000008c8 I2C_ReceiveData
+     /tmp/ccMWVMXQ.s:2028   .text:000008e4 I2C_DMACmd
+     /tmp/ccMWVMXQ.s:2084   .text:00000920 I2C_GetFlagStatus
+     /tmp/ccMWVMXQ.s:2147   .text:00000968 I2C_ClearFlag
+     /tmp/ccMWVMXQ.s:2183   .text:00000984 I2C_GetITStatus
+     /tmp/ccMWVMXQ.s:2284   .text:00000a0c I2C_ClearITPendingBit
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.743cd71370ebc432b539c5dba7924ecc
+                           .group:00000000 wm4.stm32f30x.h.56.6f19c65e98e3319a61449cb2b2455af5
+                           .group:00000000 wm4.core_cm4.h.32.1434cd257ff5806b1b03cd32ab0641e9
+                           .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05
+                           .group:00000000 wm4.core_cmInstr.h.25.d8165482ef3061013a2fc83e2d85f3d9
+                           .group:00000000 wm4.core_cm4_simd.h.29.013e5bcf58dba2d27c60184174208e07
+                           .group:00000000 wm4.core_cm4.h.155.cf7c793e178943e1bbf613f1b21cd51a
+                           .group:00000000 wm4.stm32f30x.h.294.d8a54360eca16e4157694b52a095202d
+                           .group:00000000 wm4.stm32f30x_adc.h.130.cbebad91f78fb87381fe0860eea6104e
+                           .group:00000000 wm4.stm32f30x_can.h.50.8b8f5d301152c422a6e50622b33ef620
+                           .group:00000000 wm4.stm32f30x_crc.h.54.66d4c5e565e18566aebd9abfd4bcd4b0
+                           .group:00000000 wm4.stm32f30x_comp.h.91.06ae44150aaaa82c077b71df8db3541a
+                           .group:00000000 wm4.stm32f30x_dac.h.49.b1b5b26e4ca241dbe67fa16dc86a615f
+                           .group:00000000 wm4.stm32f30x_dbgmcu.h.53.b238a263ce6a2cc83f610cc35302a38b
+                           .group:00000000 wm4.stm32f30x_dma.h.96.d7a2ddd10023e12781aa8ff5ac15d212
+                           .group:00000000 wm4.stm32f30x_exti.h.60.8ca0809491a21dec6fc69cf7471e2bab
+                           .group:00000000 wm4.stm32f30x_flash.h.70.32613455dfe7328932f786a224daac23
+                           .group:00000000 wm4.stm32f30x_gpio.h.50.408e1f6250246e4cc28221970909d34c
+                           .group:00000000 wm4.stm32f30x_syscfg.h.58.4cadeb4ec8e47d36b972bbb6b96b7161
+                           .group:00000000 wm4.stm32f30x_iwdg.h.59.467d704fb073a015941f19b50fa6470a
+                           .group:00000000 wm4.stm32f30x_opamp.h.75.704e2e5e2aab039de307aaa2dcc99fa5
+                           .group:00000000 wm4.stm32f30x_pwr.h.59.5c85acff2a3e3c5085b2140c06025cfc
+                           .group:00000000 wm4.stm32f30x_rcc.h.79.5ba7cac1e74879861a72556c25322aa4
+                           .group:00000000 wm4.stm32f30x_rtc.h.133.d184e08ff40bda44db4bed94f9633384
+                           .group:00000000 wm4.stm32f30x_spi.h.119.4d21ec94ec14f3553a127e61c0a9874f
+                           .group:00000000 wm4.stm32f30x_tim.h.175.d4a93cff2e7924577147254e501271b6
+                           .group:00000000 wm4.stm32f30x_usart.h.110.c89016273702821ff4f9fe43881f70b5
+                           .group:00000000 wm4.stm32f30x_wwdg.h.58.4688eee61a2709866472b4b4c07d9275
+                           .group:00000000 wm4.stm32f30x_misc.h.113.6a52e4fe7c3825a3ab05990f30dddf92
+                           .group:00000000 wm4.stm32f30x_i2c.h.86.3d51d4edc0e3b9ee9aae045ccbb7739a
+
+UNDEFINED SYMBOLS
+RCC_APB1PeriphResetCmd

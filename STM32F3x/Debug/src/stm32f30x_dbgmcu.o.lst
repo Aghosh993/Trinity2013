@@ -1,0 +1,492 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.eabi_attribute 28, 1
+   5              		.fpu fpv4-sp-d16
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 6
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.thumb
+  16              		.file	"stm32f30x_dbgmcu.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.align	2
+  21              		.global	DBGMCU_GetREVID
+  22              		.thumb
+  23              		.thumb_func
+  25              	DBGMCU_GetREVID:
+  26              	.LFB111:
+  27              		.file 1 "../src/stm32f30x_dbgmcu.c"
+   1:../src/stm32f30x_dbgmcu.c **** /**
+   2:../src/stm32f30x_dbgmcu.c ****   ******************************************************************************
+   3:../src/stm32f30x_dbgmcu.c ****   * @file    stm32f30x_dbgmcu.c
+   4:../src/stm32f30x_dbgmcu.c ****   * @author  MCD Application Team
+   5:../src/stm32f30x_dbgmcu.c ****   * @version V1.0.1
+   6:../src/stm32f30x_dbgmcu.c ****   * @date    23-October-2012
+   7:../src/stm32f30x_dbgmcu.c ****   * @brief   This file provides firmware functions to manage the following 
+   8:../src/stm32f30x_dbgmcu.c ****   *          functionalities of the Debug MCU (DBGMCU) peripheral:
+   9:../src/stm32f30x_dbgmcu.c ****   *           + Device and Revision ID management
+  10:../src/stm32f30x_dbgmcu.c ****   *           + Peripherals Configuration
+  11:../src/stm32f30x_dbgmcu.c ****   ******************************************************************************
+  12:../src/stm32f30x_dbgmcu.c ****   * @attention
+  13:../src/stm32f30x_dbgmcu.c ****   *
+  14:../src/stm32f30x_dbgmcu.c ****   * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  15:../src/stm32f30x_dbgmcu.c ****   *
+  16:../src/stm32f30x_dbgmcu.c ****   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  17:../src/stm32f30x_dbgmcu.c ****   * You may not use this file except in compliance with the License.
+  18:../src/stm32f30x_dbgmcu.c ****   * You may obtain a copy of the License at:
+  19:../src/stm32f30x_dbgmcu.c ****   *
+  20:../src/stm32f30x_dbgmcu.c ****   *        http://www.st.com/software_license_agreement_liberty_v2
+  21:../src/stm32f30x_dbgmcu.c ****   *
+  22:../src/stm32f30x_dbgmcu.c ****   * Unless required by applicable law or agreed to in writing, software 
+  23:../src/stm32f30x_dbgmcu.c ****   * distributed under the License is distributed on an "AS IS" BASIS, 
+  24:../src/stm32f30x_dbgmcu.c ****   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  25:../src/stm32f30x_dbgmcu.c ****   * See the License for the specific language governing permissions and
+  26:../src/stm32f30x_dbgmcu.c ****   * limitations under the License.
+  27:../src/stm32f30x_dbgmcu.c ****   *
+  28:../src/stm32f30x_dbgmcu.c ****   ******************************************************************************
+  29:../src/stm32f30x_dbgmcu.c ****   */
+  30:../src/stm32f30x_dbgmcu.c **** 
+  31:../src/stm32f30x_dbgmcu.c **** /* Includes ------------------------------------------------------------------*/
+  32:../src/stm32f30x_dbgmcu.c **** #include "stm32f30x_dbgmcu.h"
+  33:../src/stm32f30x_dbgmcu.c **** 
+  34:../src/stm32f30x_dbgmcu.c **** /** @addtogroup STM32F30x_StdPeriph_Driver
+  35:../src/stm32f30x_dbgmcu.c ****   * @{
+  36:../src/stm32f30x_dbgmcu.c ****   */
+  37:../src/stm32f30x_dbgmcu.c **** 
+  38:../src/stm32f30x_dbgmcu.c **** /** @defgroup DBGMCU 
+  39:../src/stm32f30x_dbgmcu.c ****   * @brief DBGMCU driver modules
+  40:../src/stm32f30x_dbgmcu.c ****   * @{
+  41:../src/stm32f30x_dbgmcu.c ****   */ 
+  42:../src/stm32f30x_dbgmcu.c **** 
+  43:../src/stm32f30x_dbgmcu.c **** /* Private typedef -----------------------------------------------------------*/
+  44:../src/stm32f30x_dbgmcu.c **** /* Private define ------------------------------------------------------------*/
+  45:../src/stm32f30x_dbgmcu.c **** #define IDCODE_DEVID_MASK    ((uint32_t)0x00000FFF)
+  46:../src/stm32f30x_dbgmcu.c **** 
+  47:../src/stm32f30x_dbgmcu.c **** /* Private macro -------------------------------------------------------------*/
+  48:../src/stm32f30x_dbgmcu.c **** /* Private variables ---------------------------------------------------------*/
+  49:../src/stm32f30x_dbgmcu.c **** /* Private function prototypes -----------------------------------------------*/
+  50:../src/stm32f30x_dbgmcu.c **** /* Private functions ---------------------------------------------------------*/
+  51:../src/stm32f30x_dbgmcu.c **** 
+  52:../src/stm32f30x_dbgmcu.c **** /** @defgroup DBGMCU_Private_Functions
+  53:../src/stm32f30x_dbgmcu.c ****   * @{
+  54:../src/stm32f30x_dbgmcu.c ****   */ 
+  55:../src/stm32f30x_dbgmcu.c **** 
+  56:../src/stm32f30x_dbgmcu.c **** /** @defgroup DBGMCU_Group1 Device and Revision ID management functions
+  57:../src/stm32f30x_dbgmcu.c ****  *  @brief   Device and Revision ID management functions
+  58:../src/stm32f30x_dbgmcu.c ****  *
+  59:../src/stm32f30x_dbgmcu.c **** @verbatim
+  60:../src/stm32f30x_dbgmcu.c ****   ==============================================================================
+  61:../src/stm32f30x_dbgmcu.c ****             ##### Device and Revision ID management functions #####
+  62:../src/stm32f30x_dbgmcu.c ****   ==============================================================================
+  63:../src/stm32f30x_dbgmcu.c **** 
+  64:../src/stm32f30x_dbgmcu.c **** @endverbatim
+  65:../src/stm32f30x_dbgmcu.c ****   * @{
+  66:../src/stm32f30x_dbgmcu.c ****   */
+  67:../src/stm32f30x_dbgmcu.c **** 
+  68:../src/stm32f30x_dbgmcu.c **** /**
+  69:../src/stm32f30x_dbgmcu.c ****   * @brief  Returns the device revision identifier.
+  70:../src/stm32f30x_dbgmcu.c ****   * @param  None
+  71:../src/stm32f30x_dbgmcu.c ****   * @retval Device revision identifier
+  72:../src/stm32f30x_dbgmcu.c ****   */
+  73:../src/stm32f30x_dbgmcu.c **** uint32_t DBGMCU_GetREVID(void)
+  74:../src/stm32f30x_dbgmcu.c **** {
+  28              		.loc 1 74 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33 0000 80B4     		push	{r7}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 4
+  36              		.cfi_offset 7, -4
+  37 0002 00AF     		add	r7, sp, #0
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_register 7
+  75:../src/stm32f30x_dbgmcu.c ****    return(DBGMCU->IDCODE >> 16);
+  40              		.loc 1 75 0
+  41 0004 4FF40053 		mov	r3, #8192
+  42 0008 CEF20403 		movt	r3, 57348
+  43 000c 1B68     		ldr	r3, [r3, #0]
+  44 000e 4FEA1343 		lsr	r3, r3, #16
+  76:../src/stm32f30x_dbgmcu.c **** }
+  45              		.loc 1 76 0
+  46 0012 1846     		mov	r0, r3
+  47 0014 BD46     		mov	sp, r7
+  48 0016 80BC     		pop	{r7}
+  49 0018 7047     		bx	lr
+  50              		.cfi_endproc
+  51              	.LFE111:
+  53 001a 00BF     		.align	2
+  54              		.global	DBGMCU_GetDEVID
+  55              		.thumb
+  56              		.thumb_func
+  58              	DBGMCU_GetDEVID:
+  59              	.LFB112:
+  77:../src/stm32f30x_dbgmcu.c **** 
+  78:../src/stm32f30x_dbgmcu.c **** /**
+  79:../src/stm32f30x_dbgmcu.c ****   * @brief   Returns the device identifier.
+  80:../src/stm32f30x_dbgmcu.c ****   * @param  None
+  81:../src/stm32f30x_dbgmcu.c ****   * @retval Device identifier
+  82:../src/stm32f30x_dbgmcu.c ****   */
+  83:../src/stm32f30x_dbgmcu.c **** uint32_t DBGMCU_GetDEVID(void)
+  84:../src/stm32f30x_dbgmcu.c **** {
+  60              		.loc 1 84 0
+  61              		.cfi_startproc
+  62              		@ args = 0, pretend = 0, frame = 0
+  63              		@ frame_needed = 1, uses_anonymous_args = 0
+  64              		@ link register save eliminated.
+  65 001c 80B4     		push	{r7}
+  66              	.LCFI2:
+  67              		.cfi_def_cfa_offset 4
+  68              		.cfi_offset 7, -4
+  69 001e 00AF     		add	r7, sp, #0
+  70              	.LCFI3:
+  71              		.cfi_def_cfa_register 7
+  85:../src/stm32f30x_dbgmcu.c ****    return(DBGMCU->IDCODE & IDCODE_DEVID_MASK);
+  72              		.loc 1 85 0
+  73 0020 4FF40053 		mov	r3, #8192
+  74 0024 CEF20403 		movt	r3, 57348
+  75 0028 1B68     		ldr	r3, [r3, #0]
+  76 002a 4FEA0353 		lsl	r3, r3, #20
+  77 002e 4FEA1353 		lsr	r3, r3, #20
+  86:../src/stm32f30x_dbgmcu.c **** }
+  78              		.loc 1 86 0
+  79 0032 1846     		mov	r0, r3
+  80 0034 BD46     		mov	sp, r7
+  81 0036 80BC     		pop	{r7}
+  82 0038 7047     		bx	lr
+  83              		.cfi_endproc
+  84              	.LFE112:
+  86 003a 00BF     		.align	2
+  87              		.global	DBGMCU_Config
+  88              		.thumb
+  89              		.thumb_func
+  91              	DBGMCU_Config:
+  92              	.LFB113:
+  87:../src/stm32f30x_dbgmcu.c **** 
+  88:../src/stm32f30x_dbgmcu.c **** /**
+  89:../src/stm32f30x_dbgmcu.c ****   * @}
+  90:../src/stm32f30x_dbgmcu.c ****   */
+  91:../src/stm32f30x_dbgmcu.c ****   
+  92:../src/stm32f30x_dbgmcu.c **** /** @defgroup DBGMCU_Group2 Peripherals Configuration functions
+  93:../src/stm32f30x_dbgmcu.c ****  *  @brief   Peripherals Configuration
+  94:../src/stm32f30x_dbgmcu.c ****  *
+  95:../src/stm32f30x_dbgmcu.c **** @verbatim
+  96:../src/stm32f30x_dbgmcu.c ****   ==============================================================================
+  97:../src/stm32f30x_dbgmcu.c ****                ##### Peripherals Configuration functions #####
+  98:../src/stm32f30x_dbgmcu.c ****   ==============================================================================
+  99:../src/stm32f30x_dbgmcu.c **** 
+ 100:../src/stm32f30x_dbgmcu.c **** @endverbatim
+ 101:../src/stm32f30x_dbgmcu.c ****   * @{
+ 102:../src/stm32f30x_dbgmcu.c ****   */
+ 103:../src/stm32f30x_dbgmcu.c **** 
+ 104:../src/stm32f30x_dbgmcu.c **** /**
+ 105:../src/stm32f30x_dbgmcu.c ****   * @brief  Configures low power mode behavior when the MCU is in Debug mode.
+ 106:../src/stm32f30x_dbgmcu.c ****   * @param  DBGMCU_Periph: specifies the low power mode.
+ 107:../src/stm32f30x_dbgmcu.c ****   *   This parameter can be any combination of the following values:
+ 108:../src/stm32f30x_dbgmcu.c ****   *     @arg DBGMCU_SLEEP: Keep debugger connection during SLEEP mode.              
+ 109:../src/stm32f30x_dbgmcu.c ****   *     @arg DBGMCU_STOP: Keep debugger connection during STOP mode.               
+ 110:../src/stm32f30x_dbgmcu.c ****   *     @arg DBGMCU_STANDBY: Keep debugger connection during STANDBY mode.        
+ 111:../src/stm32f30x_dbgmcu.c ****   * @param  NewState: new state of the specified low power mode in Debug mode.
+ 112:../src/stm32f30x_dbgmcu.c ****   *   This parameter can be: ENABLE or DISABLE.
+ 113:../src/stm32f30x_dbgmcu.c ****   * @retval None
+ 114:../src/stm32f30x_dbgmcu.c ****   */
+ 115:../src/stm32f30x_dbgmcu.c **** void DBGMCU_Config(uint32_t DBGMCU_Periph, FunctionalState NewState)
+ 116:../src/stm32f30x_dbgmcu.c **** {
+  93              		.loc 1 116 0
+  94              		.cfi_startproc
+  95              		@ args = 0, pretend = 0, frame = 8
+  96              		@ frame_needed = 1, uses_anonymous_args = 0
+  97              		@ link register save eliminated.
+  98 003c 80B4     		push	{r7}
+  99              	.LCFI4:
+ 100              		.cfi_def_cfa_offset 4
+ 101              		.cfi_offset 7, -4
+ 102 003e 83B0     		sub	sp, sp, #12
+ 103              	.LCFI5:
+ 104              		.cfi_def_cfa_offset 16
+ 105 0040 00AF     		add	r7, sp, #0
+ 106              	.LCFI6:
+ 107              		.cfi_def_cfa_register 7
+ 108 0042 7860     		str	r0, [r7, #4]
+ 109 0044 0B46     		mov	r3, r1
+ 110 0046 FB70     		strb	r3, [r7, #3]
+ 117:../src/stm32f30x_dbgmcu.c ****   /* Check the parameters */
+ 118:../src/stm32f30x_dbgmcu.c ****   assert_param(IS_DBGMCU_PERIPH(DBGMCU_Periph));
+ 119:../src/stm32f30x_dbgmcu.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 120:../src/stm32f30x_dbgmcu.c ****   if (NewState != DISABLE)
+ 111              		.loc 1 120 0
+ 112 0048 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 113 004a 002B     		cmp	r3, #0
+ 114 004c 0CD0     		beq	.L6
+ 121:../src/stm32f30x_dbgmcu.c ****   {
+ 122:../src/stm32f30x_dbgmcu.c ****     DBGMCU->CR |= DBGMCU_Periph;
+ 115              		.loc 1 122 0
+ 116 004e 4FF40053 		mov	r3, #8192
+ 117 0052 CEF20403 		movt	r3, 57348
+ 118 0056 4FF40052 		mov	r2, #8192
+ 119 005a CEF20402 		movt	r2, 57348
+ 120 005e 5168     		ldr	r1, [r2, #4]
+ 121 0060 7A68     		ldr	r2, [r7, #4]
+ 122 0062 0A43     		orrs	r2, r2, r1
+ 123 0064 5A60     		str	r2, [r3, #4]
+ 124 0066 0DE0     		b	.L5
+ 125              	.L6:
+ 123:../src/stm32f30x_dbgmcu.c ****   }
+ 124:../src/stm32f30x_dbgmcu.c ****   else
+ 125:../src/stm32f30x_dbgmcu.c ****   {
+ 126:../src/stm32f30x_dbgmcu.c ****     DBGMCU->CR &= ~DBGMCU_Periph;
+ 126              		.loc 1 126 0
+ 127 0068 4FF40053 		mov	r3, #8192
+ 128 006c CEF20403 		movt	r3, 57348
+ 129 0070 4FF40052 		mov	r2, #8192
+ 130 0074 CEF20402 		movt	r2, 57348
+ 131 0078 5168     		ldr	r1, [r2, #4]
+ 132 007a 7A68     		ldr	r2, [r7, #4]
+ 133 007c 6FEA0202 		mvn	r2, r2
+ 134 0080 0A40     		ands	r2, r2, r1
+ 135 0082 5A60     		str	r2, [r3, #4]
+ 136              	.L5:
+ 127:../src/stm32f30x_dbgmcu.c ****   }
+ 128:../src/stm32f30x_dbgmcu.c **** }
+ 137              		.loc 1 128 0
+ 138 0084 07F10C07 		add	r7, r7, #12
+ 139 0088 BD46     		mov	sp, r7
+ 140 008a 80BC     		pop	{r7}
+ 141 008c 7047     		bx	lr
+ 142              		.cfi_endproc
+ 143              	.LFE113:
+ 145 008e 00BF     		.align	2
+ 146              		.global	DBGMCU_APB1PeriphConfig
+ 147              		.thumb
+ 148              		.thumb_func
+ 150              	DBGMCU_APB1PeriphConfig:
+ 151              	.LFB114:
+ 129:../src/stm32f30x_dbgmcu.c **** 
+ 130:../src/stm32f30x_dbgmcu.c **** /**
+ 131:../src/stm32f30x_dbgmcu.c ****   * @brief  Configures APB1 peripheral behavior when the MCU is in Debug mode.
+ 132:../src/stm32f30x_dbgmcu.c ****   * @param  DBGMCU_Periph: specifies the APB1 peripheral.
+ 133:../src/stm32f30x_dbgmcu.c ****   *   This parameter can be any combination of the following values:        
+ 134:../src/stm32f30x_dbgmcu.c ****   *     @arg DBGMCU_TIM2_STOP: TIM2 counter stopped when Core is halted.          
+ 135:../src/stm32f30x_dbgmcu.c ****   *     @arg DBGMCU_TIM3_STOP: TIM3 counter stopped when Core is halted.          
+ 136:../src/stm32f30x_dbgmcu.c ****   *     @arg DBGMCU_TIM4_STOP: TIM4 counter stopped when Core is halted.
+ 137:../src/stm32f30x_dbgmcu.c ****   *     @arg DBGMCU_TIM6_STOP: TIM6 counter stopped when Core is halted.          
+ 138:../src/stm32f30x_dbgmcu.c ****   *     @arg DBGMCU_TIM7_STOP: TIM7 counter stopped when Core is halted.
+ 139:../src/stm32f30x_dbgmcu.c ****   *     @arg DBGMCU_RTC_STOP: RTC Calendar and Wakeup counter are stopped when 
+ 140:../src/stm32f30x_dbgmcu.c ****   *          Core is halted. 
+ 141:../src/stm32f30x_dbgmcu.c ****   *     @arg DBGMCU_WWDG_STOP: Debug WWDG stopped when Core is halted.
+ 142:../src/stm32f30x_dbgmcu.c ****   *     @arg DBGMCU_IWDG_STOP: Debug IWDG stopped when Core is halted.        
+ 143:../src/stm32f30x_dbgmcu.c ****   *     @arg DBGMCU_I2C1_SMBUS_TIMEOUT: I2C1 SMBUS timeout mode stopped when 
+ 144:../src/stm32f30x_dbgmcu.c ****   *          Core is halted.
+ 145:../src/stm32f30x_dbgmcu.c ****   *     @arg DBGMCU_I2C2_SMBUS_TIMEOUT: I2C2 SMBUS timeout mode stopped when 
+ 146:../src/stm32f30x_dbgmcu.c ****   *          Core is halted.
+ 147:../src/stm32f30x_dbgmcu.c ****   *     @arg DBGMCU_CAN1_STOP: Debug CAN2 stopped when Core is halted.        
+ 148:../src/stm32f30x_dbgmcu.c ****   * @param  NewState: new state of the specified APB1 peripheral in Debug mode.
+ 149:../src/stm32f30x_dbgmcu.c ****   *         This parameter can be: ENABLE or DISABLE.
+ 150:../src/stm32f30x_dbgmcu.c ****   * @retval None
+ 151:../src/stm32f30x_dbgmcu.c ****   */
+ 152:../src/stm32f30x_dbgmcu.c **** void DBGMCU_APB1PeriphConfig(uint32_t DBGMCU_Periph, FunctionalState NewState)
+ 153:../src/stm32f30x_dbgmcu.c **** {
+ 152              		.loc 1 153 0
+ 153              		.cfi_startproc
+ 154              		@ args = 0, pretend = 0, frame = 8
+ 155              		@ frame_needed = 1, uses_anonymous_args = 0
+ 156              		@ link register save eliminated.
+ 157 0090 80B4     		push	{r7}
+ 158              	.LCFI7:
+ 159              		.cfi_def_cfa_offset 4
+ 160              		.cfi_offset 7, -4
+ 161 0092 83B0     		sub	sp, sp, #12
+ 162              	.LCFI8:
+ 163              		.cfi_def_cfa_offset 16
+ 164 0094 00AF     		add	r7, sp, #0
+ 165              	.LCFI9:
+ 166              		.cfi_def_cfa_register 7
+ 167 0096 7860     		str	r0, [r7, #4]
+ 168 0098 0B46     		mov	r3, r1
+ 169 009a FB70     		strb	r3, [r7, #3]
+ 154:../src/stm32f30x_dbgmcu.c ****   /* Check the parameters */
+ 155:../src/stm32f30x_dbgmcu.c ****   assert_param(IS_DBGMCU_APB1PERIPH(DBGMCU_Periph));
+ 156:../src/stm32f30x_dbgmcu.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 157:../src/stm32f30x_dbgmcu.c **** 
+ 158:../src/stm32f30x_dbgmcu.c ****   if (NewState != DISABLE)
+ 170              		.loc 1 158 0
+ 171 009c FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 172 009e 002B     		cmp	r3, #0
+ 173 00a0 0CD0     		beq	.L9
+ 159:../src/stm32f30x_dbgmcu.c ****   {
+ 160:../src/stm32f30x_dbgmcu.c ****     DBGMCU->APB1FZ |= DBGMCU_Periph;
+ 174              		.loc 1 160 0
+ 175 00a2 4FF40053 		mov	r3, #8192
+ 176 00a6 CEF20403 		movt	r3, 57348
+ 177 00aa 4FF40052 		mov	r2, #8192
+ 178 00ae CEF20402 		movt	r2, 57348
+ 179 00b2 9168     		ldr	r1, [r2, #8]
+ 180 00b4 7A68     		ldr	r2, [r7, #4]
+ 181 00b6 0A43     		orrs	r2, r2, r1
+ 182 00b8 9A60     		str	r2, [r3, #8]
+ 183 00ba 0DE0     		b	.L8
+ 184              	.L9:
+ 161:../src/stm32f30x_dbgmcu.c ****   }
+ 162:../src/stm32f30x_dbgmcu.c ****   else
+ 163:../src/stm32f30x_dbgmcu.c ****   {
+ 164:../src/stm32f30x_dbgmcu.c ****     DBGMCU->APB1FZ &= ~DBGMCU_Periph;
+ 185              		.loc 1 164 0
+ 186 00bc 4FF40053 		mov	r3, #8192
+ 187 00c0 CEF20403 		movt	r3, 57348
+ 188 00c4 4FF40052 		mov	r2, #8192
+ 189 00c8 CEF20402 		movt	r2, 57348
+ 190 00cc 9168     		ldr	r1, [r2, #8]
+ 191 00ce 7A68     		ldr	r2, [r7, #4]
+ 192 00d0 6FEA0202 		mvn	r2, r2
+ 193 00d4 0A40     		ands	r2, r2, r1
+ 194 00d6 9A60     		str	r2, [r3, #8]
+ 195              	.L8:
+ 165:../src/stm32f30x_dbgmcu.c ****   }
+ 166:../src/stm32f30x_dbgmcu.c **** }
+ 196              		.loc 1 166 0
+ 197 00d8 07F10C07 		add	r7, r7, #12
+ 198 00dc BD46     		mov	sp, r7
+ 199 00de 80BC     		pop	{r7}
+ 200 00e0 7047     		bx	lr
+ 201              		.cfi_endproc
+ 202              	.LFE114:
+ 204 00e2 00BF     		.align	2
+ 205              		.global	DBGMCU_APB2PeriphConfig
+ 206              		.thumb
+ 207              		.thumb_func
+ 209              	DBGMCU_APB2PeriphConfig:
+ 210              	.LFB115:
+ 167:../src/stm32f30x_dbgmcu.c **** 
+ 168:../src/stm32f30x_dbgmcu.c **** /**
+ 169:../src/stm32f30x_dbgmcu.c ****   * @brief  Configures APB2 peripheral behavior when the MCU is in Debug mode.
+ 170:../src/stm32f30x_dbgmcu.c ****   * @param  DBGMCU_Periph: specifies the APB2 peripheral.
+ 171:../src/stm32f30x_dbgmcu.c ****   *   This parameter can be any combination of the following values:       
+ 172:../src/stm32f30x_dbgmcu.c ****   *     @arg DBGMCU_TIM1_STOP: TIM1 counter stopped when Core is halted.   
+ 173:../src/stm32f30x_dbgmcu.c ****   *     @arg DBGMCU_TIM8_STOP: TIM8 counter stopped when Core is halted. 
+ 174:../src/stm32f30x_dbgmcu.c ****   *     @arg DBGMCU_TIM15_STOP: TIM15 counter stopped when Core is halted.                
+ 175:../src/stm32f30x_dbgmcu.c ****   *     @arg DBGMCU_TIM16_STOP: TIM16 counter stopped when Core is halted.
+ 176:../src/stm32f30x_dbgmcu.c ****   *     @arg DBGMCU_TIM17_STOP: TIM17 counter stopped when Core is halted.   
+ 177:../src/stm32f30x_dbgmcu.c ****   * @param  NewState: new state of the specified APB2 peripheral in Debug mode.
+ 178:../src/stm32f30x_dbgmcu.c ****   *         This parameter can be: ENABLE or DISABLE.
+ 179:../src/stm32f30x_dbgmcu.c ****   * @retval None
+ 180:../src/stm32f30x_dbgmcu.c ****   */
+ 181:../src/stm32f30x_dbgmcu.c **** void DBGMCU_APB2PeriphConfig(uint32_t DBGMCU_Periph, FunctionalState NewState)
+ 182:../src/stm32f30x_dbgmcu.c **** {
+ 211              		.loc 1 182 0
+ 212              		.cfi_startproc
+ 213              		@ args = 0, pretend = 0, frame = 8
+ 214              		@ frame_needed = 1, uses_anonymous_args = 0
+ 215              		@ link register save eliminated.
+ 216 00e4 80B4     		push	{r7}
+ 217              	.LCFI10:
+ 218              		.cfi_def_cfa_offset 4
+ 219              		.cfi_offset 7, -4
+ 220 00e6 83B0     		sub	sp, sp, #12
+ 221              	.LCFI11:
+ 222              		.cfi_def_cfa_offset 16
+ 223 00e8 00AF     		add	r7, sp, #0
+ 224              	.LCFI12:
+ 225              		.cfi_def_cfa_register 7
+ 226 00ea 7860     		str	r0, [r7, #4]
+ 227 00ec 0B46     		mov	r3, r1
+ 228 00ee FB70     		strb	r3, [r7, #3]
+ 183:../src/stm32f30x_dbgmcu.c ****   /* Check the parameters */
+ 184:../src/stm32f30x_dbgmcu.c ****   assert_param(IS_DBGMCU_APB2PERIPH(DBGMCU_Periph));
+ 185:../src/stm32f30x_dbgmcu.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 186:../src/stm32f30x_dbgmcu.c **** 
+ 187:../src/stm32f30x_dbgmcu.c ****   if (NewState != DISABLE)
+ 229              		.loc 1 187 0
+ 230 00f0 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 231 00f2 002B     		cmp	r3, #0
+ 232 00f4 0CD0     		beq	.L12
+ 188:../src/stm32f30x_dbgmcu.c ****   {
+ 189:../src/stm32f30x_dbgmcu.c ****     DBGMCU->APB2FZ |= DBGMCU_Periph;
+ 233              		.loc 1 189 0
+ 234 00f6 4FF40053 		mov	r3, #8192
+ 235 00fa CEF20403 		movt	r3, 57348
+ 236 00fe 4FF40052 		mov	r2, #8192
+ 237 0102 CEF20402 		movt	r2, 57348
+ 238 0106 D168     		ldr	r1, [r2, #12]
+ 239 0108 7A68     		ldr	r2, [r7, #4]
+ 240 010a 0A43     		orrs	r2, r2, r1
+ 241 010c DA60     		str	r2, [r3, #12]
+ 242 010e 0DE0     		b	.L11
+ 243              	.L12:
+ 190:../src/stm32f30x_dbgmcu.c ****   }
+ 191:../src/stm32f30x_dbgmcu.c ****   else
+ 192:../src/stm32f30x_dbgmcu.c ****   {
+ 193:../src/stm32f30x_dbgmcu.c ****     DBGMCU->APB2FZ &= ~DBGMCU_Periph;
+ 244              		.loc 1 193 0
+ 245 0110 4FF40053 		mov	r3, #8192
+ 246 0114 CEF20403 		movt	r3, 57348
+ 247 0118 4FF40052 		mov	r2, #8192
+ 248 011c CEF20402 		movt	r2, 57348
+ 249 0120 D168     		ldr	r1, [r2, #12]
+ 250 0122 7A68     		ldr	r2, [r7, #4]
+ 251 0124 6FEA0202 		mvn	r2, r2
+ 252 0128 0A40     		ands	r2, r2, r1
+ 253 012a DA60     		str	r2, [r3, #12]
+ 254              	.L11:
+ 194:../src/stm32f30x_dbgmcu.c ****   }
+ 195:../src/stm32f30x_dbgmcu.c **** }
+ 255              		.loc 1 195 0
+ 256 012c 07F10C07 		add	r7, r7, #12
+ 257 0130 BD46     		mov	sp, r7
+ 258 0132 80BC     		pop	{r7}
+ 259 0134 7047     		bx	lr
+ 260              		.cfi_endproc
+ 261              	.LFE115:
+ 263              	.Letext0:
+ 264              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
+ 265              		.file 3 "/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/stm32f30x.h"
+ 266              		.file 4 "/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cm4.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 stm32f30x_dbgmcu.c
+     /tmp/ccadfkfq.s:20     .text:00000000 $t
+     /tmp/ccadfkfq.s:25     .text:00000000 DBGMCU_GetREVID
+     /tmp/ccadfkfq.s:58     .text:0000001c DBGMCU_GetDEVID
+     /tmp/ccadfkfq.s:91     .text:0000003c DBGMCU_Config
+     /tmp/ccadfkfq.s:150    .text:00000090 DBGMCU_APB1PeriphConfig
+     /tmp/ccadfkfq.s:209    .text:000000e4 DBGMCU_APB2PeriphConfig
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.743cd71370ebc432b539c5dba7924ecc
+                           .group:00000000 wm4.stm32f30x.h.56.6f19c65e98e3319a61449cb2b2455af5
+                           .group:00000000 wm4.core_cm4.h.32.1434cd257ff5806b1b03cd32ab0641e9
+                           .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05
+                           .group:00000000 wm4.core_cmInstr.h.25.d8165482ef3061013a2fc83e2d85f3d9
+                           .group:00000000 wm4.core_cm4_simd.h.29.013e5bcf58dba2d27c60184174208e07
+                           .group:00000000 wm4.core_cm4.h.155.cf7c793e178943e1bbf613f1b21cd51a
+                           .group:00000000 wm4.stm32f30x.h.294.d8a54360eca16e4157694b52a095202d
+                           .group:00000000 wm4.stm32f30x_adc.h.130.cbebad91f78fb87381fe0860eea6104e
+                           .group:00000000 wm4.stm32f30x_can.h.50.8b8f5d301152c422a6e50622b33ef620
+                           .group:00000000 wm4.stm32f30x_crc.h.54.66d4c5e565e18566aebd9abfd4bcd4b0
+                           .group:00000000 wm4.stm32f30x_comp.h.91.06ae44150aaaa82c077b71df8db3541a
+                           .group:00000000 wm4.stm32f30x_dac.h.49.b1b5b26e4ca241dbe67fa16dc86a615f
+                           .group:00000000 wm4.stm32f30x_dma.h.96.d7a2ddd10023e12781aa8ff5ac15d212
+                           .group:00000000 wm4.stm32f30x_exti.h.60.8ca0809491a21dec6fc69cf7471e2bab
+                           .group:00000000 wm4.stm32f30x_flash.h.70.32613455dfe7328932f786a224daac23
+                           .group:00000000 wm4.stm32f30x_gpio.h.50.408e1f6250246e4cc28221970909d34c
+                           .group:00000000 wm4.stm32f30x_syscfg.h.58.4cadeb4ec8e47d36b972bbb6b96b7161
+                           .group:00000000 wm4.stm32f30x_i2c.h.86.3d51d4edc0e3b9ee9aae045ccbb7739a
+                           .group:00000000 wm4.stm32f30x_iwdg.h.59.467d704fb073a015941f19b50fa6470a
+                           .group:00000000 wm4.stm32f30x_opamp.h.75.704e2e5e2aab039de307aaa2dcc99fa5
+                           .group:00000000 wm4.stm32f30x_pwr.h.59.5c85acff2a3e3c5085b2140c06025cfc
+                           .group:00000000 wm4.stm32f30x_rcc.h.79.5ba7cac1e74879861a72556c25322aa4
+                           .group:00000000 wm4.stm32f30x_rtc.h.133.d184e08ff40bda44db4bed94f9633384
+                           .group:00000000 wm4.stm32f30x_spi.h.119.4d21ec94ec14f3553a127e61c0a9874f
+                           .group:00000000 wm4.stm32f30x_tim.h.175.d4a93cff2e7924577147254e501271b6
+                           .group:00000000 wm4.stm32f30x_usart.h.110.c89016273702821ff4f9fe43881f70b5
+                           .group:00000000 wm4.stm32f30x_wwdg.h.58.4688eee61a2709866472b4b4c07d9275
+                           .group:00000000 wm4.stm32f30x_misc.h.113.6a52e4fe7c3825a3ab05990f30dddf92
+                           .group:00000000 wm4.stm32f30x_dbgmcu.h.53.b238a263ce6a2cc83f610cc35302a38b
+
+NO UNDEFINED SYMBOLS
