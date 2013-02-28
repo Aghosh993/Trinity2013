@@ -88,7 +88,6 @@ int main(void)
 
 	while(true)
 	{
-//		adcval = ADC_GetConversionValue(ADC1);
 //		pwm1_output((float)adcval/(float)4096); // Read potentiometer on PA2 and output its value on
 												// PWM channel #1
 		pwm2_output(0.5f);						// Fixed 1 kHz, 50% duty output on PWM output #2
