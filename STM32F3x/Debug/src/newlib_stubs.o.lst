@@ -590,454 +590,454 @@
  463 018e FB60     		str	r3, [r7, #12]
  464              	.LBB4:
  465              	.LBB5:
- 466              		.file 2 "/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h"
-   1:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /**************************************************************************//**
-   2:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  * @file     core_cmFunc.h
-   3:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  * @brief    CMSIS Cortex-M Core Function Access Header File
-   4:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  * @version  V3.00
-   5:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  * @date     19. January 2012
-   6:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  *
-   7:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  * @note
-   8:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  * Copyright (C) 2009-2012 ARM Limited. All rights reserved.
-   9:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  *
-  10:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  * @par
-  11:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  * ARM Limited (ARM) is supplying this software for use with Cortex-M 
-  12:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  * processor based microcontrollers.  This file can be freely distributed 
-  13:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  * within development tools that are supporting such ARM based processors. 
-  14:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  *
-  15:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  * @par
-  16:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  * THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED
-  17:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  * OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
-  18:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
-  19:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  * ARM SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR
-  20:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  * CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
-  21:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  *
-  22:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  ******************************************************************************/
-  23:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
-  24:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** #ifndef __CORE_CMFUNC_H
-  25:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** #define __CORE_CMFUNC_H
-  26:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
-  27:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
-  28:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /* ###########################  Core Function Access  ########################### */
-  29:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \ingroup  CMSIS_Core_FunctionInterface   
-  30:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
-  31:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   @{
-  32:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
-  33:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
-  34:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** #if   defined ( __CC_ARM ) /*------------------RealView Compiler -----------------*/
-  35:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /* ARM armcc specific functions */
-  36:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
-  37:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** #if (__ARMCC_VERSION < 400677)
-  38:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   #error "Please use ARM Compiler Toolchain V4.0.677 or later!"
-  39:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** #endif
-  40:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
-  41:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /* intrinsic void __enable_irq();     */
-  42:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /* intrinsic void __disable_irq();    */
-  43:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
-  44:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get Control Register
-  45:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
-  46:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function returns the content of the Control Register.
-  47:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
-  48:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \return               Control Register value
-  49:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
-  50:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE uint32_t __get_CONTROL(void)
-  51:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
-  52:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regControl         __ASM("control");
-  53:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   return(__regControl);
-  54:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
-  55:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
-  56:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
-  57:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Set Control Register
-  58:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
-  59:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function writes the given value to the Control Register.
-  60:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
-  61:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \param [in]    control  Control Register value to set
-  62:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
-  63:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE void __set_CONTROL(uint32_t control)
-  64:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
-  65:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regControl         __ASM("control");
-  66:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   __regControl = control;
-  67:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
-  68:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
-  69:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
-  70:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get IPSR Register
-  71:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
-  72:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function returns the content of the IPSR Register.
-  73:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
-  74:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \return               IPSR Register value
-  75:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
-  76:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE uint32_t __get_IPSR(void)
-  77:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
-  78:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regIPSR          __ASM("ipsr");
-  79:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   return(__regIPSR);
-  80:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
-  81:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
-  82:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
-  83:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get APSR Register
-  84:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
-  85:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function returns the content of the APSR Register.
-  86:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
-  87:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \return               APSR Register value
-  88:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
-  89:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE uint32_t __get_APSR(void)
-  90:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
-  91:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regAPSR          __ASM("apsr");
-  92:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   return(__regAPSR);
-  93:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
-  94:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
-  95:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
-  96:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get xPSR Register
-  97:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
-  98:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function returns the content of the xPSR Register.
-  99:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 100:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \return               xPSR Register value
- 101:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
- 102:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE uint32_t __get_xPSR(void)
- 103:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
- 104:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regXPSR          __ASM("xpsr");
- 105:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   return(__regXPSR);
- 106:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
- 107:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 108:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 109:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get Process Stack Pointer
- 110:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 111:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function returns the current value of the Process Stack Pointer (PSP).
- 112:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 113:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \return               PSP Register value
- 114:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
- 115:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE uint32_t __get_PSP(void)
- 116:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
- 117:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regProcessStackPointer  __ASM("psp");
- 118:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   return(__regProcessStackPointer);
- 119:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
- 120:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 121:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 122:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Set Process Stack Pointer
- 123:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 124:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function assigns the given value to the Process Stack Pointer (PSP).
- 125:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 126:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \param [in]    topOfProcStack  Process Stack Pointer value to set
- 127:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
- 128:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE void __set_PSP(uint32_t topOfProcStack)
- 129:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
- 130:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regProcessStackPointer  __ASM("psp");
- 131:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   __regProcessStackPointer = topOfProcStack;
- 132:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
- 133:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 134:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 135:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get Main Stack Pointer
- 136:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 137:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function returns the current value of the Main Stack Pointer (MSP).
- 138:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 139:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \return               MSP Register value
- 140:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
- 141:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE uint32_t __get_MSP(void)
- 142:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
- 143:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regMainStackPointer     __ASM("msp");
- 144:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   return(__regMainStackPointer);
- 145:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
- 146:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 147:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 148:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Set Main Stack Pointer
- 149:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 150:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function assigns the given value to the Main Stack Pointer (MSP).
- 151:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 152:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \param [in]    topOfMainStack  Main Stack Pointer value to set
- 153:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
- 154:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE void __set_MSP(uint32_t topOfMainStack)
- 155:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
- 156:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regMainStackPointer     __ASM("msp");
- 157:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   __regMainStackPointer = topOfMainStack;
- 158:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
- 159:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 160:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 161:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get Priority Mask
- 162:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 163:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function returns the current state of the priority mask bit from the Priority Mask Registe
- 164:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 165:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \return               Priority Mask value
- 166:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
- 167:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE uint32_t __get_PRIMASK(void)
- 168:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
- 169:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regPriMask         __ASM("primask");
- 170:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   return(__regPriMask);
- 171:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
- 172:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 173:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 174:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Set Priority Mask
- 175:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 176:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function assigns the given value to the Priority Mask Register.
- 177:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 178:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \param [in]    priMask  Priority Mask
- 179:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
- 180:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE void __set_PRIMASK(uint32_t priMask)
- 181:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
- 182:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regPriMask         __ASM("primask");
- 183:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   __regPriMask = (priMask);
- 184:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
- 185:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  
- 186:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 187:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** #if       (__CORTEX_M >= 0x03)
- 188:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 189:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Enable FIQ
- 190:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 191:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function enables FIQ interrupts by clearing the F-bit in the CPSR.
- 192:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     Can only be executed in Privileged modes.
- 193:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
- 194:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** #define __enable_fault_irq                __enable_fiq
- 195:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 196:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 197:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Disable FIQ
- 198:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 199:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function disables FIQ interrupts by setting the F-bit in the CPSR.
- 200:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     Can only be executed in Privileged modes.
- 201:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
- 202:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** #define __disable_fault_irq               __disable_fiq
- 203:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 204:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 205:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get Base Priority
- 206:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 207:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function returns the current value of the Base Priority register.
- 208:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 209:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \return               Base Priority register value
- 210:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
- 211:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE uint32_t  __get_BASEPRI(void)
- 212:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
- 213:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regBasePri         __ASM("basepri");
- 214:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   return(__regBasePri);
- 215:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
- 216:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 217:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 218:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Set Base Priority
- 219:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 220:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function assigns the given value to the Base Priority register.
- 221:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 222:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \param [in]    basePri  Base Priority value to set
- 223:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
- 224:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE void __set_BASEPRI(uint32_t basePri)
- 225:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
- 226:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regBasePri         __ASM("basepri");
- 227:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   __regBasePri = (basePri & 0xff);
- 228:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
- 229:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  
- 230:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 231:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get Fault Mask
- 232:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 233:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function returns the current value of the Fault Mask register.
- 234:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 235:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \return               Fault Mask register value
- 236:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
- 237:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE uint32_t __get_FAULTMASK(void)
- 238:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
- 239:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regFaultMask       __ASM("faultmask");
- 240:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   return(__regFaultMask);
- 241:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
- 242:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 243:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 244:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Set Fault Mask
- 245:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 246:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function assigns the given value to the Fault Mask register.
- 247:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 248:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \param [in]    faultMask  Fault Mask value to set
- 249:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
- 250:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE void __set_FAULTMASK(uint32_t faultMask)
- 251:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
- 252:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regFaultMask       __ASM("faultmask");
- 253:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   __regFaultMask = (faultMask & (uint32_t)1);
- 254:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
- 255:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 256:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** #endif /* (__CORTEX_M >= 0x03) */
- 257:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 258:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 259:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** #if       (__CORTEX_M == 0x04)
- 260:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 261:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get FPSCR
- 262:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 263:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function returns the current value of the Floating Point Status/Control register.
- 264:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 265:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \return               Floating Point Status/Control register value
- 266:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
- 267:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE uint32_t __get_FPSCR(void)
- 268:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
- 269:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** #if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
- 270:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regfpscr         __ASM("fpscr");
- 271:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   return(__regfpscr);
- 272:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** #else
- 273:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****    return(0);
- 274:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** #endif
- 275:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
- 276:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 277:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 278:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Set FPSCR
- 279:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 280:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function assigns the given value to the Floating Point Status/Control register.
- 281:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 282:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \param [in]    fpscr  Floating Point Status/Control value to set
- 283:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
- 284:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
- 285:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
- 286:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** #if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
- 287:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regfpscr         __ASM("fpscr");
- 288:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   __regfpscr = (fpscr);
- 289:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** #endif
- 290:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
- 291:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 292:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** #endif /* (__CORTEX_M == 0x04) */
- 293:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 294:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 295:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** #elif defined ( __ICCARM__ ) /*------------------ ICC Compiler -------------------*/
- 296:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /* IAR iccarm specific functions */
- 297:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 298:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** #include <cmsis_iar.h>
- 299:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 300:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 301:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** #elif defined ( __TMS470__ ) /*---------------- TI CCS Compiler ------------------*/
- 302:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /* TI CCS specific functions */
- 303:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 304:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** #include <cmsis_ccs.h>
- 305:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 306:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 307:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** #elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
- 308:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /* GNU gcc specific functions */
- 309:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 310:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Enable IRQ Interrupts
- 311:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 312:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   This function enables IRQ interrupts by clearing the I-bit in the CPSR.
- 313:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   Can only be executed in Privileged modes.
- 314:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
- 315:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __enable_irq(void)
- 316:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
- 317:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   __ASM volatile ("cpsie i");
- 318:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
- 319:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 320:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 321:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Disable IRQ Interrupts
- 322:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 323:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   This function disables IRQ interrupts by setting the I-bit in the CPSR.
- 324:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   Can only be executed in Privileged modes.
- 325:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
- 326:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __disable_irq(void)
- 327:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
- 328:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   __ASM volatile ("cpsid i");
- 329:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
- 330:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 331:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 332:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get Control Register
- 333:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 334:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function returns the content of the Control Register.
- 335:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 336:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \return               Control Register value
- 337:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
- 338:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_CONTROL(void)
- 339:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
- 340:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   uint32_t result;
- 341:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 342:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   __ASM volatile ("MRS %0, control" : "=r" (result) );
- 343:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   return(result);
- 344:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
- 345:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 346:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 347:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Set Control Register
- 348:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 349:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function writes the given value to the Control Register.
- 350:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 351:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \param [in]    control  Control Register value to set
- 352:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
- 353:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_CONTROL(uint32_t control)
- 354:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
- 355:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   __ASM volatile ("MSR control, %0" : : "r" (control) );
- 356:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
- 357:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 358:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 359:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get IPSR Register
- 360:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 361:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function returns the content of the IPSR Register.
- 362:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 363:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \return               IPSR Register value
- 364:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
- 365:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_IPSR(void)
- 366:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
- 367:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   uint32_t result;
- 368:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 369:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   __ASM volatile ("MRS %0, ipsr" : "=r" (result) );
- 370:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   return(result);
- 371:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
- 372:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 373:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 374:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get APSR Register
- 375:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 376:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function returns the content of the APSR Register.
- 377:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 378:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \return               APSR Register value
- 379:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
- 380:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_APSR(void)
- 381:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
- 382:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   uint32_t result;
- 383:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 384:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   __ASM volatile ("MRS %0, apsr" : "=r" (result) );
- 385:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   return(result);
- 386:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
- 387:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 388:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 389:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get xPSR Register
- 390:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 391:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function returns the content of the xPSR Register.
- 392:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 393:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \return               xPSR Register value
- 394:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
- 395:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_xPSR(void)
- 396:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
- 397:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   uint32_t result;
- 398:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 399:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   __ASM volatile ("MRS %0, xpsr" : "=r" (result) );
- 400:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   return(result);
- 401:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
- 402:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 403:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 404:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get Process Stack Pointer
- 405:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 406:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function returns the current value of the Process Stack Pointer (PSP).
- 407:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 408:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \return               PSP Register value
- 409:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
- 410:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_PSP(void)
- 411:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
- 412:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   register uint32_t result;
- 413:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 414:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   __ASM volatile ("MRS %0, psp\n"  : "=r" (result) );
- 415:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   return(result);
- 416:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
- 417:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  
- 418:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 419:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Set Process Stack Pointer
- 420:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 421:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function assigns the given value to the Process Stack Pointer (PSP).
- 422:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 423:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \param [in]    topOfProcStack  Process Stack Pointer value to set
- 424:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
- 425:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_PSP(uint32_t topOfProcStack)
- 426:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
- 427:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   __ASM volatile ("MSR psp, %0\n" : : "r" (topOfProcStack) );
- 428:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** }
- 429:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 430:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 431:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get Main Stack Pointer
- 432:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 433:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     This function returns the current value of the Main Stack Pointer (MSP).
- 434:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 435:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****     \return               MSP Register value
- 436:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****  */
- 437:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_MSP(void)
- 438:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** {
- 439:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   register uint32_t result;
- 440:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h **** 
- 441:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   __ASM volatile ("MRS %0, msp\n" : "=r" (result) );
+ 466              		.file 2 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h"
+   1:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /**************************************************************************//**
+   2:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  * @file     core_cmFunc.h
+   3:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  * @brief    CMSIS Cortex-M Core Function Access Header File
+   4:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  * @version  V3.00
+   5:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  * @date     19. January 2012
+   6:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  *
+   7:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  * @note
+   8:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  * Copyright (C) 2009-2012 ARM Limited. All rights reserved.
+   9:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  *
+  10:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  * @par
+  11:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  * ARM Limited (ARM) is supplying this software for use with Cortex-M 
+  12:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  * processor based microcontrollers.  This file can be freely distributed 
+  13:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  * within development tools that are supporting such ARM based processors. 
+  14:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  *
+  15:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  * @par
+  16:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  * THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED
+  17:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  * OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
+  18:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
+  19:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  * ARM SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR
+  20:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  * CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
+  21:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  *
+  22:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  ******************************************************************************/
+  23:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+  24:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** #ifndef __CORE_CMFUNC_H
+  25:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** #define __CORE_CMFUNC_H
+  26:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+  27:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+  28:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /* ###########################  Core Function Access  ########################### */
+  29:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \ingroup  CMSIS_Core_FunctionInterface   
+  30:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
+  31:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   @{
+  32:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+  33:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+  34:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** #if   defined ( __CC_ARM ) /*------------------RealView Compiler -----------------*/
+  35:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /* ARM armcc specific functions */
+  36:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+  37:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** #if (__ARMCC_VERSION < 400677)
+  38:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   #error "Please use ARM Compiler Toolchain V4.0.677 or later!"
+  39:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** #endif
+  40:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+  41:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /* intrinsic void __enable_irq();     */
+  42:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /* intrinsic void __disable_irq();    */
+  43:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+  44:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get Control Register
+  45:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+  46:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function returns the content of the Control Register.
+  47:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+  48:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \return               Control Register value
+  49:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+  50:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE uint32_t __get_CONTROL(void)
+  51:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+  52:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regControl         __ASM("control");
+  53:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   return(__regControl);
+  54:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+  55:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+  56:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+  57:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Set Control Register
+  58:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+  59:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function writes the given value to the Control Register.
+  60:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+  61:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \param [in]    control  Control Register value to set
+  62:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+  63:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE void __set_CONTROL(uint32_t control)
+  64:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+  65:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regControl         __ASM("control");
+  66:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   __regControl = control;
+  67:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+  68:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+  69:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+  70:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get IPSR Register
+  71:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+  72:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function returns the content of the IPSR Register.
+  73:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+  74:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \return               IPSR Register value
+  75:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+  76:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE uint32_t __get_IPSR(void)
+  77:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+  78:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regIPSR          __ASM("ipsr");
+  79:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   return(__regIPSR);
+  80:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+  81:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+  82:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+  83:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get APSR Register
+  84:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+  85:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function returns the content of the APSR Register.
+  86:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+  87:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \return               APSR Register value
+  88:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+  89:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE uint32_t __get_APSR(void)
+  90:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+  91:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regAPSR          __ASM("apsr");
+  92:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   return(__regAPSR);
+  93:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+  94:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+  95:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+  96:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get xPSR Register
+  97:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+  98:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function returns the content of the xPSR Register.
+  99:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 100:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \return               xPSR Register value
+ 101:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+ 102:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE uint32_t __get_xPSR(void)
+ 103:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+ 104:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regXPSR          __ASM("xpsr");
+ 105:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   return(__regXPSR);
+ 106:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+ 107:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 108:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 109:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get Process Stack Pointer
+ 110:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 111:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function returns the current value of the Process Stack Pointer (PSP).
+ 112:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 113:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \return               PSP Register value
+ 114:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+ 115:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE uint32_t __get_PSP(void)
+ 116:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+ 117:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regProcessStackPointer  __ASM("psp");
+ 118:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   return(__regProcessStackPointer);
+ 119:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+ 120:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 121:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 122:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Set Process Stack Pointer
+ 123:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 124:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function assigns the given value to the Process Stack Pointer (PSP).
+ 125:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 126:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \param [in]    topOfProcStack  Process Stack Pointer value to set
+ 127:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+ 128:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE void __set_PSP(uint32_t topOfProcStack)
+ 129:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+ 130:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regProcessStackPointer  __ASM("psp");
+ 131:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   __regProcessStackPointer = topOfProcStack;
+ 132:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+ 133:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 134:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 135:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get Main Stack Pointer
+ 136:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 137:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function returns the current value of the Main Stack Pointer (MSP).
+ 138:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 139:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \return               MSP Register value
+ 140:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+ 141:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE uint32_t __get_MSP(void)
+ 142:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+ 143:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regMainStackPointer     __ASM("msp");
+ 144:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   return(__regMainStackPointer);
+ 145:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+ 146:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 147:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 148:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Set Main Stack Pointer
+ 149:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 150:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function assigns the given value to the Main Stack Pointer (MSP).
+ 151:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 152:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \param [in]    topOfMainStack  Main Stack Pointer value to set
+ 153:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+ 154:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE void __set_MSP(uint32_t topOfMainStack)
+ 155:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+ 156:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regMainStackPointer     __ASM("msp");
+ 157:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   __regMainStackPointer = topOfMainStack;
+ 158:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+ 159:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 160:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 161:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get Priority Mask
+ 162:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 163:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function returns the current state of the priority mask bit from the Priority Mask Registe
+ 164:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 165:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \return               Priority Mask value
+ 166:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+ 167:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE uint32_t __get_PRIMASK(void)
+ 168:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+ 169:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regPriMask         __ASM("primask");
+ 170:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   return(__regPriMask);
+ 171:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+ 172:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 173:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 174:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Set Priority Mask
+ 175:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 176:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function assigns the given value to the Priority Mask Register.
+ 177:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 178:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \param [in]    priMask  Priority Mask
+ 179:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+ 180:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE void __set_PRIMASK(uint32_t priMask)
+ 181:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+ 182:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regPriMask         __ASM("primask");
+ 183:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   __regPriMask = (priMask);
+ 184:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+ 185:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  
+ 186:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 187:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** #if       (__CORTEX_M >= 0x03)
+ 188:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 189:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Enable FIQ
+ 190:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 191:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function enables FIQ interrupts by clearing the F-bit in the CPSR.
+ 192:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     Can only be executed in Privileged modes.
+ 193:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+ 194:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** #define __enable_fault_irq                __enable_fiq
+ 195:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 196:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 197:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Disable FIQ
+ 198:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 199:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function disables FIQ interrupts by setting the F-bit in the CPSR.
+ 200:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     Can only be executed in Privileged modes.
+ 201:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+ 202:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** #define __disable_fault_irq               __disable_fiq
+ 203:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 204:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 205:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get Base Priority
+ 206:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 207:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function returns the current value of the Base Priority register.
+ 208:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 209:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \return               Base Priority register value
+ 210:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+ 211:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE uint32_t  __get_BASEPRI(void)
+ 212:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+ 213:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regBasePri         __ASM("basepri");
+ 214:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   return(__regBasePri);
+ 215:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+ 216:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 217:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 218:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Set Base Priority
+ 219:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 220:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function assigns the given value to the Base Priority register.
+ 221:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 222:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \param [in]    basePri  Base Priority value to set
+ 223:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+ 224:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE void __set_BASEPRI(uint32_t basePri)
+ 225:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+ 226:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regBasePri         __ASM("basepri");
+ 227:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   __regBasePri = (basePri & 0xff);
+ 228:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+ 229:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  
+ 230:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 231:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get Fault Mask
+ 232:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 233:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function returns the current value of the Fault Mask register.
+ 234:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 235:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \return               Fault Mask register value
+ 236:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+ 237:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE uint32_t __get_FAULTMASK(void)
+ 238:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+ 239:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regFaultMask       __ASM("faultmask");
+ 240:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   return(__regFaultMask);
+ 241:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+ 242:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 243:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 244:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Set Fault Mask
+ 245:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 246:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function assigns the given value to the Fault Mask register.
+ 247:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 248:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \param [in]    faultMask  Fault Mask value to set
+ 249:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+ 250:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE void __set_FAULTMASK(uint32_t faultMask)
+ 251:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+ 252:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regFaultMask       __ASM("faultmask");
+ 253:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   __regFaultMask = (faultMask & (uint32_t)1);
+ 254:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+ 255:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 256:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** #endif /* (__CORTEX_M >= 0x03) */
+ 257:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 258:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 259:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** #if       (__CORTEX_M == 0x04)
+ 260:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 261:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get FPSCR
+ 262:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 263:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function returns the current value of the Floating Point Status/Control register.
+ 264:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 265:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \return               Floating Point Status/Control register value
+ 266:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+ 267:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE uint32_t __get_FPSCR(void)
+ 268:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+ 269:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** #if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
+ 270:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regfpscr         __ASM("fpscr");
+ 271:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   return(__regfpscr);
+ 272:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** #else
+ 273:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****    return(0);
+ 274:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** #endif
+ 275:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+ 276:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 277:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 278:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Set FPSCR
+ 279:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 280:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function assigns the given value to the Floating Point Status/Control register.
+ 281:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 282:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \param [in]    fpscr  Floating Point Status/Control value to set
+ 283:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+ 284:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
+ 285:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+ 286:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** #if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
+ 287:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   register uint32_t __regfpscr         __ASM("fpscr");
+ 288:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   __regfpscr = (fpscr);
+ 289:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** #endif
+ 290:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+ 291:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 292:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** #endif /* (__CORTEX_M == 0x04) */
+ 293:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 294:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 295:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** #elif defined ( __ICCARM__ ) /*------------------ ICC Compiler -------------------*/
+ 296:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /* IAR iccarm specific functions */
+ 297:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 298:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** #include <cmsis_iar.h>
+ 299:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 300:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 301:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** #elif defined ( __TMS470__ ) /*---------------- TI CCS Compiler ------------------*/
+ 302:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /* TI CCS specific functions */
+ 303:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 304:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** #include <cmsis_ccs.h>
+ 305:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 306:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 307:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** #elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
+ 308:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /* GNU gcc specific functions */
+ 309:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 310:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Enable IRQ Interrupts
+ 311:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 312:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   This function enables IRQ interrupts by clearing the I-bit in the CPSR.
+ 313:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   Can only be executed in Privileged modes.
+ 314:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+ 315:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __enable_irq(void)
+ 316:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+ 317:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   __ASM volatile ("cpsie i");
+ 318:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+ 319:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 320:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 321:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Disable IRQ Interrupts
+ 322:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 323:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   This function disables IRQ interrupts by setting the I-bit in the CPSR.
+ 324:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   Can only be executed in Privileged modes.
+ 325:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+ 326:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __disable_irq(void)
+ 327:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+ 328:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   __ASM volatile ("cpsid i");
+ 329:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+ 330:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 331:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 332:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get Control Register
+ 333:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 334:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function returns the content of the Control Register.
+ 335:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 336:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \return               Control Register value
+ 337:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+ 338:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_CONTROL(void)
+ 339:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+ 340:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   uint32_t result;
+ 341:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 342:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   __ASM volatile ("MRS %0, control" : "=r" (result) );
+ 343:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   return(result);
+ 344:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+ 345:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 346:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 347:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Set Control Register
+ 348:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 349:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function writes the given value to the Control Register.
+ 350:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 351:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \param [in]    control  Control Register value to set
+ 352:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+ 353:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_CONTROL(uint32_t control)
+ 354:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+ 355:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   __ASM volatile ("MSR control, %0" : : "r" (control) );
+ 356:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+ 357:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 358:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 359:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get IPSR Register
+ 360:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 361:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function returns the content of the IPSR Register.
+ 362:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 363:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \return               IPSR Register value
+ 364:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+ 365:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_IPSR(void)
+ 366:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+ 367:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   uint32_t result;
+ 368:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 369:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   __ASM volatile ("MRS %0, ipsr" : "=r" (result) );
+ 370:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   return(result);
+ 371:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+ 372:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 373:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 374:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get APSR Register
+ 375:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 376:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function returns the content of the APSR Register.
+ 377:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 378:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \return               APSR Register value
+ 379:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+ 380:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_APSR(void)
+ 381:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+ 382:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   uint32_t result;
+ 383:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 384:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   __ASM volatile ("MRS %0, apsr" : "=r" (result) );
+ 385:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   return(result);
+ 386:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+ 387:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 388:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 389:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get xPSR Register
+ 390:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 391:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function returns the content of the xPSR Register.
+ 392:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 393:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \return               xPSR Register value
+ 394:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+ 395:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_xPSR(void)
+ 396:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+ 397:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   uint32_t result;
+ 398:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 399:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   __ASM volatile ("MRS %0, xpsr" : "=r" (result) );
+ 400:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   return(result);
+ 401:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+ 402:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 403:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 404:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get Process Stack Pointer
+ 405:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 406:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function returns the current value of the Process Stack Pointer (PSP).
+ 407:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 408:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \return               PSP Register value
+ 409:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+ 410:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_PSP(void)
+ 411:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+ 412:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   register uint32_t result;
+ 413:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 414:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   __ASM volatile ("MRS %0, psp\n"  : "=r" (result) );
+ 415:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   return(result);
+ 416:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+ 417:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  
+ 418:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 419:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Set Process Stack Pointer
+ 420:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 421:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function assigns the given value to the Process Stack Pointer (PSP).
+ 422:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 423:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \param [in]    topOfProcStack  Process Stack Pointer value to set
+ 424:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+ 425:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_PSP(uint32_t topOfProcStack)
+ 426:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+ 427:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   __ASM volatile ("MSR psp, %0\n" : : "r" (topOfProcStack) );
+ 428:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** }
+ 429:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 430:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 431:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** /** \brief  Get Main Stack Pointer
+ 432:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 433:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     This function returns the current value of the Main Stack Pointer (MSP).
+ 434:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 435:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****     \return               MSP Register value
+ 436:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****  */
+ 437:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_MSP(void)
+ 438:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** {
+ 439:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   register uint32_t result;
+ 440:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h **** 
+ 441:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   __ASM volatile ("MRS %0, msp\n" : "=r" (result) );
  467              		.loc 2 441 0
- 468              	@ 441 "/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h" 1
+ 468              	@ 441 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h" 1
  469 0190 EFF30884 		MRS r4, msp
  470              	
  471              	@ 0 "" 2
- 442:/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cmFunc.h ****   return(result);
+ 442:/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cmFunc.h ****   return(result);
  472              		.loc 2 442 0
  473              		.thumb
  474 0194 2346     		mov	r3, r4
@@ -1606,37 +1606,37 @@
  911              		.file 5 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
  912              		.file 6 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
  913              		.file 7 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
- 914              		.file 8 "/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/stm32f30x.h"
+ 914              		.file 8 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
  915              		.file 9 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
- 916              		.file 10 "/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cm4.h"
+ 916              		.file 10 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 newlib_stubs.c
-     /tmp/ccXtix6o.s:25     .bss:00000000 __env
-     /tmp/ccXtix6o.s:22     .bss:00000000 $d
-     /tmp/ccXtix6o.s:32     .data:00000000 environ
-     /tmp/ccXtix6o.s:29     .data:00000000 $d
-     /tmp/ccXtix6o.s:35     .rodata:00000000 $d
-     /tmp/ccXtix6o.s:36     .rodata:00000000 .LC0
-     /tmp/ccXtix6o.s:39     .text:00000000 $t
-     /tmp/ccXtix6o.s:44     .text:00000000 _exit
-     /tmp/ccXtix6o.s:780    .text:00000310 _write
-     /tmp/ccXtix6o.s:80     .text:00000020 _close
-     /tmp/ccXtix6o.s:114    .text:00000038 _execve
-     /tmp/ccXtix6o.s:155    .text:00000064 _fork
-     /tmp/ccXtix6o.s:189    .text:00000084 _fstat
-     /tmp/ccXtix6o.s:228    .text:000000a8 _getpid
-     /tmp/ccXtix6o.s:257    .text:000000b8 _isatty
-     /tmp/ccXtix6o.s:306    .text:000000f0 _kill
-     /tmp/ccXtix6o.s:346    .text:00000118 _link
-     /tmp/ccXtix6o.s:386    .text:00000140 _lseek
-     /tmp/ccXtix6o.s:419    .rodata:00000008 .LC1
-     /tmp/ccXtix6o.s:427    .text:0000015c _sbrk
-     /tmp/ccXtix6o.s:905    .bss:00000004 heap_end.7627
-     /tmp/ccXtix6o.s:528    .text:000001f8 _read
-     /tmp/ccXtix6o.s:629    .text:00000284 _stat
-     /tmp/ccXtix6o.s:668    .text:000002a8 _times
-     /tmp/ccXtix6o.s:702    .text:000002c0 _unlink
-     /tmp/ccXtix6o.s:741    .text:000002e8 _wait
+     /tmp/ccXyVF8E.s:25     .bss:00000000 __env
+     /tmp/ccXyVF8E.s:22     .bss:00000000 $d
+     /tmp/ccXyVF8E.s:32     .data:00000000 environ
+     /tmp/ccXyVF8E.s:29     .data:00000000 $d
+     /tmp/ccXyVF8E.s:35     .rodata:00000000 $d
+     /tmp/ccXyVF8E.s:36     .rodata:00000000 .LC0
+     /tmp/ccXyVF8E.s:39     .text:00000000 $t
+     /tmp/ccXyVF8E.s:44     .text:00000000 _exit
+     /tmp/ccXyVF8E.s:780    .text:00000310 _write
+     /tmp/ccXyVF8E.s:80     .text:00000020 _close
+     /tmp/ccXyVF8E.s:114    .text:00000038 _execve
+     /tmp/ccXyVF8E.s:155    .text:00000064 _fork
+     /tmp/ccXyVF8E.s:189    .text:00000084 _fstat
+     /tmp/ccXyVF8E.s:228    .text:000000a8 _getpid
+     /tmp/ccXyVF8E.s:257    .text:000000b8 _isatty
+     /tmp/ccXyVF8E.s:306    .text:000000f0 _kill
+     /tmp/ccXyVF8E.s:346    .text:00000118 _link
+     /tmp/ccXyVF8E.s:386    .text:00000140 _lseek
+     /tmp/ccXyVF8E.s:419    .rodata:00000008 .LC1
+     /tmp/ccXyVF8E.s:427    .text:0000015c _sbrk
+     /tmp/ccXyVF8E.s:905    .bss:00000004 heap_end.7627
+     /tmp/ccXyVF8E.s:528    .text:000001f8 _read
+     /tmp/ccXyVF8E.s:629    .text:00000284 _stat
+     /tmp/ccXyVF8E.s:668    .text:000002a8 _times
+     /tmp/ccXyVF8E.s:702    .text:000002c0 _unlink
+     /tmp/ccXyVF8E.s:741    .text:000002e8 _wait
                      .debug_frame:00000010 $d
                            .group:00000000 wm4.1.743cd71370ebc432b539c5dba7924ecc
                            .group:00000000 wm4.errno.h.2.ba016d646105af6cad23be83630b6a3f

@@ -10,6 +10,8 @@
 
 #include "encoder.h"
 
+#include <math.h>
+
 // ISR definitions need to go here, to avoid C++ name-mangling
 
 extern "C"
@@ -23,6 +25,9 @@ extern volatile int led_iter;
 	void TIM7_IRQHandler(void) // ISR that performs encoder state update:
 										// Runs every DT milliseconds
 	{
+		float left_out, right_out;
+		int error, abs_err;
+
 		TIM_ClearITPendingBit(TIM7, TIM_IT_Update);
 
 		encoderState left_temp, right_temp;
@@ -43,6 +48,73 @@ extern volatile int led_iter;
 		TIM_SetCounter(TIM8, 0); // To get around the stupid 16-bit counter limitation present on all timers except timer 2
 		right_enc.speed = (float)((right_enc.position - right_temp.position)*1000)/(float)DT_ENCODER;
 		right_enc.acceleration = (float)((right_enc.speed - right_temp.speed)*1000)/(float)DT_ENCODER;
+
+		if(left_enc.m == MODE_POSITION)
+		{
+			left_out = ((float)k_p * (float)(left_enc.position_target - left_enc.position))
+					+ ((float)k_i*(float)(left_enc.integral))
+					+ ((float)k_d*(float)left_enc.speed);
+			left_out = (left_out > 100) ? 100 : ((left_out < -100) ? -100 : left_out);
+
+			pwm2_output(100-((float)(left_out+100)/(float)2));
+		}
+		else if(left_enc.m == MODE_SPEED)
+		{
+			pwm2_output(0);
+		}
+
+		if(right_enc.m == MODE_POSITION)
+		{
+			error = right_enc.position - right_enc.position_target;
+			right_enc.integral += (float)(error) * (float)DT_ENCODER / (float)1000;
+
+			if(right_enc.integral * k_i > 100 || right_enc.integral * k_i < -100)
+			{
+				right_enc.integral = (float)100/(float)k_i;
+			}
+
+			right_out = ((float)k_p * (float)error)
+					+ ((float)k_i*(float)(right_enc.integral))
+					+ ((float)k_d*(float)(error - right_enc.last_error)/(float)(DT_ENCODER/(float)1000));
+			right_out = (right_out > 100) ? 100 : ((right_out < -100) ? -100 : right_out);
+			right_enc.last_error = error;
+
+			abs_err = (error > 0) ? error : (error*-1);
+
+			if(error > 10 || error < -10)
+			{
+				pwm1_output((((float)(right_out+100)/(float)2))*(float)0.01);
+			}
+			else
+			{
+				pwm1_output(0.50f);
+				right_enc.m = MODE_OPENLOOP;
+			}
+		}
+		/*
+		else if(right_enc.m == MODE_SPEED)
+		{
+			error = right_enc.speed - right_enc.speed_target;
+
+			right_out = ((float)error * (float)k_p_s);// + ((float)k_d_s * (float)(error - right_enc.last_speed_error)/(float)((float)DT_ENCODER/(float)1000));
+//			right_out = (right_out > 100) ? 100 : ((right_out < -100) ? -100 : right_out);
+			right_enc.vel_cmd += right_out;
+			if(right_enc.vel_cmd > 1)
+			{
+				right_enc.vel_cmd = 1;
+			}
+
+			else if(right_enc.vel_cmd < 0)
+			{
+				right_enc.vel_cmd = 0;
+			}
+
+//			pwm1_output((float)1.0-right_enc.vel_cmd);
+			pwm1_output(0.50f);
+
+			right_enc.last_speed_error = error;
+		}
+		*/
 	}
 
 	void TIM1_TRG_COM_TIM17_IRQHandler(void)

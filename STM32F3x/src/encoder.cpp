@@ -15,7 +15,7 @@ void TIM8_init_encoder(void)	// PC6, PC7 -> TIM8 CH1 and CH2 mappings:
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;//UP;
 	GPIO_Init(GPIOC, &GPIO_InitStructure);
 
 	GPIO_PinAFConfig(GPIOC, GPIO_PinSource6, GPIO_AF_4);
@@ -44,7 +44,7 @@ void TIM2_init_encoder(void) // PA0, PA1 -> TIM2 CH1 and CH2 mappings:
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;//UP;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 	GPIO_PinAFConfig(GPIOA, GPIO_PinSource0, GPIO_AF_1);
@@ -104,6 +104,13 @@ void init_encoder_struct(encoderState* enc)
 	enc->position = 0;
 	enc->speed = 0;
 	enc->acceleration = 0;
+	enc->m = MODE_OPENLOOP;
+	enc->integral = 0;
+	enc->position_target = 0;
+	enc->speed_target = 0;
+	enc->last_error = 0;
+	enc->last_speed_error = 0;
+	enc->vel_cmd = 0.5f;
 }
 
 

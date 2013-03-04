@@ -73,9 +73,9 @@
   57              		.loc 1 17 0
   58 0024 4FF00303 		mov	r3, #3
   59 0028 7B72     		strb	r3, [r7, #9]
-  18:../src/encoder.cpp **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+  18:../src/encoder.cpp **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;//UP;
   60              		.loc 1 18 0
-  61 002a 4FF00103 		mov	r3, #1
+  61 002a 4FF00003 		mov	r3, #0
   62 002e FB72     		strb	r3, [r7, #11]
   19:../src/encoder.cpp **** 	GPIO_Init(GPIOC, &GPIO_InitStructure);
   63              		.loc 1 19 0
@@ -207,9 +207,9 @@
  164              		.loc 1 46 0
  165 0104 4FF00303 		mov	r3, #3
  166 0108 7B72     		strb	r3, [r7, #9]
-  47:../src/encoder.cpp **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+  47:../src/encoder.cpp **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;//UP;
  167              		.loc 1 47 0
- 168 010a 4FF00103 		mov	r3, #1
+ 168 010a 4FF00003 		mov	r3, #0
  169 010e FB72     		strb	r3, [r7, #11]
   48:../src/encoder.cpp **** 	GPIO_Init(GPIOA, &GPIO_InitStructure);
  170              		.loc 1 48 0
@@ -354,7 +354,7 @@
   89:../src/encoder.cpp **** 
   90:../src/encoder.cpp **** 	TIM7_init.TIM_Period = (10*DT_ENCODER)-1;
  271              		.loc 1 90 0
- 272 01d8 40F2DB53 		movw	r3, #1499
+ 272 01d8 4FF0F903 		mov	r3, #249
  273 01dc 7B60     		str	r3, [r7, #4]
   91:../src/encoder.cpp **** 	TIM7_init.TIM_Prescaler = 7199;
  274              		.loc 1 91 0
@@ -442,29 +442,64 @@
  343 024c 7B68     		ldr	r3, [r7, #4]
  344 024e 4FF00002 		mov	r2, #0
  345 0252 9A60     		str	r2, [r3, #8]	@ float
- 107:../src/encoder.cpp **** }
+ 107:../src/encoder.cpp **** 	enc->m = MODE_OPENLOOP;
  346              		.loc 1 107 0
- 347 0254 07F10C07 		add	r7, r7, #12
- 348 0258 BD46     		mov	sp, r7
- 349 025a 80BC     		pop	{r7}
- 350 025c 7047     		bx	lr
- 351              		.cfi_endproc
- 352              	.LFE114:
- 354              	.Letext0:
- 355              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
- 356              		.file 3 "/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/stm32f30x.h"
- 357              		.file 4 "/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/stm32f30x_gpio.h"
- 358              		.file 5 "/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/stm32f30x_tim.h"
- 359              		.file 6 "/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/stm32f30x_misc.h"
- 360              		.file 7 "/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/Robot/encoder.h"
- 361              		.file 8 "/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/inc/core_cm4.h"
+ 347 0254 7B68     		ldr	r3, [r7, #4]
+ 348 0256 4FF00002 		mov	r2, #0
+ 349 025a 83F82420 		strb	r2, [r3, #36]
+ 108:../src/encoder.cpp **** 	enc->integral = 0;
+ 350              		.loc 1 108 0
+ 351 025e 7B68     		ldr	r3, [r7, #4]
+ 352 0260 4FF00002 		mov	r2, #0
+ 353 0264 5A61     		str	r2, [r3, #20]
+ 109:../src/encoder.cpp **** 	enc->position_target = 0;
+ 354              		.loc 1 109 0
+ 355 0266 7B68     		ldr	r3, [r7, #4]
+ 356 0268 4FF00002 		mov	r2, #0
+ 357 026c DA60     		str	r2, [r3, #12]
+ 110:../src/encoder.cpp **** 	enc->speed_target = 0;
+ 358              		.loc 1 110 0
+ 359 026e 7B68     		ldr	r3, [r7, #4]
+ 360 0270 4FF00002 		mov	r2, #0
+ 361 0274 1A61     		str	r2, [r3, #16]	@ float
+ 111:../src/encoder.cpp **** 	enc->last_error = 0;
+ 362              		.loc 1 111 0
+ 363 0276 7B68     		ldr	r3, [r7, #4]
+ 364 0278 4FF00002 		mov	r2, #0
+ 365 027c 9A61     		str	r2, [r3, #24]
+ 112:../src/encoder.cpp **** 	enc->last_speed_error = 0;
+ 366              		.loc 1 112 0
+ 367 027e 7B68     		ldr	r3, [r7, #4]
+ 368 0280 4FF00002 		mov	r2, #0
+ 369 0284 DA61     		str	r2, [r3, #28]	@ float
+ 113:../src/encoder.cpp **** 	enc->vel_cmd = 0.5f;
+ 370              		.loc 1 113 0
+ 371 0286 7B68     		ldr	r3, [r7, #4]
+ 372 0288 4FF07C52 		mov	r2, #1056964608
+ 373 028c 1A62     		str	r2, [r3, #32]	@ float
+ 114:../src/encoder.cpp **** }
+ 374              		.loc 1 114 0
+ 375 028e 07F10C07 		add	r7, r7, #12
+ 376 0292 BD46     		mov	sp, r7
+ 377 0294 80BC     		pop	{r7}
+ 378 0296 7047     		bx	lr
+ 379              		.cfi_endproc
+ 380              	.LFE114:
+ 382              	.Letext0:
+ 383              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
+ 384              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
+ 385              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_gpio.h"
+ 386              		.file 5 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_tim.h"
+ 387              		.file 6 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_misc.h"
+ 388              		.file 7 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot/encoder.h"
+ 389              		.file 8 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 encoder.cpp
-     /tmp/ccpo89fw.s:20     .text:00000000 $t
-     /tmp/ccpo89fw.s:25     .text:00000000 _Z17TIM8_init_encoderv
-     /tmp/ccpo89fw.s:133    .text:000000e0 _Z17TIM2_init_encoderv
-     /tmp/ccpo89fw.s:233    .text:000001a4 _Z23encoder_update_ISR_initv
-     /tmp/ccpo89fw.s:316    .text:00000234 _Z19init_encoder_structP12encoderState
+     /tmp/ccZCbiRI.s:20     .text:00000000 $t
+     /tmp/ccZCbiRI.s:25     .text:00000000 _Z17TIM8_init_encoderv
+     /tmp/ccZCbiRI.s:133    .text:000000e0 _Z17TIM2_init_encoderv
+     /tmp/ccZCbiRI.s:233    .text:000001a4 _Z23encoder_update_ISR_initv
+     /tmp/ccZCbiRI.s:316    .text:00000234 _Z19init_encoder_structP12encoderState
                      .debug_frame:00000010 $d
                            .group:00000000 wm4.1.50a79f075d1434c9a8bd8ee500f78677
                            .group:00000000 wm4.common_headers.h.9.7fd02f13feff23c3903ac7c4e216cd44
@@ -497,6 +532,15 @@ DEFINED SYMBOLS
                            .group:00000000 wm4.stm32f30x_usart.h.110.c89016273702821ff4f9fe43881f70b5
                            .group:00000000 wm4.stm32f30x_wwdg.h.58.4688eee61a2709866472b4b4c07d9275
                            .group:00000000 wm4.stm32f30x_misc.h.113.6a52e4fe7c3825a3ab05990f30dddf92
+                           .group:00000000 wm4.newlib.h.8.a9901dc52d1357e3e94003403d43f8b5
+                           .group:00000000 wm4.config.h.193.5fb8ef056cdff92dec3dee9552839d8c
+                           .group:00000000 wm4._ansi.h.23.fa6206289f154965d075fc01e2867808
+                           .group:00000000 wm4._default_types.h.6.1dbd2e581fd590860c7c17f21d147e91
+                           .group:00000000 wm4.lock.h.2.9bc98482741e5e2a9450b12934a684ea
+                           .group:00000000 wm4.stddef.h.349.31f4c5baff3fa2689010b32028da9c47
+                           .group:00000000 wm4.reent.h.16.9e42f0e588b85e70b2bf6572af57ce64
+                           .group:00000000 wm4.math.h.35.4ec5c5df469deeb27bddb969fc54c06a
+                           .group:00000000 wm4.encoder.h.14.d5e5872c27905990847e2dff40a1b2fe
 
 UNDEFINED SYMBOLS
 RCC_AHBPeriphClockCmd

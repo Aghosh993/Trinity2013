@@ -65,6 +65,9 @@ int main(void)
 	init_encoder_struct(&left_enc);
 	init_encoder_struct(&right_enc);
 
+	right_enc.position_target = 8400;
+//	right_enc.speed_target = 8400;
+
 	// Initialize PWM outputs 1 and 2 at 1000 kHz duty frequency:
 
 	pwm_out1_init(5000);
@@ -84,21 +87,35 @@ int main(void)
 	LED_MATRIX_ISR_init();		//Hand out some eye candy while we're at it...
 
 	adcval = 0;
-	float mtr_out = 0;
+//	float mtr_out = 0;
+	char *mode;
+
+	right_enc.m = MODE_POSITION;
+//	right_enc.m = MODE_SPEED;
 
 	while(true)
 	{
+//		adcval = ADC_GetConversionValue(ADC1);
 //		pwm1_output((float)adcval/(float)4096); // Read potentiometer on PA2 and output its value on
 												// PWM channel #1
 		pwm2_output(0.5f);						// Fixed 1 kHz, 50% duty output on PWM output #2
-		mtr_out = (float)adcval/(float)4096;
-		mtr_out = (adcval >= 4013) ? 0.97 : mtr_out;
-		pwm1_output(mtr_out);
+//		mtr_out = (float)adcval/(float)4096;
+//		mtr_out = (adcval >= 4013) ? 0.97 : mtr_out;
+//		pwm1_output(mtr_out);
+//		right_enc.position_target = 15000;
 
 		// Debug Statements:
 
 //		printf("%d %d %d\n\r", adcData[0], adcData[1], adcval);
-		printf("%d\n\r", adcval);
+//		printf("%d\n\r", adcval);
+//		if(right_enc.m == MODE_OPENLOOP)
+//		{
+//			pwm1_output(0.50f);
+//		}
+
+		mode = (right_enc.m == MODE_OPENLOOP) ? (char *)"Open" : ((right_enc.m == MODE_POSITION) ? (char *)"Position" : (char *)"Velocity");
+	//	pwm1_output(0.50f);
+		printf("Left: %d | Right: %d | Mode: %s\n\r", left_enc.position, right_enc.position, mode);
 
 //		printf("Bias_x: %d | Theta_x: %5.2f | Left: %d | Right: %d\n\r", gyro_bias_x, gyro_angle_x, left_enc.position, right_enc.position);
 //		printf("ADC Value on Channel 3: %d || Theta_x: %5.2f\n\r", adcval, gyro_angle_x);
