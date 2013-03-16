@@ -51,7 +51,7 @@ volatile float gyro_angle_x;
 int gyro_bias_x, adcval;
 
 //__IO uint16_t adcData[3];
-__IO int adcData;
+__IO uint32_t adcData[2];
 int new_data;
 
 // Initialize all encoder data structures to zero:
@@ -61,6 +61,10 @@ int main(void)
 	SystemInit(); // Set up clocks/PLL/et. al
 
 	UART1_init(); // Debug bridge
+
+//	adcData = 0;
+	adcData[0] = 0;
+	adcData[1] = 0;
 
 	// Initialize global encoder data structure for left and right encoders:
 
@@ -91,7 +95,7 @@ int main(void)
 	LED_MATRIX_ISR_init();		//Hand out some eye candy while we're at it...
 
 	adcval = 0;
-//	float mtr_out = 0;
+	float mtr_out = 0;
 	char *mode;
 
 	right_enc.m = MODE_POSITION;
@@ -117,7 +121,7 @@ int main(void)
 //			pwm1_output(0.50f);
 //		}
 
-		mode = (right_enc.m == MODE_OPENLOOP) ? (char *)"Open" : ((right_enc.m == MODE_POSITION) ? (char *)"Position" : (char *)"Velocity");
+//		mode = (right_enc.m == MODE_OPENLOOP) ? (char *)"Open" : ((right_enc.m == MODE_POSITION) ? (char *)"Position" : (char *)"Velocity");
 	//	pwm1_output(0.50f);
 //		printf("Left: %d | Right: %d | Mode: %s\n\r", left_enc.position, right_enc.position, mode);
 
@@ -126,7 +130,8 @@ int main(void)
 //		while(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) != SET);
 //		DMA_ClearFlag(DMA1_FLAG_GL1 | DMA1_FLAG_TC1);
 		while(new_data==0);
-		printf("ADC1: %d\n\r", adcData);//adcData, (uint32_t)&(ADC1->DR));//, adcData[1]);
+//		printf("ADC: %d\n\r", adcData);
+		printf("ADC1: %4d || ADC2: %4d\n\r", adcData[0], adcData[1]);//adcData, (uint32_t)&(ADC1->DR));//, adcData[1]);
 		new_data = 0;
 
 //		printf("Hello World!!\n\r");
@@ -227,9 +232,11 @@ void adc1_init_other(void) //PA2 -> Channel 3 on ADC1
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
 
 	/* Configure ADC Channel7 as analog input */
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_3;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
+//	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;		//
+//	GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;			//
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 	ADC_StructInit(&ADC_InitStructure);
@@ -239,7 +246,7 @@ void adc1_init_other(void) //PA2 -> Channel 3 on ADC1
 
 	/* Insert delay equal to 10 µs */
 	int foo;
-	for(foo = 0; foo < 32000; ++foo)
+	for(foo = 0; foo < 64000; ++foo)
 	{
 	  ++foo;
 	}
@@ -253,7 +260,7 @@ void adc1_init_other(void) //PA2 -> Channel 3 on ADC1
 	ADC_CommonInitStructure.ADC_Clock = ADC_Clock_AsynClkMode;
 	ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_1;
 	ADC_CommonInitStructure.ADC_DMAMode = ADC_DMAMode_Circular;
-	ADC_CommonInitStructure.ADC_TwoSamplingDelay = 0xF;
+	ADC_CommonInitStructure.ADC_TwoSamplingDelay = 0xF;//0xF;
 	ADC_CommonInit(ADC1, &ADC_CommonInitStructure);
 
 	ADC_InitStructure.ADC_ContinuousConvMode = ADC_ContinuousConvMode_Enable;
@@ -263,11 +270,14 @@ void adc1_init_other(void) //PA2 -> Channel 3 on ADC1
 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
 	ADC_InitStructure.ADC_OverrunMode = ADC_OverrunMode_Disable;
 	ADC_InitStructure.ADC_AutoInjMode = ADC_AutoInjec_Disable;
-	ADC_InitStructure.ADC_NbrOfRegChannel = 1;
+	ADC_InitStructure.ADC_NbrOfRegChannel = 2;
 	ADC_Init(ADC1, &ADC_InitStructure);
 
 	/* ADC1 regular channel3 configuration */
 	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 1, ADC_SampleTime_601Cycles5);//ADC_SampleTime_61Cycles5);//ADC_SampleTime_7Cycles5);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 2, ADC_SampleTime_601Cycles5);//ADC_SampleTime_61Cycles5);//ADC_SampleTime_7Cycles5);
+
+//	ADC_RegularChannelSequencerLengthConfig(ADC1, 2);
 
 	/* Enable ADC1 */
 	ADC_Cmd(ADC1, ENABLE);
@@ -289,9 +299,9 @@ void adc1_init_other(void) //PA2 -> Channel 3 on ADC1
 	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&(ADC1->DR); //0x50000040; //Address of peripheral the DMA must map to
 	DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) &adcData; //Variable to which ADC values will be stored
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
-	DMA_InitStructure.DMA_BufferSize = 1; //Buffer size (3 because we using three channels)
+	DMA_InitStructure.DMA_BufferSize = 2;
 	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
-	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Disable;//DMA_MemoryInc_Enable;
+	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
 	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Word;
 	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Word;
 	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
@@ -310,11 +320,10 @@ void adc1_init_other(void) //PA2 -> Channel 3 on ADC1
 	NVIC_Init(&nv);
 
 	DMA_ITConfig(DMA1_Channel1, DMA_IT_TC, ENABLE);
-
 	DMA_Cmd(DMA1_Channel1, ENABLE);
+
 	ADC_DMAConfig(ADC1, ADC_DMAMode_Circular);
 	ADC_DMACmd(ADC1, ENABLE);
-
 }
 
 void adc1_init(void) //PA2 -> Channel 3 on ADC1

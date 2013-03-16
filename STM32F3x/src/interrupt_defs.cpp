@@ -22,7 +22,6 @@ extern encoderState left_enc, right_enc;
 extern int gyro_bias_x, adcval;
 extern volatile int led_matrix[8];
 extern volatile int led_iter;
-extern __IO int adcData;
 extern int new_data;
 
 	void TIM7_IRQHandler(void) // ISR that performs encoder state update:
