@@ -52,6 +52,7 @@ int gyro_bias_x, adcval;
 
 //__IO uint16_t adcData[3];
 __IO int adcData;
+int new_data;
 
 // Initialize all encoder data structures to zero:
 
@@ -81,6 +82,7 @@ int main(void)
 
 	// Initialize ADC, encoder update, IMU update and LED matrix interrupts:
 
+	new_data = 0;
 	adc1_init_other();
 //	adc1_init();
 //	adc1_dma_init();
@@ -122,8 +124,11 @@ int main(void)
 //		printf("Bias_x: %d | Theta_x: %5.2f | Left: %d | Right: %d\n\r", gyro_bias_x, gyro_angle_x, left_enc.position, right_enc.position);
 //		printf("ADC Value on Channel 3: %d || Theta_x: %5.2f\n\r", adcval, gyro_angle_x);
 //		while(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) != SET);
-		DMA_ClearFlag(DMA1_FLAG_GL1 | DMA1_FLAG_TC1);
+//		DMA_ClearFlag(DMA1_FLAG_GL1 | DMA1_FLAG_TC1);
+		while(new_data==0);
 		printf("ADC1: %d\n\r", adcData);//adcData, (uint32_t)&(ADC1->DR));//, adcData[1]);
+		new_data = 0;
+
 //		printf("Hello World!!\n\r");
 	}
 	return 0; // We should never manage to get here...
@@ -294,6 +299,17 @@ void adc1_init_other(void) //PA2 -> Channel 3 on ADC1
 	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
 
 	DMA_Init(DMA1_Channel1, &DMA_InitStructure);
+
+	NVIC_InitTypeDef nv;
+
+	nv.NVIC_IRQChannel = DMA1_Channel1_IRQn;
+	nv.NVIC_IRQChannelPreemptionPriority = 2;
+	nv.NVIC_IRQChannelSubPriority = 0;
+	nv.NVIC_IRQChannelCmd = ENABLE;
+
+	NVIC_Init(&nv);
+
+	DMA_ITConfig(DMA1_Channel1, DMA_IT_TC, ENABLE);
 
 	DMA_Cmd(DMA1_Channel1, ENABLE);
 	ADC_DMAConfig(ADC1, ADC_DMAMode_Circular);
