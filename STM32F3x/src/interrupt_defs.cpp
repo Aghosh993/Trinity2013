@@ -10,6 +10,7 @@
 
 #include "encoder.h"
 
+//#include <stdio.h>
 #include <math.h>
 
 // ISR definitions need to go here, to avoid C++ name-mangling
@@ -21,6 +22,7 @@ extern encoderState left_enc, right_enc;
 extern int gyro_bias_x, adcval;
 extern volatile int led_matrix[8];
 extern volatile int led_iter;
+//extern uint16_t adcData;
 
 	void TIM7_IRQHandler(void) // ISR that performs encoder state update:
 										// Runs every DT milliseconds
@@ -149,6 +151,12 @@ extern volatile int led_iter;
 			adcval = ADC_GetConversionValue(ADC1);
 			ADC_ClearITPendingBit(ADC1, ADC_IT_EOC);
 		}
+	}
+
+	void DMA1_Channel1_IRQHandler(void)
+	{
+		DMA_ClearITPendingBit(DMA1_IT_TC1);
+//		printf("ADC1: %d\n\r", adcData);//, adcData[1]);
 	}
 }
 
