@@ -28,6 +28,16 @@
  * Analog: 	Channel 3 (PA2)
  * 			Channel 4 (PA3)
  * 			Channel 5 (PF4)
+ * Debug port information: Baud Rate=115200, 8n1 UART (TTL pins PA9, PA10)
+ * 							PA9 = TX, PA10 = RX (W/respect to STM32 device)
+ *
+ * Purpose: Trinity 2013 (Theseus) Primary code development tree
+ *
+ */
+
+/*
+ * ADC TODO: Use PF4 for third channel in DMA setup for ADC1, then attempt to get DMA + continuous
+ * conversion up and running in ADC3...? (Need more detailed datasheet reference...)
  */
 
 volatile int led_iter;
@@ -39,9 +49,8 @@ int16_t calc_gyro_bias(void);
 
 uint32_t L3GD20_TIMEOUT_UserCallback(void);
 
-void adc1_init_other(void);
+void adc1_init_DMA(void);
 void adc1_init(void);
-void adc1_dma_init(void);
 
 // Global variables to keep track of encoders and inertial sensors:
 
@@ -87,9 +96,8 @@ int main(void)
 	// Initialize ADC, encoder update, IMU update and LED matrix interrupts:
 
 	new_data = 0;
-	adc1_init_other();
-//	adc1_init();
-//	adc1_dma_init();
+	adc1_init_DMA();
+
 	encoder_update_ISR_init();	//Update the state of the two encoders (left/right)
 	imu_update_ISR_init(); 		//IMU (gyro/acclerometer/magnetometer ISR)
 	LED_MATRIX_ISR_init();		//Hand out some eye candy while we're at it...
@@ -99,13 +107,9 @@ int main(void)
 	char *mode;
 
 	right_enc.m = MODE_POSITION;
-//	right_enc.m = MODE_SPEED;
 
 	while(true)
 	{
-//		adcval = ADC_GetConversionValue(ADC1);
-//		pwm1_output((float)adcval/(float)4096); // Read potentiometer on PA2 and output its value on
-												// PWM channel #1
 		pwm2_output(0.5f);						// Fixed 1 kHz, 50% duty output on PWM output #2
 //		mtr_out = (float)adcval/(float)4096;
 //		mtr_out = (adcval >= 4013) ? 0.97 : mtr_out;
@@ -217,27 +221,35 @@ int16_t calc_gyro_bias(void)
 	return (int16_t)((float)accum_x/(float)250);
 }
 
-void adc1_init_other(void) //PA2 -> Channel 3 on ADC1
+/*
+ * Initializes the DMA controller to transfer data between the ADC (ADC1) and
+ * a user-supplied location in memory
+ * @Args: None
+ * @Return Val: None
+ */
+
+void adc1_init_DMA(void)
 {
+	// Init structures required to initialize the peripherals as required:
+
 	ADC_InitTypeDef       ADC_InitStructure;
 	ADC_CommonInitTypeDef ADC_CommonInitStructure;
 	GPIO_InitTypeDef      GPIO_InitStructure;
+
 	/* Configure the ADC clock */
 	RCC_ADCCLKConfig(RCC_ADC12PLLCLK_Div2);
-
 	/* Enable ADC1 clock */
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_ADC12, ENABLE);
-	/* ADC Channel configuration */
 	/* GPIOC Periph clock enable */
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
 
-	/* Configure ADC Channel7 as analog input */
+	// Configure ADC Channel 3 and 4 as analog inputs
+
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_3;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
-//	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;		//
-//	GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;			//
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	// @TODO: TEST EFFECT OF GPIO STRUCT INIT STATEMENT AND VERIFY OPERATION!!
 
 	ADC_StructInit(&ADC_InitStructure);
 
@@ -257,7 +269,7 @@ void adc1_init_other(void) //PA2 -> Channel 3 on ADC1
 	while(ADC_GetCalibrationStatus(ADC1) != RESET );
 
 	ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
-	ADC_CommonInitStructure.ADC_Clock = ADC_Clock_AsynClkMode;
+	ADC_CommonInitStructure.ADC_Clock = ADC_Clock_AsynClkMode; //ADC_Clock_SynClkModeDiv2
 	ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_1;
 	ADC_CommonInitStructure.ADC_DMAMode = ADC_DMAMode_Circular;
 	ADC_CommonInitStructure.ADC_TwoSamplingDelay = 0xF;//0xF;
@@ -275,9 +287,7 @@ void adc1_init_other(void) //PA2 -> Channel 3 on ADC1
 
 	/* ADC1 regular channel3 configuration */
 	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 1, ADC_SampleTime_601Cycles5);//ADC_SampleTime_61Cycles5);//ADC_SampleTime_7Cycles5);
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 2, ADC_SampleTime_601Cycles5);//ADC_SampleTime_61Cycles5);//ADC_SampleTime_7Cycles5);
-
-//	ADC_RegularChannelSequencerLengthConfig(ADC1, 2);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 2, ADC_SampleTime_19Cycles5);//ADC_SampleTime_61Cycles5);//ADC_SampleTime_7Cycles5);
 
 	/* Enable ADC1 */
 	ADC_Cmd(ADC1, ENABLE);
@@ -287,8 +297,6 @@ void adc1_init_other(void) //PA2 -> Channel 3 on ADC1
 
 	/* Start ADC1 Software Conversion */
 	ADC_StartConversion(ADC1);
-
-	///////////////////
 
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
 
@@ -325,6 +333,11 @@ void adc1_init_other(void) //PA2 -> Channel 3 on ADC1
 	ADC_DMAConfig(ADC1, ADC_DMAMode_Circular);
 	ADC_DMACmd(ADC1, ENABLE);
 }
+
+/* Initializes ADC1 to read PA2 continuously using ADC1 end of conversion (EOC) interrupt
+ * @Args: Nothing
+ * @Return Val: Nothing
+ */
 
 void adc1_init(void) //PA2 -> Channel 3 on ADC1
 {
@@ -383,14 +396,18 @@ void adc1_init(void) //PA2 -> Channel 3 on ADC1
 	/* ADC1 regular channel3 configuration */
 	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 1, ADC_SampleTime_601Cycles5);//ADC_SampleTime_61Cycles5);//ADC_SampleTime_7Cycles5);
 
+	// Configure ADC1_2 global interrupt:
+
 	NVIC_InitTypeDef nv;
 
-	nv.NVIC_IRQChannel = ADC1_2_IRQn;//TIM3_IRQn;	//TIM2_IRQn;
+	nv.NVIC_IRQChannel = ADC1_2_IRQn;
 	nv.NVIC_IRQChannelPreemptionPriority = 2;
 	nv.NVIC_IRQChannelSubPriority = 0;
 	nv.NVIC_IRQChannelCmd = ENABLE;
 
 	NVIC_Init(&nv);
+
+	// Enable ADC1's global interrupt:
 
 	ADC_ITConfig(ADC1, ADC_IT_EOC, ENABLE);
 
@@ -403,205 +420,3 @@ void adc1_init(void) //PA2 -> Channel 3 on ADC1
 	/* Start ADC1 Software Conversion */
 	ADC_StartConversion(ADC1);
 }
-
-void adc1_dma_init(void) //PA2 (Channel 3), PA3 (Channel 4), PF5 (Channel 5) in use
-{
-	ADC_InitTypeDef       	ADC_InitStructure;
-	ADC_CommonInitTypeDef 	ADC_CommonInitStructure;
-	GPIO_InitTypeDef      	GPIO_InitStructure;
-	DMA_InitTypeDef			DMA_InitStructure;
-
-	ADC_StructInit(&ADC_InitStructure);
-	ADC_CommonStructInit(&ADC_CommonInitStructure);
-	GPIO_StructInit(&GPIO_InitStructure);
-
-	/* Configure the ADC clock */
-	RCC_ADCCLKConfig(RCC_ADC12PLLCLK_Div2);
-	/* Enable ADC1 clock */
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_ADC12, ENABLE);
-	/* GPIOA Periph clock enable */
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
-	//Configure DMA1 - Channel1==
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
-
-	/* Configure ADC Channel 3 (PA2) as analog input */
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_2 | GPIO_Pin_3;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
-	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
-
-	DMA_DeInit(DMA1_Channel1); //Set DMA registers to default values
-	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&(ADC1->DR); //0x50000040; //Address of peripheral the DMA must map to
-	DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) &adcData; //Variable to which ADC values will be stored
-	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
-	DMA_InitStructure.DMA_BufferSize = 1; //Buffer size (3 because we using three channels)
-	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
-	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Disable;//DMA_MemoryInc_Enable;
-	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord; //HalfWord
-	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;//HalfWord
-	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
-	DMA_InitStructure.DMA_Priority = DMA_Priority_High;
-	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
-
-	DMA_Init(DMA1_Channel1, &DMA_InitStructure);
-
-	DMA_Cmd(DMA1_Channel1, ENABLE);
-
-	ADC_VoltageRegulatorCmd(ADC1, ENABLE); // Turn on ADC1 voltage regulator
-
-	int foo;
-	for(foo = 0; foo < 32000; ++foo)
-	{
-	  ++foo;
-	}
-
-	ADC_SelectCalibrationMode(ADC1, ADC_CalibrationMode_Single);
-	ADC_StartCalibration(ADC1);
-
-	while(ADC_GetCalibrationStatus(ADC1) != RESET );
-
-	ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
-	ADC_CommonInitStructure.ADC_Clock = ADC_Clock_AsynClkMode;//ADC_Clock_SynClkModeDiv4;
-	ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_1;//ADC_DMAAccessMode_Disabled;
-	ADC_CommonInitStructure.ADC_DMAMode = ADC_DMAMode_Circular;//ADC_DMAMode_OneShot;
-	ADC_CommonInitStructure.ADC_TwoSamplingDelay = 0x8;//0xF;
-	ADC_CommonInit(ADC1, &ADC_CommonInitStructure);
-
-	ADC_InitStructure.ADC_ContinuousConvMode = ADC_ContinuousConvMode_Enable;
-	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
-	ADC_InitStructure.ADC_ExternalTrigConvEvent = ADC_ExternalTrigConvEvent_0;
-	ADC_InitStructure.ADC_ExternalTrigEventEdge = ADC_ExternalTrigEventEdge_None;
-	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
-	ADC_InitStructure.ADC_OverrunMode = ADC_OverrunMode_Disable;
-	ADC_InitStructure.ADC_AutoInjMode = ADC_AutoInjec_Disable;
-	ADC_InitStructure.ADC_NbrOfRegChannel = 1;
-	ADC_Init(ADC1, &ADC_InitStructure);
-
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 1, ADC_SampleTime_601Cycles5);
-
-//	ADC_Cmd(ADC1, ENABLE);
-	ADC_DMACmd(ADC1, ENABLE);
-
-	ADC_SelectCalibrationMode(ADC1, ADC_CalibrationMode_Single);
-	ADC_StartCalibration(ADC1);
-
-	while(ADC_GetCalibrationStatus(ADC1) != RESET );
-	ADC_Cmd(ADC1, ENABLE);
-
-	//	 wait for ADRDY
-	while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_RDY));
-
-	ADC_StartConversion(ADC1);
-}
-
-/*
-NVIC_InitTypeDef nv;
-
-nv.NVIC_IRQChannel = DMA1_Channel1_IRQn;
-nv.NVIC_IRQChannelPreemptionPriority = 2;
-nv.NVIC_IRQChannelSubPriority = 0;
-nv.NVIC_IRQChannelCmd = ENABLE;
-
-NVIC_Init(&nv);
-*/
-
-//	DMA_ITConfig(DMA1_Channel1, DMA1_IT_TC1, ENABLE);
-
-/*
-void adc1_dma_init(void) //PA2 (Channel 3), PA3 (Channel 4), PF5 (Channel 5) in use
-{
-	ADC_InitTypeDef       	ADC_InitStructure;
-	ADC_CommonInitTypeDef 	ADC_CommonInitStructure;
-	GPIO_InitTypeDef      	GPIO_InitStructure;
-	DMA_InitTypeDef			DMA_InitStructure;
-
-	ADC_StructInit(&ADC_InitStructure);
-	ADC_CommonStructInit(&ADC_CommonInitStructure);
-	GPIO_StructInit(&GPIO_InitStructure);
-
-	RCC_ADCCLKConfig(RCC_ADC12PLLCLK_Div6);
-
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_ADC12, ENABLE);
-
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
-
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
-	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
-
-
-	GPIO_StructInit(&GPIO_InitStructure);
-
-	// Configure ADC Channel5 as analog input
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
-	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
-
-	//Configure DMA1 - Channel1==
-
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
-
-	DMA_DeInit(DMA1_Channel1); //Set DMA registers to default values
-	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)ADC1_BASE; //0x50000040; //Address of peripheral the DMA must map to
-	DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) &adcData; //Variable to which ADC values will be stored
-	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
-	DMA_InitStructure.DMA_BufferSize = 1; //Buffer size (3 because we using three channels)
-	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
-	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Disable;//DMA_MemoryInc_Enable;
-	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Word; //HalfWord
-	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Word;//HalfWord
-	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
-	DMA_InitStructure.DMA_Priority = DMA_Priority_High;
-	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
-
-	ADC_VoltageRegulatorCmd(ADC1, ENABLE);
-
-	int foo;
-	for(foo = 0; foo < 32000; ++foo)
-	{
-	  ++foo;
-	}
-
-	ADC_SelectCalibrationMode(ADC1, ADC_CalibrationMode_Single);
-	ADC_StartCalibration(ADC1);
-
-	while(ADC_GetCalibrationStatus(ADC1) != RESET );
-
-	ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
-	ADC_CommonInitStructure.ADC_Clock = ADC_Clock_AsynClkMode;//ADC_Clock_SynClkModeDiv1;
-	ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_1;//ADC_DMAAccessMode_Disabled;
-	ADC_CommonInitStructure.ADC_DMAMode = ADC_DMAMode_Circular;//ADC_DMAMode_OneShot;
-	ADC_CommonInitStructure.ADC_TwoSamplingDelay = 0xF;
-	ADC_CommonInit(ADC1, &ADC_CommonInitStructure);
-
-	ADC_InitStructure.ADC_ContinuousConvMode = ADC_ContinuousConvMode_Enable;
-	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
-	ADC_InitStructure.ADC_ExternalTrigConvEvent = ADC_ExternalTrigConvEvent_0;
-	ADC_InitStructure.ADC_ExternalTrigEventEdge = ADC_ExternalTrigEventEdge_None;
-	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
-	ADC_InitStructure.ADC_OverrunMode = ADC_OverrunMode_Disable;
-	ADC_InitStructure.ADC_AutoInjMode = ADC_AutoInjec_Disable;
-	ADC_InitStructure.ADC_NbrOfRegChannel = 1;
-	ADC_Init(ADC1, &ADC_InitStructure);
-
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 1, ADC_SampleTime_601Cycles5);//Try later: ADC_SampleTime_7Cycles5
-
-	DMA_Init(DMA1_Channel1, &DMA_InitStructure); //Initialise the DMA
-	DMA_Cmd(DMA1_Channel1, ENABLE); //Enable the DMA1 - Channel1
-
-	ADC_DMAConfig(ADC1, ADC_DMAMode_Circular);
-	ADC_DMACmd(ADC1, ENABLE);
-
-	ADC_Cmd(ADC1, ENABLE);
-
-//	ADC_SelectCalibrationMode(ADC1, ADC_CalibrationMode_Single);
-//	ADC_StartCalibration(ADC1);
-
-//	 wait for ADRDY
-	while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_RDY));
-
-	ADC_StartConversion(ADC1);
-}
-*/

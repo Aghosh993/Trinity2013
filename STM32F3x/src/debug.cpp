@@ -18,6 +18,11 @@ void blink_leds(void)
 	}
 }
 
+/* Initializes the primary debug UART port, at main Baud Rate of 115200 bps, 8n1 parity
+ * @Args: None
+ * @Return Val: None
+ */
+
 void UART1_init(void)
 {
 	// USART1 Init:
@@ -59,13 +64,10 @@ void UART1_init(void)
 	{}
 }
 
-
-
 /* Initializes the ISR that controls the LED circle on the board to provide visual feedback to the user,
  * along with some eye candy
  * Priority: 6 (LOW)
  */
-
 
 void LED_MATRIX_ISR_init(void)
 {
