@@ -513,7 +513,7 @@ void battery_watchdog_init(void)
 
 	/* Configure PB1, PE7 as analog inputs */
 	GPIO_StructInit(&GPIO_InitStructure);
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_13;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
@@ -556,20 +556,20 @@ void battery_watchdog_init(void)
 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
 	ADC_InitStructure.ADC_OverrunMode = ADC_OverrunMode_Disable;
 	ADC_InitStructure.ADC_AutoInjMode = ADC_AutoInjec_Disable;
-	ADC_InitStructure.ADC_NbrOfRegChannel = 1;					//2
+	ADC_InitStructure.ADC_NbrOfRegChannel = 2;
 	ADC_Init(ADC3, &ADC_InitStructure);
 
 	/* ADC3 regular Channel 1, 13 configuration */
 	ADC_RegularChannelConfig(ADC3, ADC_Channel_1, 1, ADC_SampleTime_601Cycles5);
-//	ADC_RegularChannelConfig(ADC3, ADC_Channel_13, 2, ADC_SampleTime_7Cycles5);
+	ADC_RegularChannelConfig(ADC3, ADC_Channel_5, 2, ADC_SampleTime_601Cycles5);
 
 	ADC_AnalogWatchdog1SingleChannelConfig(ADC3, ADC_Channel_1);
-//	ADC_AnalogWatchdog2SingleChannelConfig(ADC3, ADC_Channel_13);
+	ADC_AnalogWatchdog2SingleChannelConfig(ADC3, ADC_Channel_5);
 
 	/* Configure AWD 1 & 2 Thresholds: */
 
 	ADC_AnalogWatchdog1ThresholdsConfig(ADC3, 2048, 10);// 2100, 1996); //50%
-//	ADC_AnalogWatchdog2ThresholdsConfig(ADC3, 0x80, 0x00);//0xC1, 0xBB); //75%
+	ADC_AnalogWatchdog2ThresholdsConfig(ADC3, 0x80, 0x00);//0xC1, 0xBB); //75%
 
 	ADC_AnalogWatchdogCmd(ADC3, ADC_AnalogWatchdog_SingleRegEnable);
 //	ADC_AnalogWatchdogCmd(ADC3, ADC_AnalogWatchdog_AllRegEnable);
@@ -587,7 +587,7 @@ void battery_watchdog_init(void)
 
 	// Enable ADC3's global interrupt:
 
-	ADC_ITConfig(ADC3, ADC_IT_AWD1, ENABLE);// | ADC_IT_AWD2, ENABLE);
+	ADC_ITConfig(ADC3, ADC_IT_AWD1 | ADC_IT_AWD2, ENABLE);
 
 	/* Enable ADC3 */
 	ADC_Cmd(ADC3, ENABLE);
