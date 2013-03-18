@@ -23,6 +23,7 @@ extern int gyro_bias_x, adcval;
 extern volatile int led_matrix[8];
 extern volatile int led_iter;
 extern int new_data;
+extern uint8_t adc2_new_data;
 
 	void TIM7_IRQHandler(void) // ISR that performs encoder state update:
 										// Runs every DT milliseconds
@@ -157,6 +158,12 @@ extern int new_data;
 	{
 		DMA_ClearITPendingBit(DMA1_IT_TC1);
 		new_data = 1;
+	}
+
+	void DMA2_Channel1_IRQHandler(void)
+	{
+		DMA_ClearITPendingBit(DMA2_IT_TC1);
+		adc2_new_data = 1;
 	}
 }
 

@@ -72,22 +72,36 @@
   79              		.align	2
   82              	new_data:
   83 0068 00000000 		.space	4
-  84              		.section	.rodata
+  84              		.global	adc2_data
   85              		.align	2
-  86              	.LC0:
-  87 0000 41444331 		.ascii	"ADC1: %4d || ADC2: %4d\012\015\000"
-  87      3A202534 
-  87      64207C7C 
-  87      20414443 
-  87      323A2025 
-  88              		.text
-  89              		.align	2
-  90              		.global	main
-  91              		.thumb
-  92              		.thumb_func
-  94              	main:
-  95              	.LFB111:
-  96              		.file 1 "../src/main.cpp"
+  88              	adc2_data:
+  89 006c 00000000 		.space	16
+  89      00000000 
+  89      00000000 
+  89      00000000 
+  90              		.global	adc2_new_data
+  93              	adc2_new_data:
+  94 007c 00       		.space	1
+  95 007d 000000   		.section	.rodata
+  96              		.align	2
+  97              	.LC0:
+  98 0000 41444332 		.ascii	"ADC2: \000"
+  98      3A2000
+  99 0007 00       		.align	2
+ 100              	.LC1:
+ 101 0008 25346420 		.ascii	"%4d \000"
+ 101      00
+ 102 000d 000000   		.align	2
+ 103              	.LC2:
+ 104 0010 0A0D00   		.ascii	"\012\015\000"
+ 105              		.text
+ 106              		.align	2
+ 107              		.global	main
+ 108              		.thumb
+ 109              		.thumb_func
+ 111              	main:
+ 112              	.LFB111:
+ 113              		.file 1 "../src/main.cpp"
    1:../src/main.cpp **** #include "stm32f30x_adc.h"
    2:../src/main.cpp **** #include "stm32f30x_gpio.h"
    3:../src/main.cpp **** #include "stm32f30x_dma.h"
@@ -140,1269 +154,1829 @@
   50:../src/main.cpp **** uint32_t L3GD20_TIMEOUT_UserCallback(void);
   51:../src/main.cpp **** 
   52:../src/main.cpp **** void adc1_init_DMA(void);
-  53:../src/main.cpp **** void adc1_init(void);
-  54:../src/main.cpp **** 
-  55:../src/main.cpp **** // Global variables to keep track of encoders and inertial sensors:
-  56:../src/main.cpp **** 
-  57:../src/main.cpp **** encoderState left_enc, right_enc;
-  58:../src/main.cpp **** 
-  59:../src/main.cpp **** volatile float gyro_angle_x;
-  60:../src/main.cpp **** int gyro_bias_x, adcval;
-  61:../src/main.cpp **** 
-  62:../src/main.cpp **** //__IO uint16_t adcData[3];
-  63:../src/main.cpp **** __IO uint32_t adcData[2];
-  64:../src/main.cpp **** int new_data;
-  65:../src/main.cpp **** 
-  66:../src/main.cpp **** // Initialize all encoder data structures to zero:
-  67:../src/main.cpp **** 
-  68:../src/main.cpp **** int main(void)
-  69:../src/main.cpp **** {
-  97              		.loc 1 69 0
-  98              		.cfi_startproc
-  99              		@ args = 0, pretend = 0, frame = 8
- 100              		@ frame_needed = 1, uses_anonymous_args = 0
- 101 0000 80B5     		push	{r7, lr}
- 102              	.LCFI0:
- 103              		.cfi_def_cfa_offset 8
- 104              		.cfi_offset 7, -8
- 105              		.cfi_offset 14, -4
- 106 0002 82B0     		sub	sp, sp, #8
- 107              	.LCFI1:
- 108              		.cfi_def_cfa_offset 16
- 109 0004 00AF     		add	r7, sp, #0
- 110              	.LCFI2:
- 111              		.cfi_def_cfa_register 7
- 112              	.LBB2:
-  70:../src/main.cpp **** 	SystemInit(); // Set up clocks/PLL/et. al
- 113              		.loc 1 70 0
- 114 0006 FFF7FEFF 		bl	SystemInit
+  53:../src/main.cpp **** void adc2_init_DMA(void);
+  54:../src/main.cpp **** void adc1_init(void);
+  55:../src/main.cpp **** 
+  56:../src/main.cpp **** // Global variables to keep track of encoders and inertial sensors:
+  57:../src/main.cpp **** 
+  58:../src/main.cpp **** encoderState left_enc, right_enc;
+  59:../src/main.cpp **** 
+  60:../src/main.cpp **** volatile float gyro_angle_x;
+  61:../src/main.cpp **** int gyro_bias_x, adcval;
+  62:../src/main.cpp **** 
+  63:../src/main.cpp **** //__IO uint16_t adcData[3];
+  64:../src/main.cpp **** __IO uint32_t adcData[2];
+  65:../src/main.cpp **** int new_data;
+  66:../src/main.cpp **** 
+  67:../src/main.cpp **** __IO uint32_t adc2_data[4];
+  68:../src/main.cpp **** uint8_t adc2_new_data;
+  69:../src/main.cpp **** 
+  70:../src/main.cpp **** // Initialize all encoder data structures to zero:
   71:../src/main.cpp **** 
-  72:../src/main.cpp **** 	UART1_init(); // Debug bridge
- 115              		.loc 1 72 0
- 116 000a FFF7FEFF 		bl	_Z10UART1_initv
-  73:../src/main.cpp **** 
-  74:../src/main.cpp **** //	adcData = 0;
-  75:../src/main.cpp **** 	adcData[0] = 0;
- 117              		.loc 1 75 0
- 118 000e 40F20003 		movw	r3, #:lower16:adcData
- 119 0012 C0F20003 		movt	r3, #:upper16:adcData
- 120 0016 4FF00002 		mov	r2, #0
- 121 001a 1A60     		str	r2, [r3, #0]
-  76:../src/main.cpp **** 	adcData[1] = 0;
- 122              		.loc 1 76 0
- 123 001c 40F20003 		movw	r3, #:lower16:adcData
- 124 0020 C0F20003 		movt	r3, #:upper16:adcData
- 125 0024 4FF00002 		mov	r2, #0
- 126 0028 5A60     		str	r2, [r3, #4]
+  72:../src/main.cpp **** int main(void)
+  73:../src/main.cpp **** {
+ 114              		.loc 1 73 0
+ 115              		.cfi_startproc
+ 116              		@ args = 0, pretend = 0, frame = 8
+ 117              		@ frame_needed = 1, uses_anonymous_args = 0
+ 118 0000 80B5     		push	{r7, lr}
+ 119              	.LCFI0:
+ 120              		.cfi_def_cfa_offset 8
+ 121              		.cfi_offset 7, -8
+ 122              		.cfi_offset 14, -4
+ 123 0002 82B0     		sub	sp, sp, #8
+ 124              	.LCFI1:
+ 125              		.cfi_def_cfa_offset 16
+ 126 0004 00AF     		add	r7, sp, #0
+ 127              	.LCFI2:
+ 128              		.cfi_def_cfa_register 7
+ 129              	.LBB2:
+  74:../src/main.cpp **** 	SystemInit(); // Set up clocks/PLL/et. al
+ 130              		.loc 1 74 0
+ 131 0006 FFF7FEFF 		bl	SystemInit
+  75:../src/main.cpp **** 
+  76:../src/main.cpp **** 	UART1_init(); // Debug bridge
+ 132              		.loc 1 76 0
+ 133 000a FFF7FEFF 		bl	_Z10UART1_initv
   77:../src/main.cpp **** 
-  78:../src/main.cpp **** 	// Initialize global encoder data structure for left and right encoders:
+  78:../src/main.cpp **** 	// Initialize ADC data buffers to 0;
   79:../src/main.cpp **** 
-  80:../src/main.cpp **** 	init_encoder_struct(&left_enc);
- 127              		.loc 1 80 0
- 128 002a 40F20000 		movw	r0, #:lower16:left_enc
- 129 002e C0F20000 		movt	r0, #:upper16:left_enc
- 130 0032 FFF7FEFF 		bl	_Z19init_encoder_structP12encoderState
-  81:../src/main.cpp **** 	init_encoder_struct(&right_enc);
- 131              		.loc 1 81 0
- 132 0036 40F20000 		movw	r0, #:lower16:right_enc
- 133 003a C0F20000 		movt	r0, #:upper16:right_enc
- 134 003e FFF7FEFF 		bl	_Z19init_encoder_structP12encoderState
+  80:../src/main.cpp **** 	adcData[0] = 0;
+ 134              		.loc 1 80 0
+ 135 000e 40F20003 		movw	r3, #:lower16:adcData
+ 136 0012 C0F20003 		movt	r3, #:upper16:adcData
+ 137 0016 4FF00002 		mov	r2, #0
+ 138 001a 1A60     		str	r2, [r3, #0]
+  81:../src/main.cpp **** 	adcData[1] = 0;
+ 139              		.loc 1 81 0
+ 140 001c 40F20003 		movw	r3, #:lower16:adcData
+ 141 0020 C0F20003 		movt	r3, #:upper16:adcData
+ 142 0024 4FF00002 		mov	r2, #0
+ 143 0028 5A60     		str	r2, [r3, #4]
   82:../src/main.cpp **** 
-  83:../src/main.cpp **** 	right_enc.position_target = 8400;
- 135              		.loc 1 83 0
- 136 0042 40F20003 		movw	r3, #:lower16:right_enc
- 137 0046 C0F20003 		movt	r3, #:upper16:right_enc
- 138 004a 42F2D002 		movw	r2, #8400
- 139 004e DA60     		str	r2, [r3, #12]
-  84:../src/main.cpp **** //	right_enc.speed_target = 8400;
-  85:../src/main.cpp **** 
-  86:../src/main.cpp **** 	// Initialize PWM outputs 1 and 2 at 5.0 kHz duty frequency:
-  87:../src/main.cpp **** 
-  88:../src/main.cpp **** 	pwm_out1_init(5000);
- 140              		.loc 1 88 0
- 141 0050 41F28830 		movw	r0, #5000
- 142 0054 FFF7FEFF 		bl	_Z13pwm_out1_initt
-  89:../src/main.cpp **** 	pwm_out2_init(5000);
- 143              		.loc 1 89 0
- 144 0058 41F28830 		movw	r0, #5000
- 145 005c FFF7FEFF 		bl	_Z13pwm_out2_initt
-  90:../src/main.cpp **** 
-  91:../src/main.cpp **** 	// Initialize hardware quadrature encoder input interfaces:
-  92:../src/main.cpp **** 
-  93:../src/main.cpp **** 	TIM8_init_encoder();
- 146              		.loc 1 93 0
- 147 0060 FFF7FEFF 		bl	_Z17TIM8_init_encoderv
-  94:../src/main.cpp **** 	TIM2_init_encoder();
- 148              		.loc 1 94 0
- 149 0064 FFF7FEFF 		bl	_Z17TIM2_init_encoderv
-  95:../src/main.cpp **** 
-  96:../src/main.cpp **** 	// Initialize ADC, encoder update, IMU update and LED matrix interrupts:
+  83:../src/main.cpp **** 	uint8_t iter = 0;
+ 144              		.loc 1 83 0
+ 145 002a 4FF00003 		mov	r3, #0
+ 146 002e FB71     		strb	r3, [r7, #7]
+  84:../src/main.cpp **** 	for(iter=0; iter < 7; ++iter)
+ 147              		.loc 1 84 0
+ 148 0030 4FF00003 		mov	r3, #0
+ 149 0034 FB71     		strb	r3, [r7, #7]
+ 150 0036 0CE0     		b	.L2
+ 151              	.L3:
+  85:../src/main.cpp **** 	{
+  86:../src/main.cpp **** 		adc2_data[iter] = 0;
+ 152              		.loc 1 86 0 discriminator 2
+ 153 0038 FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
+ 154 003a 40F20003 		movw	r3, #:lower16:adc2_data
+ 155 003e C0F20003 		movt	r3, #:upper16:adc2_data
+ 156 0042 4FF00001 		mov	r1, #0
+ 157 0046 43F82210 		str	r1, [r3, r2, lsl #2]
+  84:../src/main.cpp **** 	for(iter=0; iter < 7; ++iter)
+ 158              		.loc 1 84 0 discriminator 2
+ 159 004a FB79     		ldrb	r3, [r7, #7]
+ 160 004c 03F10103 		add	r3, r3, #1
+ 161 0050 FB71     		strb	r3, [r7, #7]
+ 162              	.L2:
+  84:../src/main.cpp **** 	for(iter=0; iter < 7; ++iter)
+ 163              		.loc 1 84 0 is_stmt 0 discriminator 1
+ 164 0052 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 165 0054 062B     		cmp	r3, #6
+ 166 0056 8CBF     		ite	hi
+ 167 0058 0023     		movhi	r3, #0
+ 168 005a 0123     		movls	r3, #1
+ 169 005c DBB2     		uxtb	r3, r3
+ 170 005e 002B     		cmp	r3, #0
+ 171 0060 EAD1     		bne	.L3
+  87:../src/main.cpp **** 	}
+  88:../src/main.cpp **** 
+  89:../src/main.cpp **** 	/*
+  90:../src/main.cpp **** 	 * Initialize global encoder data structure for left and right encoders,
+  91:../src/main.cpp **** 	 * and set position/speed targets as necessary:
+  92:../src/main.cpp **** 	 */
+  93:../src/main.cpp **** 
+  94:../src/main.cpp **** 
+  95:../src/main.cpp **** 	init_encoder_struct(&left_enc);
+ 172              		.loc 1 95 0 is_stmt 1
+ 173 0062 40F20000 		movw	r0, #:lower16:left_enc
+ 174 0066 C0F20000 		movt	r0, #:upper16:left_enc
+ 175 006a FFF7FEFF 		bl	_Z19init_encoder_structP12encoderState
+  96:../src/main.cpp **** 	init_encoder_struct(&right_enc);
+ 176              		.loc 1 96 0
+ 177 006e 40F20000 		movw	r0, #:lower16:right_enc
+ 178 0072 C0F20000 		movt	r0, #:upper16:right_enc
+ 179 0076 FFF7FEFF 		bl	_Z19init_encoder_structP12encoderState
   97:../src/main.cpp **** 
-  98:../src/main.cpp **** 	new_data = 0;
- 150              		.loc 1 98 0
- 151 0068 40F20003 		movw	r3, #:lower16:new_data
- 152 006c C0F20003 		movt	r3, #:upper16:new_data
- 153 0070 4FF00002 		mov	r2, #0
- 154 0074 1A60     		str	r2, [r3, #0]
-  99:../src/main.cpp **** 	adc1_init_DMA();
- 155              		.loc 1 99 0
- 156 0076 FFF7FEFF 		bl	_Z13adc1_init_DMAv
- 100:../src/main.cpp **** //	adc1_init();
- 101:../src/main.cpp **** //	adc1_dma_init();
- 102:../src/main.cpp **** 	encoder_update_ISR_init();	//Update the state of the two encoders (left/right)
- 157              		.loc 1 102 0
- 158 007a FFF7FEFF 		bl	_Z23encoder_update_ISR_initv
- 103:../src/main.cpp **** 	imu_update_ISR_init(); 		//IMU (gyro/acclerometer/magnetometer ISR)
- 159              		.loc 1 103 0
- 160 007e FFF7FEFF 		bl	_Z19imu_update_ISR_initv
- 104:../src/main.cpp **** 	LED_MATRIX_ISR_init();		//Hand out some eye candy while we're at it...
- 161              		.loc 1 104 0
- 162 0082 FFF7FEFF 		bl	_Z19LED_MATRIX_ISR_initv
+  98:../src/main.cpp **** 	right_enc.position_target = 8400;
+ 180              		.loc 1 98 0
+ 181 007a 40F20003 		movw	r3, #:lower16:right_enc
+ 182 007e C0F20003 		movt	r3, #:upper16:right_enc
+ 183 0082 42F2D002 		movw	r2, #8400
+ 184 0086 DA60     		str	r2, [r3, #12]
+  99:../src/main.cpp ****  //	right_enc.speed_target = 8400;
+ 100:../src/main.cpp **** 
+ 101:../src/main.cpp **** 	// Initialize PWM outputs 1 and 2 at 5.0 kHz duty frequency:
+ 102:../src/main.cpp **** 
+ 103:../src/main.cpp **** 	pwm_out1_init(5000);
+ 185              		.loc 1 103 0
+ 186 0088 41F28830 		movw	r0, #5000
+ 187 008c FFF7FEFF 		bl	_Z13pwm_out1_initt
+ 104:../src/main.cpp **** 	pwm_out2_init(5000);
+ 188              		.loc 1 104 0
+ 189 0090 41F28830 		movw	r0, #5000
+ 190 0094 FFF7FEFF 		bl	_Z13pwm_out2_initt
  105:../src/main.cpp **** 
- 106:../src/main.cpp **** 	adcval = 0;
- 163              		.loc 1 106 0
- 164 0086 40F20003 		movw	r3, #:lower16:adcval
- 165 008a C0F20003 		movt	r3, #:upper16:adcval
- 166 008e 4FF00002 		mov	r2, #0
- 167 0092 1A60     		str	r2, [r3, #0]
- 107:../src/main.cpp **** 	float mtr_out = 0;
- 168              		.loc 1 107 0
- 169 0094 4FF00003 		mov	r3, #0
- 170 0098 7B60     		str	r3, [r7, #4]	@ float
- 108:../src/main.cpp **** 	char *mode;
- 109:../src/main.cpp **** 
- 110:../src/main.cpp **** 	right_enc.m = MODE_POSITION;
- 171              		.loc 1 110 0
- 172 009a 40F20003 		movw	r3, #:lower16:right_enc
- 173 009e C0F20003 		movt	r3, #:upper16:right_enc
- 174 00a2 4FF00102 		mov	r2, #1
- 175 00a6 83F82420 		strb	r2, [r3, #36]
- 176              	.L3:
- 111:../src/main.cpp **** //	right_enc.m = MODE_SPEED;
+ 106:../src/main.cpp **** 	// Initialize hardware quadrature encoder input interfaces:
+ 107:../src/main.cpp **** 
+ 108:../src/main.cpp **** 	TIM8_init_encoder();
+ 191              		.loc 1 108 0
+ 192 0098 FFF7FEFF 		bl	_Z17TIM8_init_encoderv
+ 109:../src/main.cpp **** 	TIM2_init_encoder();
+ 193              		.loc 1 109 0
+ 194 009c FFF7FEFF 		bl	_Z17TIM2_init_encoderv
+ 110:../src/main.cpp **** 
+ 111:../src/main.cpp **** 	// Initialize ADC, encoder update, IMU update and LED matrix interrupts:
  112:../src/main.cpp **** 
- 113:../src/main.cpp **** 	while(true)
- 114:../src/main.cpp **** 	{
- 115:../src/main.cpp **** 		pwm2_output(0.5f);						// Fixed 1 kHz, 50% duty output on PWM output #2
- 177              		.loc 1 115 0
- 178 00aa B6EE000A 		fconsts	s0, #96
- 179 00ae FFF7FEFF 		bl	_Z11pwm2_outputf
- 180              	.L2:
- 116:../src/main.cpp **** //		mtr_out = (float)adcval/(float)4096;
- 117:../src/main.cpp **** //		mtr_out = (adcval >= 4013) ? 0.97 : mtr_out;
- 118:../src/main.cpp **** //		pwm1_output(mtr_out);
- 119:../src/main.cpp **** //		right_enc.position_target = 15000;
- 120:../src/main.cpp **** 
- 121:../src/main.cpp **** 		// Debug Statements:
- 122:../src/main.cpp **** 
- 123:../src/main.cpp **** //		printf("%d %d %d\n\r", adcData[0], adcData[1], adcval);
- 124:../src/main.cpp **** //		printf("%d\n\r", adcval);
- 125:../src/main.cpp **** //		if(right_enc.m == MODE_OPENLOOP)
- 126:../src/main.cpp **** //		{
- 127:../src/main.cpp **** //			pwm1_output(0.50f);
- 128:../src/main.cpp **** //		}
+ 113:../src/main.cpp **** 	new_data = 0;
+ 195              		.loc 1 113 0
+ 196 00a0 40F20003 		movw	r3, #:lower16:new_data
+ 197 00a4 C0F20003 		movt	r3, #:upper16:new_data
+ 198 00a8 4FF00002 		mov	r2, #0
+ 199 00ac 1A60     		str	r2, [r3, #0]
+ 114:../src/main.cpp **** 	adc2_new_data = 0;
+ 200              		.loc 1 114 0
+ 201 00ae 40F20003 		movw	r3, #:lower16:adc2_new_data
+ 202 00b2 C0F20003 		movt	r3, #:upper16:adc2_new_data
+ 203 00b6 4FF00002 		mov	r2, #0
+ 204 00ba 1A70     		strb	r2, [r3, #0]
+ 115:../src/main.cpp **** 
+ 116:../src/main.cpp **** 	// Initialize ADC1 DMA:
+ 117:../src/main.cpp **** 	adc1_init_DMA();
+ 205              		.loc 1 117 0
+ 206 00bc FFF7FEFF 		bl	_Z13adc1_init_DMAv
+ 118:../src/main.cpp **** 
+ 119:../src/main.cpp **** 	// Initialize ADC2 DMA:
+ 120:../src/main.cpp **** 	adc2_init_DMA();
+ 207              		.loc 1 120 0
+ 208 00c0 FFF7FEFF 		bl	_Z13adc2_init_DMAv
+ 121:../src/main.cpp **** 
+ 122:../src/main.cpp **** 	encoder_update_ISR_init();	//Update the state of the two encoders (left/right)
+ 209              		.loc 1 122 0
+ 210 00c4 FFF7FEFF 		bl	_Z23encoder_update_ISR_initv
+ 123:../src/main.cpp **** 	imu_update_ISR_init(); 		//IMU (gyro/acclerometer/magnetometer ISR)
+ 211              		.loc 1 123 0
+ 212 00c8 FFF7FEFF 		bl	_Z19imu_update_ISR_initv
+ 124:../src/main.cpp **** 	LED_MATRIX_ISR_init();		//Hand out some eye candy while we're at it...
+ 213              		.loc 1 124 0
+ 214 00cc FFF7FEFF 		bl	_Z19LED_MATRIX_ISR_initv
+ 125:../src/main.cpp **** 
+ 126:../src/main.cpp **** 	adcval = 0;
+ 215              		.loc 1 126 0
+ 216 00d0 40F20003 		movw	r3, #:lower16:adcval
+ 217 00d4 C0F20003 		movt	r3, #:upper16:adcval
+ 218 00d8 4FF00002 		mov	r2, #0
+ 219 00dc 1A60     		str	r2, [r3, #0]
+ 127:../src/main.cpp **** 	float mtr_out = 0;
+ 220              		.loc 1 127 0
+ 221 00de 4FF00003 		mov	r3, #0
+ 222 00e2 3B60     		str	r3, [r7, #0]	@ float
+ 128:../src/main.cpp **** 	char *mode;
  129:../src/main.cpp **** 
- 130:../src/main.cpp **** //		mode = (right_enc.m == MODE_OPENLOOP) ? (char *)"Open" : ((right_enc.m == MODE_POSITION) ? (cha
- 131:../src/main.cpp **** 	//	pwm1_output(0.50f);
- 132:../src/main.cpp **** //		printf("Left: %d | Right: %d | Mode: %s\n\r", left_enc.position, right_enc.position, mode);
- 133:../src/main.cpp **** 
- 134:../src/main.cpp **** //		printf("Bias_x: %d | Theta_x: %5.2f | Left: %d | Right: %d\n\r", gyro_bias_x, gyro_angle_x, lef
- 135:../src/main.cpp **** //		printf("ADC Value on Channel 3: %d || Theta_x: %5.2f\n\r", adcval, gyro_angle_x);
- 136:../src/main.cpp **** //		while(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) != SET);
- 137:../src/main.cpp **** //		DMA_ClearFlag(DMA1_FLAG_GL1 | DMA1_FLAG_TC1);
- 138:../src/main.cpp **** 		while(new_data==0);
- 181              		.loc 1 138 0 discriminator 1
- 182 00b2 40F20003 		movw	r3, #:lower16:new_data
- 183 00b6 C0F20003 		movt	r3, #:upper16:new_data
- 184 00ba 1B68     		ldr	r3, [r3, #0]
- 185 00bc 002B     		cmp	r3, #0
- 186 00be 14BF     		ite	ne
- 187 00c0 0023     		movne	r3, #0
- 188 00c2 0123     		moveq	r3, #1
- 189 00c4 DBB2     		uxtb	r3, r3
- 190 00c6 002B     		cmp	r3, #0
- 191 00c8 F3D1     		bne	.L2
- 139:../src/main.cpp **** //		printf("ADC: %d\n\r", adcData);
- 140:../src/main.cpp **** 		printf("ADC1: %4d || ADC2: %4d\n\r", adcData[0], adcData[1]);//adcData, (uint32_t)&(ADC1->DR));//
- 192              		.loc 1 140 0
- 193 00ca 40F20003 		movw	r3, #:lower16:adcData
- 194 00ce C0F20003 		movt	r3, #:upper16:adcData
- 195 00d2 1A68     		ldr	r2, [r3, #0]
- 196 00d4 40F20003 		movw	r3, #:lower16:adcData
- 197 00d8 C0F20003 		movt	r3, #:upper16:adcData
- 198 00dc 5B68     		ldr	r3, [r3, #4]
- 199 00de 40F20000 		movw	r0, #:lower16:.LC0
- 200 00e2 C0F20000 		movt	r0, #:upper16:.LC0
- 201 00e6 1146     		mov	r1, r2
- 202 00e8 1A46     		mov	r2, r3
- 203 00ea FFF7FEFF 		bl	printf
- 141:../src/main.cpp **** 		new_data = 0;
- 204              		.loc 1 141 0
- 205 00ee 40F20003 		movw	r3, #:lower16:new_data
- 206 00f2 C0F20003 		movt	r3, #:upper16:new_data
- 207 00f6 4FF00002 		mov	r2, #0
- 208 00fa 1A60     		str	r2, [r3, #0]
- 113:../src/main.cpp **** 	while(true)
- 209              		.loc 1 113 0
- 210 00fc D5E7     		b	.L3
- 211              	.LBE2:
- 212              		.cfi_endproc
- 213              	.LFE111:
- 215 00fe 00BF     		.align	2
- 216              		.global	_Z19imu_update_ISR_initv
- 217              		.thumb
- 218              		.thumb_func
- 220              	_Z19imu_update_ISR_initv:
- 221              	.LFB112:
- 142:../src/main.cpp **** 
- 143:../src/main.cpp **** //		printf("Hello World!!\n\r");
- 144:../src/main.cpp **** 	}
- 145:../src/main.cpp **** 	return 0; // We should never manage to get here...
- 146:../src/main.cpp **** }
- 147:../src/main.cpp **** 
- 148:../src/main.cpp **** // Initializes the ISR that reads inertial sensors (gyro + accelerometer)
- 149:../src/main.cpp **** // Interrupt priority is HIGHEST (0)
- 150:../src/main.cpp **** 
- 151:../src/main.cpp **** void imu_update_ISR_init(void)
- 152:../src/main.cpp **** {
- 222              		.loc 1 152 0
- 223              		.cfi_startproc
- 224              		@ args = 0, pretend = 0, frame = 24
- 225              		@ frame_needed = 1, uses_anonymous_args = 0
- 226 0100 80B5     		push	{r7, lr}
- 227              	.LCFI3:
- 228              		.cfi_def_cfa_offset 8
- 229              		.cfi_offset 7, -8
- 230              		.cfi_offset 14, -4
- 231 0102 86B0     		sub	sp, sp, #24
- 232              	.LCFI4:
- 233              		.cfi_def_cfa_offset 32
- 234 0104 00AF     		add	r7, sp, #0
- 235              	.LCFI5:
- 236              		.cfi_def_cfa_register 7
- 237              	.LBB3:
- 153:../src/main.cpp **** 	L3GD20_InitTypeDef l3gInit;
- 154:../src/main.cpp **** 
- 155:../src/main.cpp **** 	l3gInit.Axes_Enable = L3GD20_AXES_ENABLE;
- 238              		.loc 1 155 0
- 239 0106 4FF00703 		mov	r3, #7
- 240 010a BB74     		strb	r3, [r7, #18]
- 156:../src/main.cpp **** 	l3gInit.Band_Width = L3GD20_BANDWIDTH_1;
- 241              		.loc 1 156 0
- 242 010c 4FF00003 		mov	r3, #0
- 243 0110 FB74     		strb	r3, [r7, #19]
- 157:../src/main.cpp **** 	l3gInit.BlockData_Update = L3GD20_BlockDataUpdate_Continous;
- 244              		.loc 1 157 0
- 245 0112 4FF00003 		mov	r3, #0
- 246 0116 3B75     		strb	r3, [r7, #20]
- 158:../src/main.cpp **** 	l3gInit.Endianness = L3GD20_BLE_LSB;
- 247              		.loc 1 158 0
- 248 0118 4FF00003 		mov	r3, #0
- 249 011c 7B75     		strb	r3, [r7, #21]
- 159:../src/main.cpp **** 	l3gInit.Full_Scale = L3GD20_FULLSCALE_250;
- 250              		.loc 1 159 0
- 251 011e 4FF00003 		mov	r3, #0
- 252 0122 BB75     		strb	r3, [r7, #22]
- 160:../src/main.cpp **** 	l3gInit.Output_DataRate = L3GD20_OUTPUT_DATARATE_1;
- 253              		.loc 1 160 0
- 254 0124 4FF00003 		mov	r3, #0
- 255 0128 7B74     		strb	r3, [r7, #17]
- 161:../src/main.cpp **** 	l3gInit.Power_Mode = L3GD20_MODE_ACTIVE;
- 256              		.loc 1 161 0
- 257 012a 4FF00803 		mov	r3, #8
- 258 012e 3B74     		strb	r3, [r7, #16]
- 162:../src/main.cpp **** 
- 163:../src/main.cpp **** 	L3GD20_Init(&l3gInit);
- 259              		.loc 1 163 0
- 260 0130 07F11003 		add	r3, r7, #16
- 261 0134 1846     		mov	r0, r3
- 262 0136 FFF7FEFF 		bl	L3GD20_Init
- 164:../src/main.cpp **** 	gyro_bias_x = calc_gyro_bias();
- 263              		.loc 1 164 0
- 264 013a FFF7FEFF 		bl	_Z14calc_gyro_biasv
- 265 013e 0346     		mov	r3, r0
- 266 0140 1A46     		mov	r2, r3
- 267 0142 40F20003 		movw	r3, #:lower16:gyro_bias_x
- 268 0146 C0F20003 		movt	r3, #:upper16:gyro_bias_x
- 269 014a 1A60     		str	r2, [r3, #0]
- 165:../src/main.cpp **** 
- 166:../src/main.cpp **** 	gyro_angle_x = 0;
- 270              		.loc 1 166 0
- 271 014c 40F20003 		movw	r3, #:lower16:gyro_angle_x
- 272 0150 C0F20003 		movt	r3, #:upper16:gyro_angle_x
- 273 0154 4FF00002 		mov	r2, #0
- 274 0158 1A60     		str	r2, [r3, #0]	@ float
- 167:../src/main.cpp **** 
- 168:../src/main.cpp **** 	NVIC_InitTypeDef nv;
- 169:../src/main.cpp **** 	TIM_TimeBaseInitTypeDef TIM17_init;
- 170:../src/main.cpp **** 
- 171:../src/main.cpp **** 	nv.NVIC_IRQChannel = TIM1_TRG_COM_TIM17_IRQn;//TIM3_IRQn;	//TIM2_IRQn;
- 275              		.loc 1 171 0
- 276 015a 4FF01A03 		mov	r3, #26
- 277 015e 3B73     		strb	r3, [r7, #12]
- 172:../src/main.cpp **** 	nv.NVIC_IRQChannelPreemptionPriority = 0;
- 278              		.loc 1 172 0
- 279 0160 4FF00003 		mov	r3, #0
- 280 0164 7B73     		strb	r3, [r7, #13]
- 173:../src/main.cpp **** 	nv.NVIC_IRQChannelSubPriority = 0;
- 281              		.loc 1 173 0
- 282 0166 4FF00003 		mov	r3, #0
- 283 016a BB73     		strb	r3, [r7, #14]
- 174:../src/main.cpp **** 	nv.NVIC_IRQChannelCmd = ENABLE;
- 284              		.loc 1 174 0
- 285 016c 4FF00103 		mov	r3, #1
- 286 0170 FB73     		strb	r3, [r7, #15]
- 175:../src/main.cpp **** 
- 176:../src/main.cpp **** 	NVIC_Init(&nv);
- 287              		.loc 1 176 0
- 288 0172 07F10C03 		add	r3, r7, #12
- 289 0176 1846     		mov	r0, r3
- 290 0178 FFF7FEFF 		bl	NVIC_Init
- 177:../src/main.cpp **** 
- 178:../src/main.cpp **** 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM17, ENABLE); //TIM3 on APB1
- 291              		.loc 1 178 0
- 292 017c 4FF48020 		mov	r0, #262144
- 293 0180 4FF00101 		mov	r1, #1
- 294 0184 FFF7FEFF 		bl	RCC_APB2PeriphClockCmd
- 179:../src/main.cpp **** 
- 180:../src/main.cpp **** 	/*
- 181:../src/main.cpp **** 	 * UPDATE_FREQUENCY = TIM_CLK/[(PRESCALER+1)(ARR+1)(REPCOUNTER+1)]
- 182:../src/main.cpp **** 	 * 	  Prescaler -> PRESCALER
- 183:../src/main.cpp **** 	 * 	  Period -> ARR
- 184:../src/main.cpp **** 	 * 	  RepetitionCounter -> REPCOUNTER
- 185:../src/main.cpp **** 	 */
- 186:../src/main.cpp **** 
- 187:../src/main.cpp **** 	TIM17_init.TIM_Period = (10*DT_IMU)-1;
- 295              		.loc 1 187 0
- 296 0188 4FF0F903 		mov	r3, #249
- 297 018c 7B60     		str	r3, [r7, #4]
- 188:../src/main.cpp **** 	TIM17_init.TIM_Prescaler = 7199;
- 298              		.loc 1 188 0
- 299 018e 41F61F43 		movw	r3, #7199
- 300 0192 3B80     		strh	r3, [r7, #0]	@ movhi
- 189:../src/main.cpp **** 	TIM17_init.TIM_RepetitionCounter = 0;
- 301              		.loc 1 189 0
- 302 0194 4FF00003 		mov	r3, #0
- 303 0198 BB72     		strb	r3, [r7, #10]
- 190:../src/main.cpp **** 	TIM17_init.TIM_ClockDivision = 0;
- 304              		.loc 1 190 0
- 305 019a 4FF00003 		mov	r3, #0
- 306 019e 3B81     		strh	r3, [r7, #8]	@ movhi
- 191:../src/main.cpp **** 	TIM17_init.TIM_CounterMode = TIM_CounterMode_Up;
- 307              		.loc 1 191 0
- 308 01a0 4FF00003 		mov	r3, #0
- 309 01a4 7B80     		strh	r3, [r7, #2]	@ movhi
+ 130:../src/main.cpp **** 	right_enc.m = MODE_POSITION;
+ 223              		.loc 1 130 0
+ 224 00e4 40F20003 		movw	r3, #:lower16:right_enc
+ 225 00e8 C0F20003 		movt	r3, #:upper16:right_enc
+ 226 00ec 4FF00102 		mov	r2, #1
+ 227 00f0 83F82420 		strb	r2, [r3, #36]
+ 228              	.L7:
+ 131:../src/main.cpp **** 
+ 132:../src/main.cpp **** 	while(true)
+ 133:../src/main.cpp **** 	{
+ 134:../src/main.cpp **** //		pwm2_output(0.5f);						// Fixed 1 kHz, 50% duty output on PWM output #2
+ 135:../src/main.cpp **** 
+ 136:../src/main.cpp **** 		// Debug Statements:
+ 137:../src/main.cpp **** 
+ 138:../src/main.cpp **** //		printf("%d %d %d\n\r", adcData[0], adcData[1], adcval);
+ 139:../src/main.cpp **** //		printf("%d\n\r", adcval);
+ 140:../src/main.cpp **** //		if(right_enc.m == MODE_OPENLOOP)
+ 141:../src/main.cpp **** //		{
+ 142:../src/main.cpp **** //			pwm1_output(0.50f);
+ 143:../src/main.cpp **** //		}
+ 144:../src/main.cpp **** 
+ 145:../src/main.cpp **** //		mode = (right_enc.m == MODE_OPENLOOP) ? (char *)"Open" : ((right_enc.m == MODE_POSITION) ? (cha
+ 146:../src/main.cpp **** 	//	pwm1_output(0.50f);
+ 147:../src/main.cpp **** //		printf("Left: %d | Right: %d | Mode: %s\n\r", left_enc.position, right_enc.position, mode);
+ 148:../src/main.cpp **** 
+ 149:../src/main.cpp **** //		printf("Bias_x: %d | Theta_x: %5.2f | Left: %d | Right: %d\n\r", gyro_bias_x, gyro_angle_x, lef
+ 150:../src/main.cpp **** //		printf("ADC Value on Channel 3: %d || Theta_x: %5.2f\n\r", adcval, gyro_angle_x);
+ 151:../src/main.cpp **** //		while(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) != SET);
+ 152:../src/main.cpp **** //		DMA_ClearFlag(DMA1_FLAG_GL1 | DMA1_FLAG_TC1);
+ 153:../src/main.cpp **** 
+ 154:../src/main.cpp **** 		/*
+ 155:../src/main.cpp **** 		while(new_data==0);
+ 156:../src/main.cpp **** 		printf("ADC1: %4d || ADC2: %4d\n\r", adcData[0], adcData[1]);//adcData, (uint32_t)&(ADC1->DR));//
+ 157:../src/main.cpp **** 		new_data = 0;
+ 158:../src/main.cpp **** 		*/
+ 159:../src/main.cpp **** 		printf("ADC2: ");
+ 229              		.loc 1 159 0
+ 230 00f4 40F20000 		movw	r0, #:lower16:.LC0
+ 231 00f8 C0F20000 		movt	r0, #:upper16:.LC0
+ 232 00fc FFF7FEFF 		bl	printf
+ 233              	.L4:
+ 160:../src/main.cpp **** 		while(adc2_new_data==0);
+ 234              		.loc 1 160 0 discriminator 1
+ 235 0100 40F20003 		movw	r3, #:lower16:adc2_new_data
+ 236 0104 C0F20003 		movt	r3, #:upper16:adc2_new_data
+ 237 0108 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 238 010a 002B     		cmp	r3, #0
+ 239 010c 14BF     		ite	ne
+ 240 010e 0023     		movne	r3, #0
+ 241 0110 0123     		moveq	r3, #1
+ 242 0112 DBB2     		uxtb	r3, r3
+ 243 0114 002B     		cmp	r3, #0
+ 244 0116 F3D1     		bne	.L4
+ 161:../src/main.cpp **** 		for(iter=0;iter<4;++iter)
+ 245              		.loc 1 161 0
+ 246 0118 4FF00003 		mov	r3, #0
+ 247 011c FB71     		strb	r3, [r7, #7]
+ 248 011e 11E0     		b	.L5
+ 249              	.L6:
+ 162:../src/main.cpp **** 		{
+ 163:../src/main.cpp **** 			printf("%4d ", adc2_data[iter]);
+ 250              		.loc 1 163 0 discriminator 2
+ 251 0120 FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
+ 252 0122 40F20003 		movw	r3, #:lower16:adc2_data
+ 253 0126 C0F20003 		movt	r3, #:upper16:adc2_data
+ 254 012a 53F82230 		ldr	r3, [r3, r2, lsl #2]
+ 255 012e 40F20000 		movw	r0, #:lower16:.LC1
+ 256 0132 C0F20000 		movt	r0, #:upper16:.LC1
+ 257 0136 1946     		mov	r1, r3
+ 258 0138 FFF7FEFF 		bl	printf
+ 161:../src/main.cpp **** 		for(iter=0;iter<4;++iter)
+ 259              		.loc 1 161 0 discriminator 2
+ 260 013c FB79     		ldrb	r3, [r7, #7]
+ 261 013e 03F10103 		add	r3, r3, #1
+ 262 0142 FB71     		strb	r3, [r7, #7]
+ 263              	.L5:
+ 161:../src/main.cpp **** 		for(iter=0;iter<4;++iter)
+ 264              		.loc 1 161 0 is_stmt 0 discriminator 1
+ 265 0144 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 266 0146 032B     		cmp	r3, #3
+ 267 0148 8CBF     		ite	hi
+ 268 014a 0023     		movhi	r3, #0
+ 269 014c 0123     		movls	r3, #1
+ 270 014e DBB2     		uxtb	r3, r3
+ 271 0150 002B     		cmp	r3, #0
+ 272 0152 E5D1     		bne	.L6
+ 164:../src/main.cpp **** 		}
+ 165:../src/main.cpp **** 		printf("\n\r");
+ 273              		.loc 1 165 0 is_stmt 1
+ 274 0154 40F20000 		movw	r0, #:lower16:.LC2
+ 275 0158 C0F20000 		movt	r0, #:upper16:.LC2
+ 276 015c FFF7FEFF 		bl	printf
+ 132:../src/main.cpp **** 	while(true)
+ 277              		.loc 1 132 0
+ 278 0160 C8E7     		b	.L7
+ 279              	.LBE2:
+ 280              		.cfi_endproc
+ 281              	.LFE111:
+ 283 0162 00BF     		.align	2
+ 284              		.global	_Z19imu_update_ISR_initv
+ 285              		.thumb
+ 286              		.thumb_func
+ 288              	_Z19imu_update_ISR_initv:
+ 289              	.LFB112:
+ 166:../src/main.cpp **** 	}
+ 167:../src/main.cpp **** 	return 0; // We should never manage to get here...
+ 168:../src/main.cpp **** }
+ 169:../src/main.cpp **** 
+ 170:../src/main.cpp **** // Initializes the ISR that reads inertial sensors (gyro + accelerometer)
+ 171:../src/main.cpp **** // Interrupt priority is HIGHEST (0)
+ 172:../src/main.cpp **** 
+ 173:../src/main.cpp **** void imu_update_ISR_init(void)
+ 174:../src/main.cpp **** {
+ 290              		.loc 1 174 0
+ 291              		.cfi_startproc
+ 292              		@ args = 0, pretend = 0, frame = 24
+ 293              		@ frame_needed = 1, uses_anonymous_args = 0
+ 294 0164 80B5     		push	{r7, lr}
+ 295              	.LCFI3:
+ 296              		.cfi_def_cfa_offset 8
+ 297              		.cfi_offset 7, -8
+ 298              		.cfi_offset 14, -4
+ 299 0166 86B0     		sub	sp, sp, #24
+ 300              	.LCFI4:
+ 301              		.cfi_def_cfa_offset 32
+ 302 0168 00AF     		add	r7, sp, #0
+ 303              	.LCFI5:
+ 304              		.cfi_def_cfa_register 7
+ 305              	.LBB3:
+ 175:../src/main.cpp **** 	L3GD20_InitTypeDef l3gInit;
+ 176:../src/main.cpp **** 
+ 177:../src/main.cpp **** 	l3gInit.Axes_Enable = L3GD20_AXES_ENABLE;
+ 306              		.loc 1 177 0
+ 307 016a 4FF00703 		mov	r3, #7
+ 308 016e BB74     		strb	r3, [r7, #18]
+ 178:../src/main.cpp **** 	l3gInit.Band_Width = L3GD20_BANDWIDTH_1;
+ 309              		.loc 1 178 0
+ 310 0170 4FF00003 		mov	r3, #0
+ 311 0174 FB74     		strb	r3, [r7, #19]
+ 179:../src/main.cpp **** 	l3gInit.BlockData_Update = L3GD20_BlockDataUpdate_Continous;
+ 312              		.loc 1 179 0
+ 313 0176 4FF00003 		mov	r3, #0
+ 314 017a 3B75     		strb	r3, [r7, #20]
+ 180:../src/main.cpp **** 	l3gInit.Endianness = L3GD20_BLE_LSB;
+ 315              		.loc 1 180 0
+ 316 017c 4FF00003 		mov	r3, #0
+ 317 0180 7B75     		strb	r3, [r7, #21]
+ 181:../src/main.cpp **** 	l3gInit.Full_Scale = L3GD20_FULLSCALE_250;
+ 318              		.loc 1 181 0
+ 319 0182 4FF00003 		mov	r3, #0
+ 320 0186 BB75     		strb	r3, [r7, #22]
+ 182:../src/main.cpp **** 	l3gInit.Output_DataRate = L3GD20_OUTPUT_DATARATE_1;
+ 321              		.loc 1 182 0
+ 322 0188 4FF00003 		mov	r3, #0
+ 323 018c 7B74     		strb	r3, [r7, #17]
+ 183:../src/main.cpp **** 	l3gInit.Power_Mode = L3GD20_MODE_ACTIVE;
+ 324              		.loc 1 183 0
+ 325 018e 4FF00803 		mov	r3, #8
+ 326 0192 3B74     		strb	r3, [r7, #16]
+ 184:../src/main.cpp **** 
+ 185:../src/main.cpp **** 	L3GD20_Init(&l3gInit);
+ 327              		.loc 1 185 0
+ 328 0194 07F11003 		add	r3, r7, #16
+ 329 0198 1846     		mov	r0, r3
+ 330 019a FFF7FEFF 		bl	L3GD20_Init
+ 186:../src/main.cpp **** 	gyro_bias_x = calc_gyro_bias();
+ 331              		.loc 1 186 0
+ 332 019e FFF7FEFF 		bl	_Z14calc_gyro_biasv
+ 333 01a2 0346     		mov	r3, r0
+ 334 01a4 1A46     		mov	r2, r3
+ 335 01a6 40F20003 		movw	r3, #:lower16:gyro_bias_x
+ 336 01aa C0F20003 		movt	r3, #:upper16:gyro_bias_x
+ 337 01ae 1A60     		str	r2, [r3, #0]
+ 187:../src/main.cpp **** 
+ 188:../src/main.cpp **** 	gyro_angle_x = 0;
+ 338              		.loc 1 188 0
+ 339 01b0 40F20003 		movw	r3, #:lower16:gyro_angle_x
+ 340 01b4 C0F20003 		movt	r3, #:upper16:gyro_angle_x
+ 341 01b8 4FF00002 		mov	r2, #0
+ 342 01bc 1A60     		str	r2, [r3, #0]	@ float
+ 189:../src/main.cpp **** 
+ 190:../src/main.cpp **** 	NVIC_InitTypeDef nv;
+ 191:../src/main.cpp **** 	TIM_TimeBaseInitTypeDef TIM17_init;
  192:../src/main.cpp **** 
- 193:../src/main.cpp **** 	TIM_TimeBaseInit(TIM17, &TIM17_init);
- 310              		.loc 1 193 0
- 311 01a6 3B46     		mov	r3, r7
- 312 01a8 4FF49040 		mov	r0, #18432
- 313 01ac C4F20100 		movt	r0, 16385
- 314 01b0 1946     		mov	r1, r3
- 315 01b2 FFF7FEFF 		bl	TIM_TimeBaseInit
- 194:../src/main.cpp **** 
- 195:../src/main.cpp **** 	TIM_ITConfig(TIM17, TIM_IT_Update, ENABLE);
- 316              		.loc 1 195 0
- 317 01b6 4FF49040 		mov	r0, #18432
- 318 01ba C4F20100 		movt	r0, 16385
- 319 01be 4FF00101 		mov	r1, #1
- 320 01c2 4FF00102 		mov	r2, #1
- 321 01c6 FFF7FEFF 		bl	TIM_ITConfig
- 196:../src/main.cpp **** 	TIM_Cmd(TIM17, ENABLE);
- 322              		.loc 1 196 0
- 323 01ca 4FF49040 		mov	r0, #18432
- 324 01ce C4F20100 		movt	r0, 16385
- 325 01d2 4FF00101 		mov	r1, #1
- 326 01d6 FFF7FEFF 		bl	TIM_Cmd
- 327              	.LBE3:
- 197:../src/main.cpp **** }
- 328              		.loc 1 197 0
- 329 01da 07F11807 		add	r7, r7, #24
- 330 01de BD46     		mov	sp, r7
- 331 01e0 80BD     		pop	{r7, pc}
- 332              		.cfi_endproc
- 333              	.LFE112:
- 335              		.section	.rodata
- 336 0019 000000   		.align	2
- 337              	.LC1:
- 338 001c 4C334744 		.ascii	"L3GD20 read attempt timed out... check your wiring/"
- 338      32302072 
- 338      65616420 
- 338      61747465 
- 338      6D707420 
- 339 004f 636F6465 		.ascii	"code!!!\012\015\000"
- 339      2121210A 
- 339      0D00
- 340 0059 000000   		.text
- 341 01e2 00BF     		.align	2
- 342              		.global	L3GD20_TIMEOUT_UserCallback
- 343              		.thumb
- 344              		.thumb_func
- 346              	L3GD20_TIMEOUT_UserCallback:
- 347              	.LFB113:
- 198:../src/main.cpp **** 
- 199:../src/main.cpp **** uint32_t L3GD20_TIMEOUT_UserCallback(void)
- 200:../src/main.cpp **** {
- 348              		.loc 1 200 0
- 349              		.cfi_startproc
- 350              		@ args = 0, pretend = 0, frame = 0
- 351              		@ frame_needed = 1, uses_anonymous_args = 0
- 352 01e4 80B5     		push	{r7, lr}
- 353              	.LCFI6:
- 354              		.cfi_def_cfa_offset 8
- 355              		.cfi_offset 7, -8
- 356              		.cfi_offset 14, -4
- 357 01e6 00AF     		add	r7, sp, #0
- 358              	.LCFI7:
- 359              		.cfi_def_cfa_register 7
- 201:../src/main.cpp **** 	printf("L3GD20 read attempt timed out... check your wiring/code!!!\n\r");
- 360              		.loc 1 201 0
- 361 01e8 40F20000 		movw	r0, #:lower16:.LC1
- 362 01ec C0F20000 		movt	r0, #:upper16:.LC1
- 363 01f0 FFF7FEFF 		bl	printf
- 202:../src/main.cpp **** 	return 0;
- 364              		.loc 1 202 0
- 365 01f4 4FF00003 		mov	r3, #0
- 203:../src/main.cpp **** }
- 366              		.loc 1 203 0
- 367 01f8 1846     		mov	r0, r3
- 368 01fa 80BD     		pop	{r7, pc}
- 369              		.cfi_endproc
- 370              	.LFE113:
- 372              		.align	2
- 373              		.global	_Z14calc_gyro_biasv
- 374              		.thumb
- 375              		.thumb_func
- 377              	_Z14calc_gyro_biasv:
- 378              	.LFB114:
- 204:../src/main.cpp **** 
- 205:../src/main.cpp **** int16_t calc_gyro_bias(void)
- 206:../src/main.cpp **** {
- 379              		.loc 1 206 0
- 380              		.cfi_startproc
- 381              		@ args = 0, pretend = 0, frame = 16
- 382              		@ frame_needed = 1, uses_anonymous_args = 0
- 383 01fc 80B5     		push	{r7, lr}
- 384              	.LCFI8:
- 385              		.cfi_def_cfa_offset 8
- 386              		.cfi_offset 7, -8
- 387              		.cfi_offset 14, -4
- 388 01fe 84B0     		sub	sp, sp, #16
- 389              	.LCFI9:
- 390              		.cfi_def_cfa_offset 24
- 391 0200 00AF     		add	r7, sp, #0
- 392              	.LCFI10:
- 393              		.cfi_def_cfa_register 7
- 394              	.LBB4:
- 207:../src/main.cpp **** 	int i = 0;
- 395              		.loc 1 207 0
- 396 0202 4FF00003 		mov	r3, #0
- 397 0206 FB60     		str	r3, [r7, #12]
- 208:../src/main.cpp **** 	int accum_x = 0;
- 398              		.loc 1 208 0
- 399 0208 4FF00003 		mov	r3, #0
- 400 020c BB60     		str	r3, [r7, #8]
- 209:../src/main.cpp **** 
- 210:../src/main.cpp **** 	union twosComp {		// Takes care of two's complement conversion
- 211:../src/main.cpp **** 		uint16_t un_signed;
- 212:../src/main.cpp **** 		int16_t output;
- 213:../src/main.cpp **** 	} convert;
+ 193:../src/main.cpp **** 	nv.NVIC_IRQChannel = TIM1_TRG_COM_TIM17_IRQn;
+ 343              		.loc 1 193 0
+ 344 01be 4FF01A03 		mov	r3, #26
+ 345 01c2 3B73     		strb	r3, [r7, #12]
+ 194:../src/main.cpp **** 	nv.NVIC_IRQChannelPreemptionPriority = 0;
+ 346              		.loc 1 194 0
+ 347 01c4 4FF00003 		mov	r3, #0
+ 348 01c8 7B73     		strb	r3, [r7, #13]
+ 195:../src/main.cpp **** 	nv.NVIC_IRQChannelSubPriority = 0;
+ 349              		.loc 1 195 0
+ 350 01ca 4FF00003 		mov	r3, #0
+ 351 01ce BB73     		strb	r3, [r7, #14]
+ 196:../src/main.cpp **** 	nv.NVIC_IRQChannelCmd = ENABLE;
+ 352              		.loc 1 196 0
+ 353 01d0 4FF00103 		mov	r3, #1
+ 354 01d4 FB73     		strb	r3, [r7, #15]
+ 197:../src/main.cpp **** 
+ 198:../src/main.cpp **** 	NVIC_Init(&nv);
+ 355              		.loc 1 198 0
+ 356 01d6 07F10C03 		add	r3, r7, #12
+ 357 01da 1846     		mov	r0, r3
+ 358 01dc FFF7FEFF 		bl	NVIC_Init
+ 199:../src/main.cpp **** 
+ 200:../src/main.cpp **** 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM17, ENABLE);
+ 359              		.loc 1 200 0
+ 360 01e0 4FF48020 		mov	r0, #262144
+ 361 01e4 4FF00101 		mov	r1, #1
+ 362 01e8 FFF7FEFF 		bl	RCC_APB2PeriphClockCmd
+ 201:../src/main.cpp **** 
+ 202:../src/main.cpp **** 	/*
+ 203:../src/main.cpp **** 	 * UPDATE_FREQUENCY = TIM_CLK/[(PRESCALER+1)(ARR+1)(REPCOUNTER+1)]
+ 204:../src/main.cpp **** 	 * 	  Prescaler -> PRESCALER
+ 205:../src/main.cpp **** 	 * 	  Period -> ARR
+ 206:../src/main.cpp **** 	 * 	  RepetitionCounter -> REPCOUNTER
+ 207:../src/main.cpp **** 	 */
+ 208:../src/main.cpp **** 
+ 209:../src/main.cpp **** 	TIM17_init.TIM_Period = (10*DT_IMU)-1;
+ 363              		.loc 1 209 0
+ 364 01ec 4FF0F903 		mov	r3, #249
+ 365 01f0 7B60     		str	r3, [r7, #4]
+ 210:../src/main.cpp **** 	TIM17_init.TIM_Prescaler = 7199;
+ 366              		.loc 1 210 0
+ 367 01f2 41F61F43 		movw	r3, #7199
+ 368 01f6 3B80     		strh	r3, [r7, #0]	@ movhi
+ 211:../src/main.cpp **** 	TIM17_init.TIM_RepetitionCounter = 0;
+ 369              		.loc 1 211 0
+ 370 01f8 4FF00003 		mov	r3, #0
+ 371 01fc BB72     		strb	r3, [r7, #10]
+ 212:../src/main.cpp **** 	TIM17_init.TIM_ClockDivision = 0;
+ 372              		.loc 1 212 0
+ 373 01fe 4FF00003 		mov	r3, #0
+ 374 0202 3B81     		strh	r3, [r7, #8]	@ movhi
+ 213:../src/main.cpp **** 	TIM17_init.TIM_CounterMode = TIM_CounterMode_Up;
+ 375              		.loc 1 213 0
+ 376 0204 4FF00003 		mov	r3, #0
+ 377 0208 7B80     		strh	r3, [r7, #2]	@ movhi
  214:../src/main.cpp **** 
- 215:../src/main.cpp **** 	uint8_t bytes[2];
+ 215:../src/main.cpp **** 	TIM_TimeBaseInit(TIM17, &TIM17_init);
+ 378              		.loc 1 215 0
+ 379 020a 3B46     		mov	r3, r7
+ 380 020c 4FF49040 		mov	r0, #18432
+ 381 0210 C4F20100 		movt	r0, 16385
+ 382 0214 1946     		mov	r1, r3
+ 383 0216 FFF7FEFF 		bl	TIM_TimeBaseInit
  216:../src/main.cpp **** 
- 217:../src/main.cpp **** 	for(i = 0; i < 250; ++i)
- 401              		.loc 1 217 0
- 402 020e 4FF00003 		mov	r3, #0
- 403 0212 FB60     		str	r3, [r7, #12]
- 404 0214 19E0     		b	.L8
- 405              	.L9:
- 218:../src/main.cpp **** 	{
- 219:../src/main.cpp **** 		L3GD20_Read(bytes, L3GD20_OUT_X_L_ADDR, 2);
- 406              		.loc 1 219 0 discriminator 2
- 407 0216 3B46     		mov	r3, r7
- 408 0218 1846     		mov	r0, r3
- 409 021a 4FF02801 		mov	r1, #40
- 410 021e 4FF00202 		mov	r2, #2
- 411 0222 FFF7FEFF 		bl	L3GD20_Read
- 220:../src/main.cpp **** 		convert.un_signed = (bytes[1] << 8) | bytes[0];
- 412              		.loc 1 220 0 discriminator 2
- 413 0226 7B78     		ldrb	r3, [r7, #1]	@ zero_extendqisi2
- 414 0228 4FEA0323 		lsl	r3, r3, #8
- 415 022c 9AB2     		uxth	r2, r3
- 416 022e 3B78     		ldrb	r3, [r7, #0]	@ zero_extendqisi2
- 417 0230 1343     		orrs	r3, r3, r2
- 418 0232 9BB2     		uxth	r3, r3
- 419 0234 9BB2     		uxth	r3, r3
- 420 0236 BB80     		strh	r3, [r7, #4]	@ movhi
- 221:../src/main.cpp **** 		accum_x += convert.output;
- 421              		.loc 1 221 0 discriminator 2
- 422 0238 BB88     		ldrh	r3, [r7, #4]
- 423 023a 1BB2     		sxth	r3, r3
- 424 023c BA68     		ldr	r2, [r7, #8]
- 425 023e D318     		adds	r3, r2, r3
- 426 0240 BB60     		str	r3, [r7, #8]
- 217:../src/main.cpp **** 	for(i = 0; i < 250; ++i)
- 427              		.loc 1 217 0 discriminator 2
- 428 0242 FB68     		ldr	r3, [r7, #12]
- 429 0244 03F10103 		add	r3, r3, #1
- 430 0248 FB60     		str	r3, [r7, #12]
- 431              	.L8:
- 217:../src/main.cpp **** 	for(i = 0; i < 250; ++i)
- 432              		.loc 1 217 0 is_stmt 0 discriminator 1
- 433 024a FB68     		ldr	r3, [r7, #12]
- 434 024c F92B     		cmp	r3, #249
- 435 024e CCBF     		ite	gt
- 436 0250 0023     		movgt	r3, #0
- 437 0252 0123     		movle	r3, #1
- 438 0254 DBB2     		uxtb	r3, r3
- 439 0256 002B     		cmp	r3, #0
- 440 0258 DDD1     		bne	.L9
- 222:../src/main.cpp **** 	}
- 223:../src/main.cpp **** 	return (int16_t)((float)accum_x/(float)250);
- 441              		.loc 1 223 0 is_stmt 1
- 442 025a D7ED027A 		flds	s15, [r7, #8]	@ int
- 443 025e B8EEE77A 		fsitos	s14, s15
- 444 0262 DFED077A 		flds	s15, .L11
- 445 0266 C7EE277A 		fdivs	s15, s14, s15
- 446 026a FDEEE77A 		ftosizs	s15, s15
- 447 026e 17EE903A 		fmrs	r3, s15	@ int
- 448 0272 9BB2     		uxth	r3, r3
- 449 0274 1BB2     		sxth	r3, r3
- 450              	.LBE4:
- 224:../src/main.cpp **** }
- 451              		.loc 1 224 0
- 452 0276 1846     		mov	r0, r3
- 453 0278 07F11007 		add	r7, r7, #16
- 454 027c BD46     		mov	sp, r7
- 455 027e 80BD     		pop	{r7, pc}
- 456              	.L12:
- 457              		.align	2
- 458              	.L11:
- 459 0280 00007A43 		.word	1132068864
- 460              		.cfi_endproc
- 461              	.LFE114:
- 463              		.align	2
- 464              		.global	_Z13adc1_init_DMAv
- 465              		.thumb
- 466              		.thumb_func
- 468              	_Z13adc1_init_DMAv:
- 469              	.LFB115:
- 225:../src/main.cpp **** 
- 226:../src/main.cpp **** /*
- 227:../src/main.cpp ****  * Initializes the DMA controller to transfer data between the ADC (ADC1) and
- 228:../src/main.cpp ****  * a user-supplied location in memory
- 229:../src/main.cpp ****  * @Args: None
- 230:../src/main.cpp ****  * @Return Val: None
- 231:../src/main.cpp ****  */
- 232:../src/main.cpp **** 
- 233:../src/main.cpp **** void adc1_init_DMA(void)
- 234:../src/main.cpp **** {
- 470              		.loc 1 234 0
- 471              		.cfi_startproc
- 472              		@ args = 0, pretend = 0, frame = 112
- 473              		@ frame_needed = 1, uses_anonymous_args = 0
- 474 0284 80B5     		push	{r7, lr}
- 475              	.LCFI11:
- 476              		.cfi_def_cfa_offset 8
- 477              		.cfi_offset 7, -8
- 478              		.cfi_offset 14, -4
- 479 0286 9CB0     		sub	sp, sp, #112
- 480              	.LCFI12:
- 481              		.cfi_def_cfa_offset 120
- 482 0288 00AF     		add	r7, sp, #0
- 483              	.LCFI13:
- 484              		.cfi_def_cfa_register 7
- 485              	.LBB5:
- 235:../src/main.cpp **** 	// Init structures required to initialize the peripherals as required:
+ 217:../src/main.cpp **** 	TIM_ITConfig(TIM17, TIM_IT_Update, ENABLE);
+ 384              		.loc 1 217 0
+ 385 021a 4FF49040 		mov	r0, #18432
+ 386 021e C4F20100 		movt	r0, 16385
+ 387 0222 4FF00101 		mov	r1, #1
+ 388 0226 4FF00102 		mov	r2, #1
+ 389 022a FFF7FEFF 		bl	TIM_ITConfig
+ 218:../src/main.cpp **** 	TIM_Cmd(TIM17, ENABLE);
+ 390              		.loc 1 218 0
+ 391 022e 4FF49040 		mov	r0, #18432
+ 392 0232 C4F20100 		movt	r0, 16385
+ 393 0236 4FF00101 		mov	r1, #1
+ 394 023a FFF7FEFF 		bl	TIM_Cmd
+ 395              	.LBE3:
+ 219:../src/main.cpp **** }
+ 396              		.loc 1 219 0
+ 397 023e 07F11807 		add	r7, r7, #24
+ 398 0242 BD46     		mov	sp, r7
+ 399 0244 80BD     		pop	{r7, pc}
+ 400              		.cfi_endproc
+ 401              	.LFE112:
+ 403              		.section	.rodata
+ 404 0013 00       		.align	2
+ 405              	.LC3:
+ 406 0014 4C334744 		.ascii	"L3GD20 read attempt timed out... check your wiring/"
+ 406      32302072 
+ 406      65616420 
+ 406      61747465 
+ 406      6D707420 
+ 407 0047 636F6465 		.ascii	"code!!!\012\015\000"
+ 407      2121210A 
+ 407      0D00
+ 408 0051 000000   		.text
+ 409 0246 00BF     		.align	2
+ 410              		.global	L3GD20_TIMEOUT_UserCallback
+ 411              		.thumb
+ 412              		.thumb_func
+ 414              	L3GD20_TIMEOUT_UserCallback:
+ 415              	.LFB113:
+ 220:../src/main.cpp **** 
+ 221:../src/main.cpp **** uint32_t L3GD20_TIMEOUT_UserCallback(void)
+ 222:../src/main.cpp **** {
+ 416              		.loc 1 222 0
+ 417              		.cfi_startproc
+ 418              		@ args = 0, pretend = 0, frame = 0
+ 419              		@ frame_needed = 1, uses_anonymous_args = 0
+ 420 0248 80B5     		push	{r7, lr}
+ 421              	.LCFI6:
+ 422              		.cfi_def_cfa_offset 8
+ 423              		.cfi_offset 7, -8
+ 424              		.cfi_offset 14, -4
+ 425 024a 00AF     		add	r7, sp, #0
+ 426              	.LCFI7:
+ 427              		.cfi_def_cfa_register 7
+ 223:../src/main.cpp **** 	printf("L3GD20 read attempt timed out... check your wiring/code!!!\n\r");
+ 428              		.loc 1 223 0
+ 429 024c 40F20000 		movw	r0, #:lower16:.LC3
+ 430 0250 C0F20000 		movt	r0, #:upper16:.LC3
+ 431 0254 FFF7FEFF 		bl	printf
+ 224:../src/main.cpp **** 	return 0;
+ 432              		.loc 1 224 0
+ 433 0258 4FF00003 		mov	r3, #0
+ 225:../src/main.cpp **** }
+ 434              		.loc 1 225 0
+ 435 025c 1846     		mov	r0, r3
+ 436 025e 80BD     		pop	{r7, pc}
+ 437              		.cfi_endproc
+ 438              	.LFE113:
+ 440              		.align	2
+ 441              		.global	_Z14calc_gyro_biasv
+ 442              		.thumb
+ 443              		.thumb_func
+ 445              	_Z14calc_gyro_biasv:
+ 446              	.LFB114:
+ 226:../src/main.cpp **** 
+ 227:../src/main.cpp **** int16_t calc_gyro_bias(void)
+ 228:../src/main.cpp **** {
+ 447              		.loc 1 228 0
+ 448              		.cfi_startproc
+ 449              		@ args = 0, pretend = 0, frame = 16
+ 450              		@ frame_needed = 1, uses_anonymous_args = 0
+ 451 0260 80B5     		push	{r7, lr}
+ 452              	.LCFI8:
+ 453              		.cfi_def_cfa_offset 8
+ 454              		.cfi_offset 7, -8
+ 455              		.cfi_offset 14, -4
+ 456 0262 84B0     		sub	sp, sp, #16
+ 457              	.LCFI9:
+ 458              		.cfi_def_cfa_offset 24
+ 459 0264 00AF     		add	r7, sp, #0
+ 460              	.LCFI10:
+ 461              		.cfi_def_cfa_register 7
+ 462              	.LBB4:
+ 229:../src/main.cpp **** 	int i = 0;
+ 463              		.loc 1 229 0
+ 464 0266 4FF00003 		mov	r3, #0
+ 465 026a FB60     		str	r3, [r7, #12]
+ 230:../src/main.cpp **** 	int accum_x = 0;
+ 466              		.loc 1 230 0
+ 467 026c 4FF00003 		mov	r3, #0
+ 468 0270 BB60     		str	r3, [r7, #8]
+ 231:../src/main.cpp **** 
+ 232:../src/main.cpp **** 	union twosComp {		// Takes care of two's complement conversion
+ 233:../src/main.cpp **** 		uint16_t un_signed;
+ 234:../src/main.cpp **** 		int16_t output;
+ 235:../src/main.cpp **** 	} convert;
  236:../src/main.cpp **** 
- 237:../src/main.cpp **** 	ADC_InitTypeDef       ADC_InitStructure;
- 238:../src/main.cpp **** 	ADC_CommonInitTypeDef ADC_CommonInitStructure;
- 239:../src/main.cpp **** 	GPIO_InitTypeDef      GPIO_InitStructure;
- 240:../src/main.cpp **** 
- 241:../src/main.cpp **** 	/* Configure the ADC clock */
- 242:../src/main.cpp **** 	RCC_ADCCLKConfig(RCC_ADC12PLLCLK_Div2);
- 486              		.loc 1 242 0
- 487 028a 4FF48870 		mov	r0, #272
- 488 028e FFF7FEFF 		bl	RCC_ADCCLKConfig
- 243:../src/main.cpp **** 	/* Enable ADC1 clock */
- 244:../src/main.cpp **** 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_ADC12, ENABLE);
- 489              		.loc 1 244 0
- 490 0292 4FF08050 		mov	r0, #268435456
- 491 0296 4FF00101 		mov	r1, #1
- 492 029a FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
- 245:../src/main.cpp **** 	/* GPIOC Periph clock enable */
- 246:../src/main.cpp **** 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
- 493              		.loc 1 246 0
- 494 029e 4FF40030 		mov	r0, #131072
- 495 02a2 4FF00101 		mov	r1, #1
- 496 02a6 FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
+ 237:../src/main.cpp **** 	uint8_t bytes[2];
+ 238:../src/main.cpp **** 
+ 239:../src/main.cpp **** 	for(i = 0; i < 250; ++i)
+ 469              		.loc 1 239 0
+ 470 0272 4FF00003 		mov	r3, #0
+ 471 0276 FB60     		str	r3, [r7, #12]
+ 472 0278 19E0     		b	.L12
+ 473              	.L13:
+ 240:../src/main.cpp **** 	{
+ 241:../src/main.cpp **** 		L3GD20_Read(bytes, L3GD20_OUT_X_L_ADDR, 2);
+ 474              		.loc 1 241 0 discriminator 2
+ 475 027a 3B46     		mov	r3, r7
+ 476 027c 1846     		mov	r0, r3
+ 477 027e 4FF02801 		mov	r1, #40
+ 478 0282 4FF00202 		mov	r2, #2
+ 479 0286 FFF7FEFF 		bl	L3GD20_Read
+ 242:../src/main.cpp **** 		convert.un_signed = (bytes[1] << 8) | bytes[0];
+ 480              		.loc 1 242 0 discriminator 2
+ 481 028a 7B78     		ldrb	r3, [r7, #1]	@ zero_extendqisi2
+ 482 028c 4FEA0323 		lsl	r3, r3, #8
+ 483 0290 9AB2     		uxth	r2, r3
+ 484 0292 3B78     		ldrb	r3, [r7, #0]	@ zero_extendqisi2
+ 485 0294 1343     		orrs	r3, r3, r2
+ 486 0296 9BB2     		uxth	r3, r3
+ 487 0298 9BB2     		uxth	r3, r3
+ 488 029a BB80     		strh	r3, [r7, #4]	@ movhi
+ 243:../src/main.cpp **** 		accum_x += convert.output;
+ 489              		.loc 1 243 0 discriminator 2
+ 490 029c BB88     		ldrh	r3, [r7, #4]
+ 491 029e 1BB2     		sxth	r3, r3
+ 492 02a0 BA68     		ldr	r2, [r7, #8]
+ 493 02a2 D318     		adds	r3, r2, r3
+ 494 02a4 BB60     		str	r3, [r7, #8]
+ 239:../src/main.cpp **** 	for(i = 0; i < 250; ++i)
+ 495              		.loc 1 239 0 discriminator 2
+ 496 02a6 FB68     		ldr	r3, [r7, #12]
+ 497 02a8 03F10103 		add	r3, r3, #1
+ 498 02ac FB60     		str	r3, [r7, #12]
+ 499              	.L12:
+ 239:../src/main.cpp **** 	for(i = 0; i < 250; ++i)
+ 500              		.loc 1 239 0 is_stmt 0 discriminator 1
+ 501 02ae FB68     		ldr	r3, [r7, #12]
+ 502 02b0 F92B     		cmp	r3, #249
+ 503 02b2 CCBF     		ite	gt
+ 504 02b4 0023     		movgt	r3, #0
+ 505 02b6 0123     		movle	r3, #1
+ 506 02b8 DBB2     		uxtb	r3, r3
+ 507 02ba 002B     		cmp	r3, #0
+ 508 02bc DDD1     		bne	.L13
+ 244:../src/main.cpp **** 	}
+ 245:../src/main.cpp **** 	return (int16_t)((float)accum_x/(float)250);
+ 509              		.loc 1 245 0 is_stmt 1
+ 510 02be D7ED027A 		flds	s15, [r7, #8]	@ int
+ 511 02c2 B8EEE77A 		fsitos	s14, s15
+ 512 02c6 DFED077A 		flds	s15, .L15
+ 513 02ca C7EE277A 		fdivs	s15, s14, s15
+ 514 02ce FDEEE77A 		ftosizs	s15, s15
+ 515 02d2 17EE903A 		fmrs	r3, s15	@ int
+ 516 02d6 9BB2     		uxth	r3, r3
+ 517 02d8 1BB2     		sxth	r3, r3
+ 518              	.LBE4:
+ 246:../src/main.cpp **** }
+ 519              		.loc 1 246 0
+ 520 02da 1846     		mov	r0, r3
+ 521 02dc 07F11007 		add	r7, r7, #16
+ 522 02e0 BD46     		mov	sp, r7
+ 523 02e2 80BD     		pop	{r7, pc}
+ 524              	.L16:
+ 525              		.align	2
+ 526              	.L15:
+ 527 02e4 00007A43 		.word	1132068864
+ 528              		.cfi_endproc
+ 529              	.LFE114:
+ 531              		.align	2
+ 532              		.global	_Z13adc1_init_DMAv
+ 533              		.thumb
+ 534              		.thumb_func
+ 536              	_Z13adc1_init_DMAv:
+ 537              	.LFB115:
  247:../src/main.cpp **** 
- 248:../src/main.cpp **** 	// Configure ADC Channel 3 and 4 as analog inputs
- 249:../src/main.cpp **** 
- 250:../src/main.cpp **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_3;
- 497              		.loc 1 250 0
- 498 02aa 4FF00C03 		mov	r3, #12
- 499 02ae 3B65     		str	r3, [r7, #80]
- 251:../src/main.cpp **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
- 500              		.loc 1 251 0
- 501 02b0 4FF00303 		mov	r3, #3
- 502 02b4 87F85430 		strb	r3, [r7, #84]
- 252:../src/main.cpp **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
- 503              		.loc 1 252 0
- 504 02b8 4FF00003 		mov	r3, #0
- 505 02bc 87F85730 		strb	r3, [r7, #87]
- 253:../src/main.cpp **** 	GPIO_Init(GPIOA, &GPIO_InitStructure);
- 506              		.loc 1 253 0
- 507 02c0 07F15003 		add	r3, r7, #80
- 508 02c4 4FF09040 		mov	r0, #1207959552
- 509 02c8 1946     		mov	r1, r3
- 510 02ca FFF7FEFF 		bl	GPIO_Init
- 254:../src/main.cpp **** 	// @TODO: TEST EFFECT OF GPIO STRUCT INIT STATEMENT AND VERIFY OPERATION!!
- 255:../src/main.cpp **** 
- 256:../src/main.cpp **** 	ADC_StructInit(&ADC_InitStructure);
- 511              		.loc 1 256 0
- 512 02ce 3B46     		mov	r3, r7
- 513 02d0 1846     		mov	r0, r3
- 514 02d2 FFF7FEFF 		bl	ADC_StructInit
- 257:../src/main.cpp **** 
- 258:../src/main.cpp **** 	/* Calibration procedure */
- 259:../src/main.cpp **** 	ADC_VoltageRegulatorCmd(ADC1, ENABLE);
- 515              		.loc 1 259 0
- 516 02d6 4FF0A040 		mov	r0, #1342177280
- 517 02da 4FF00101 		mov	r1, #1
- 518 02de FFF7FEFF 		bl	ADC_VoltageRegulatorCmd
- 260:../src/main.cpp **** 
- 261:../src/main.cpp **** 	/* Insert delay equal to 10 µs */
- 262:../src/main.cpp **** 	int foo;
- 263:../src/main.cpp **** 	for(foo = 0; foo < 64000; ++foo)
- 519              		.loc 1 263 0
- 520 02e2 4FF00003 		mov	r3, #0
- 521 02e6 FB66     		str	r3, [r7, #108]
- 522 02e8 07E0     		b	.L14
- 523              	.L15:
- 264:../src/main.cpp **** 	{
- 265:../src/main.cpp **** 	  ++foo;
- 524              		.loc 1 265 0 discriminator 2
- 525 02ea FB6E     		ldr	r3, [r7, #108]
- 526 02ec 03F10103 		add	r3, r3, #1
- 527 02f0 FB66     		str	r3, [r7, #108]
- 263:../src/main.cpp **** 	for(foo = 0; foo < 64000; ++foo)
- 528              		.loc 1 263 0 discriminator 2
- 529 02f2 FB6E     		ldr	r3, [r7, #108]
- 530 02f4 03F10103 		add	r3, r3, #1
- 531 02f8 FB66     		str	r3, [r7, #108]
- 532              	.L14:
- 263:../src/main.cpp **** 	for(foo = 0; foo < 64000; ++foo)
- 533              		.loc 1 263 0 is_stmt 0 discriminator 1
- 534 02fa FA6E     		ldr	r2, [r7, #108]
- 535 02fc 4FF6FF13 		movw	r3, #63999
- 536 0300 9A42     		cmp	r2, r3
- 537 0302 CCBF     		ite	gt
- 538 0304 0023     		movgt	r3, #0
- 539 0306 0123     		movle	r3, #1
- 540 0308 DBB2     		uxtb	r3, r3
- 541 030a 002B     		cmp	r3, #0
- 542 030c EDD1     		bne	.L15
- 266:../src/main.cpp **** 	}
- 267:../src/main.cpp **** 
- 268:../src/main.cpp **** 	ADC_SelectCalibrationMode(ADC1, ADC_CalibrationMode_Single);
- 543              		.loc 1 268 0 is_stmt 1
- 544 030e 4FF0A040 		mov	r0, #1342177280
- 545 0312 4FF00001 		mov	r1, #0
- 546 0316 FFF7FEFF 		bl	ADC_SelectCalibrationMode
- 269:../src/main.cpp **** 	ADC_StartCalibration(ADC1);
- 547              		.loc 1 269 0
- 548 031a 4FF0A040 		mov	r0, #1342177280
- 549 031e FFF7FEFF 		bl	ADC_StartCalibration
- 270:../src/main.cpp **** 
- 271:../src/main.cpp **** 	while(ADC_GetCalibrationStatus(ADC1) != RESET );
- 550              		.loc 1 271 0
- 551 0322 00BF     		nop
- 552              	.L16:
- 553              		.loc 1 271 0 is_stmt 0 discriminator 1
- 554 0324 4FF0A040 		mov	r0, #1342177280
- 555 0328 FFF7FEFF 		bl	ADC_GetCalibrationStatus
- 556 032c 0346     		mov	r3, r0
- 557 032e 002B     		cmp	r3, #0
- 558 0330 0CBF     		ite	eq
- 559 0332 0023     		moveq	r3, #0
- 560 0334 0123     		movne	r3, #1
- 561 0336 DBB2     		uxtb	r3, r3
- 562 0338 002B     		cmp	r3, #0
- 563 033a F3D1     		bne	.L16
- 272:../src/main.cpp **** 
- 273:../src/main.cpp **** 	ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
- 564              		.loc 1 273 0 is_stmt 1
- 565 033c 4FF00003 		mov	r3, #0
- 566 0340 BB65     		str	r3, [r7, #88]
- 274:../src/main.cpp **** 	ADC_CommonInitStructure.ADC_Clock = ADC_Clock_AsynClkMode; //ADC_Clock_SynClkModeDiv2
- 567              		.loc 1 274 0
- 568 0342 4FF00003 		mov	r3, #0
- 569 0346 FB65     		str	r3, [r7, #92]
- 275:../src/main.cpp **** 	ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_1;
- 570              		.loc 1 275 0
- 571 0348 4FF40043 		mov	r3, #32768
- 572 034c 3B66     		str	r3, [r7, #96]
- 276:../src/main.cpp **** 	ADC_CommonInitStructure.ADC_DMAMode = ADC_DMAMode_Circular;
- 573              		.loc 1 276 0
- 574 034e 4FF00203 		mov	r3, #2
- 575 0352 7B66     		str	r3, [r7, #100]
- 277:../src/main.cpp **** 	ADC_CommonInitStructure.ADC_TwoSamplingDelay = 0xF;//0xF;
- 576              		.loc 1 277 0
- 577 0354 4FF00F03 		mov	r3, #15
- 578 0358 87F86830 		strb	r3, [r7, #104]
- 278:../src/main.cpp **** 	ADC_CommonInit(ADC1, &ADC_CommonInitStructure);
- 579              		.loc 1 278 0
- 580 035c 07F15803 		add	r3, r7, #88
- 581 0360 4FF0A040 		mov	r0, #1342177280
- 582 0364 1946     		mov	r1, r3
- 583 0366 FFF7FEFF 		bl	ADC_CommonInit
+ 248:../src/main.cpp **** /*
+ 249:../src/main.cpp ****  * Initializes the DMA controller to transfer data between the ADC (ADC1) and
+ 250:../src/main.cpp ****  * a user-supplied location in memory
+ 251:../src/main.cpp ****  * @Args: None
+ 252:../src/main.cpp ****  * @Return Val: None
+ 253:../src/main.cpp ****  */
+ 254:../src/main.cpp **** 
+ 255:../src/main.cpp **** void adc1_init_DMA(void)
+ 256:../src/main.cpp **** {
+ 538              		.loc 1 256 0
+ 539              		.cfi_startproc
+ 540              		@ args = 0, pretend = 0, frame = 112
+ 541              		@ frame_needed = 1, uses_anonymous_args = 0
+ 542 02e8 80B5     		push	{r7, lr}
+ 543              	.LCFI11:
+ 544              		.cfi_def_cfa_offset 8
+ 545              		.cfi_offset 7, -8
+ 546              		.cfi_offset 14, -4
+ 547 02ea 9CB0     		sub	sp, sp, #112
+ 548              	.LCFI12:
+ 549              		.cfi_def_cfa_offset 120
+ 550 02ec 00AF     		add	r7, sp, #0
+ 551              	.LCFI13:
+ 552              		.cfi_def_cfa_register 7
+ 553              	.LBB5:
+ 257:../src/main.cpp **** 	// Init structures required to initialize the peripherals as required:
+ 258:../src/main.cpp **** 
+ 259:../src/main.cpp **** 	ADC_InitTypeDef       ADC_InitStructure;
+ 260:../src/main.cpp **** 	ADC_CommonInitTypeDef ADC_CommonInitStructure;
+ 261:../src/main.cpp **** 	GPIO_InitTypeDef      GPIO_InitStructure;
+ 262:../src/main.cpp **** 
+ 263:../src/main.cpp **** 	/* Configure the ADC clock */
+ 264:../src/main.cpp **** 	RCC_ADCCLKConfig(RCC_ADC12PLLCLK_Div2);
+ 554              		.loc 1 264 0
+ 555 02ee 4FF48870 		mov	r0, #272
+ 556 02f2 FFF7FEFF 		bl	RCC_ADCCLKConfig
+ 265:../src/main.cpp **** 	/* Enable ADC1 clock */
+ 266:../src/main.cpp **** 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_ADC12, ENABLE);
+ 557              		.loc 1 266 0
+ 558 02f6 4FF08050 		mov	r0, #268435456
+ 559 02fa 4FF00101 		mov	r1, #1
+ 560 02fe FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
+ 267:../src/main.cpp **** 	/* GPIOC Periph clock enable */
+ 268:../src/main.cpp **** 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
+ 561              		.loc 1 268 0
+ 562 0302 4FF40030 		mov	r0, #131072
+ 563 0306 4FF00101 		mov	r1, #1
+ 564 030a FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
+ 269:../src/main.cpp **** 
+ 270:../src/main.cpp **** 	// Configure ADC Channel 3 and 4 as analog inputs
+ 271:../src/main.cpp **** 
+ 272:../src/main.cpp **** 	GPIO_StructInit(&GPIO_InitStructure);
+ 565              		.loc 1 272 0
+ 566 030e 07F15003 		add	r3, r7, #80
+ 567 0312 1846     		mov	r0, r3
+ 568 0314 FFF7FEFF 		bl	GPIO_StructInit
+ 273:../src/main.cpp **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_3;
+ 569              		.loc 1 273 0
+ 570 0318 4FF00C03 		mov	r3, #12
+ 571 031c 3B65     		str	r3, [r7, #80]
+ 274:../src/main.cpp **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
+ 572              		.loc 1 274 0
+ 573 031e 4FF00303 		mov	r3, #3
+ 574 0322 87F85430 		strb	r3, [r7, #84]
+ 275:../src/main.cpp **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
+ 575              		.loc 1 275 0
+ 576 0326 4FF00003 		mov	r3, #0
+ 577 032a 87F85730 		strb	r3, [r7, #87]
+ 276:../src/main.cpp **** 	GPIO_Init(GPIOA, &GPIO_InitStructure);
+ 578              		.loc 1 276 0
+ 579 032e 07F15003 		add	r3, r7, #80
+ 580 0332 4FF09040 		mov	r0, #1207959552
+ 581 0336 1946     		mov	r1, r3
+ 582 0338 FFF7FEFF 		bl	GPIO_Init
+ 277:../src/main.cpp **** 
+ 278:../src/main.cpp **** 	ADC_StructInit(&ADC_InitStructure);
+ 583              		.loc 1 278 0
+ 584 033c 3B46     		mov	r3, r7
+ 585 033e 1846     		mov	r0, r3
+ 586 0340 FFF7FEFF 		bl	ADC_StructInit
  279:../src/main.cpp **** 
- 280:../src/main.cpp **** 	ADC_InitStructure.ADC_ContinuousConvMode = ADC_ContinuousConvMode_Enable;
- 584              		.loc 1 280 0
- 585 036a 4FF40053 		mov	r3, #8192
- 586 036e 3B60     		str	r3, [r7, #0]
- 281:../src/main.cpp **** 	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
+ 280:../src/main.cpp **** 	/* Calibration procedure */
+ 281:../src/main.cpp **** 	ADC_VoltageRegulatorCmd(ADC1, ENABLE);
  587              		.loc 1 281 0
- 588 0370 4FF00003 		mov	r3, #0
- 589 0374 7B60     		str	r3, [r7, #4]
- 282:../src/main.cpp **** 	ADC_InitStructure.ADC_ExternalTrigConvEvent = ADC_ExternalTrigConvEvent_0;
- 590              		.loc 1 282 0
- 591 0376 4FF00003 		mov	r3, #0
- 592 037a BB60     		str	r3, [r7, #8]
- 283:../src/main.cpp **** 	ADC_InitStructure.ADC_ExternalTrigEventEdge = ADC_ExternalTrigEventEdge_None;
- 593              		.loc 1 283 0
- 594 037c 4FF00003 		mov	r3, #0
- 595 0380 FB60     		str	r3, [r7, #12]
- 284:../src/main.cpp **** 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
- 596              		.loc 1 284 0
- 597 0382 4FF00003 		mov	r3, #0
- 598 0386 3B61     		str	r3, [r7, #16]
- 285:../src/main.cpp **** 	ADC_InitStructure.ADC_OverrunMode = ADC_OverrunMode_Disable;
- 599              		.loc 1 285 0
- 600 0388 4FF00003 		mov	r3, #0
- 601 038c 7B61     		str	r3, [r7, #20]
- 286:../src/main.cpp **** 	ADC_InitStructure.ADC_AutoInjMode = ADC_AutoInjec_Disable;
- 602              		.loc 1 286 0
- 603 038e 4FF00003 		mov	r3, #0
- 604 0392 BB61     		str	r3, [r7, #24]
- 287:../src/main.cpp **** 	ADC_InitStructure.ADC_NbrOfRegChannel = 2;
- 605              		.loc 1 287 0
- 606 0394 4FF00203 		mov	r3, #2
- 607 0398 3B77     		strb	r3, [r7, #28]
- 288:../src/main.cpp **** 	ADC_Init(ADC1, &ADC_InitStructure);
- 608              		.loc 1 288 0
- 609 039a 3B46     		mov	r3, r7
- 610 039c 4FF0A040 		mov	r0, #1342177280
- 611 03a0 1946     		mov	r1, r3
- 612 03a2 FFF7FEFF 		bl	ADC_Init
+ 588 0344 4FF0A040 		mov	r0, #1342177280
+ 589 0348 4FF00101 		mov	r1, #1
+ 590 034c FFF7FEFF 		bl	ADC_VoltageRegulatorCmd
+ 282:../src/main.cpp **** 
+ 283:../src/main.cpp **** 	/* Insert delay equal to about 900 µs */
+ 284:../src/main.cpp **** 	int foo;
+ 285:../src/main.cpp **** 	for(foo = 0; foo < 64000; ++foo)
+ 591              		.loc 1 285 0
+ 592 0350 4FF00003 		mov	r3, #0
+ 593 0354 FB66     		str	r3, [r7, #108]
+ 594 0356 07E0     		b	.L18
+ 595              	.L19:
+ 286:../src/main.cpp **** 	{
+ 287:../src/main.cpp **** 	  ++foo;
+ 596              		.loc 1 287 0 discriminator 2
+ 597 0358 FB6E     		ldr	r3, [r7, #108]
+ 598 035a 03F10103 		add	r3, r3, #1
+ 599 035e FB66     		str	r3, [r7, #108]
+ 285:../src/main.cpp **** 	for(foo = 0; foo < 64000; ++foo)
+ 600              		.loc 1 285 0 discriminator 2
+ 601 0360 FB6E     		ldr	r3, [r7, #108]
+ 602 0362 03F10103 		add	r3, r3, #1
+ 603 0366 FB66     		str	r3, [r7, #108]
+ 604              	.L18:
+ 285:../src/main.cpp **** 	for(foo = 0; foo < 64000; ++foo)
+ 605              		.loc 1 285 0 is_stmt 0 discriminator 1
+ 606 0368 FA6E     		ldr	r2, [r7, #108]
+ 607 036a 4FF6FF13 		movw	r3, #63999
+ 608 036e 9A42     		cmp	r2, r3
+ 609 0370 CCBF     		ite	gt
+ 610 0372 0023     		movgt	r3, #0
+ 611 0374 0123     		movle	r3, #1
+ 612 0376 DBB2     		uxtb	r3, r3
+ 613 0378 002B     		cmp	r3, #0
+ 614 037a EDD1     		bne	.L19
+ 288:../src/main.cpp **** 	}
  289:../src/main.cpp **** 
- 290:../src/main.cpp **** 	/* ADC1 regular channel3 configuration */
- 291:../src/main.cpp **** 	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 1, ADC_SampleTime_601Cycles5);//ADC_SampleTime_61Cyc
- 613              		.loc 1 291 0
- 614 03a6 4FF0A040 		mov	r0, #1342177280
- 615 03aa 4FF00301 		mov	r1, #3
- 616 03ae 4FF00102 		mov	r2, #1
- 617 03b2 4FF00703 		mov	r3, #7
- 618 03b6 FFF7FEFF 		bl	ADC_RegularChannelConfig
- 292:../src/main.cpp **** 	ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 2, ADC_SampleTime_19Cycles5);//ADC_SampleTime_61Cycl
- 619              		.loc 1 292 0
- 620 03ba 4FF0A040 		mov	r0, #1342177280
- 621 03be 4FF00401 		mov	r1, #4
- 622 03c2 4FF00202 		mov	r2, #2
- 623 03c6 4FF00403 		mov	r3, #4
- 624 03ca FFF7FEFF 		bl	ADC_RegularChannelConfig
- 293:../src/main.cpp **** 
- 294:../src/main.cpp **** 	/* Enable ADC1 */
- 295:../src/main.cpp **** 	ADC_Cmd(ADC1, ENABLE);
- 625              		.loc 1 295 0
- 626 03ce 4FF0A040 		mov	r0, #1342177280
- 627 03d2 4FF00101 		mov	r1, #1
- 628 03d6 FFF7FEFF 		bl	ADC_Cmd
- 296:../src/main.cpp **** 
- 297:../src/main.cpp **** 	/* wait for ADRDY */
- 298:../src/main.cpp **** 	while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_RDY));
- 629              		.loc 1 298 0
- 630 03da 00BF     		nop
- 631              	.L17:
- 632              		.loc 1 298 0 is_stmt 0 discriminator 1
- 633 03dc 4FF0A040 		mov	r0, #1342177280
- 634 03e0 4FF00101 		mov	r1, #1
- 635 03e4 FFF7FEFF 		bl	ADC_GetFlagStatus
- 636 03e8 0346     		mov	r3, r0
- 637 03ea 002B     		cmp	r3, #0
- 638 03ec 14BF     		ite	ne
- 639 03ee 0023     		movne	r3, #0
- 640 03f0 0123     		moveq	r3, #1
- 641 03f2 DBB2     		uxtb	r3, r3
- 642 03f4 002B     		cmp	r3, #0
- 643 03f6 F1D1     		bne	.L17
- 299:../src/main.cpp **** 
- 300:../src/main.cpp **** 	/* Start ADC1 Software Conversion */
- 301:../src/main.cpp **** 	ADC_StartConversion(ADC1);
- 644              		.loc 1 301 0 is_stmt 1
- 645 03f8 4FF0A040 		mov	r0, #1342177280
- 646 03fc FFF7FEFF 		bl	ADC_StartConversion
- 302:../src/main.cpp **** 
- 303:../src/main.cpp **** 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
- 647              		.loc 1 303 0
- 648 0400 4FF00100 		mov	r0, #1
- 649 0404 4FF00101 		mov	r1, #1
- 650 0408 FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
- 304:../src/main.cpp **** 
- 305:../src/main.cpp **** 	DMA_InitTypeDef			DMA_InitStructure;
- 306:../src/main.cpp **** 	DMA_StructInit(&DMA_InitStructure);
- 651              		.loc 1 306 0
- 652 040c 07F12003 		add	r3, r7, #32
- 653 0410 1846     		mov	r0, r3
- 654 0412 FFF7FEFF 		bl	DMA_StructInit
- 307:../src/main.cpp **** 
- 308:../src/main.cpp **** 	DMA_DeInit(DMA1_Channel1); //Set DMA registers to default values
- 655              		.loc 1 308 0
- 656 0416 4FF00800 		mov	r0, #8
- 657 041a C4F20200 		movt	r0, 16386
- 658 041e FFF7FEFF 		bl	DMA_DeInit
- 309:../src/main.cpp **** 	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&(ADC1->DR); //0x50000040; //Address of perip
- 659              		.loc 1 309 0
- 660 0422 4FF04003 		mov	r3, #64
- 661 0426 C5F20003 		movt	r3, 20480
- 662 042a 3B62     		str	r3, [r7, #32]
- 310:../src/main.cpp **** 	DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) &adcData; //Variable to which ADC values will be
- 663              		.loc 1 310 0
- 664 042c 40F20003 		movw	r3, #:lower16:adcData
- 665 0430 C0F20003 		movt	r3, #:upper16:adcData
- 666 0434 7B62     		str	r3, [r7, #36]
- 311:../src/main.cpp **** 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
- 667              		.loc 1 311 0
- 668 0436 4FF00003 		mov	r3, #0
- 669 043a BB62     		str	r3, [r7, #40]
- 312:../src/main.cpp **** 	DMA_InitStructure.DMA_BufferSize = 2;
- 670              		.loc 1 312 0
- 671 043c 4FF00203 		mov	r3, #2
- 672 0440 BB85     		strh	r3, [r7, #44]	@ movhi
- 313:../src/main.cpp **** 	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
- 673              		.loc 1 313 0
- 674 0442 4FF00003 		mov	r3, #0
- 675 0446 3B63     		str	r3, [r7, #48]
- 314:../src/main.cpp **** 	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
- 676              		.loc 1 314 0
- 677 0448 4FF08003 		mov	r3, #128
- 678 044c 7B63     		str	r3, [r7, #52]
- 315:../src/main.cpp **** 	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Word;
- 679              		.loc 1 315 0
- 680 044e 4FF40073 		mov	r3, #512
- 681 0452 BB63     		str	r3, [r7, #56]
- 316:../src/main.cpp **** 	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Word;
- 682              		.loc 1 316 0
- 683 0454 4FF40063 		mov	r3, #2048
- 684 0458 FB63     		str	r3, [r7, #60]
- 317:../src/main.cpp **** 	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
- 685              		.loc 1 317 0
- 686 045a 4FF02003 		mov	r3, #32
- 687 045e 3B64     		str	r3, [r7, #64]
- 318:../src/main.cpp **** 	DMA_InitStructure.DMA_Priority = DMA_Priority_High;
- 688              		.loc 1 318 0
- 689 0460 4FF40053 		mov	r3, #8192
- 690 0464 7B64     		str	r3, [r7, #68]
- 319:../src/main.cpp **** 	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
- 691              		.loc 1 319 0
- 692 0466 4FF00003 		mov	r3, #0
- 693 046a BB64     		str	r3, [r7, #72]
- 320:../src/main.cpp **** 
- 321:../src/main.cpp **** 	DMA_Init(DMA1_Channel1, &DMA_InitStructure);
- 694              		.loc 1 321 0
- 695 046c 07F12003 		add	r3, r7, #32
- 696 0470 4FF00800 		mov	r0, #8
- 697 0474 C4F20200 		movt	r0, 16386
- 698 0478 1946     		mov	r1, r3
- 699 047a FFF7FEFF 		bl	DMA_Init
- 322:../src/main.cpp **** 
- 323:../src/main.cpp **** 	NVIC_InitTypeDef nv;
+ 290:../src/main.cpp **** 	ADC_SelectCalibrationMode(ADC1, ADC_CalibrationMode_Single);
+ 615              		.loc 1 290 0 is_stmt 1
+ 616 037c 4FF0A040 		mov	r0, #1342177280
+ 617 0380 4FF00001 		mov	r1, #0
+ 618 0384 FFF7FEFF 		bl	ADC_SelectCalibrationMode
+ 291:../src/main.cpp **** 	ADC_StartCalibration(ADC1);
+ 619              		.loc 1 291 0
+ 620 0388 4FF0A040 		mov	r0, #1342177280
+ 621 038c FFF7FEFF 		bl	ADC_StartCalibration
+ 292:../src/main.cpp **** 
+ 293:../src/main.cpp **** 	while(ADC_GetCalibrationStatus(ADC1) != RESET );
+ 622              		.loc 1 293 0
+ 623 0390 00BF     		nop
+ 624              	.L20:
+ 625              		.loc 1 293 0 is_stmt 0 discriminator 1
+ 626 0392 4FF0A040 		mov	r0, #1342177280
+ 627 0396 FFF7FEFF 		bl	ADC_GetCalibrationStatus
+ 628 039a 0346     		mov	r3, r0
+ 629 039c 002B     		cmp	r3, #0
+ 630 039e 0CBF     		ite	eq
+ 631 03a0 0023     		moveq	r3, #0
+ 632 03a2 0123     		movne	r3, #1
+ 633 03a4 DBB2     		uxtb	r3, r3
+ 634 03a6 002B     		cmp	r3, #0
+ 635 03a8 F3D1     		bne	.L20
+ 294:../src/main.cpp **** 
+ 295:../src/main.cpp **** 	ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
+ 636              		.loc 1 295 0 is_stmt 1
+ 637 03aa 4FF00003 		mov	r3, #0
+ 638 03ae BB65     		str	r3, [r7, #88]
+ 296:../src/main.cpp **** 	ADC_CommonInitStructure.ADC_Clock = ADC_Clock_AsynClkMode; //ADC_Clock_SynClkModeDiv2
+ 639              		.loc 1 296 0
+ 640 03b0 4FF00003 		mov	r3, #0
+ 641 03b4 FB65     		str	r3, [r7, #92]
+ 297:../src/main.cpp **** 	ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_1;
+ 642              		.loc 1 297 0
+ 643 03b6 4FF40043 		mov	r3, #32768
+ 644 03ba 3B66     		str	r3, [r7, #96]
+ 298:../src/main.cpp **** 	ADC_CommonInitStructure.ADC_DMAMode = ADC_DMAMode_Circular;
+ 645              		.loc 1 298 0
+ 646 03bc 4FF00203 		mov	r3, #2
+ 647 03c0 7B66     		str	r3, [r7, #100]
+ 299:../src/main.cpp **** 	ADC_CommonInitStructure.ADC_TwoSamplingDelay = 0xF;//0xF;
+ 648              		.loc 1 299 0
+ 649 03c2 4FF00F03 		mov	r3, #15
+ 650 03c6 87F86830 		strb	r3, [r7, #104]
+ 300:../src/main.cpp **** 	ADC_CommonInit(ADC1, &ADC_CommonInitStructure);
+ 651              		.loc 1 300 0
+ 652 03ca 07F15803 		add	r3, r7, #88
+ 653 03ce 4FF0A040 		mov	r0, #1342177280
+ 654 03d2 1946     		mov	r1, r3
+ 655 03d4 FFF7FEFF 		bl	ADC_CommonInit
+ 301:../src/main.cpp **** 
+ 302:../src/main.cpp **** 	ADC_InitStructure.ADC_ContinuousConvMode = ADC_ContinuousConvMode_Enable;
+ 656              		.loc 1 302 0
+ 657 03d8 4FF40053 		mov	r3, #8192
+ 658 03dc 3B60     		str	r3, [r7, #0]
+ 303:../src/main.cpp **** 	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
+ 659              		.loc 1 303 0
+ 660 03de 4FF00003 		mov	r3, #0
+ 661 03e2 7B60     		str	r3, [r7, #4]
+ 304:../src/main.cpp **** 	ADC_InitStructure.ADC_ExternalTrigConvEvent = ADC_ExternalTrigConvEvent_0;
+ 662              		.loc 1 304 0
+ 663 03e4 4FF00003 		mov	r3, #0
+ 664 03e8 BB60     		str	r3, [r7, #8]
+ 305:../src/main.cpp **** 	ADC_InitStructure.ADC_ExternalTrigEventEdge = ADC_ExternalTrigEventEdge_None;
+ 665              		.loc 1 305 0
+ 666 03ea 4FF00003 		mov	r3, #0
+ 667 03ee FB60     		str	r3, [r7, #12]
+ 306:../src/main.cpp **** 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+ 668              		.loc 1 306 0
+ 669 03f0 4FF00003 		mov	r3, #0
+ 670 03f4 3B61     		str	r3, [r7, #16]
+ 307:../src/main.cpp **** 	ADC_InitStructure.ADC_OverrunMode = ADC_OverrunMode_Disable;
+ 671              		.loc 1 307 0
+ 672 03f6 4FF00003 		mov	r3, #0
+ 673 03fa 7B61     		str	r3, [r7, #20]
+ 308:../src/main.cpp **** 	ADC_InitStructure.ADC_AutoInjMode = ADC_AutoInjec_Disable;
+ 674              		.loc 1 308 0
+ 675 03fc 4FF00003 		mov	r3, #0
+ 676 0400 BB61     		str	r3, [r7, #24]
+ 309:../src/main.cpp **** 	ADC_InitStructure.ADC_NbrOfRegChannel = 2;
+ 677              		.loc 1 309 0
+ 678 0402 4FF00203 		mov	r3, #2
+ 679 0406 3B77     		strb	r3, [r7, #28]
+ 310:../src/main.cpp **** 	ADC_Init(ADC1, &ADC_InitStructure);
+ 680              		.loc 1 310 0
+ 681 0408 3B46     		mov	r3, r7
+ 682 040a 4FF0A040 		mov	r0, #1342177280
+ 683 040e 1946     		mov	r1, r3
+ 684 0410 FFF7FEFF 		bl	ADC_Init
+ 311:../src/main.cpp **** 
+ 312:../src/main.cpp **** 	/* ADC1 regular channel3 configuration */
+ 313:../src/main.cpp **** 	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 1, ADC_SampleTime_601Cycles5);//ADC_SampleTime_61Cyc
+ 685              		.loc 1 313 0
+ 686 0414 4FF0A040 		mov	r0, #1342177280
+ 687 0418 4FF00301 		mov	r1, #3
+ 688 041c 4FF00102 		mov	r2, #1
+ 689 0420 4FF00703 		mov	r3, #7
+ 690 0424 FFF7FEFF 		bl	ADC_RegularChannelConfig
+ 314:../src/main.cpp **** 	ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 2, ADC_SampleTime_19Cycles5);//ADC_SampleTime_61Cycl
+ 691              		.loc 1 314 0
+ 692 0428 4FF0A040 		mov	r0, #1342177280
+ 693 042c 4FF00401 		mov	r1, #4
+ 694 0430 4FF00202 		mov	r2, #2
+ 695 0434 4FF00403 		mov	r3, #4
+ 696 0438 FFF7FEFF 		bl	ADC_RegularChannelConfig
+ 315:../src/main.cpp **** 
+ 316:../src/main.cpp **** 	/* Enable ADC1 */
+ 317:../src/main.cpp **** 	ADC_Cmd(ADC1, ENABLE);
+ 697              		.loc 1 317 0
+ 698 043c 4FF0A040 		mov	r0, #1342177280
+ 699 0440 4FF00101 		mov	r1, #1
+ 700 0444 FFF7FEFF 		bl	ADC_Cmd
+ 318:../src/main.cpp **** 
+ 319:../src/main.cpp **** 	/* wait for ADRDY */
+ 320:../src/main.cpp **** 	while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_RDY));
+ 701              		.loc 1 320 0
+ 702 0448 00BF     		nop
+ 703              	.L21:
+ 704              		.loc 1 320 0 is_stmt 0 discriminator 1
+ 705 044a 4FF0A040 		mov	r0, #1342177280
+ 706 044e 4FF00101 		mov	r1, #1
+ 707 0452 FFF7FEFF 		bl	ADC_GetFlagStatus
+ 708 0456 0346     		mov	r3, r0
+ 709 0458 002B     		cmp	r3, #0
+ 710 045a 14BF     		ite	ne
+ 711 045c 0023     		movne	r3, #0
+ 712 045e 0123     		moveq	r3, #1
+ 713 0460 DBB2     		uxtb	r3, r3
+ 714 0462 002B     		cmp	r3, #0
+ 715 0464 F1D1     		bne	.L21
+ 321:../src/main.cpp **** 
+ 322:../src/main.cpp **** 	/* Start ADC1 Software Conversion */
+ 323:../src/main.cpp **** 	ADC_StartConversion(ADC1);
+ 716              		.loc 1 323 0 is_stmt 1
+ 717 0466 4FF0A040 		mov	r0, #1342177280
+ 718 046a FFF7FEFF 		bl	ADC_StartConversion
  324:../src/main.cpp **** 
- 325:../src/main.cpp **** 	nv.NVIC_IRQChannel = DMA1_Channel1_IRQn;
- 700              		.loc 1 325 0
- 701 047e 4FF00B03 		mov	r3, #11
- 702 0482 87F84C30 		strb	r3, [r7, #76]
- 326:../src/main.cpp **** 	nv.NVIC_IRQChannelPreemptionPriority = 2;
- 703              		.loc 1 326 0
- 704 0486 4FF00203 		mov	r3, #2
- 705 048a 87F84D30 		strb	r3, [r7, #77]
- 327:../src/main.cpp **** 	nv.NVIC_IRQChannelSubPriority = 0;
- 706              		.loc 1 327 0
- 707 048e 4FF00003 		mov	r3, #0
- 708 0492 87F84E30 		strb	r3, [r7, #78]
- 328:../src/main.cpp **** 	nv.NVIC_IRQChannelCmd = ENABLE;
- 709              		.loc 1 328 0
- 710 0496 4FF00103 		mov	r3, #1
- 711 049a 87F84F30 		strb	r3, [r7, #79]
+ 325:../src/main.cpp **** 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
+ 719              		.loc 1 325 0
+ 720 046e 4FF00100 		mov	r0, #1
+ 721 0472 4FF00101 		mov	r1, #1
+ 722 0476 FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
+ 326:../src/main.cpp **** 
+ 327:../src/main.cpp **** 	DMA_InitTypeDef			DMA_InitStructure;
+ 328:../src/main.cpp **** 	DMA_StructInit(&DMA_InitStructure);
+ 723              		.loc 1 328 0
+ 724 047a 07F12003 		add	r3, r7, #32
+ 725 047e 1846     		mov	r0, r3
+ 726 0480 FFF7FEFF 		bl	DMA_StructInit
  329:../src/main.cpp **** 
- 330:../src/main.cpp **** 	NVIC_Init(&nv);
- 712              		.loc 1 330 0
- 713 049e 07F14C03 		add	r3, r7, #76
- 714 04a2 1846     		mov	r0, r3
- 715 04a4 FFF7FEFF 		bl	NVIC_Init
- 331:../src/main.cpp **** 
- 332:../src/main.cpp **** 	DMA_ITConfig(DMA1_Channel1, DMA_IT_TC, ENABLE);
- 716              		.loc 1 332 0
- 717 04a8 4FF00800 		mov	r0, #8
- 718 04ac C4F20200 		movt	r0, 16386
- 719 04b0 4FF00201 		mov	r1, #2
- 720 04b4 4FF00102 		mov	r2, #1
- 721 04b8 FFF7FEFF 		bl	DMA_ITConfig
- 333:../src/main.cpp **** 	DMA_Cmd(DMA1_Channel1, ENABLE);
- 722              		.loc 1 333 0
- 723 04bc 4FF00800 		mov	r0, #8
- 724 04c0 C4F20200 		movt	r0, 16386
- 725 04c4 4FF00101 		mov	r1, #1
- 726 04c8 FFF7FEFF 		bl	DMA_Cmd
- 334:../src/main.cpp **** 
- 335:../src/main.cpp **** 	ADC_DMAConfig(ADC1, ADC_DMAMode_Circular);
- 727              		.loc 1 335 0
- 728 04cc 4FF0A040 		mov	r0, #1342177280
- 729 04d0 4FF00201 		mov	r1, #2
- 730 04d4 FFF7FEFF 		bl	ADC_DMAConfig
- 336:../src/main.cpp **** 	ADC_DMACmd(ADC1, ENABLE);
- 731              		.loc 1 336 0
- 732 04d8 4FF0A040 		mov	r0, #1342177280
- 733 04dc 4FF00101 		mov	r1, #1
- 734 04e0 FFF7FEFF 		bl	ADC_DMACmd
- 735              	.LBE5:
- 337:../src/main.cpp **** }
- 736              		.loc 1 337 0
- 737 04e4 07F17007 		add	r7, r7, #112
- 738 04e8 BD46     		mov	sp, r7
- 739 04ea 80BD     		pop	{r7, pc}
- 740              		.cfi_endproc
- 741              	.LFE115:
- 743              		.align	2
- 744              		.global	_Z9adc1_initv
- 745              		.thumb
- 746              		.thumb_func
- 748              	_Z9adc1_initv:
- 749              	.LFB116:
- 338:../src/main.cpp **** 
- 339:../src/main.cpp **** /* Initializes ADC1 to read PA2 continuously using ADC1 end of conversion (EOC) interrupt
- 340:../src/main.cpp ****  * @Args: Nothing
- 341:../src/main.cpp ****  * @Return Val: Nothing
- 342:../src/main.cpp ****  */
- 343:../src/main.cpp **** 
- 344:../src/main.cpp **** void adc1_init(void) //PA2 -> Channel 3 on ADC1
- 345:../src/main.cpp **** {
- 750              		.loc 1 345 0
- 751              		.cfi_startproc
- 752              		@ args = 0, pretend = 0, frame = 72
- 753              		@ frame_needed = 1, uses_anonymous_args = 0
- 754 04ec 80B5     		push	{r7, lr}
- 755              	.LCFI14:
- 756              		.cfi_def_cfa_offset 8
- 757              		.cfi_offset 7, -8
- 758              		.cfi_offset 14, -4
- 759 04ee 92B0     		sub	sp, sp, #72
- 760              	.LCFI15:
- 761              		.cfi_def_cfa_offset 80
- 762 04f0 00AF     		add	r7, sp, #0
- 763              	.LCFI16:
- 764              		.cfi_def_cfa_register 7
- 765              	.LBB6:
- 346:../src/main.cpp **** 	ADC_InitTypeDef       ADC_InitStructure;
- 347:../src/main.cpp **** 	ADC_CommonInitTypeDef ADC_CommonInitStructure;
- 348:../src/main.cpp **** 	GPIO_InitTypeDef      GPIO_InitStructure;
- 349:../src/main.cpp **** 	/* Configure the ADC clock */
- 350:../src/main.cpp **** 	RCC_ADCCLKConfig(RCC_ADC12PLLCLK_Div2);
- 766              		.loc 1 350 0
- 767 04f2 4FF48870 		mov	r0, #272
- 768 04f6 FFF7FEFF 		bl	RCC_ADCCLKConfig
+ 330:../src/main.cpp **** 	DMA_DeInit(DMA1_Channel1); 											//Set DMA registers to default values
+ 727              		.loc 1 330 0
+ 728 0484 4FF00800 		mov	r0, #8
+ 729 0488 C4F20200 		movt	r0, 16386
+ 730 048c FFF7FEFF 		bl	DMA_DeInit
+ 331:../src/main.cpp **** 	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&(ADC1->DR);
+ 731              		.loc 1 331 0
+ 732 0490 4FF04003 		mov	r3, #64
+ 733 0494 C5F20003 		movt	r3, 20480
+ 734 0498 3B62     		str	r3, [r7, #32]
+ 332:../src/main.cpp **** 	DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) &adcData; 		//Variable to which ADC values will 
+ 735              		.loc 1 332 0
+ 736 049a 40F20003 		movw	r3, #:lower16:adcData
+ 737 049e C0F20003 		movt	r3, #:upper16:adcData
+ 738 04a2 7B62     		str	r3, [r7, #36]
+ 333:../src/main.cpp **** 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
+ 739              		.loc 1 333 0
+ 740 04a4 4FF00003 		mov	r3, #0
+ 741 04a8 BB62     		str	r3, [r7, #40]
+ 334:../src/main.cpp **** 	DMA_InitStructure.DMA_BufferSize = 2;
+ 742              		.loc 1 334 0
+ 743 04aa 4FF00203 		mov	r3, #2
+ 744 04ae BB85     		strh	r3, [r7, #44]	@ movhi
+ 335:../src/main.cpp **** 	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+ 745              		.loc 1 335 0
+ 746 04b0 4FF00003 		mov	r3, #0
+ 747 04b4 3B63     		str	r3, [r7, #48]
+ 336:../src/main.cpp **** 	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
+ 748              		.loc 1 336 0
+ 749 04b6 4FF08003 		mov	r3, #128
+ 750 04ba 7B63     		str	r3, [r7, #52]
+ 337:../src/main.cpp **** 	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Word;
+ 751              		.loc 1 337 0
+ 752 04bc 4FF40073 		mov	r3, #512
+ 753 04c0 BB63     		str	r3, [r7, #56]
+ 338:../src/main.cpp **** 	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Word;
+ 754              		.loc 1 338 0
+ 755 04c2 4FF40063 		mov	r3, #2048
+ 756 04c6 FB63     		str	r3, [r7, #60]
+ 339:../src/main.cpp **** 	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
+ 757              		.loc 1 339 0
+ 758 04c8 4FF02003 		mov	r3, #32
+ 759 04cc 3B64     		str	r3, [r7, #64]
+ 340:../src/main.cpp **** 	DMA_InitStructure.DMA_Priority = DMA_Priority_High;
+ 760              		.loc 1 340 0
+ 761 04ce 4FF40053 		mov	r3, #8192
+ 762 04d2 7B64     		str	r3, [r7, #68]
+ 341:../src/main.cpp **** 	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
+ 763              		.loc 1 341 0
+ 764 04d4 4FF00003 		mov	r3, #0
+ 765 04d8 BB64     		str	r3, [r7, #72]
+ 342:../src/main.cpp **** 
+ 343:../src/main.cpp **** 	DMA_Init(DMA1_Channel1, &DMA_InitStructure);
+ 766              		.loc 1 343 0
+ 767 04da 07F12003 		add	r3, r7, #32
+ 768 04de 4FF00800 		mov	r0, #8
+ 769 04e2 C4F20200 		movt	r0, 16386
+ 770 04e6 1946     		mov	r1, r3
+ 771 04e8 FFF7FEFF 		bl	DMA_Init
+ 344:../src/main.cpp **** 
+ 345:../src/main.cpp **** 	NVIC_InitTypeDef nv;
+ 346:../src/main.cpp **** 
+ 347:../src/main.cpp **** 	nv.NVIC_IRQChannel = DMA1_Channel1_IRQn;
+ 772              		.loc 1 347 0
+ 773 04ec 4FF00B03 		mov	r3, #11
+ 774 04f0 87F84C30 		strb	r3, [r7, #76]
+ 348:../src/main.cpp **** 	nv.NVIC_IRQChannelPreemptionPriority = 2;
+ 775              		.loc 1 348 0
+ 776 04f4 4FF00203 		mov	r3, #2
+ 777 04f8 87F84D30 		strb	r3, [r7, #77]
+ 349:../src/main.cpp **** 	nv.NVIC_IRQChannelSubPriority = 0;
+ 778              		.loc 1 349 0
+ 779 04fc 4FF00003 		mov	r3, #0
+ 780 0500 87F84E30 		strb	r3, [r7, #78]
+ 350:../src/main.cpp **** 	nv.NVIC_IRQChannelCmd = ENABLE;
+ 781              		.loc 1 350 0
+ 782 0504 4FF00103 		mov	r3, #1
+ 783 0508 87F84F30 		strb	r3, [r7, #79]
  351:../src/main.cpp **** 
- 352:../src/main.cpp **** 	/* Enable ADC1 clock */
- 353:../src/main.cpp **** 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_ADC12, ENABLE);
- 769              		.loc 1 353 0
- 770 04fa 4FF08050 		mov	r0, #268435456
- 771 04fe 4FF00101 		mov	r1, #1
- 772 0502 FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
- 354:../src/main.cpp **** 	/* ADC Channel configuration */
- 355:../src/main.cpp **** 	/* GPIOC Periph clock enable */
- 356:../src/main.cpp **** 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
- 773              		.loc 1 356 0
- 774 0506 4FF40030 		mov	r0, #131072
- 775 050a 4FF00101 		mov	r1, #1
- 776 050e FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
- 357:../src/main.cpp **** 
- 358:../src/main.cpp **** 	/* Configure ADC Channel7 as analog input */
- 359:../src/main.cpp **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
- 777              		.loc 1 359 0
- 778 0512 4FF00403 		mov	r3, #4
- 779 0516 BB62     		str	r3, [r7, #40]
- 360:../src/main.cpp **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
- 780              		.loc 1 360 0
- 781 0518 4FF00303 		mov	r3, #3
- 782 051c 87F82C30 		strb	r3, [r7, #44]
- 361:../src/main.cpp **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
- 783              		.loc 1 361 0
- 784 0520 4FF00003 		mov	r3, #0
- 785 0524 87F82F30 		strb	r3, [r7, #47]
- 362:../src/main.cpp **** 	GPIO_Init(GPIOA, &GPIO_InitStructure);
- 786              		.loc 1 362 0
- 787 0528 07F12803 		add	r3, r7, #40
- 788 052c 4FF09040 		mov	r0, #1207959552
- 789 0530 1946     		mov	r1, r3
- 790 0532 FFF7FEFF 		bl	GPIO_Init
- 363:../src/main.cpp **** 
- 364:../src/main.cpp **** 	ADC_StructInit(&ADC_InitStructure);
- 791              		.loc 1 364 0
- 792 0536 07F10403 		add	r3, r7, #4
- 793 053a 1846     		mov	r0, r3
- 794 053c FFF7FEFF 		bl	ADC_StructInit
- 365:../src/main.cpp **** 
- 366:../src/main.cpp **** 	/* Calibration procedure */
- 367:../src/main.cpp **** 	ADC_VoltageRegulatorCmd(ADC1, ENABLE);
- 795              		.loc 1 367 0
- 796 0540 4FF0A040 		mov	r0, #1342177280
- 797 0544 4FF00101 		mov	r1, #1
- 798 0548 FFF7FEFF 		bl	ADC_VoltageRegulatorCmd
+ 352:../src/main.cpp **** 	NVIC_Init(&nv);
+ 784              		.loc 1 352 0
+ 785 050c 07F14C03 		add	r3, r7, #76
+ 786 0510 1846     		mov	r0, r3
+ 787 0512 FFF7FEFF 		bl	NVIC_Init
+ 353:../src/main.cpp **** 
+ 354:../src/main.cpp **** 	DMA_ITConfig(DMA1_Channel1, DMA_IT_TC, ENABLE);
+ 788              		.loc 1 354 0
+ 789 0516 4FF00800 		mov	r0, #8
+ 790 051a C4F20200 		movt	r0, 16386
+ 791 051e 4FF00201 		mov	r1, #2
+ 792 0522 4FF00102 		mov	r2, #1
+ 793 0526 FFF7FEFF 		bl	DMA_ITConfig
+ 355:../src/main.cpp **** 	DMA_Cmd(DMA1_Channel1, ENABLE);
+ 794              		.loc 1 355 0
+ 795 052a 4FF00800 		mov	r0, #8
+ 796 052e C4F20200 		movt	r0, 16386
+ 797 0532 4FF00101 		mov	r1, #1
+ 798 0536 FFF7FEFF 		bl	DMA_Cmd
+ 356:../src/main.cpp **** 
+ 357:../src/main.cpp **** 	ADC_DMAConfig(ADC1, ADC_DMAMode_Circular);
+ 799              		.loc 1 357 0
+ 800 053a 4FF0A040 		mov	r0, #1342177280
+ 801 053e 4FF00201 		mov	r1, #2
+ 802 0542 FFF7FEFF 		bl	ADC_DMAConfig
+ 358:../src/main.cpp **** 	ADC_DMACmd(ADC1, ENABLE);
+ 803              		.loc 1 358 0
+ 804 0546 4FF0A040 		mov	r0, #1342177280
+ 805 054a 4FF00101 		mov	r1, #1
+ 806 054e FFF7FEFF 		bl	ADC_DMACmd
+ 807              	.LBE5:
+ 359:../src/main.cpp **** }
+ 808              		.loc 1 359 0
+ 809 0552 07F17007 		add	r7, r7, #112
+ 810 0556 BD46     		mov	sp, r7
+ 811 0558 80BD     		pop	{r7, pc}
+ 812              		.cfi_endproc
+ 813              	.LFE115:
+ 815 055a 00BF     		.align	2
+ 816              		.global	_Z13adc2_init_DMAv
+ 817              		.thumb
+ 818              		.thumb_func
+ 820              	_Z13adc2_init_DMAv:
+ 821              	.LFB116:
+ 360:../src/main.cpp **** 
+ 361:../src/main.cpp **** void adc2_init_DMA(void)
+ 362:../src/main.cpp **** {
+ 822              		.loc 1 362 0
+ 823              		.cfi_startproc
+ 824              		@ args = 0, pretend = 0, frame = 112
+ 825              		@ frame_needed = 1, uses_anonymous_args = 0
+ 826 055c 80B5     		push	{r7, lr}
+ 827              	.LCFI14:
+ 828              		.cfi_def_cfa_offset 8
+ 829              		.cfi_offset 7, -8
+ 830              		.cfi_offset 14, -4
+ 831 055e 9CB0     		sub	sp, sp, #112
+ 832              	.LCFI15:
+ 833              		.cfi_def_cfa_offset 120
+ 834 0560 00AF     		add	r7, sp, #0
+ 835              	.LCFI16:
+ 836              		.cfi_def_cfa_register 7
+ 837              	.LBB6:
+ 363:../src/main.cpp **** 	// Init structures required to initialize the peripherals as required:
+ 364:../src/main.cpp **** 
+ 365:../src/main.cpp **** 	ADC_InitTypeDef       ADC_InitStructure;
+ 366:../src/main.cpp **** 	ADC_CommonInitTypeDef ADC_CommonInitStructure;
+ 367:../src/main.cpp **** 	GPIO_InitTypeDef      GPIO_InitStructure;
  368:../src/main.cpp **** 
- 369:../src/main.cpp **** 	/* Insert delay equal to 10 µs */
- 370:../src/main.cpp **** 	int foo;
- 371:../src/main.cpp **** 	for(foo = 0; foo < 32000; ++foo)
- 799              		.loc 1 371 0
- 800 054c 4FF00003 		mov	r3, #0
- 801 0550 7B64     		str	r3, [r7, #68]
- 802 0552 07E0     		b	.L19
- 803              	.L20:
- 372:../src/main.cpp **** 	{
- 373:../src/main.cpp **** 	  ++foo;
- 804              		.loc 1 373 0 discriminator 2
- 805 0554 7B6C     		ldr	r3, [r7, #68]
- 806 0556 03F10103 		add	r3, r3, #1
- 807 055a 7B64     		str	r3, [r7, #68]
- 371:../src/main.cpp **** 	for(foo = 0; foo < 32000; ++foo)
- 808              		.loc 1 371 0 discriminator 2
- 809 055c 7B6C     		ldr	r3, [r7, #68]
- 810 055e 03F10103 		add	r3, r3, #1
- 811 0562 7B64     		str	r3, [r7, #68]
- 812              	.L19:
- 371:../src/main.cpp **** 	for(foo = 0; foo < 32000; ++foo)
- 813              		.loc 1 371 0 is_stmt 0 discriminator 1
- 814 0564 7A6C     		ldr	r2, [r7, #68]
- 815 0566 47F6FF43 		movw	r3, #31999
- 816 056a 9A42     		cmp	r2, r3
- 817 056c CCBF     		ite	gt
- 818 056e 0023     		movgt	r3, #0
- 819 0570 0123     		movle	r3, #1
- 820 0572 DBB2     		uxtb	r3, r3
- 821 0574 002B     		cmp	r3, #0
- 822 0576 EDD1     		bne	.L20
- 374:../src/main.cpp **** 	}
+ 369:../src/main.cpp **** 	/* Configure the ADC clock */
+ 370:../src/main.cpp **** 	RCC_ADCCLKConfig(RCC_ADC12PLLCLK_Div2); /////////////MOD!!!!!!!!
+ 838              		.loc 1 370 0
+ 839 0562 4FF48870 		mov	r0, #272
+ 840 0566 FFF7FEFF 		bl	RCC_ADCCLKConfig
+ 371:../src/main.cpp **** 	/* Enable ADC2 clock */
+ 372:../src/main.cpp **** 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_ADC12, ENABLE);
+ 841              		.loc 1 372 0
+ 842 056a 4FF08050 		mov	r0, #268435456
+ 843 056e 4FF00101 		mov	r1, #1
+ 844 0572 FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
+ 373:../src/main.cpp **** 	/* GPIOA, GPIOB, GPIOC Periph clock enable */
+ 374:../src/main.cpp **** 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA | RCC_AHBPeriph_GPIOB | RCC_AHBPeriph_GPIOC, ENABLE);
+ 845              		.loc 1 374 0
+ 846 0576 4FF46020 		mov	r0, #917504
+ 847 057a 4FF00101 		mov	r1, #1
+ 848 057e FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
  375:../src/main.cpp **** 
- 376:../src/main.cpp **** 	ADC_SelectCalibrationMode(ADC1, ADC_CalibrationMode_Single);
- 823              		.loc 1 376 0 is_stmt 1
- 824 0578 4FF0A040 		mov	r0, #1342177280
- 825 057c 4FF00001 		mov	r1, #0
- 826 0580 FFF7FEFF 		bl	ADC_SelectCalibrationMode
- 377:../src/main.cpp **** 	ADC_StartCalibration(ADC1);
- 827              		.loc 1 377 0
- 828 0584 4FF0A040 		mov	r0, #1342177280
- 829 0588 FFF7FEFF 		bl	ADC_StartCalibration
- 378:../src/main.cpp **** 
- 379:../src/main.cpp **** 	while(ADC_GetCalibrationStatus(ADC1) != RESET );
- 830              		.loc 1 379 0
- 831 058c 00BF     		nop
- 832              	.L21:
- 833              		.loc 1 379 0 is_stmt 0 discriminator 1
- 834 058e 4FF0A040 		mov	r0, #1342177280
- 835 0592 FFF7FEFF 		bl	ADC_GetCalibrationStatus
- 836 0596 0346     		mov	r3, r0
- 837 0598 002B     		cmp	r3, #0
- 838 059a 0CBF     		ite	eq
- 839 059c 0023     		moveq	r3, #0
- 840 059e 0123     		movne	r3, #1
- 841 05a0 DBB2     		uxtb	r3, r3
- 842 05a2 002B     		cmp	r3, #0
- 843 05a4 F3D1     		bne	.L21
- 380:../src/main.cpp **** 
- 381:../src/main.cpp **** 	ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
- 844              		.loc 1 381 0 is_stmt 1
- 845 05a6 4FF00003 		mov	r3, #0
- 846 05aa 3B63     		str	r3, [r7, #48]
- 382:../src/main.cpp **** 	ADC_CommonInitStructure.ADC_Clock = ADC_Clock_AsynClkMode;
- 847              		.loc 1 382 0
- 848 05ac 4FF00003 		mov	r3, #0
- 849 05b0 7B63     		str	r3, [r7, #52]
- 383:../src/main.cpp **** 	ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled;
- 850              		.loc 1 383 0
- 851 05b2 4FF00003 		mov	r3, #0
- 852 05b6 BB63     		str	r3, [r7, #56]
- 384:../src/main.cpp **** 	ADC_CommonInitStructure.ADC_DMAMode = ADC_DMAMode_OneShot;
- 853              		.loc 1 384 0
- 854 05b8 4FF00003 		mov	r3, #0
- 855 05bc FB63     		str	r3, [r7, #60]
- 385:../src/main.cpp **** 	ADC_CommonInitStructure.ADC_TwoSamplingDelay = 0;
- 856              		.loc 1 385 0
- 857 05be 4FF00003 		mov	r3, #0
- 858 05c2 87F84030 		strb	r3, [r7, #64]
- 386:../src/main.cpp **** 	ADC_CommonInit(ADC1, &ADC_CommonInitStructure);
- 859              		.loc 1 386 0
- 860 05c6 07F13003 		add	r3, r7, #48
- 861 05ca 4FF0A040 		mov	r0, #1342177280
- 862 05ce 1946     		mov	r1, r3
- 863 05d0 FFF7FEFF 		bl	ADC_CommonInit
- 387:../src/main.cpp **** 
- 388:../src/main.cpp **** 	ADC_InitStructure.ADC_ContinuousConvMode = ADC_ContinuousConvMode_Enable;
- 864              		.loc 1 388 0
- 865 05d4 4FF40053 		mov	r3, #8192
- 866 05d8 7B60     		str	r3, [r7, #4]
- 389:../src/main.cpp **** 	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
- 867              		.loc 1 389 0
- 868 05da 4FF00003 		mov	r3, #0
- 869 05de BB60     		str	r3, [r7, #8]
- 390:../src/main.cpp **** 	ADC_InitStructure.ADC_ExternalTrigConvEvent = ADC_ExternalTrigConvEvent_0;
- 870              		.loc 1 390 0
- 871 05e0 4FF00003 		mov	r3, #0
- 872 05e4 FB60     		str	r3, [r7, #12]
- 391:../src/main.cpp **** 	ADC_InitStructure.ADC_ExternalTrigEventEdge = ADC_ExternalTrigEventEdge_None;
- 873              		.loc 1 391 0
- 874 05e6 4FF00003 		mov	r3, #0
- 875 05ea 3B61     		str	r3, [r7, #16]
- 392:../src/main.cpp **** 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
- 876              		.loc 1 392 0
- 877 05ec 4FF00003 		mov	r3, #0
- 878 05f0 7B61     		str	r3, [r7, #20]
- 393:../src/main.cpp **** 	ADC_InitStructure.ADC_OverrunMode = ADC_OverrunMode_Disable;
- 879              		.loc 1 393 0
- 880 05f2 4FF00003 		mov	r3, #0
- 881 05f6 BB61     		str	r3, [r7, #24]
- 394:../src/main.cpp **** 	ADC_InitStructure.ADC_AutoInjMode = ADC_AutoInjec_Disable;
- 882              		.loc 1 394 0
- 883 05f8 4FF00003 		mov	r3, #0
- 884 05fc FB61     		str	r3, [r7, #28]
- 395:../src/main.cpp **** 	ADC_InitStructure.ADC_NbrOfRegChannel = 1;
- 885              		.loc 1 395 0
- 886 05fe 4FF00103 		mov	r3, #1
- 887 0602 87F82030 		strb	r3, [r7, #32]
- 396:../src/main.cpp **** 	ADC_Init(ADC1, &ADC_InitStructure);
- 888              		.loc 1 396 0
- 889 0606 07F10403 		add	r3, r7, #4
- 890 060a 4FF0A040 		mov	r0, #1342177280
- 891 060e 1946     		mov	r1, r3
- 892 0610 FFF7FEFF 		bl	ADC_Init
- 397:../src/main.cpp **** 
- 398:../src/main.cpp **** 	/* ADC1 regular channel3 configuration */
- 399:../src/main.cpp **** 	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 1, ADC_SampleTime_601Cycles5);//ADC_SampleTime_61Cyc
- 893              		.loc 1 399 0
- 894 0614 4FF0A040 		mov	r0, #1342177280
- 895 0618 4FF00301 		mov	r1, #3
- 896 061c 4FF00102 		mov	r2, #1
- 897 0620 4FF00703 		mov	r3, #7
- 898 0624 FFF7FEFF 		bl	ADC_RegularChannelConfig
- 400:../src/main.cpp **** 
- 401:../src/main.cpp **** 	// Configure ADC1_2 global interrupt:
- 402:../src/main.cpp **** 
- 403:../src/main.cpp **** 	NVIC_InitTypeDef nv;
- 404:../src/main.cpp **** 
- 405:../src/main.cpp **** 	nv.NVIC_IRQChannel = ADC1_2_IRQn;
- 899              		.loc 1 405 0
- 900 0628 4FF01203 		mov	r3, #18
- 901 062c 87F82430 		strb	r3, [r7, #36]
- 406:../src/main.cpp **** 	nv.NVIC_IRQChannelPreemptionPriority = 2;
- 902              		.loc 1 406 0
- 903 0630 4FF00203 		mov	r3, #2
- 904 0634 87F82530 		strb	r3, [r7, #37]
- 407:../src/main.cpp **** 	nv.NVIC_IRQChannelSubPriority = 0;
- 905              		.loc 1 407 0
- 906 0638 4FF00003 		mov	r3, #0
- 907 063c 87F82630 		strb	r3, [r7, #38]
- 408:../src/main.cpp **** 	nv.NVIC_IRQChannelCmd = ENABLE;
- 908              		.loc 1 408 0
- 909 0640 4FF00103 		mov	r3, #1
- 910 0644 87F82730 		strb	r3, [r7, #39]
- 409:../src/main.cpp **** 
- 410:../src/main.cpp **** 	NVIC_Init(&nv);
- 911              		.loc 1 410 0
- 912 0648 07F12403 		add	r3, r7, #36
- 913 064c 1846     		mov	r0, r3
- 914 064e FFF7FEFF 		bl	NVIC_Init
+ 376:../src/main.cpp **** 	// Configure PA4, PB2, PC4, PC5 as analog inputs
+ 377:../src/main.cpp **** 
+ 378:../src/main.cpp **** 	GPIO_StructInit(&GPIO_InitStructure);
+ 849              		.loc 1 378 0
+ 850 0582 07F15003 		add	r3, r7, #80
+ 851 0586 1846     		mov	r0, r3
+ 852 0588 FFF7FEFF 		bl	GPIO_StructInit
+ 379:../src/main.cpp **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
+ 853              		.loc 1 379 0
+ 854 058c 4FF01003 		mov	r3, #16
+ 855 0590 3B65     		str	r3, [r7, #80]
+ 380:../src/main.cpp **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
+ 856              		.loc 1 380 0
+ 857 0592 4FF00303 		mov	r3, #3
+ 858 0596 87F85430 		strb	r3, [r7, #84]
+ 381:../src/main.cpp **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
+ 859              		.loc 1 381 0
+ 860 059a 4FF00003 		mov	r3, #0
+ 861 059e 87F85730 		strb	r3, [r7, #87]
+ 382:../src/main.cpp **** 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 862              		.loc 1 382 0
+ 863 05a2 4FF00303 		mov	r3, #3
+ 864 05a6 87F85530 		strb	r3, [r7, #85]
+ 383:../src/main.cpp **** 	GPIO_Init(GPIOA, &GPIO_InitStructure);
+ 865              		.loc 1 383 0
+ 866 05aa 07F15003 		add	r3, r7, #80
+ 867 05ae 4FF09040 		mov	r0, #1207959552
+ 868 05b2 1946     		mov	r1, r3
+ 869 05b4 FFF7FEFF 		bl	GPIO_Init
+ 384:../src/main.cpp **** 
+ 385:../src/main.cpp **** 	GPIO_StructInit(&GPIO_InitStructure);
+ 870              		.loc 1 385 0
+ 871 05b8 07F15003 		add	r3, r7, #80
+ 872 05bc 1846     		mov	r0, r3
+ 873 05be FFF7FEFF 		bl	GPIO_StructInit
+ 386:../src/main.cpp **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
+ 874              		.loc 1 386 0
+ 875 05c2 4FF00403 		mov	r3, #4
+ 876 05c6 3B65     		str	r3, [r7, #80]
+ 387:../src/main.cpp **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
+ 877              		.loc 1 387 0
+ 878 05c8 4FF00303 		mov	r3, #3
+ 879 05cc 87F85430 		strb	r3, [r7, #84]
+ 388:../src/main.cpp **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
+ 880              		.loc 1 388 0
+ 881 05d0 4FF00003 		mov	r3, #0
+ 882 05d4 87F85730 		strb	r3, [r7, #87]
+ 389:../src/main.cpp **** 	GPIO_Init(GPIOB, &GPIO_InitStructure);
+ 883              		.loc 1 389 0
+ 884 05d8 07F15003 		add	r3, r7, #80
+ 885 05dc 4FF48060 		mov	r0, #1024
+ 886 05e0 C4F60000 		movt	r0, 18432
+ 887 05e4 1946     		mov	r1, r3
+ 888 05e6 FFF7FEFF 		bl	GPIO_Init
+ 390:../src/main.cpp **** 
+ 391:../src/main.cpp **** 	GPIO_StructInit(&GPIO_InitStructure);
+ 889              		.loc 1 391 0
+ 890 05ea 07F15003 		add	r3, r7, #80
+ 891 05ee 1846     		mov	r0, r3
+ 892 05f0 FFF7FEFF 		bl	GPIO_StructInit
+ 392:../src/main.cpp **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5;
+ 893              		.loc 1 392 0
+ 894 05f4 4FF03003 		mov	r3, #48
+ 895 05f8 3B65     		str	r3, [r7, #80]
+ 393:../src/main.cpp **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
+ 896              		.loc 1 393 0
+ 897 05fa 4FF00303 		mov	r3, #3
+ 898 05fe 87F85430 		strb	r3, [r7, #84]
+ 394:../src/main.cpp **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
+ 899              		.loc 1 394 0
+ 900 0602 4FF00003 		mov	r3, #0
+ 901 0606 87F85730 		strb	r3, [r7, #87]
+ 395:../src/main.cpp **** 	GPIO_Init(GPIOC, &GPIO_InitStructure);
+ 902              		.loc 1 395 0
+ 903 060a 07F15003 		add	r3, r7, #80
+ 904 060e 4FF40060 		mov	r0, #2048
+ 905 0612 C4F60000 		movt	r0, 18432
+ 906 0616 1946     		mov	r1, r3
+ 907 0618 FFF7FEFF 		bl	GPIO_Init
+ 396:../src/main.cpp **** 
+ 397:../src/main.cpp **** 	ADC_StructInit(&ADC_InitStructure);
+ 908              		.loc 1 397 0
+ 909 061c 3B46     		mov	r3, r7
+ 910 061e 1846     		mov	r0, r3
+ 911 0620 FFF7FEFF 		bl	ADC_StructInit
+ 398:../src/main.cpp **** 
+ 399:../src/main.cpp **** 	/* Calibration procedure */
+ 400:../src/main.cpp **** 	ADC_VoltageRegulatorCmd(ADC2, ENABLE);
+ 912              		.loc 1 400 0
+ 913 0624 4FF48070 		mov	r0, #256
+ 914 0628 C5F20000 		movt	r0, 20480
+ 915 062c 4FF00101 		mov	r1, #1
+ 916 0630 FFF7FEFF 		bl	ADC_VoltageRegulatorCmd
+ 401:../src/main.cpp **** 
+ 402:../src/main.cpp **** 	/* Insert delay equal to about 900 µs */
+ 403:../src/main.cpp **** 	int foo;
+ 404:../src/main.cpp **** 	for(foo = 0; foo < 64000; ++foo)
+ 917              		.loc 1 404 0
+ 918 0634 4FF00003 		mov	r3, #0
+ 919 0638 FB66     		str	r3, [r7, #108]
+ 920 063a 07E0     		b	.L23
+ 921              	.L24:
+ 405:../src/main.cpp **** 	{
+ 406:../src/main.cpp **** 	  ++foo;
+ 922              		.loc 1 406 0 discriminator 2
+ 923 063c FB6E     		ldr	r3, [r7, #108]
+ 924 063e 03F10103 		add	r3, r3, #1
+ 925 0642 FB66     		str	r3, [r7, #108]
+ 404:../src/main.cpp **** 	for(foo = 0; foo < 64000; ++foo)
+ 926              		.loc 1 404 0 discriminator 2
+ 927 0644 FB6E     		ldr	r3, [r7, #108]
+ 928 0646 03F10103 		add	r3, r3, #1
+ 929 064a FB66     		str	r3, [r7, #108]
+ 930              	.L23:
+ 404:../src/main.cpp **** 	for(foo = 0; foo < 64000; ++foo)
+ 931              		.loc 1 404 0 is_stmt 0 discriminator 1
+ 932 064c FA6E     		ldr	r2, [r7, #108]
+ 933 064e 4FF6FF13 		movw	r3, #63999
+ 934 0652 9A42     		cmp	r2, r3
+ 935 0654 CCBF     		ite	gt
+ 936 0656 0023     		movgt	r3, #0
+ 937 0658 0123     		movle	r3, #1
+ 938 065a DBB2     		uxtb	r3, r3
+ 939 065c 002B     		cmp	r3, #0
+ 940 065e EDD1     		bne	.L24
+ 407:../src/main.cpp **** 	}
+ 408:../src/main.cpp **** 
+ 409:../src/main.cpp **** 	ADC_SelectCalibrationMode(ADC2, ADC_CalibrationMode_Single);
+ 941              		.loc 1 409 0 is_stmt 1
+ 942 0660 4FF48070 		mov	r0, #256
+ 943 0664 C5F20000 		movt	r0, 20480
+ 944 0668 4FF00001 		mov	r1, #0
+ 945 066c FFF7FEFF 		bl	ADC_SelectCalibrationMode
+ 410:../src/main.cpp **** 	ADC_StartCalibration(ADC2);
+ 946              		.loc 1 410 0
+ 947 0670 4FF48070 		mov	r0, #256
+ 948 0674 C5F20000 		movt	r0, 20480
+ 949 0678 FFF7FEFF 		bl	ADC_StartCalibration
  411:../src/main.cpp **** 
- 412:../src/main.cpp **** 	// Enable ADC1's global interrupt:
+ 412:../src/main.cpp **** 	while(ADC_GetCalibrationStatus(ADC2) != RESET );
+ 950              		.loc 1 412 0
+ 951 067c 00BF     		nop
+ 952              	.L25:
+ 953              		.loc 1 412 0 is_stmt 0 discriminator 1
+ 954 067e 4FF48070 		mov	r0, #256
+ 955 0682 C5F20000 		movt	r0, 20480
+ 956 0686 FFF7FEFF 		bl	ADC_GetCalibrationStatus
+ 957 068a 0346     		mov	r3, r0
+ 958 068c 002B     		cmp	r3, #0
+ 959 068e 0CBF     		ite	eq
+ 960 0690 0023     		moveq	r3, #0
+ 961 0692 0123     		movne	r3, #1
+ 962 0694 DBB2     		uxtb	r3, r3
+ 963 0696 002B     		cmp	r3, #0
+ 964 0698 F1D1     		bne	.L25
  413:../src/main.cpp **** 
- 414:../src/main.cpp **** 	ADC_ITConfig(ADC1, ADC_IT_EOC, ENABLE);
- 915              		.loc 1 414 0
- 916 0652 4FF0A040 		mov	r0, #1342177280
- 917 0656 4FF00401 		mov	r1, #4
- 918 065a 4FF00102 		mov	r2, #1
- 919 065e FFF7FEFF 		bl	ADC_ITConfig
- 415:../src/main.cpp **** 
- 416:../src/main.cpp **** 	/* Enable ADC1 */
- 417:../src/main.cpp **** 	ADC_Cmd(ADC1, ENABLE);
- 920              		.loc 1 417 0
- 921 0662 4FF0A040 		mov	r0, #1342177280
- 922 0666 4FF00101 		mov	r1, #1
- 923 066a FFF7FEFF 		bl	ADC_Cmd
- 418:../src/main.cpp **** 
- 419:../src/main.cpp **** 	/* wait for ADRDY */
- 420:../src/main.cpp **** 	while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_RDY));
- 924              		.loc 1 420 0
- 925 066e 00BF     		nop
- 926              	.L22:
- 927              		.loc 1 420 0 is_stmt 0 discriminator 1
- 928 0670 4FF0A040 		mov	r0, #1342177280
- 929 0674 4FF00101 		mov	r1, #1
- 930 0678 FFF7FEFF 		bl	ADC_GetFlagStatus
- 931 067c 0346     		mov	r3, r0
- 932 067e 002B     		cmp	r3, #0
- 933 0680 14BF     		ite	ne
- 934 0682 0023     		movne	r3, #0
- 935 0684 0123     		moveq	r3, #1
- 936 0686 DBB2     		uxtb	r3, r3
- 937 0688 002B     		cmp	r3, #0
- 938 068a F1D1     		bne	.L22
- 421:../src/main.cpp **** 
- 422:../src/main.cpp **** 	/* Start ADC1 Software Conversion */
- 423:../src/main.cpp **** 	ADC_StartConversion(ADC1);
- 939              		.loc 1 423 0 is_stmt 1
- 940 068c 4FF0A040 		mov	r0, #1342177280
- 941 0690 FFF7FEFF 		bl	ADC_StartConversion
- 942              	.LBE6:
- 424:../src/main.cpp **** }
- 943              		.loc 1 424 0
- 944 0694 07F14807 		add	r7, r7, #72
- 945 0698 BD46     		mov	sp, r7
- 946 069a 80BD     		pop	{r7, pc}
- 947              		.cfi_endproc
- 948              	.LFE116:
- 950              	.Letext0:
- 951              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
- 952              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
- 953              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_dma.h"
- 954              		.file 5 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_gpio.h"
- 955              		.file 6 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_tim.h"
- 956              		.file 7 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_misc.h"
- 957              		.file 8 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_adc.h"
- 958              		.file 9 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f3_discovery_l3gd20.h"
- 959              		.file 10 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot/encoder.h"
- 960              		.file 11 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
+ 414:../src/main.cpp **** 	ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
+ 965              		.loc 1 414 0 is_stmt 1
+ 966 069a 4FF00003 		mov	r3, #0
+ 967 069e BB65     		str	r3, [r7, #88]
+ 415:../src/main.cpp **** 	ADC_CommonInitStructure.ADC_Clock = ADC_Clock_AsynClkMode;
+ 968              		.loc 1 415 0
+ 969 06a0 4FF00003 		mov	r3, #0
+ 970 06a4 FB65     		str	r3, [r7, #92]
+ 416:../src/main.cpp **** 	ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_1;
+ 971              		.loc 1 416 0
+ 972 06a6 4FF40043 		mov	r3, #32768
+ 973 06aa 3B66     		str	r3, [r7, #96]
+ 417:../src/main.cpp **** 	ADC_CommonInitStructure.ADC_DMAMode = ADC_DMAMode_Circular;
+ 974              		.loc 1 417 0
+ 975 06ac 4FF00203 		mov	r3, #2
+ 976 06b0 7B66     		str	r3, [r7, #100]
+ 418:../src/main.cpp **** 	ADC_CommonInitStructure.ADC_TwoSamplingDelay = 0xF;
+ 977              		.loc 1 418 0
+ 978 06b2 4FF00F03 		mov	r3, #15
+ 979 06b6 87F86830 		strb	r3, [r7, #104]
+ 419:../src/main.cpp **** 	ADC_CommonInit(ADC2, &ADC_CommonInitStructure);
+ 980              		.loc 1 419 0
+ 981 06ba 07F15803 		add	r3, r7, #88
+ 982 06be 4FF48070 		mov	r0, #256
+ 983 06c2 C5F20000 		movt	r0, 20480
+ 984 06c6 1946     		mov	r1, r3
+ 985 06c8 FFF7FEFF 		bl	ADC_CommonInit
+ 420:../src/main.cpp **** 
+ 421:../src/main.cpp **** 	ADC_InitStructure.ADC_ContinuousConvMode = ADC_ContinuousConvMode_Enable;
+ 986              		.loc 1 421 0
+ 987 06cc 4FF40053 		mov	r3, #8192
+ 988 06d0 3B60     		str	r3, [r7, #0]
+ 422:../src/main.cpp **** 	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
+ 989              		.loc 1 422 0
+ 990 06d2 4FF00003 		mov	r3, #0
+ 991 06d6 7B60     		str	r3, [r7, #4]
+ 423:../src/main.cpp **** 	ADC_InitStructure.ADC_ExternalTrigConvEvent = ADC_ExternalTrigConvEvent_0;
+ 992              		.loc 1 423 0
+ 993 06d8 4FF00003 		mov	r3, #0
+ 994 06dc BB60     		str	r3, [r7, #8]
+ 424:../src/main.cpp **** 	ADC_InitStructure.ADC_ExternalTrigEventEdge = ADC_ExternalTrigEventEdge_None;
+ 995              		.loc 1 424 0
+ 996 06de 4FF00003 		mov	r3, #0
+ 997 06e2 FB60     		str	r3, [r7, #12]
+ 425:../src/main.cpp **** 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+ 998              		.loc 1 425 0
+ 999 06e4 4FF00003 		mov	r3, #0
+ 1000 06e8 3B61     		str	r3, [r7, #16]
+ 426:../src/main.cpp **** 	ADC_InitStructure.ADC_OverrunMode = ADC_OverrunMode_Disable;
+ 1001              		.loc 1 426 0
+ 1002 06ea 4FF00003 		mov	r3, #0
+ 1003 06ee 7B61     		str	r3, [r7, #20]
+ 427:../src/main.cpp **** 	ADC_InitStructure.ADC_AutoInjMode = ADC_AutoInjec_Disable;
+ 1004              		.loc 1 427 0
+ 1005 06f0 4FF00003 		mov	r3, #0
+ 1006 06f4 BB61     		str	r3, [r7, #24]
+ 428:../src/main.cpp **** 	ADC_InitStructure.ADC_NbrOfRegChannel = 4;
+ 1007              		.loc 1 428 0
+ 1008 06f6 4FF00403 		mov	r3, #4
+ 1009 06fa 3B77     		strb	r3, [r7, #28]
+ 429:../src/main.cpp **** 	ADC_Init(ADC2, &ADC_InitStructure);
+ 1010              		.loc 1 429 0
+ 1011 06fc 3B46     		mov	r3, r7
+ 1012 06fe 4FF48070 		mov	r0, #256
+ 1013 0702 C5F20000 		movt	r0, 20480
+ 1014 0706 1946     		mov	r1, r3
+ 1015 0708 FFF7FEFF 		bl	ADC_Init
+ 430:../src/main.cpp **** 
+ 431:../src/main.cpp **** 	/* ADC2 regular Channel 1,2,3,4 configuration */
+ 432:../src/main.cpp **** 
+ 433:../src/main.cpp **** 	ADC_RegularChannelConfig(ADC2, ADC_Channel_1, 1, ADC_SampleTime_601Cycles5);
+ 1016              		.loc 1 433 0
+ 1017 070c 4FF48070 		mov	r0, #256
+ 1018 0710 C5F20000 		movt	r0, 20480
+ 1019 0714 4FF00101 		mov	r1, #1
+ 1020 0718 4FF00102 		mov	r2, #1
+ 1021 071c 4FF00703 		mov	r3, #7
+ 1022 0720 FFF7FEFF 		bl	ADC_RegularChannelConfig
+ 434:../src/main.cpp **** 	ADC_RegularChannelConfig(ADC2, ADC_Channel_5, 2, ADC_SampleTime_601Cycles5);
+ 1023              		.loc 1 434 0
+ 1024 0724 4FF48070 		mov	r0, #256
+ 1025 0728 C5F20000 		movt	r0, 20480
+ 1026 072c 4FF00501 		mov	r1, #5
+ 1027 0730 4FF00202 		mov	r2, #2
+ 1028 0734 4FF00703 		mov	r3, #7
+ 1029 0738 FFF7FEFF 		bl	ADC_RegularChannelConfig
+ 435:../src/main.cpp **** 	ADC_RegularChannelConfig(ADC2, ADC_Channel_11, 3, ADC_SampleTime_601Cycles5);
+ 1030              		.loc 1 435 0
+ 1031 073c 4FF48070 		mov	r0, #256
+ 1032 0740 C5F20000 		movt	r0, 20480
+ 1033 0744 4FF00B01 		mov	r1, #11
+ 1034 0748 4FF00302 		mov	r2, #3
+ 1035 074c 4FF00703 		mov	r3, #7
+ 1036 0750 FFF7FEFF 		bl	ADC_RegularChannelConfig
+ 436:../src/main.cpp **** 	ADC_RegularChannelConfig(ADC2, ADC_Channel_12, 4, ADC_SampleTime_601Cycles5);
+ 1037              		.loc 1 436 0
+ 1038 0754 4FF48070 		mov	r0, #256
+ 1039 0758 C5F20000 		movt	r0, 20480
+ 1040 075c 4FF00C01 		mov	r1, #12
+ 1041 0760 4FF00402 		mov	r2, #4
+ 1042 0764 4FF00703 		mov	r3, #7
+ 1043 0768 FFF7FEFF 		bl	ADC_RegularChannelConfig
+ 437:../src/main.cpp **** 
+ 438:../src/main.cpp **** 	/* Enable ADC2 */
+ 439:../src/main.cpp **** 	ADC_Cmd(ADC2, ENABLE);
+ 1044              		.loc 1 439 0
+ 1045 076c 4FF48070 		mov	r0, #256
+ 1046 0770 C5F20000 		movt	r0, 20480
+ 1047 0774 4FF00101 		mov	r1, #1
+ 1048 0778 FFF7FEFF 		bl	ADC_Cmd
+ 440:../src/main.cpp **** 
+ 441:../src/main.cpp **** 	/* wait for ADRDY */
+ 442:../src/main.cpp **** 	while(!ADC_GetFlagStatus(ADC2, ADC_FLAG_RDY));
+ 1049              		.loc 1 442 0
+ 1050 077c 00BF     		nop
+ 1051              	.L26:
+ 1052              		.loc 1 442 0 is_stmt 0 discriminator 1
+ 1053 077e 4FF48070 		mov	r0, #256
+ 1054 0782 C5F20000 		movt	r0, 20480
+ 1055 0786 4FF00101 		mov	r1, #1
+ 1056 078a FFF7FEFF 		bl	ADC_GetFlagStatus
+ 1057 078e 0346     		mov	r3, r0
+ 1058 0790 002B     		cmp	r3, #0
+ 1059 0792 14BF     		ite	ne
+ 1060 0794 0023     		movne	r3, #0
+ 1061 0796 0123     		moveq	r3, #1
+ 1062 0798 DBB2     		uxtb	r3, r3
+ 1063 079a 002B     		cmp	r3, #0
+ 1064 079c EFD1     		bne	.L26
+ 443:../src/main.cpp **** 
+ 444:../src/main.cpp **** 	/* Start ADC2 Software Conversion */
+ 445:../src/main.cpp **** 	ADC_StartConversion(ADC2);
+ 1065              		.loc 1 445 0 is_stmt 1
+ 1066 079e 4FF48070 		mov	r0, #256
+ 1067 07a2 C5F20000 		movt	r0, 20480
+ 1068 07a6 FFF7FEFF 		bl	ADC_StartConversion
+ 446:../src/main.cpp **** 
+ 447:../src/main.cpp **** 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA2, ENABLE);
+ 1069              		.loc 1 447 0
+ 1070 07aa 4FF00200 		mov	r0, #2
+ 1071 07ae 4FF00101 		mov	r1, #1
+ 1072 07b2 FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
+ 448:../src/main.cpp **** 
+ 449:../src/main.cpp **** 	DMA_InitTypeDef			DMA_InitStructure;
+ 450:../src/main.cpp **** 	DMA_StructInit(&DMA_InitStructure);
+ 1073              		.loc 1 450 0
+ 1074 07b6 07F12003 		add	r3, r7, #32
+ 1075 07ba 1846     		mov	r0, r3
+ 1076 07bc FFF7FEFF 		bl	DMA_StructInit
+ 451:../src/main.cpp **** 
+ 452:../src/main.cpp **** 	DMA_DeInit(DMA2_Channel1); 											//Set DMA registers to default values
+ 1077              		.loc 1 452 0
+ 1078 07c0 4FF48160 		mov	r0, #1032
+ 1079 07c4 C4F20200 		movt	r0, 16386
+ 1080 07c8 FFF7FEFF 		bl	DMA_DeInit
+ 453:../src/main.cpp **** 	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&(ADC2->DR);
+ 1081              		.loc 1 453 0
+ 1082 07cc 4FF4A073 		mov	r3, #320
+ 1083 07d0 C5F20003 		movt	r3, 20480
+ 1084 07d4 3B62     		str	r3, [r7, #32]
+ 454:../src/main.cpp **** 	DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) &adc2_data; 		//Variable to which ADC values wil
+ 1085              		.loc 1 454 0
+ 1086 07d6 40F20003 		movw	r3, #:lower16:adc2_data
+ 1087 07da C0F20003 		movt	r3, #:upper16:adc2_data
+ 1088 07de 7B62     		str	r3, [r7, #36]
+ 455:../src/main.cpp **** 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
+ 1089              		.loc 1 455 0
+ 1090 07e0 4FF00003 		mov	r3, #0
+ 1091 07e4 BB62     		str	r3, [r7, #40]
+ 456:../src/main.cpp **** 	DMA_InitStructure.DMA_BufferSize = 4;
+ 1092              		.loc 1 456 0
+ 1093 07e6 4FF00403 		mov	r3, #4
+ 1094 07ea BB85     		strh	r3, [r7, #44]	@ movhi
+ 457:../src/main.cpp **** 	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+ 1095              		.loc 1 457 0
+ 1096 07ec 4FF00003 		mov	r3, #0
+ 1097 07f0 3B63     		str	r3, [r7, #48]
+ 458:../src/main.cpp **** 	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
+ 1098              		.loc 1 458 0
+ 1099 07f2 4FF08003 		mov	r3, #128
+ 1100 07f6 7B63     		str	r3, [r7, #52]
+ 459:../src/main.cpp **** 	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Word;
+ 1101              		.loc 1 459 0
+ 1102 07f8 4FF40073 		mov	r3, #512
+ 1103 07fc BB63     		str	r3, [r7, #56]
+ 460:../src/main.cpp **** 	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Word;
+ 1104              		.loc 1 460 0
+ 1105 07fe 4FF40063 		mov	r3, #2048
+ 1106 0802 FB63     		str	r3, [r7, #60]
+ 461:../src/main.cpp **** 	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
+ 1107              		.loc 1 461 0
+ 1108 0804 4FF02003 		mov	r3, #32
+ 1109 0808 3B64     		str	r3, [r7, #64]
+ 462:../src/main.cpp **** 	DMA_InitStructure.DMA_Priority = DMA_Priority_High;
+ 1110              		.loc 1 462 0
+ 1111 080a 4FF40053 		mov	r3, #8192
+ 1112 080e 7B64     		str	r3, [r7, #68]
+ 463:../src/main.cpp **** 	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
+ 1113              		.loc 1 463 0
+ 1114 0810 4FF00003 		mov	r3, #0
+ 1115 0814 BB64     		str	r3, [r7, #72]
+ 464:../src/main.cpp **** 
+ 465:../src/main.cpp **** 	DMA_Init(DMA2_Channel1, &DMA_InitStructure);
+ 1116              		.loc 1 465 0
+ 1117 0816 07F12003 		add	r3, r7, #32
+ 1118 081a 4FF48160 		mov	r0, #1032
+ 1119 081e C4F20200 		movt	r0, 16386
+ 1120 0822 1946     		mov	r1, r3
+ 1121 0824 FFF7FEFF 		bl	DMA_Init
+ 466:../src/main.cpp **** 
+ 467:../src/main.cpp **** 	NVIC_InitTypeDef nv;
+ 468:../src/main.cpp **** 
+ 469:../src/main.cpp **** 	nv.NVIC_IRQChannel = DMA2_Channel1_IRQn;
+ 1122              		.loc 1 469 0
+ 1123 0828 4FF03803 		mov	r3, #56
+ 1124 082c 87F84C30 		strb	r3, [r7, #76]
+ 470:../src/main.cpp **** 	nv.NVIC_IRQChannelPreemptionPriority = 2;
+ 1125              		.loc 1 470 0
+ 1126 0830 4FF00203 		mov	r3, #2
+ 1127 0834 87F84D30 		strb	r3, [r7, #77]
+ 471:../src/main.cpp **** 	nv.NVIC_IRQChannelSubPriority = 0;
+ 1128              		.loc 1 471 0
+ 1129 0838 4FF00003 		mov	r3, #0
+ 1130 083c 87F84E30 		strb	r3, [r7, #78]
+ 472:../src/main.cpp **** 	nv.NVIC_IRQChannelCmd = ENABLE;
+ 1131              		.loc 1 472 0
+ 1132 0840 4FF00103 		mov	r3, #1
+ 1133 0844 87F84F30 		strb	r3, [r7, #79]
+ 473:../src/main.cpp **** 
+ 474:../src/main.cpp **** 	NVIC_Init(&nv);
+ 1134              		.loc 1 474 0
+ 1135 0848 07F14C03 		add	r3, r7, #76
+ 1136 084c 1846     		mov	r0, r3
+ 1137 084e FFF7FEFF 		bl	NVIC_Init
+ 475:../src/main.cpp **** 
+ 476:../src/main.cpp **** 	DMA_ITConfig(DMA2_Channel1, DMA_IT_TC, ENABLE);
+ 1138              		.loc 1 476 0
+ 1139 0852 4FF48160 		mov	r0, #1032
+ 1140 0856 C4F20200 		movt	r0, 16386
+ 1141 085a 4FF00201 		mov	r1, #2
+ 1142 085e 4FF00102 		mov	r2, #1
+ 1143 0862 FFF7FEFF 		bl	DMA_ITConfig
+ 477:../src/main.cpp **** 	DMA_Cmd(DMA2_Channel1, ENABLE);
+ 1144              		.loc 1 477 0
+ 1145 0866 4FF48160 		mov	r0, #1032
+ 1146 086a C4F20200 		movt	r0, 16386
+ 1147 086e 4FF00101 		mov	r1, #1
+ 1148 0872 FFF7FEFF 		bl	DMA_Cmd
+ 478:../src/main.cpp **** 
+ 479:../src/main.cpp **** 	ADC_DMAConfig(ADC2, ADC_DMAMode_Circular);
+ 1149              		.loc 1 479 0
+ 1150 0876 4FF48070 		mov	r0, #256
+ 1151 087a C5F20000 		movt	r0, 20480
+ 1152 087e 4FF00201 		mov	r1, #2
+ 1153 0882 FFF7FEFF 		bl	ADC_DMAConfig
+ 480:../src/main.cpp **** 	ADC_DMACmd(ADC2, ENABLE);
+ 1154              		.loc 1 480 0
+ 1155 0886 4FF48070 		mov	r0, #256
+ 1156 088a C5F20000 		movt	r0, 20480
+ 1157 088e 4FF00101 		mov	r1, #1
+ 1158 0892 FFF7FEFF 		bl	ADC_DMACmd
+ 1159              	.LBE6:
+ 481:../src/main.cpp **** }
+ 1160              		.loc 1 481 0
+ 1161 0896 07F17007 		add	r7, r7, #112
+ 1162 089a BD46     		mov	sp, r7
+ 1163 089c 80BD     		pop	{r7, pc}
+ 1164              		.cfi_endproc
+ 1165              	.LFE116:
+ 1167 089e 00BF     		.align	2
+ 1168              		.global	_Z9adc1_initv
+ 1169              		.thumb
+ 1170              		.thumb_func
+ 1172              	_Z9adc1_initv:
+ 1173              	.LFB117:
+ 482:../src/main.cpp **** 
+ 483:../src/main.cpp **** /* Initializes ADC1 to read PA2 continuously using ADC1 end of conversion (EOC) interrupt
+ 484:../src/main.cpp ****  * @Args: Nothing
+ 485:../src/main.cpp ****  * @Return Val: Nothing
+ 486:../src/main.cpp ****  */
+ 487:../src/main.cpp **** 
+ 488:../src/main.cpp **** void adc1_init(void) //PA2 -> Channel 3 on ADC1
+ 489:../src/main.cpp **** {
+ 1174              		.loc 1 489 0
+ 1175              		.cfi_startproc
+ 1176              		@ args = 0, pretend = 0, frame = 72
+ 1177              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1178 08a0 80B5     		push	{r7, lr}
+ 1179              	.LCFI17:
+ 1180              		.cfi_def_cfa_offset 8
+ 1181              		.cfi_offset 7, -8
+ 1182              		.cfi_offset 14, -4
+ 1183 08a2 92B0     		sub	sp, sp, #72
+ 1184              	.LCFI18:
+ 1185              		.cfi_def_cfa_offset 80
+ 1186 08a4 00AF     		add	r7, sp, #0
+ 1187              	.LCFI19:
+ 1188              		.cfi_def_cfa_register 7
+ 1189              	.LBB7:
+ 490:../src/main.cpp **** 	ADC_InitTypeDef       ADC_InitStructure;
+ 491:../src/main.cpp **** 	ADC_CommonInitTypeDef ADC_CommonInitStructure;
+ 492:../src/main.cpp **** 	GPIO_InitTypeDef      GPIO_InitStructure;
+ 493:../src/main.cpp **** 	/* Configure the ADC clock */
+ 494:../src/main.cpp **** 	RCC_ADCCLKConfig(RCC_ADC12PLLCLK_Div2);
+ 1190              		.loc 1 494 0
+ 1191 08a6 4FF48870 		mov	r0, #272
+ 1192 08aa FFF7FEFF 		bl	RCC_ADCCLKConfig
+ 495:../src/main.cpp **** 
+ 496:../src/main.cpp **** 	/* Enable ADC1 clock */
+ 497:../src/main.cpp **** 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_ADC12, ENABLE);
+ 1193              		.loc 1 497 0
+ 1194 08ae 4FF08050 		mov	r0, #268435456
+ 1195 08b2 4FF00101 		mov	r1, #1
+ 1196 08b6 FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
+ 498:../src/main.cpp **** 	/* ADC Channel configuration */
+ 499:../src/main.cpp **** 	/* GPIOC Periph clock enable */
+ 500:../src/main.cpp **** 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
+ 1197              		.loc 1 500 0
+ 1198 08ba 4FF40030 		mov	r0, #131072
+ 1199 08be 4FF00101 		mov	r1, #1
+ 1200 08c2 FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
+ 501:../src/main.cpp **** 
+ 502:../src/main.cpp **** 	/* Configure ADC Channel7 as analog input */
+ 503:../src/main.cpp **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
+ 1201              		.loc 1 503 0
+ 1202 08c6 4FF00403 		mov	r3, #4
+ 1203 08ca BB62     		str	r3, [r7, #40]
+ 504:../src/main.cpp **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
+ 1204              		.loc 1 504 0
+ 1205 08cc 4FF00303 		mov	r3, #3
+ 1206 08d0 87F82C30 		strb	r3, [r7, #44]
+ 505:../src/main.cpp **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
+ 1207              		.loc 1 505 0
+ 1208 08d4 4FF00003 		mov	r3, #0
+ 1209 08d8 87F82F30 		strb	r3, [r7, #47]
+ 506:../src/main.cpp **** 	GPIO_Init(GPIOA, &GPIO_InitStructure);
+ 1210              		.loc 1 506 0
+ 1211 08dc 07F12803 		add	r3, r7, #40
+ 1212 08e0 4FF09040 		mov	r0, #1207959552
+ 1213 08e4 1946     		mov	r1, r3
+ 1214 08e6 FFF7FEFF 		bl	GPIO_Init
+ 507:../src/main.cpp **** 
+ 508:../src/main.cpp **** 	ADC_StructInit(&ADC_InitStructure);
+ 1215              		.loc 1 508 0
+ 1216 08ea 07F10403 		add	r3, r7, #4
+ 1217 08ee 1846     		mov	r0, r3
+ 1218 08f0 FFF7FEFF 		bl	ADC_StructInit
+ 509:../src/main.cpp **** 
+ 510:../src/main.cpp **** 	/* Calibration procedure */
+ 511:../src/main.cpp **** 	ADC_VoltageRegulatorCmd(ADC1, ENABLE);
+ 1219              		.loc 1 511 0
+ 1220 08f4 4FF0A040 		mov	r0, #1342177280
+ 1221 08f8 4FF00101 		mov	r1, #1
+ 1222 08fc FFF7FEFF 		bl	ADC_VoltageRegulatorCmd
+ 512:../src/main.cpp **** 
+ 513:../src/main.cpp **** 	/* Insert delay equal to 10 µs */
+ 514:../src/main.cpp **** 	int foo;
+ 515:../src/main.cpp **** 	for(foo = 0; foo < 32000; ++foo)
+ 1223              		.loc 1 515 0
+ 1224 0900 4FF00003 		mov	r3, #0
+ 1225 0904 7B64     		str	r3, [r7, #68]
+ 1226 0906 07E0     		b	.L28
+ 1227              	.L29:
+ 516:../src/main.cpp **** 	{
+ 517:../src/main.cpp **** 	  ++foo;
+ 1228              		.loc 1 517 0 discriminator 2
+ 1229 0908 7B6C     		ldr	r3, [r7, #68]
+ 1230 090a 03F10103 		add	r3, r3, #1
+ 1231 090e 7B64     		str	r3, [r7, #68]
+ 515:../src/main.cpp **** 	for(foo = 0; foo < 32000; ++foo)
+ 1232              		.loc 1 515 0 discriminator 2
+ 1233 0910 7B6C     		ldr	r3, [r7, #68]
+ 1234 0912 03F10103 		add	r3, r3, #1
+ 1235 0916 7B64     		str	r3, [r7, #68]
+ 1236              	.L28:
+ 515:../src/main.cpp **** 	for(foo = 0; foo < 32000; ++foo)
+ 1237              		.loc 1 515 0 is_stmt 0 discriminator 1
+ 1238 0918 7A6C     		ldr	r2, [r7, #68]
+ 1239 091a 47F6FF43 		movw	r3, #31999
+ 1240 091e 9A42     		cmp	r2, r3
+ 1241 0920 CCBF     		ite	gt
+ 1242 0922 0023     		movgt	r3, #0
+ 1243 0924 0123     		movle	r3, #1
+ 1244 0926 DBB2     		uxtb	r3, r3
+ 1245 0928 002B     		cmp	r3, #0
+ 1246 092a EDD1     		bne	.L29
+ 518:../src/main.cpp **** 	}
+ 519:../src/main.cpp **** 
+ 520:../src/main.cpp **** 	ADC_SelectCalibrationMode(ADC1, ADC_CalibrationMode_Single);
+ 1247              		.loc 1 520 0 is_stmt 1
+ 1248 092c 4FF0A040 		mov	r0, #1342177280
+ 1249 0930 4FF00001 		mov	r1, #0
+ 1250 0934 FFF7FEFF 		bl	ADC_SelectCalibrationMode
+ 521:../src/main.cpp **** 	ADC_StartCalibration(ADC1);
+ 1251              		.loc 1 521 0
+ 1252 0938 4FF0A040 		mov	r0, #1342177280
+ 1253 093c FFF7FEFF 		bl	ADC_StartCalibration
+ 522:../src/main.cpp **** 
+ 523:../src/main.cpp **** 	while(ADC_GetCalibrationStatus(ADC1) != RESET );
+ 1254              		.loc 1 523 0
+ 1255 0940 00BF     		nop
+ 1256              	.L30:
+ 1257              		.loc 1 523 0 is_stmt 0 discriminator 1
+ 1258 0942 4FF0A040 		mov	r0, #1342177280
+ 1259 0946 FFF7FEFF 		bl	ADC_GetCalibrationStatus
+ 1260 094a 0346     		mov	r3, r0
+ 1261 094c 002B     		cmp	r3, #0
+ 1262 094e 0CBF     		ite	eq
+ 1263 0950 0023     		moveq	r3, #0
+ 1264 0952 0123     		movne	r3, #1
+ 1265 0954 DBB2     		uxtb	r3, r3
+ 1266 0956 002B     		cmp	r3, #0
+ 1267 0958 F3D1     		bne	.L30
+ 524:../src/main.cpp **** 
+ 525:../src/main.cpp **** 	ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
+ 1268              		.loc 1 525 0 is_stmt 1
+ 1269 095a 4FF00003 		mov	r3, #0
+ 1270 095e 3B63     		str	r3, [r7, #48]
+ 526:../src/main.cpp **** 	ADC_CommonInitStructure.ADC_Clock = ADC_Clock_AsynClkMode;
+ 1271              		.loc 1 526 0
+ 1272 0960 4FF00003 		mov	r3, #0
+ 1273 0964 7B63     		str	r3, [r7, #52]
+ 527:../src/main.cpp **** 	ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled;
+ 1274              		.loc 1 527 0
+ 1275 0966 4FF00003 		mov	r3, #0
+ 1276 096a BB63     		str	r3, [r7, #56]
+ 528:../src/main.cpp **** 	ADC_CommonInitStructure.ADC_DMAMode = ADC_DMAMode_OneShot;
+ 1277              		.loc 1 528 0
+ 1278 096c 4FF00003 		mov	r3, #0
+ 1279 0970 FB63     		str	r3, [r7, #60]
+ 529:../src/main.cpp **** 	ADC_CommonInitStructure.ADC_TwoSamplingDelay = 0;
+ 1280              		.loc 1 529 0
+ 1281 0972 4FF00003 		mov	r3, #0
+ 1282 0976 87F84030 		strb	r3, [r7, #64]
+ 530:../src/main.cpp **** 	ADC_CommonInit(ADC1, &ADC_CommonInitStructure);
+ 1283              		.loc 1 530 0
+ 1284 097a 07F13003 		add	r3, r7, #48
+ 1285 097e 4FF0A040 		mov	r0, #1342177280
+ 1286 0982 1946     		mov	r1, r3
+ 1287 0984 FFF7FEFF 		bl	ADC_CommonInit
+ 531:../src/main.cpp **** 
+ 532:../src/main.cpp **** 	ADC_InitStructure.ADC_ContinuousConvMode = ADC_ContinuousConvMode_Enable;
+ 1288              		.loc 1 532 0
+ 1289 0988 4FF40053 		mov	r3, #8192
+ 1290 098c 7B60     		str	r3, [r7, #4]
+ 533:../src/main.cpp **** 	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
+ 1291              		.loc 1 533 0
+ 1292 098e 4FF00003 		mov	r3, #0
+ 1293 0992 BB60     		str	r3, [r7, #8]
+ 534:../src/main.cpp **** 	ADC_InitStructure.ADC_ExternalTrigConvEvent = ADC_ExternalTrigConvEvent_0;
+ 1294              		.loc 1 534 0
+ 1295 0994 4FF00003 		mov	r3, #0
+ 1296 0998 FB60     		str	r3, [r7, #12]
+ 535:../src/main.cpp **** 	ADC_InitStructure.ADC_ExternalTrigEventEdge = ADC_ExternalTrigEventEdge_None;
+ 1297              		.loc 1 535 0
+ 1298 099a 4FF00003 		mov	r3, #0
+ 1299 099e 3B61     		str	r3, [r7, #16]
+ 536:../src/main.cpp **** 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+ 1300              		.loc 1 536 0
+ 1301 09a0 4FF00003 		mov	r3, #0
+ 1302 09a4 7B61     		str	r3, [r7, #20]
+ 537:../src/main.cpp **** 	ADC_InitStructure.ADC_OverrunMode = ADC_OverrunMode_Disable;
+ 1303              		.loc 1 537 0
+ 1304 09a6 4FF00003 		mov	r3, #0
+ 1305 09aa BB61     		str	r3, [r7, #24]
+ 538:../src/main.cpp **** 	ADC_InitStructure.ADC_AutoInjMode = ADC_AutoInjec_Disable;
+ 1306              		.loc 1 538 0
+ 1307 09ac 4FF00003 		mov	r3, #0
+ 1308 09b0 FB61     		str	r3, [r7, #28]
+ 539:../src/main.cpp **** 	ADC_InitStructure.ADC_NbrOfRegChannel = 1;
+ 1309              		.loc 1 539 0
+ 1310 09b2 4FF00103 		mov	r3, #1
+ 1311 09b6 87F82030 		strb	r3, [r7, #32]
+ 540:../src/main.cpp **** 	ADC_Init(ADC1, &ADC_InitStructure);
+ 1312              		.loc 1 540 0
+ 1313 09ba 07F10403 		add	r3, r7, #4
+ 1314 09be 4FF0A040 		mov	r0, #1342177280
+ 1315 09c2 1946     		mov	r1, r3
+ 1316 09c4 FFF7FEFF 		bl	ADC_Init
+ 541:../src/main.cpp **** 
+ 542:../src/main.cpp **** 	/* ADC1 regular channel3 configuration */
+ 543:../src/main.cpp **** 	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 1, ADC_SampleTime_601Cycles5);//ADC_SampleTime_61Cyc
+ 1317              		.loc 1 543 0
+ 1318 09c8 4FF0A040 		mov	r0, #1342177280
+ 1319 09cc 4FF00301 		mov	r1, #3
+ 1320 09d0 4FF00102 		mov	r2, #1
+ 1321 09d4 4FF00703 		mov	r3, #7
+ 1322 09d8 FFF7FEFF 		bl	ADC_RegularChannelConfig
+ 544:../src/main.cpp **** 
+ 545:../src/main.cpp **** 	// Configure ADC1_2 global interrupt:
+ 546:../src/main.cpp **** 
+ 547:../src/main.cpp **** 	NVIC_InitTypeDef nv;
+ 548:../src/main.cpp **** 
+ 549:../src/main.cpp **** 	nv.NVIC_IRQChannel = ADC1_2_IRQn;
+ 1323              		.loc 1 549 0
+ 1324 09dc 4FF01203 		mov	r3, #18
+ 1325 09e0 87F82430 		strb	r3, [r7, #36]
+ 550:../src/main.cpp **** 	nv.NVIC_IRQChannelPreemptionPriority = 2;
+ 1326              		.loc 1 550 0
+ 1327 09e4 4FF00203 		mov	r3, #2
+ 1328 09e8 87F82530 		strb	r3, [r7, #37]
+ 551:../src/main.cpp **** 	nv.NVIC_IRQChannelSubPriority = 0;
+ 1329              		.loc 1 551 0
+ 1330 09ec 4FF00003 		mov	r3, #0
+ 1331 09f0 87F82630 		strb	r3, [r7, #38]
+ 552:../src/main.cpp **** 	nv.NVIC_IRQChannelCmd = ENABLE;
+ 1332              		.loc 1 552 0
+ 1333 09f4 4FF00103 		mov	r3, #1
+ 1334 09f8 87F82730 		strb	r3, [r7, #39]
+ 553:../src/main.cpp **** 
+ 554:../src/main.cpp **** 	NVIC_Init(&nv);
+ 1335              		.loc 1 554 0
+ 1336 09fc 07F12403 		add	r3, r7, #36
+ 1337 0a00 1846     		mov	r0, r3
+ 1338 0a02 FFF7FEFF 		bl	NVIC_Init
+ 555:../src/main.cpp **** 
+ 556:../src/main.cpp **** 	// Enable ADC1's global interrupt:
+ 557:../src/main.cpp **** 
+ 558:../src/main.cpp **** 	ADC_ITConfig(ADC1, ADC_IT_EOC, ENABLE);
+ 1339              		.loc 1 558 0
+ 1340 0a06 4FF0A040 		mov	r0, #1342177280
+ 1341 0a0a 4FF00401 		mov	r1, #4
+ 1342 0a0e 4FF00102 		mov	r2, #1
+ 1343 0a12 FFF7FEFF 		bl	ADC_ITConfig
+ 559:../src/main.cpp **** 
+ 560:../src/main.cpp **** 	/* Enable ADC1 */
+ 561:../src/main.cpp **** 	ADC_Cmd(ADC1, ENABLE);
+ 1344              		.loc 1 561 0
+ 1345 0a16 4FF0A040 		mov	r0, #1342177280
+ 1346 0a1a 4FF00101 		mov	r1, #1
+ 1347 0a1e FFF7FEFF 		bl	ADC_Cmd
+ 562:../src/main.cpp **** 
+ 563:../src/main.cpp **** 	/* wait for ADRDY */
+ 564:../src/main.cpp **** 	while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_RDY));
+ 1348              		.loc 1 564 0
+ 1349 0a22 00BF     		nop
+ 1350              	.L31:
+ 1351              		.loc 1 564 0 is_stmt 0 discriminator 1
+ 1352 0a24 4FF0A040 		mov	r0, #1342177280
+ 1353 0a28 4FF00101 		mov	r1, #1
+ 1354 0a2c FFF7FEFF 		bl	ADC_GetFlagStatus
+ 1355 0a30 0346     		mov	r3, r0
+ 1356 0a32 002B     		cmp	r3, #0
+ 1357 0a34 14BF     		ite	ne
+ 1358 0a36 0023     		movne	r3, #0
+ 1359 0a38 0123     		moveq	r3, #1
+ 1360 0a3a DBB2     		uxtb	r3, r3
+ 1361 0a3c 002B     		cmp	r3, #0
+ 1362 0a3e F1D1     		bne	.L31
+ 565:../src/main.cpp **** 
+ 566:../src/main.cpp **** 	/* Start ADC1 Software Conversion */
+ 567:../src/main.cpp **** 	ADC_StartConversion(ADC1);
+ 1363              		.loc 1 567 0 is_stmt 1
+ 1364 0a40 4FF0A040 		mov	r0, #1342177280
+ 1365 0a44 FFF7FEFF 		bl	ADC_StartConversion
+ 1366              	.LBE7:
+ 568:../src/main.cpp **** }
+ 1367              		.loc 1 568 0
+ 1368 0a48 07F14807 		add	r7, r7, #72
+ 1369 0a4c BD46     		mov	sp, r7
+ 1370 0a4e 80BD     		pop	{r7, pc}
+ 1371              		.cfi_endproc
+ 1372              	.LFE117:
+ 1374              	.Letext0:
+ 1375              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
+ 1376              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
+ 1377              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_dma.h"
+ 1378              		.file 5 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_gpio.h"
+ 1379              		.file 6 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_tim.h"
+ 1380              		.file 7 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_misc.h"
+ 1381              		.file 8 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_adc.h"
+ 1382              		.file 9 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f3_discovery_l3gd20.h"
+ 1383              		.file 10 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot/encoder.h"
+ 1384              		.file 11 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 main.cpp
-     /tmp/ccCRg3s2.s:25     .bss:00000000 led_iter
-     /tmp/ccCRg3s2.s:22     .bss:00000000 $d
-     /tmp/ccCRg3s2.s:32     .data:00000000 led_matrix
-     /tmp/ccCRg3s2.s:29     .data:00000000 $d
-     /tmp/ccCRg3s2.s:46     .bss:00000004 left_enc
-     /tmp/ccCRg3s2.s:52     .bss:0000002c right_enc
-     /tmp/ccCRg3s2.s:58     .bss:00000054 gyro_angle_x
-     /tmp/ccCRg3s2.s:64     .bss:00000058 gyro_bias_x
-     /tmp/ccCRg3s2.s:70     .bss:0000005c adcval
-     /tmp/ccCRg3s2.s:76     .bss:00000060 adcData
-     /tmp/ccCRg3s2.s:82     .bss:00000068 new_data
-     /tmp/ccCRg3s2.s:85     .rodata:00000000 $d
-     /tmp/ccCRg3s2.s:86     .rodata:00000000 .LC0
-     /tmp/ccCRg3s2.s:89     .text:00000000 $t
-     /tmp/ccCRg3s2.s:94     .text:00000000 main
-     /tmp/ccCRg3s2.s:468    .text:00000284 _Z13adc1_init_DMAv
-     /tmp/ccCRg3s2.s:220    .text:00000100 _Z19imu_update_ISR_initv
-     /tmp/ccCRg3s2.s:377    .text:000001fc _Z14calc_gyro_biasv
-     /tmp/ccCRg3s2.s:337    .rodata:0000001c .LC1
-     /tmp/ccCRg3s2.s:346    .text:000001e4 L3GD20_TIMEOUT_UserCallback
-     /tmp/ccCRg3s2.s:459    .text:00000280 $d
-     /tmp/ccCRg3s2.s:463    .text:00000284 $t
-     /tmp/ccCRg3s2.s:748    .text:000004ec _Z9adc1_initv
+     /tmp/ccnz3NrQ.s:25     .bss:00000000 led_iter
+     /tmp/ccnz3NrQ.s:22     .bss:00000000 $d
+     /tmp/ccnz3NrQ.s:32     .data:00000000 led_matrix
+     /tmp/ccnz3NrQ.s:29     .data:00000000 $d
+     /tmp/ccnz3NrQ.s:46     .bss:00000004 left_enc
+     /tmp/ccnz3NrQ.s:52     .bss:0000002c right_enc
+     /tmp/ccnz3NrQ.s:58     .bss:00000054 gyro_angle_x
+     /tmp/ccnz3NrQ.s:64     .bss:00000058 gyro_bias_x
+     /tmp/ccnz3NrQ.s:70     .bss:0000005c adcval
+     /tmp/ccnz3NrQ.s:76     .bss:00000060 adcData
+     /tmp/ccnz3NrQ.s:82     .bss:00000068 new_data
+     /tmp/ccnz3NrQ.s:88     .bss:0000006c adc2_data
+     /tmp/ccnz3NrQ.s:93     .bss:0000007c adc2_new_data
+     /tmp/ccnz3NrQ.s:96     .rodata:00000000 $d
+     /tmp/ccnz3NrQ.s:97     .rodata:00000000 .LC0
+     /tmp/ccnz3NrQ.s:100    .rodata:00000008 .LC1
+     /tmp/ccnz3NrQ.s:103    .rodata:00000010 .LC2
+     /tmp/ccnz3NrQ.s:106    .text:00000000 $t
+     /tmp/ccnz3NrQ.s:111    .text:00000000 main
+     /tmp/ccnz3NrQ.s:536    .text:000002e8 _Z13adc1_init_DMAv
+     /tmp/ccnz3NrQ.s:820    .text:0000055c _Z13adc2_init_DMAv
+     /tmp/ccnz3NrQ.s:288    .text:00000164 _Z19imu_update_ISR_initv
+     /tmp/ccnz3NrQ.s:445    .text:00000260 _Z14calc_gyro_biasv
+     /tmp/ccnz3NrQ.s:405    .rodata:00000014 .LC3
+     /tmp/ccnz3NrQ.s:414    .text:00000248 L3GD20_TIMEOUT_UserCallback
+     /tmp/ccnz3NrQ.s:527    .text:000002e4 $d
+     /tmp/ccnz3NrQ.s:531    .text:000002e8 $t
+     /tmp/ccnz3NrQ.s:1172   .text:000008a0 _Z9adc1_initv
                      .debug_frame:00000010 $d
                            .group:00000000 wm4.1.50a79f075d1434c9a8bd8ee500f78677
                            .group:00000000 wm4.stm32f30x.h.56.6f19c65e98e3319a61449cb2b2455af5
@@ -1466,7 +2040,6 @@ _Z17TIM8_init_encoderv
 _Z17TIM2_init_encoderv
 _Z23encoder_update_ISR_initv
 _Z19LED_MATRIX_ISR_initv
-_Z11pwm2_outputf
 printf
 L3GD20_Init
 NVIC_Init
@@ -1477,6 +2050,7 @@ TIM_Cmd
 L3GD20_Read
 RCC_ADCCLKConfig
 RCC_AHBPeriphClockCmd
+GPIO_StructInit
 GPIO_Init
 ADC_StructInit
 ADC_VoltageRegulatorCmd
