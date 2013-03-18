@@ -156,6 +156,13 @@ int main(void)
 		printf("ADC1: %4d || ADC2: %4d\n\r", adcData[0], adcData[1]);//adcData, (uint32_t)&(ADC1->DR));//, adcData[1]);
 		new_data = 0;
 		*/
+		printf("ADC1: ");
+		while(new_data==0);
+		for(iter=0;iter<2;++iter)
+		{
+			printf("%4d ", adcData[iter]);
+		}
+
 		printf("ADC2: ");
 		while(adc2_new_data==0);
 		for(iter=0;iter<4;++iter)
@@ -311,7 +318,7 @@ void adc1_init_DMA(void)
 
 	/* ADC1 regular channel3 configuration */
 	ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 1, ADC_SampleTime_601Cycles5);//ADC_SampleTime_61Cycles5);//ADC_SampleTime_7Cycles5);
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 2, ADC_SampleTime_19Cycles5);//ADC_SampleTime_61Cycles5);//ADC_SampleTime_7Cycles5);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 2, ADC_SampleTime_601Cycles5);//ADC_SampleTime_61Cycles5);//ADC_SampleTime_7Cycles5);
 
 	/* Enable ADC1 */
 	ADC_Cmd(ADC1, ENABLE);
