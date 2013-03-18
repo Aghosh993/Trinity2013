@@ -1437,21 +1437,21 @@
  999              		.file 7 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32f3_discovery_l3gd20.c
-     /tmp/ccocCum2.s:25     .data:00000000 L3GD20Timeout
-     /tmp/ccocCum2.s:22     .data:00000000 $d
-     /tmp/ccocCum2.s:28     .text:00000000 $t
-     /tmp/ccocCum2.s:33     .text:00000000 L3GD20_Init
-     /tmp/ccocCum2.s:681    .text:000003a4 L3GD20_LowLevel_Init
-     /tmp/ccocCum2.s:518    .text:000002b4 L3GD20_Write
-     /tmp/ccocCum2.s:123    .text:00000084 L3GD20_RebootCmd
-     /tmp/ccocCum2.s:596    .text:00000324 L3GD20_Read
-     /tmp/ccocCum2.s:169    .text:000000c0 L3GD20_INT1InterruptConfig
-     /tmp/ccocCum2.s:258    .text:00000158 L3GD20_INT1InterruptCmd
-     /tmp/ccocCum2.s:312    .text:000001a4 L3GD20_INT2InterruptCmd
-     /tmp/ccocCum2.s:366    .text:000001f0 L3GD20_FilterConfig
-     /tmp/ccocCum2.s:426    .text:00000244 L3GD20_FilterCmd
-     /tmp/ccocCum2.s:480    .text:00000290 L3GD20_GetDataStatus
-     /tmp/ccocCum2.s:880    .text:00000568 L3GD20_SendByte
+     /tmp/ccBDqrmn.s:25     .data:00000000 L3GD20Timeout
+     /tmp/ccBDqrmn.s:22     .data:00000000 $d
+     /tmp/ccBDqrmn.s:28     .text:00000000 $t
+     /tmp/ccBDqrmn.s:33     .text:00000000 L3GD20_Init
+     /tmp/ccBDqrmn.s:681    .text:000003a4 L3GD20_LowLevel_Init
+     /tmp/ccBDqrmn.s:518    .text:000002b4 L3GD20_Write
+     /tmp/ccBDqrmn.s:123    .text:00000084 L3GD20_RebootCmd
+     /tmp/ccBDqrmn.s:596    .text:00000324 L3GD20_Read
+     /tmp/ccBDqrmn.s:169    .text:000000c0 L3GD20_INT1InterruptConfig
+     /tmp/ccBDqrmn.s:258    .text:00000158 L3GD20_INT1InterruptCmd
+     /tmp/ccBDqrmn.s:312    .text:000001a4 L3GD20_INT2InterruptCmd
+     /tmp/ccBDqrmn.s:366    .text:000001f0 L3GD20_FilterConfig
+     /tmp/ccBDqrmn.s:426    .text:00000244 L3GD20_FilterCmd
+     /tmp/ccBDqrmn.s:480    .text:00000290 L3GD20_GetDataStatus
+     /tmp/ccBDqrmn.s:880    .text:00000568 L3GD20_SendByte
                      .debug_frame:00000010 $d
                            .group:00000000 wm4.1.743cd71370ebc432b539c5dba7924ecc
                            .group:00000000 wm4.stm32f30x.h.56.6f19c65e98e3319a61449cb2b2455af5

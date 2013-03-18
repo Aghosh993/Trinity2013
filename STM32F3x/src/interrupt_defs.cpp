@@ -24,6 +24,7 @@ extern volatile int led_matrix[8];
 extern volatile int led_iter;
 extern int new_data;
 extern uint8_t adc2_new_data;
+extern uint8_t adc3_awd1, adc3_awd2;
 
 	void TIM7_IRQHandler(void) // ISR that performs encoder state update:
 										// Runs every DT milliseconds
@@ -164,6 +165,29 @@ extern uint8_t adc2_new_data;
 	{
 		DMA_ClearITPendingBit(DMA2_IT_TC1);
 		adc2_new_data = 1;
+	}
+
+	void ADC3_IRQHandler(void)
+	{
+		int i = 0;
+		int sum = 0;
+		if(ADC_GetITStatus(ADC3, ADC_IT_AWD1) != RESET)
+		{
+			ADC_ClearITPendingBit(ADC3, ADC_IT_AWD1);
+			for(i=0; i<35;++i)
+			{
+				sum += ADC_GetConversionValue(ADC3);
+			}
+			if((float)sum/float(35) > 2048)
+			{
+				adc3_awd1 = 1;
+			}
+		}
+		else if (ADC_GetITStatus(ADC3, ADC_IT_AWD2) != RESET)
+		{
+			ADC_ClearITPendingBit(ADC3, ADC_IT_AWD2);
+			adc3_awd2 = 1;
+		}
 	}
 }
 

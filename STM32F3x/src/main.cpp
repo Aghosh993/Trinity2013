@@ -51,6 +51,7 @@ uint32_t L3GD20_TIMEOUT_UserCallback(void);
 
 void adc1_init_DMA(void);
 void adc2_init_DMA(void);
+void battery_watchdog_init(void);
 void adc1_init(void);
 
 // Global variables to keep track of encoders and inertial sensors:
@@ -66,6 +67,8 @@ int new_data;
 
 __IO uint32_t adc2_data[4];
 uint8_t adc2_new_data;
+
+uint8_t adc3_awd1, adc3_awd2;
 
 // Initialize all encoder data structures to zero:
 
@@ -85,6 +88,9 @@ int main(void)
 	{
 		adc2_data[iter] = 0;
 	}
+
+	adc3_awd1 = 0;
+	adc3_awd2 = 0;
 
 	/*
 	 * Initialize global encoder data structure for left and right encoders,
@@ -118,6 +124,7 @@ int main(void)
 
 	// Initialize ADC2 DMA:
 	adc2_init_DMA();
+	battery_watchdog_init();
 
 	encoder_update_ISR_init();	//Update the state of the two encoders (left/right)
 	imu_update_ISR_init(); 		//IMU (gyro/acclerometer/magnetometer ISR)
@@ -169,6 +176,9 @@ int main(void)
 		{
 			printf("%4d ", adc2_data[iter]);
 		}
+		printf("AWD1: %d, AWD2: %d, ADC: %d", adc3_awd1, adc3_awd2, ADC_GetConversionValue(ADC3));
+//		adc3_awd1 = 0;
+//		adc3_awd2 = 0;
 		printf("\n\r");
 	}
 	return 0; // We should never manage to get here...
@@ -485,6 +495,108 @@ void adc2_init_DMA(void)
 
 	ADC_DMAConfig(ADC2, ADC_DMAMode_Circular);
 	ADC_DMACmd(ADC2, ENABLE);
+}
+
+void battery_watchdog_init(void)
+{
+	ADC_InitTypeDef       ADC_InitStructure;
+	ADC_CommonInitTypeDef ADC_CommonInitStructure;
+	GPIO_InitTypeDef      GPIO_InitStructure;
+	/* Configure the ADC clock */
+	RCC_ADCCLKConfig(RCC_ADC34PLLCLK_Div128);
+
+	/* Enable ADC1 clock */
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_ADC34, ENABLE);
+	/* ADC Channel configuration */
+	/* GPIOC Periph clock enable */
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB | RCC_AHBPeriph_GPIOE, ENABLE);
+
+	/* Configure PB1, PE7 as analog inputs */
+	GPIO_StructInit(&GPIO_InitStructure);
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
+	GPIO_Init(GPIOB, &GPIO_InitStructure);
+/*
+	GPIO_StructInit(&GPIO_InitStructure);
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
+	GPIO_Init(GPIOE, &GPIO_InitStructure);
+*/
+
+	ADC_StructInit(&ADC_InitStructure);
+
+	/* Calibration procedure */
+	ADC_VoltageRegulatorCmd(ADC3, ENABLE);
+
+	/* Insert delay equal to 222 µs */
+	int foo;
+	for(foo = 0; foo < 32000; ++foo)
+	{
+	  ++foo;
+	}
+
+	ADC_SelectCalibrationMode(ADC3, ADC_CalibrationMode_Single);
+	ADC_StartCalibration(ADC3);
+
+	while(ADC_GetCalibrationStatus(ADC3) != RESET );
+
+	ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
+	ADC_CommonInitStructure.ADC_Clock = ADC_Clock_SynClkModeDiv4;//ADC_Clock_AsynClkMode;
+	ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled;
+	ADC_CommonInitStructure.ADC_DMAMode = ADC_DMAMode_OneShot;
+	ADC_CommonInitStructure.ADC_TwoSamplingDelay = 0;
+	ADC_CommonInit(ADC3, &ADC_CommonInitStructure);
+
+	ADC_InitStructure.ADC_ContinuousConvMode = ADC_ContinuousConvMode_Enable;
+	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
+	ADC_InitStructure.ADC_ExternalTrigConvEvent = ADC_ExternalTrigConvEvent_0;
+	ADC_InitStructure.ADC_ExternalTrigEventEdge = ADC_ExternalTrigEventEdge_None;
+	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+	ADC_InitStructure.ADC_OverrunMode = ADC_OverrunMode_Disable;
+	ADC_InitStructure.ADC_AutoInjMode = ADC_AutoInjec_Disable;
+	ADC_InitStructure.ADC_NbrOfRegChannel = 1;					//2
+	ADC_Init(ADC3, &ADC_InitStructure);
+
+	/* ADC3 regular Channel 1, 13 configuration */
+	ADC_RegularChannelConfig(ADC3, ADC_Channel_1, 1, ADC_SampleTime_601Cycles5);
+//	ADC_RegularChannelConfig(ADC3, ADC_Channel_13, 2, ADC_SampleTime_7Cycles5);
+
+	ADC_AnalogWatchdog1SingleChannelConfig(ADC3, ADC_Channel_1);
+//	ADC_AnalogWatchdog2SingleChannelConfig(ADC3, ADC_Channel_13);
+
+	/* Configure AWD 1 & 2 Thresholds: */
+
+	ADC_AnalogWatchdog1ThresholdsConfig(ADC3, 2048, 10);// 2100, 1996); //50%
+//	ADC_AnalogWatchdog2ThresholdsConfig(ADC3, 0x80, 0x00);//0xC1, 0xBB); //75%
+
+	ADC_AnalogWatchdogCmd(ADC3, ADC_AnalogWatchdog_SingleRegEnable);
+//	ADC_AnalogWatchdogCmd(ADC3, ADC_AnalogWatchdog_AllRegEnable);
+
+	// Configure ADC3 global interrupt:
+
+	NVIC_InitTypeDef nv;
+
+	nv.NVIC_IRQChannel = ADC3_IRQn;
+	nv.NVIC_IRQChannelPreemptionPriority = 0;
+	nv.NVIC_IRQChannelSubPriority = 0;
+	nv.NVIC_IRQChannelCmd = ENABLE;
+
+	NVIC_Init(&nv);
+
+	// Enable ADC3's global interrupt:
+
+	ADC_ITConfig(ADC3, ADC_IT_AWD1, ENABLE);// | ADC_IT_AWD2, ENABLE);
+
+	/* Enable ADC3 */
+	ADC_Cmd(ADC3, ENABLE);
+
+	/* wait for ADRDY */
+	while(!ADC_GetFlagStatus(ADC3, ADC_FLAG_RDY));
+
+	/* Start ADC3 Software Conversion */
+	ADC_StartConversion(ADC3);
 }
 
 /* Initializes ADC1 to read PA2 continuously using ADC1 end of conversion (EOC) interrupt
