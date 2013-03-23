@@ -44,7 +44,7 @@ void TIM2_init_encoder(void) // PA0, PA1 -> TIM2 CH1 and CH2 mappings:
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;//UP;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 	GPIO_PinAFConfig(GPIOA, GPIO_PinSource0, GPIO_AF_1);
@@ -63,6 +63,35 @@ void TIM2_init_encoder(void) // PA0, PA1 -> TIM2 CH1 and CH2 mappings:
 	TIM_SetCounter(TIM2, 0);
 }
 
+void TIM4_init_encoder(void)
+{
+	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
+	GPIO_InitTypeDef GPIO_InitStructure;
+
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOD, ENABLE);
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_13;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(GPIOD, &GPIO_InitStructure);
+
+	GPIO_PinAFConfig(GPIOD, GPIO_PinSource12, GPIO_AF_2); //10??
+	GPIO_PinAFConfig(GPIOD, GPIO_PinSource13, GPIO_AF_2); //10??
+
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
+	TIM_TimeBaseStructure.TIM_Period = 0xFFFFFFFF;
+	TIM_TimeBaseStructure.TIM_Prescaler = 0;
+	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+	TIM_EncoderInterfaceConfig(TIM4,TIM_EncoderMode_TI12,TIM_ICPolarity_Falling,
+	TIM_ICPolarity_Falling);
+	TIM_TimeBaseInit(TIM4, &TIM_TimeBaseStructure);
+	TIM_Cmd(TIM4, ENABLE);
+
+	TIM_SetCounter(TIM4, 0);
+}
+
 // Initializes the ISR that updates the raw state (position, velocity, acceleration) of each encoder.
 // Interrupt Priority: NEXT-HIGHEST (1)
 
@@ -72,7 +101,7 @@ void encoder_update_ISR_init(void)
 	TIM_TimeBaseInitTypeDef TIM7_init;
 
 	nv.NVIC_IRQChannel = TIM7_IRQn;
-	nv.NVIC_IRQChannelPreemptionPriority = 1;
+	nv.NVIC_IRQChannelPreemptionPriority = 0;//
 	nv.NVIC_IRQChannelSubPriority = 0;
 	nv.NVIC_IRQChannelCmd = ENABLE;
 

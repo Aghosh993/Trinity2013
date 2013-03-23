@@ -14,7 +14,8 @@
 
 /*
  * Timer usage manifest:
- * TIM2: 32-bit encoder interface input (PC6, PC7)
+ * TIM2: 32-bit encoder interface input (PC6, PC7) (NOT ON TRINITY BOARD DUE TO HARDWARE FAULT!!)
+ * TIM4: 16-bit encoder interface input (PD12, PD13) (ONLY ON TRINITY BOARD, DUE TO ABOVE!!)
  * TIM8: 16-bit encoder interface input (PA0, PA1)
  *
  * TIM3: PWM Output Channels 1 and 2 	(PB4, PB5)
@@ -54,6 +55,11 @@ void adc2_init_DMA(void);
 void battery_watchdog_init(void);
 void adc1_init(void);
 
+void brake_pins_init(void);
+
+void ping_pin_init(void);
+void timer2_timebase_init(void);
+
 // Global variables to keep track of encoders and inertial sensors:
 
 encoderState left_enc, right_enc;
@@ -69,6 +75,8 @@ __IO uint32_t adc2_data[4];
 uint8_t adc2_new_data;
 
 uint8_t adc3_awd1, adc3_awd2;
+
+int count, stage;
 
 // Initialize all encoder data structures to zero:
 
@@ -92,6 +100,9 @@ int main(void)
 	adc3_awd1 = 0;
 	adc3_awd2 = 0;
 
+	count = 0;
+	stage = 0;
+
 	/*
 	 * Initialize global encoder data structure for left and right encoders,
 	 * and set position/speed targets as necessary:
@@ -106,13 +117,14 @@ int main(void)
 
 	// Initialize PWM outputs 1 and 2 at 5.0 kHz duty frequency:
 
-	pwm_out1_init(5000);
-	pwm_out2_init(5000);
+	brake_pins_init();
+	pwm_out1_init(1000);
+	pwm_out2_init(1000);
 
 	// Initialize hardware quadrature encoder input interfaces:
 
 	TIM8_init_encoder();
-	TIM2_init_encoder();
+	TIM4_init_encoder();
 
 	// Initialize ADC, encoder update, IMU update and LED matrix interrupts:
 
@@ -123,18 +135,25 @@ int main(void)
 	adc1_init_DMA();
 
 	// Initialize ADC2 DMA:
-	adc2_init_DMA();
-	battery_watchdog_init();
+//	adc2_init_DMA();
+//	battery_watchdog_init();
 
 	encoder_update_ISR_init();	//Update the state of the two encoders (left/right)
-	imu_update_ISR_init(); 		//IMU (gyro/acclerometer/magnetometer ISR)
+//	imu_update_ISR_init(); 		//IMU (gyro/acclerometer/magnetometer ISR)
 	LED_MATRIX_ISR_init();		//Hand out some eye candy while we're at it...
+
+	// Ping Sensor Init:
+
+	ping_pin_init();
+	timer2_timebase_init();
+
+	imu_update_ISR_init();
 
 	adcval = 0;
 	float mtr_out = 0;
 	char *mode;
 
-	right_enc.m = MODE_POSITION;
+//	right_enc.m = MODE_POSITION;
 
 	while(true)
 	{
@@ -150,8 +169,13 @@ int main(void)
 //		}
 
 //		mode = (right_enc.m == MODE_OPENLOOP) ? (char *)"Open" : ((right_enc.m == MODE_POSITION) ? (char *)"Position" : (char *)"Velocity");
-	//	pwm1_output(0.50f);
-//		printf("Left: %d | Right: %d | Mode: %s\n\r", left_enc.position, right_enc.position, mode);
+//		GPIO_WriteBit(GPIOE, GPIO_Pin_2, Bit_RESET);
+//		GPIO_WriteBit(GPIOE, GPIO_Pin_3, Bit_RESET);
+		mtr_out = 0.6;//(float)adcData[0]/(float)4096;
+		pwm1_output(0.75);//mtr_out);
+		pwm2_output(0.25);//1-mtr_out);
+//		printf("Left: %d | Right: %d\n\r", left_enc.position, right_enc.position);//, mode);
+		printf("%d Counter: %d\n\r", count, TIM_GetCounter(TIM2));
 
 //		printf("Bias_x: %d | Theta_x: %5.2f | Left: %d | Right: %d\n\r", gyro_bias_x, gyro_angle_x, left_enc.position, right_enc.position);
 //		printf("ADC Value on Channel 3: %d || Theta_x: %5.2f\n\r", adcval, gyro_angle_x);
@@ -163,12 +187,15 @@ int main(void)
 		printf("ADC1: %4d || ADC2: %4d\n\r", adcData[0], adcData[1]);//adcData, (uint32_t)&(ADC1->DR));//, adcData[1]);
 		new_data = 0;
 		*/
+		/*
 		printf("ADC1: ");
 		while(new_data==0);
 		for(iter=0;iter<2;++iter)
 		{
 			printf("%4d ", adcData[iter]);
 		}
+
+		pwm1_output((float)adcData[0]/(float)4096);
 
 		printf("ADC2: ");
 		while(adc2_new_data==0);
@@ -180,6 +207,7 @@ int main(void)
 //		adc3_awd1 = 0;
 //		adc3_awd2 = 0;
 		printf("\n\r");
+		*/
 	}
 	return 0; // We should never manage to get here...
 }
@@ -239,6 +267,95 @@ uint32_t L3GD20_TIMEOUT_UserCallback(void)
 {
 	printf("L3GD20 read attempt timed out... check your wiring/code!!!\n\r");
 	return 0;
+}
+
+void brake_pins_init(void)
+{
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOE, ENABLE);
+	GPIO_InitTypeDef GPIO_InitStructure;
+	GPIO_StructInit(&GPIO_InitStructure);
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_3;
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_Level_2;
+	GPIO_Init(GPIOE, &GPIO_InitStructure);
+
+	GPIO_WriteBit(GPIOE, GPIO_Pin_2, Bit_RESET);
+	GPIO_WriteBit(GPIOE, GPIO_Pin_3, Bit_RESET);
+
+	/*
+	 * 	a.GPIO_Mode = GPIO_Mode_OUT;
+	a.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	a.GPIO_OType = GPIO_OType_PP;
+	a.GPIO_Speed = GPIO_Speed_Level_2;
+
+	 */
+}
+/*
+ * PB0: OUTPUT
+ * PB1: INPUT
+ */
+void ping_pin_init(void)
+{
+
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
+
+	GPIO_InitTypeDef g;
+	g.GPIO_Mode = GPIO_Mode_IN;
+	g.GPIO_OType = GPIO_OType_OD;
+	g.GPIO_Pin = GPIO_Pin_1;
+	g.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	g.GPIO_Speed = GPIO_Speed_Level_1;
+
+	GPIO_Init(GPIOB, &g);
+
+	g.GPIO_Mode = GPIO_Mode_OUT;
+	g.GPIO_OType = GPIO_OType_PP;
+	g.GPIO_Pin = GPIO_Pin_0;
+	g.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	g.GPIO_Speed = GPIO_Speed_Level_1;
+
+	GPIO_Init(GPIOB, &g);
+
+//	EXTI_InitTypeDef e;
+
+//	e.EXTI_Line = EXTI_Line1;
+//	e.EXTI_LineCmd = ENABLE;
+//	e.EXTI_Mode = EXTI_Mode_Interrupt;
+//	e.EXTI_Trigger = EXTI_Trigger_Rising_Falling; //EXTI_Trigger_Rising;
+
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOB, EXTI_PinSource1);
+
+//	EXTI_Init(&e);
+
+	/*
+	NVIC_InitTypeDef nv;
+
+	nv.NVIC_IRQChannel = EXTI1_IRQn;
+	nv.NVIC_IRQChannelCmd = ENABLE;
+	nv.NVIC_IRQChannelPreemptionPriority = 0;
+	nv.NVIC_IRQChannelSubPriority = 0;
+
+	NVIC_Init(&nv);
+	*/
+
+}
+
+void timer2_timebase_init(void)
+{
+	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
+	TIM_TimeBaseStructure.TIM_Period = 1899;//0xFFFFFFFF;//1899;//0xFFFFFFFF;
+	TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
+	TIM_TimeBaseStructure.TIM_Prescaler = 71;//0;//71;
+	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
+//	TIM_Cmd(TIM2, ENABLE);
+
+	TIM_SetCounter(TIM2, 0);
 }
 
 int16_t calc_gyro_bias(void)

@@ -207,7 +207,7 @@
  164              		.loc 1 46 0
  165 0104 4FF00303 		mov	r3, #3
  166 0108 7B72     		strb	r3, [r7, #9]
-  47:../src/encoder.cpp **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;//UP;
+  47:../src/encoder.cpp **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
  167              		.loc 1 47 0
  168 010a 4FF00003 		mov	r3, #0
  169 010e FB72     		strb	r3, [r7, #11]
@@ -286,223 +286,358 @@
  225              		.cfi_endproc
  226              	.LFE112:
  228              		.align	2
- 229              		.global	_Z23encoder_update_ISR_initv
+ 229              		.global	_Z17TIM4_init_encoderv
  230              		.thumb
  231              		.thumb_func
- 233              	_Z23encoder_update_ISR_initv:
+ 233              	_Z17TIM4_init_encoderv:
  234              	.LFB113:
   65:../src/encoder.cpp **** 
-  66:../src/encoder.cpp **** // Initializes the ISR that updates the raw state (position, velocity, acceleration) of each encode
-  67:../src/encoder.cpp **** // Interrupt Priority: NEXT-HIGHEST (1)
-  68:../src/encoder.cpp **** 
-  69:../src/encoder.cpp **** void encoder_update_ISR_init(void)
-  70:../src/encoder.cpp **** {
- 235              		.loc 1 70 0
+  66:../src/encoder.cpp **** void TIM4_init_encoder(void)
+  67:../src/encoder.cpp **** {
+ 235              		.loc 1 67 0
  236              		.cfi_startproc
- 237              		@ args = 0, pretend = 0, frame = 16
+ 237              		@ args = 0, pretend = 0, frame = 24
  238              		@ frame_needed = 1, uses_anonymous_args = 0
  239 01a4 80B5     		push	{r7, lr}
  240              	.LCFI6:
  241              		.cfi_def_cfa_offset 8
  242              		.cfi_offset 7, -8
  243              		.cfi_offset 14, -4
- 244 01a6 84B0     		sub	sp, sp, #16
+ 244 01a6 86B0     		sub	sp, sp, #24
  245              	.LCFI7:
- 246              		.cfi_def_cfa_offset 24
+ 246              		.cfi_def_cfa_offset 32
  247 01a8 00AF     		add	r7, sp, #0
  248              	.LCFI8:
  249              		.cfi_def_cfa_register 7
  250              	.LBB4:
-  71:../src/encoder.cpp **** 	NVIC_InitTypeDef nv;
-  72:../src/encoder.cpp **** 	TIM_TimeBaseInitTypeDef TIM7_init;
-  73:../src/encoder.cpp **** 
-  74:../src/encoder.cpp **** 	nv.NVIC_IRQChannel = TIM7_IRQn;
- 251              		.loc 1 74 0
- 252 01aa 4FF03703 		mov	r3, #55
- 253 01ae 3B73     		strb	r3, [r7, #12]
-  75:../src/encoder.cpp **** 	nv.NVIC_IRQChannelPreemptionPriority = 1;
- 254              		.loc 1 75 0
- 255 01b0 4FF00103 		mov	r3, #1
- 256 01b4 7B73     		strb	r3, [r7, #13]
-  76:../src/encoder.cpp **** 	nv.NVIC_IRQChannelSubPriority = 0;
- 257              		.loc 1 76 0
- 258 01b6 4FF00003 		mov	r3, #0
- 259 01ba BB73     		strb	r3, [r7, #14]
-  77:../src/encoder.cpp **** 	nv.NVIC_IRQChannelCmd = ENABLE;
- 260              		.loc 1 77 0
- 261 01bc 4FF00103 		mov	r3, #1
- 262 01c0 FB73     		strb	r3, [r7, #15]
+  68:../src/encoder.cpp **** 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
+  69:../src/encoder.cpp **** 	GPIO_InitTypeDef GPIO_InitStructure;
+  70:../src/encoder.cpp **** 
+  71:../src/encoder.cpp **** 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOD, ENABLE);
+ 251              		.loc 1 71 0
+ 252 01aa 4FF48010 		mov	r0, #1048576
+ 253 01ae 4FF00101 		mov	r1, #1
+ 254 01b2 FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
+  72:../src/encoder.cpp **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_13;
+ 255              		.loc 1 72 0
+ 256 01b6 4FF44053 		mov	r3, #12288
+ 257 01ba 7B60     		str	r3, [r7, #4]
+  73:../src/encoder.cpp **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+ 258              		.loc 1 73 0
+ 259 01bc 4FF00203 		mov	r3, #2
+ 260 01c0 3B72     		strb	r3, [r7, #8]
+  74:../src/encoder.cpp **** 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+ 261              		.loc 1 74 0
+ 262 01c2 4FF00003 		mov	r3, #0
+ 263 01c6 BB72     		strb	r3, [r7, #10]
+  75:../src/encoder.cpp **** 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 264              		.loc 1 75 0
+ 265 01c8 4FF00303 		mov	r3, #3
+ 266 01cc 7B72     		strb	r3, [r7, #9]
+  76:../src/encoder.cpp **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+ 267              		.loc 1 76 0
+ 268 01ce 4FF00003 		mov	r3, #0
+ 269 01d2 FB72     		strb	r3, [r7, #11]
+  77:../src/encoder.cpp **** 	GPIO_Init(GPIOD, &GPIO_InitStructure);
+ 270              		.loc 1 77 0
+ 271 01d4 07F10403 		add	r3, r7, #4
+ 272 01d8 4FF44060 		mov	r0, #3072
+ 273 01dc C4F60000 		movt	r0, 18432
+ 274 01e0 1946     		mov	r1, r3
+ 275 01e2 FFF7FEFF 		bl	GPIO_Init
   78:../src/encoder.cpp **** 
-  79:../src/encoder.cpp **** 	NVIC_Init(&nv);
- 263              		.loc 1 79 0
- 264 01c2 07F10C03 		add	r3, r7, #12
- 265 01c6 1846     		mov	r0, r3
- 266 01c8 FFF7FEFF 		bl	NVIC_Init
-  80:../src/encoder.cpp **** 
-  81:../src/encoder.cpp **** 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM7, ENABLE); //TIM2 on APB1
- 267              		.loc 1 81 0
- 268 01cc 4FF02000 		mov	r0, #32
- 269 01d0 4FF00101 		mov	r1, #1
- 270 01d4 FFF7FEFF 		bl	RCC_APB1PeriphClockCmd
-  82:../src/encoder.cpp **** 
-  83:../src/encoder.cpp **** 	/*
-  84:../src/encoder.cpp **** 	 * UPDATE_FREQUENCY = TIM_CLK/[(PRESCALER+1)(ARR+1)(REPCOUNTER+1)]
-  85:../src/encoder.cpp **** 	 * 	  Prescaler -> PRESCALER
-  86:../src/encoder.cpp **** 	 * 	  Period -> ARR
-  87:../src/encoder.cpp **** 	 * 	  RepetitionCounter -> REPCOUNTER
-  88:../src/encoder.cpp **** 	 */
-  89:../src/encoder.cpp **** 
-  90:../src/encoder.cpp **** 	TIM7_init.TIM_Period = (10*DT_ENCODER)-1;
- 271              		.loc 1 90 0
- 272 01d8 4FF0F903 		mov	r3, #249
- 273 01dc 7B60     		str	r3, [r7, #4]
-  91:../src/encoder.cpp **** 	TIM7_init.TIM_Prescaler = 7199;
- 274              		.loc 1 91 0
- 275 01de 41F61F43 		movw	r3, #7199
- 276 01e2 3B80     		strh	r3, [r7, #0]	@ movhi
-  92:../src/encoder.cpp **** 	TIM7_init.TIM_RepetitionCounter = 0;
- 277              		.loc 1 92 0
- 278 01e4 4FF00003 		mov	r3, #0
- 279 01e8 BB72     		strb	r3, [r7, #10]
-  93:../src/encoder.cpp **** 	TIM7_init.TIM_ClockDivision = 0;
- 280              		.loc 1 93 0
- 281 01ea 4FF00003 		mov	r3, #0
- 282 01ee 3B81     		strh	r3, [r7, #8]	@ movhi
-  94:../src/encoder.cpp **** 	TIM7_init.TIM_CounterMode = TIM_CounterMode_Up;
- 283              		.loc 1 94 0
- 284 01f0 4FF00003 		mov	r3, #0
- 285 01f4 7B80     		strh	r3, [r7, #2]	@ movhi
-  95:../src/encoder.cpp **** 
-  96:../src/encoder.cpp **** 	TIM_TimeBaseInit(TIM7, &TIM7_init);
- 286              		.loc 1 96 0
- 287 01f6 3B46     		mov	r3, r7
- 288 01f8 4FF4A050 		mov	r0, #5120
- 289 01fc C4F20000 		movt	r0, 16384
- 290 0200 1946     		mov	r1, r3
- 291 0202 FFF7FEFF 		bl	TIM_TimeBaseInit
+  79:../src/encoder.cpp **** 	GPIO_PinAFConfig(GPIOD, GPIO_PinSource12, GPIO_AF_2); //10??
+ 276              		.loc 1 79 0
+ 277 01e6 4FF44060 		mov	r0, #3072
+ 278 01ea C4F60000 		movt	r0, 18432
+ 279 01ee 4FF00C01 		mov	r1, #12
+ 280 01f2 4FF00202 		mov	r2, #2
+ 281 01f6 FFF7FEFF 		bl	GPIO_PinAFConfig
+  80:../src/encoder.cpp **** 	GPIO_PinAFConfig(GPIOD, GPIO_PinSource13, GPIO_AF_2); //10??
+ 282              		.loc 1 80 0
+ 283 01fa 4FF44060 		mov	r0, #3072
+ 284 01fe C4F60000 		movt	r0, 18432
+ 285 0202 4FF00D01 		mov	r1, #13
+ 286 0206 4FF00202 		mov	r2, #2
+ 287 020a FFF7FEFF 		bl	GPIO_PinAFConfig
+  81:../src/encoder.cpp **** 
+  82:../src/encoder.cpp **** 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
+ 288              		.loc 1 82 0
+ 289 020e 4FF00400 		mov	r0, #4
+ 290 0212 4FF00101 		mov	r1, #1
+ 291 0216 FFF7FEFF 		bl	RCC_APB1PeriphClockCmd
+  83:../src/encoder.cpp **** 	TIM_TimeBaseStructure.TIM_Period = 0xFFFFFFFF;
+ 292              		.loc 1 83 0
+ 293 021a 4FF0FF33 		mov	r3, #-1
+ 294 021e 3B61     		str	r3, [r7, #16]
+  84:../src/encoder.cpp **** 	TIM_TimeBaseStructure.TIM_Prescaler = 0;
+ 295              		.loc 1 84 0
+ 296 0220 4FF00003 		mov	r3, #0
+ 297 0224 BB81     		strh	r3, [r7, #12]	@ movhi
+  85:../src/encoder.cpp **** 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+ 298              		.loc 1 85 0
+ 299 0226 4FF00003 		mov	r3, #0
+ 300 022a BB82     		strh	r3, [r7, #20]	@ movhi
+  86:../src/encoder.cpp **** 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+ 301              		.loc 1 86 0
+ 302 022c 4FF00003 		mov	r3, #0
+ 303 0230 FB81     		strh	r3, [r7, #14]	@ movhi
+  87:../src/encoder.cpp **** 	TIM_EncoderInterfaceConfig(TIM4,TIM_EncoderMode_TI12,TIM_ICPolarity_Falling,
+  88:../src/encoder.cpp **** 	TIM_ICPolarity_Falling);
+ 304              		.loc 1 88 0
+ 305 0232 4FF40060 		mov	r0, #2048
+ 306 0236 C4F20000 		movt	r0, 16384
+ 307 023a 4FF00301 		mov	r1, #3
+ 308 023e 4FF00202 		mov	r2, #2
+ 309 0242 4FF00203 		mov	r3, #2
+ 310 0246 FFF7FEFF 		bl	TIM_EncoderInterfaceConfig
+  89:../src/encoder.cpp **** 	TIM_TimeBaseInit(TIM4, &TIM_TimeBaseStructure);
+ 311              		.loc 1 89 0
+ 312 024a 07F10C03 		add	r3, r7, #12
+ 313 024e 4FF40060 		mov	r0, #2048
+ 314 0252 C4F20000 		movt	r0, 16384
+ 315 0256 1946     		mov	r1, r3
+ 316 0258 FFF7FEFF 		bl	TIM_TimeBaseInit
+  90:../src/encoder.cpp **** 	TIM_Cmd(TIM4, ENABLE);
+ 317              		.loc 1 90 0
+ 318 025c 4FF40060 		mov	r0, #2048
+ 319 0260 C4F20000 		movt	r0, 16384
+ 320 0264 4FF00101 		mov	r1, #1
+ 321 0268 FFF7FEFF 		bl	TIM_Cmd
+  91:../src/encoder.cpp **** 
+  92:../src/encoder.cpp **** 	TIM_SetCounter(TIM4, 0);
+ 322              		.loc 1 92 0
+ 323 026c 4FF40060 		mov	r0, #2048
+ 324 0270 C4F20000 		movt	r0, 16384
+ 325 0274 4FF00001 		mov	r1, #0
+ 326 0278 FFF7FEFF 		bl	TIM_SetCounter
+ 327              	.LBE4:
+  93:../src/encoder.cpp **** }
+ 328              		.loc 1 93 0
+ 329 027c 07F11807 		add	r7, r7, #24
+ 330 0280 BD46     		mov	sp, r7
+ 331 0282 80BD     		pop	{r7, pc}
+ 332              		.cfi_endproc
+ 333              	.LFE113:
+ 335              		.align	2
+ 336              		.global	_Z23encoder_update_ISR_initv
+ 337              		.thumb
+ 338              		.thumb_func
+ 340              	_Z23encoder_update_ISR_initv:
+ 341              	.LFB114:
+  94:../src/encoder.cpp **** 
+  95:../src/encoder.cpp **** // Initializes the ISR that updates the raw state (position, velocity, acceleration) of each encode
+  96:../src/encoder.cpp **** // Interrupt Priority: NEXT-HIGHEST (1)
   97:../src/encoder.cpp **** 
-  98:../src/encoder.cpp **** 	TIM_ITConfig(TIM7, TIM_IT_Update, ENABLE);
- 292              		.loc 1 98 0
- 293 0206 4FF4A050 		mov	r0, #5120
- 294 020a C4F20000 		movt	r0, 16384
- 295 020e 4FF00101 		mov	r1, #1
- 296 0212 4FF00102 		mov	r2, #1
- 297 0216 FFF7FEFF 		bl	TIM_ITConfig
-  99:../src/encoder.cpp **** 	TIM_Cmd(TIM7, ENABLE);
- 298              		.loc 1 99 0
- 299 021a 4FF4A050 		mov	r0, #5120
- 300 021e C4F20000 		movt	r0, 16384
- 301 0222 4FF00101 		mov	r1, #1
- 302 0226 FFF7FEFF 		bl	TIM_Cmd
- 303              	.LBE4:
- 100:../src/encoder.cpp **** 
- 101:../src/encoder.cpp **** }
- 304              		.loc 1 101 0
- 305 022a 07F11007 		add	r7, r7, #16
- 306 022e BD46     		mov	sp, r7
- 307 0230 80BD     		pop	{r7, pc}
- 308              		.cfi_endproc
- 309              	.LFE113:
- 311 0232 00BF     		.align	2
- 312              		.global	_Z19init_encoder_structP12encoderState
- 313              		.thumb
- 314              		.thumb_func
- 316              	_Z19init_encoder_structP12encoderState:
- 317              	.LFB114:
- 102:../src/encoder.cpp **** void init_encoder_struct(encoderState* enc)
- 103:../src/encoder.cpp **** {
- 318              		.loc 1 103 0
- 319              		.cfi_startproc
- 320              		@ args = 0, pretend = 0, frame = 8
- 321              		@ frame_needed = 1, uses_anonymous_args = 0
- 322              		@ link register save eliminated.
- 323 0234 80B4     		push	{r7}
- 324              	.LCFI9:
- 325              		.cfi_def_cfa_offset 4
- 326              		.cfi_offset 7, -4
- 327 0236 83B0     		sub	sp, sp, #12
- 328              	.LCFI10:
- 329              		.cfi_def_cfa_offset 16
- 330 0238 00AF     		add	r7, sp, #0
- 331              	.LCFI11:
- 332              		.cfi_def_cfa_register 7
- 333 023a 7860     		str	r0, [r7, #4]
- 104:../src/encoder.cpp **** 	enc->position = 0;
- 334              		.loc 1 104 0
- 335 023c 7B68     		ldr	r3, [r7, #4]
- 336 023e 4FF00002 		mov	r2, #0
- 337 0242 1A60     		str	r2, [r3, #0]
- 105:../src/encoder.cpp **** 	enc->speed = 0;
- 338              		.loc 1 105 0
- 339 0244 7B68     		ldr	r3, [r7, #4]
- 340 0246 4FF00002 		mov	r2, #0
- 341 024a 5A60     		str	r2, [r3, #4]	@ float
- 106:../src/encoder.cpp **** 	enc->acceleration = 0;
- 342              		.loc 1 106 0
- 343 024c 7B68     		ldr	r3, [r7, #4]
- 344 024e 4FF00002 		mov	r2, #0
- 345 0252 9A60     		str	r2, [r3, #8]	@ float
- 107:../src/encoder.cpp **** 	enc->m = MODE_OPENLOOP;
- 346              		.loc 1 107 0
- 347 0254 7B68     		ldr	r3, [r7, #4]
- 348 0256 4FF00002 		mov	r2, #0
- 349 025a 83F82420 		strb	r2, [r3, #36]
- 108:../src/encoder.cpp **** 	enc->integral = 0;
- 350              		.loc 1 108 0
- 351 025e 7B68     		ldr	r3, [r7, #4]
- 352 0260 4FF00002 		mov	r2, #0
- 353 0264 5A61     		str	r2, [r3, #20]
- 109:../src/encoder.cpp **** 	enc->position_target = 0;
- 354              		.loc 1 109 0
- 355 0266 7B68     		ldr	r3, [r7, #4]
- 356 0268 4FF00002 		mov	r2, #0
- 357 026c DA60     		str	r2, [r3, #12]
- 110:../src/encoder.cpp **** 	enc->speed_target = 0;
- 358              		.loc 1 110 0
- 359 026e 7B68     		ldr	r3, [r7, #4]
- 360 0270 4FF00002 		mov	r2, #0
- 361 0274 1A61     		str	r2, [r3, #16]	@ float
- 111:../src/encoder.cpp **** 	enc->last_error = 0;
- 362              		.loc 1 111 0
- 363 0276 7B68     		ldr	r3, [r7, #4]
- 364 0278 4FF00002 		mov	r2, #0
- 365 027c 9A61     		str	r2, [r3, #24]
- 112:../src/encoder.cpp **** 	enc->last_speed_error = 0;
- 366              		.loc 1 112 0
- 367 027e 7B68     		ldr	r3, [r7, #4]
- 368 0280 4FF00002 		mov	r2, #0
- 369 0284 DA61     		str	r2, [r3, #28]	@ float
- 113:../src/encoder.cpp **** 	enc->vel_cmd = 0.5f;
- 370              		.loc 1 113 0
- 371 0286 7B68     		ldr	r3, [r7, #4]
- 372 0288 4FF07C52 		mov	r2, #1056964608
- 373 028c 1A62     		str	r2, [r3, #32]	@ float
- 114:../src/encoder.cpp **** }
- 374              		.loc 1 114 0
- 375 028e 07F10C07 		add	r7, r7, #12
- 376 0292 BD46     		mov	sp, r7
- 377 0294 80BC     		pop	{r7}
- 378 0296 7047     		bx	lr
- 379              		.cfi_endproc
- 380              	.LFE114:
- 382              	.Letext0:
- 383              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
- 384              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
- 385              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_gpio.h"
- 386              		.file 5 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_tim.h"
- 387              		.file 6 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_misc.h"
- 388              		.file 7 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot/encoder.h"
- 389              		.file 8 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
+  98:../src/encoder.cpp **** void encoder_update_ISR_init(void)
+  99:../src/encoder.cpp **** {
+ 342              		.loc 1 99 0
+ 343              		.cfi_startproc
+ 344              		@ args = 0, pretend = 0, frame = 16
+ 345              		@ frame_needed = 1, uses_anonymous_args = 0
+ 346 0284 80B5     		push	{r7, lr}
+ 347              	.LCFI9:
+ 348              		.cfi_def_cfa_offset 8
+ 349              		.cfi_offset 7, -8
+ 350              		.cfi_offset 14, -4
+ 351 0286 84B0     		sub	sp, sp, #16
+ 352              	.LCFI10:
+ 353              		.cfi_def_cfa_offset 24
+ 354 0288 00AF     		add	r7, sp, #0
+ 355              	.LCFI11:
+ 356              		.cfi_def_cfa_register 7
+ 357              	.LBB5:
+ 100:../src/encoder.cpp **** 	NVIC_InitTypeDef nv;
+ 101:../src/encoder.cpp **** 	TIM_TimeBaseInitTypeDef TIM7_init;
+ 102:../src/encoder.cpp **** 
+ 103:../src/encoder.cpp **** 	nv.NVIC_IRQChannel = TIM7_IRQn;
+ 358              		.loc 1 103 0
+ 359 028a 4FF03703 		mov	r3, #55
+ 360 028e 3B73     		strb	r3, [r7, #12]
+ 104:../src/encoder.cpp **** 	nv.NVIC_IRQChannelPreemptionPriority = 0;//
+ 361              		.loc 1 104 0
+ 362 0290 4FF00003 		mov	r3, #0
+ 363 0294 7B73     		strb	r3, [r7, #13]
+ 105:../src/encoder.cpp **** 	nv.NVIC_IRQChannelSubPriority = 0;
+ 364              		.loc 1 105 0
+ 365 0296 4FF00003 		mov	r3, #0
+ 366 029a BB73     		strb	r3, [r7, #14]
+ 106:../src/encoder.cpp **** 	nv.NVIC_IRQChannelCmd = ENABLE;
+ 367              		.loc 1 106 0
+ 368 029c 4FF00103 		mov	r3, #1
+ 369 02a0 FB73     		strb	r3, [r7, #15]
+ 107:../src/encoder.cpp **** 
+ 108:../src/encoder.cpp **** 	NVIC_Init(&nv);
+ 370              		.loc 1 108 0
+ 371 02a2 07F10C03 		add	r3, r7, #12
+ 372 02a6 1846     		mov	r0, r3
+ 373 02a8 FFF7FEFF 		bl	NVIC_Init
+ 109:../src/encoder.cpp **** 
+ 110:../src/encoder.cpp **** 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM7, ENABLE); //TIM2 on APB1
+ 374              		.loc 1 110 0
+ 375 02ac 4FF02000 		mov	r0, #32
+ 376 02b0 4FF00101 		mov	r1, #1
+ 377 02b4 FFF7FEFF 		bl	RCC_APB1PeriphClockCmd
+ 111:../src/encoder.cpp **** 
+ 112:../src/encoder.cpp **** 	/*
+ 113:../src/encoder.cpp **** 	 * UPDATE_FREQUENCY = TIM_CLK/[(PRESCALER+1)(ARR+1)(REPCOUNTER+1)]
+ 114:../src/encoder.cpp **** 	 * 	  Prescaler -> PRESCALER
+ 115:../src/encoder.cpp **** 	 * 	  Period -> ARR
+ 116:../src/encoder.cpp **** 	 * 	  RepetitionCounter -> REPCOUNTER
+ 117:../src/encoder.cpp **** 	 */
+ 118:../src/encoder.cpp **** 
+ 119:../src/encoder.cpp **** 	TIM7_init.TIM_Period = (10*DT_ENCODER)-1;
+ 378              		.loc 1 119 0
+ 379 02b8 4FF0F903 		mov	r3, #249
+ 380 02bc 7B60     		str	r3, [r7, #4]
+ 120:../src/encoder.cpp **** 	TIM7_init.TIM_Prescaler = 7199;
+ 381              		.loc 1 120 0
+ 382 02be 41F61F43 		movw	r3, #7199
+ 383 02c2 3B80     		strh	r3, [r7, #0]	@ movhi
+ 121:../src/encoder.cpp **** 	TIM7_init.TIM_RepetitionCounter = 0;
+ 384              		.loc 1 121 0
+ 385 02c4 4FF00003 		mov	r3, #0
+ 386 02c8 BB72     		strb	r3, [r7, #10]
+ 122:../src/encoder.cpp **** 	TIM7_init.TIM_ClockDivision = 0;
+ 387              		.loc 1 122 0
+ 388 02ca 4FF00003 		mov	r3, #0
+ 389 02ce 3B81     		strh	r3, [r7, #8]	@ movhi
+ 123:../src/encoder.cpp **** 	TIM7_init.TIM_CounterMode = TIM_CounterMode_Up;
+ 390              		.loc 1 123 0
+ 391 02d0 4FF00003 		mov	r3, #0
+ 392 02d4 7B80     		strh	r3, [r7, #2]	@ movhi
+ 124:../src/encoder.cpp **** 
+ 125:../src/encoder.cpp **** 	TIM_TimeBaseInit(TIM7, &TIM7_init);
+ 393              		.loc 1 125 0
+ 394 02d6 3B46     		mov	r3, r7
+ 395 02d8 4FF4A050 		mov	r0, #5120
+ 396 02dc C4F20000 		movt	r0, 16384
+ 397 02e0 1946     		mov	r1, r3
+ 398 02e2 FFF7FEFF 		bl	TIM_TimeBaseInit
+ 126:../src/encoder.cpp **** 
+ 127:../src/encoder.cpp **** 	TIM_ITConfig(TIM7, TIM_IT_Update, ENABLE);
+ 399              		.loc 1 127 0
+ 400 02e6 4FF4A050 		mov	r0, #5120
+ 401 02ea C4F20000 		movt	r0, 16384
+ 402 02ee 4FF00101 		mov	r1, #1
+ 403 02f2 4FF00102 		mov	r2, #1
+ 404 02f6 FFF7FEFF 		bl	TIM_ITConfig
+ 128:../src/encoder.cpp **** 	TIM_Cmd(TIM7, ENABLE);
+ 405              		.loc 1 128 0
+ 406 02fa 4FF4A050 		mov	r0, #5120
+ 407 02fe C4F20000 		movt	r0, 16384
+ 408 0302 4FF00101 		mov	r1, #1
+ 409 0306 FFF7FEFF 		bl	TIM_Cmd
+ 410              	.LBE5:
+ 129:../src/encoder.cpp **** 
+ 130:../src/encoder.cpp **** }
+ 411              		.loc 1 130 0
+ 412 030a 07F11007 		add	r7, r7, #16
+ 413 030e BD46     		mov	sp, r7
+ 414 0310 80BD     		pop	{r7, pc}
+ 415              		.cfi_endproc
+ 416              	.LFE114:
+ 418 0312 00BF     		.align	2
+ 419              		.global	_Z19init_encoder_structP12encoderState
+ 420              		.thumb
+ 421              		.thumb_func
+ 423              	_Z19init_encoder_structP12encoderState:
+ 424              	.LFB115:
+ 131:../src/encoder.cpp **** void init_encoder_struct(encoderState* enc)
+ 132:../src/encoder.cpp **** {
+ 425              		.loc 1 132 0
+ 426              		.cfi_startproc
+ 427              		@ args = 0, pretend = 0, frame = 8
+ 428              		@ frame_needed = 1, uses_anonymous_args = 0
+ 429              		@ link register save eliminated.
+ 430 0314 80B4     		push	{r7}
+ 431              	.LCFI12:
+ 432              		.cfi_def_cfa_offset 4
+ 433              		.cfi_offset 7, -4
+ 434 0316 83B0     		sub	sp, sp, #12
+ 435              	.LCFI13:
+ 436              		.cfi_def_cfa_offset 16
+ 437 0318 00AF     		add	r7, sp, #0
+ 438              	.LCFI14:
+ 439              		.cfi_def_cfa_register 7
+ 440 031a 7860     		str	r0, [r7, #4]
+ 133:../src/encoder.cpp **** 	enc->position = 0;
+ 441              		.loc 1 133 0
+ 442 031c 7B68     		ldr	r3, [r7, #4]
+ 443 031e 4FF00002 		mov	r2, #0
+ 444 0322 1A60     		str	r2, [r3, #0]
+ 134:../src/encoder.cpp **** 	enc->speed = 0;
+ 445              		.loc 1 134 0
+ 446 0324 7B68     		ldr	r3, [r7, #4]
+ 447 0326 4FF00002 		mov	r2, #0
+ 448 032a 5A60     		str	r2, [r3, #4]	@ float
+ 135:../src/encoder.cpp **** 	enc->acceleration = 0;
+ 449              		.loc 1 135 0
+ 450 032c 7B68     		ldr	r3, [r7, #4]
+ 451 032e 4FF00002 		mov	r2, #0
+ 452 0332 9A60     		str	r2, [r3, #8]	@ float
+ 136:../src/encoder.cpp **** 	enc->m = MODE_OPENLOOP;
+ 453              		.loc 1 136 0
+ 454 0334 7B68     		ldr	r3, [r7, #4]
+ 455 0336 4FF00002 		mov	r2, #0
+ 456 033a 83F82420 		strb	r2, [r3, #36]
+ 137:../src/encoder.cpp **** 	enc->integral = 0;
+ 457              		.loc 1 137 0
+ 458 033e 7B68     		ldr	r3, [r7, #4]
+ 459 0340 4FF00002 		mov	r2, #0
+ 460 0344 5A61     		str	r2, [r3, #20]
+ 138:../src/encoder.cpp **** 	enc->position_target = 0;
+ 461              		.loc 1 138 0
+ 462 0346 7B68     		ldr	r3, [r7, #4]
+ 463 0348 4FF00002 		mov	r2, #0
+ 464 034c DA60     		str	r2, [r3, #12]
+ 139:../src/encoder.cpp **** 	enc->speed_target = 0;
+ 465              		.loc 1 139 0
+ 466 034e 7B68     		ldr	r3, [r7, #4]
+ 467 0350 4FF00002 		mov	r2, #0
+ 468 0354 1A61     		str	r2, [r3, #16]	@ float
+ 140:../src/encoder.cpp **** 	enc->last_error = 0;
+ 469              		.loc 1 140 0
+ 470 0356 7B68     		ldr	r3, [r7, #4]
+ 471 0358 4FF00002 		mov	r2, #0
+ 472 035c 9A61     		str	r2, [r3, #24]
+ 141:../src/encoder.cpp **** 	enc->last_speed_error = 0;
+ 473              		.loc 1 141 0
+ 474 035e 7B68     		ldr	r3, [r7, #4]
+ 475 0360 4FF00002 		mov	r2, #0
+ 476 0364 DA61     		str	r2, [r3, #28]	@ float
+ 142:../src/encoder.cpp **** 	enc->vel_cmd = 0.5f;
+ 477              		.loc 1 142 0
+ 478 0366 7B68     		ldr	r3, [r7, #4]
+ 479 0368 4FF07C52 		mov	r2, #1056964608
+ 480 036c 1A62     		str	r2, [r3, #32]	@ float
+ 143:../src/encoder.cpp **** }
+ 481              		.loc 1 143 0
+ 482 036e 07F10C07 		add	r7, r7, #12
+ 483 0372 BD46     		mov	sp, r7
+ 484 0374 80BC     		pop	{r7}
+ 485 0376 7047     		bx	lr
+ 486              		.cfi_endproc
+ 487              	.LFE115:
+ 489              	.Letext0:
+ 490              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
+ 491              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
+ 492              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_gpio.h"
+ 493              		.file 5 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_tim.h"
+ 494              		.file 6 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_misc.h"
+ 495              		.file 7 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot/encoder.h"
+ 496              		.file 8 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 encoder.cpp
-     /tmp/ccfFhuFJ.s:20     .text:00000000 $t
-     /tmp/ccfFhuFJ.s:25     .text:00000000 _Z17TIM8_init_encoderv
-     /tmp/ccfFhuFJ.s:133    .text:000000e0 _Z17TIM2_init_encoderv
-     /tmp/ccfFhuFJ.s:233    .text:000001a4 _Z23encoder_update_ISR_initv
-     /tmp/ccfFhuFJ.s:316    .text:00000234 _Z19init_encoder_structP12encoderState
+     /tmp/cc0cCswj.s:20     .text:00000000 $t
+     /tmp/cc0cCswj.s:25     .text:00000000 _Z17TIM8_init_encoderv
+     /tmp/cc0cCswj.s:133    .text:000000e0 _Z17TIM2_init_encoderv
+     /tmp/cc0cCswj.s:233    .text:000001a4 _Z17TIM4_init_encoderv
+     /tmp/cc0cCswj.s:340    .text:00000284 _Z23encoder_update_ISR_initv
+     /tmp/cc0cCswj.s:423    .text:00000314 _Z19init_encoder_structP12encoderState
                      .debug_frame:00000010 $d
                            .group:00000000 wm4.1.50a79f075d1434c9a8bd8ee500f78677
-                           .group:00000000 wm4.common_headers.h.9.7fd02f13feff23c3903ac7c4e216cd44
+                           .group:00000000 wm4.common_headers.h.9.669975762de5793e6d2436455cef4d0e
                            .group:00000000 wm4.stm32f30x.h.56.6f19c65e98e3319a61449cb2b2455af5
                            .group:00000000 wm4.core_cm4.h.32.1434cd257ff5806b1b03cd32ab0641e9
                            .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05

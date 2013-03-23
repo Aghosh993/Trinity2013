@@ -44,6 +44,9 @@ typedef struct{
 
 void init_encoder_struct(encoderState* enc);
 void TIM2_init_encoder(void);
+
+void TIM4_init_encoder(void);
+
 void TIM8_init_encoder(void);
 void encoder_update_ISR_init(void);
 

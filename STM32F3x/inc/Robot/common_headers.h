@@ -8,7 +8,7 @@
 #ifndef COMMON_HEADERS_H_
 #define COMMON_HEADERS_H_
 
-#define DT_IMU 			25
+#define DT_IMU 			40
 
 #include "stm32f30x.h"
 #include "stm32f30x_adc.h"

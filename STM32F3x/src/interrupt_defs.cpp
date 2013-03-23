@@ -26,6 +26,8 @@ extern int new_data;
 extern uint8_t adc2_new_data;
 extern uint8_t adc3_awd1, adc3_awd2;
 
+extern int count, stage;
+
 	void TIM7_IRQHandler(void) // ISR that performs encoder state update:
 										// Runs every DT milliseconds
 	{
@@ -44,7 +46,8 @@ extern uint8_t adc3_awd1, adc3_awd2;
 		right_temp.speed = right_enc.speed;
 		right_temp.acceleration = right_enc.acceleration;
 
-		left_enc.position = TIM_GetCounter(TIM2);
+		left_enc.position = left_temp.position + (int16_t)TIM_GetCounter(TIM4); //Instead of TIM2 on other boards with functional TIM2
+		TIM_SetCounter(TIM4, 0);
 		left_enc.speed = (float)((left_enc.position - left_temp.position)*1000)/(float)DT_ENCODER; // Since DT is in milliseconds...
 		left_enc.acceleration = (float)((left_enc.speed - left_temp.speed)*1000)/(float)DT_ENCODER;
 
@@ -123,7 +126,9 @@ extern uint8_t adc3_awd1, adc3_awd2;
 
 	void TIM1_TRG_COM_TIM17_IRQHandler(void)
 	{
+
 		TIM_ClearITPendingBit(TIM17, TIM_IT_Update);
+		/*
 		uint8_t bytes[2];
 
 		union twosComp {		// Takes care of two's complement conversion
@@ -135,6 +140,67 @@ extern uint8_t adc3_awd1, adc3_awd2;
 		convert.un_signed = (bytes[1] << 8) | bytes[0];
 
 		gyro_angle_x += (convert.output - gyro_bias_x) * (float)0.00763 * (float)0.001 * (float)DT_IMU;
+
+		*/
+		/*
+		 * Below: code required to trigger the ping sensor:
+		 */
+
+		EXTI_InitTypeDef e;
+
+		e.EXTI_Line = EXTI_Line1;
+		e.EXTI_LineCmd = DISABLE;
+		e.EXTI_Mode = EXTI_Mode_Interrupt;
+		e.EXTI_Trigger = EXTI_Trigger_Rising;
+
+		EXTI_Init(&e);
+
+		GPIO_InitTypeDef g;
+		g.GPIO_Mode = GPIO_Mode_OUT;
+		g.GPIO_OType = GPIO_OType_PP;
+		g.GPIO_Pin = GPIO_Pin_0;
+		g.GPIO_PuPd = GPIO_PuPd_NOPULL;
+		g.GPIO_Speed = GPIO_Speed_Level_1;
+
+		GPIO_Init(GPIOB, &g);
+		int iter = 0;
+
+		for(iter=0;iter<10;++iter)
+		{
+			GPIO_WriteBit(GPIOB, GPIO_Pin_0, Bit_SET);
+		}
+
+		GPIO_WriteBit(GPIOB, GPIO_Pin_0, Bit_RESET);
+
+
+		g.GPIO_Mode = GPIO_Mode_IN;
+		g.GPIO_OType = GPIO_OType_OD;
+		g.GPIO_Pin = GPIO_Pin_0;
+		g.GPIO_PuPd = GPIO_PuPd_NOPULL;
+		g.GPIO_Speed = GPIO_Speed_Level_1;
+
+		GPIO_Init(GPIOB, &g);
+
+		TIM_SetCounter(TIM2, 0);
+
+		stage = 0;
+
+		e.EXTI_Line = EXTI_Line1;
+		e.EXTI_LineCmd = ENABLE;
+		e.EXTI_Mode = EXTI_Mode_Interrupt;
+		e.EXTI_Trigger = EXTI_Trigger_Rising;
+
+		EXTI_Init(&e);
+
+		NVIC_InitTypeDef nv;
+
+		nv.NVIC_IRQChannel = EXTI1_IRQn;
+		nv.NVIC_IRQChannelCmd = ENABLE;
+		nv.NVIC_IRQChannelPreemptionPriority = 0;
+		nv.NVIC_IRQChannelSubPriority = 0;
+
+		NVIC_Init(&nv);
+
 	}
 	void TIM6_DAC_IRQHandler(void)
 	{
@@ -189,6 +255,46 @@ extern uint8_t adc3_awd1, adc3_awd2;
 			adc3_awd2 = 1;
 		}
 	}
+
+	void EXTI1_IRQHandler(void)
+	{
+		EXTI_ClearITPendingBit(EXTI_Line1);
+		if(stage == 0)
+		{
+			TIM_SetCounter(TIM2, 0);
+			TIM_Cmd(TIM2, ENABLE);
+
+			EXTI_InitTypeDef e;
+
+			e.EXTI_Line = EXTI_Line1;
+			e.EXTI_LineCmd = ENABLE;
+			e.EXTI_Mode = EXTI_Mode_Interrupt;
+			e.EXTI_Trigger = EXTI_Trigger_Falling; //EXTI_Trigger_Rising;
+
+			EXTI_Init(&e);
+
+			stage = 1;
+			return;
+		}
+		else if(stage == 1)
+		{
+			count = TIM_GetCounter(TIM2);
+			TIM_Cmd(TIM2, DISABLE);
+
+			NVIC_InitTypeDef nv;
+
+			nv.NVIC_IRQChannel = EXTI1_IRQn;
+			nv.NVIC_IRQChannelCmd = DISABLE;
+			nv.NVIC_IRQChannelPreemptionPriority = 0;
+			nv.NVIC_IRQChannelSubPriority = 0;
+
+			NVIC_Init(&nv);
+
+			stage = 0;
+			return;
+		}
+	}
+
 }
 
 
