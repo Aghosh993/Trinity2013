@@ -60,6 +60,8 @@ void brake_pins_init(void);
 void ping_pin_init(void);
 void timer2_timebase_init(void);
 
+void comp_init(void);
+
 // Global variables to keep track of encoders and inertial sensors:
 
 encoderState left_enc, right_enc;
@@ -77,6 +79,7 @@ uint8_t adc2_new_data;
 uint8_t adc3_awd1, adc3_awd2;
 
 int count, stage;
+#define K_ULTRASONIC 0.001130f
 
 // Initialize all encoder data structures to zero:
 
@@ -118,8 +121,8 @@ int main(void)
 	// Initialize PWM outputs 1 and 2 at 5.0 kHz duty frequency:
 
 	brake_pins_init();
-	pwm_out1_init(1000);
-	pwm_out2_init(1000);
+	pwm_out1_init(2000);
+	pwm_out2_init(2000);
 
 	// Initialize hardware quadrature encoder input interfaces:
 
@@ -135,7 +138,7 @@ int main(void)
 	adc1_init_DMA();
 
 	// Initialize ADC2 DMA:
-//	adc2_init_DMA();
+	adc2_init_DMA();
 //	battery_watchdog_init();
 
 	encoder_update_ISR_init();	//Update the state of the two encoders (left/right)
@@ -148,6 +151,8 @@ int main(void)
 	timer2_timebase_init();
 
 	imu_update_ISR_init();
+
+	comp_init();
 
 	adcval = 0;
 	float mtr_out = 0;
@@ -174,8 +179,9 @@ int main(void)
 		mtr_out = 0.6;//(float)adcData[0]/(float)4096;
 		pwm1_output(0.75);//mtr_out);
 		pwm2_output(0.25);//1-mtr_out);
+//		printf("%d\n\r", COMP_GetOutputLevel(COMP_Selection_COMP2));
 //		printf("Left: %d | Right: %d\n\r", left_enc.position, right_enc.position);//, mode);
-		printf("%d Counter: %d\n\r", count, TIM_GetCounter(TIM2));
+		printf("%3.3f Counter: %d\n\r", ((float)count*(float)0.5*(float)K_ULTRASONIC), TIM_GetCounter(TIM2));
 
 //		printf("Bias_x: %d | Theta_x: %5.2f | Left: %d | Right: %d\n\r", gyro_bias_x, gyro_angle_x, left_enc.position, right_enc.position);
 //		printf("ADC Value on Channel 3: %d || Theta_x: %5.2f\n\r", adcval, gyro_angle_x);
@@ -186,6 +192,7 @@ int main(void)
 		while(new_data==0);
 		printf("ADC1: %4d || ADC2: %4d\n\r", adcData[0], adcData[1]);//adcData, (uint32_t)&(ADC1->DR));//, adcData[1]);
 		new_data = 0;
+
 		*/
 		/*
 		printf("ADC1: ");
@@ -203,11 +210,12 @@ int main(void)
 		{
 			printf("%4d ", adc2_data[iter]);
 		}
-		printf("AWD1: %d, AWD2: %d, ADC: %d", adc3_awd1, adc3_awd2, ADC_GetConversionValue(ADC3));
+		*/
+//		printf("AWD1: %d, AWD2: %d, ADC: %d", adc3_awd1, adc3_awd2, ADC_GetConversionValue(ADC3));
 //		adc3_awd1 = 0;
 //		adc3_awd2 = 0;
-		printf("\n\r");
-		*/
+//		printf("\n\r");
+
 	}
 	return 0; // We should never manage to get here...
 }
@@ -347,7 +355,7 @@ void timer2_timebase_init(void)
 {
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
-	TIM_TimeBaseStructure.TIM_Period = 1899;//0xFFFFFFFF;//1899;//0xFFFFFFFF;
+	TIM_TimeBaseStructure.TIM_Period = 17999;//1899;//0xFFFFFFFF;//1899;//0xFFFFFFFF;
 	TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
 	TIM_TimeBaseStructure.TIM_Prescaler = 71;//0;//71;
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
@@ -356,6 +364,50 @@ void timer2_timebase_init(void)
 //	TIM_Cmd(TIM2, ENABLE);
 
 	TIM_SetCounter(TIM2, 0);
+}
+
+/*
+ * Use COMP2, COMP3, COMP4, COMP5
+ */
+
+void comp_init(void)
+{
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+
+	GPIO_InitTypeDef g;
+
+	g.GPIO_Mode = GPIO_Mode_AN;
+//	g.GPIO_OType = GPIO_OType_OD;
+	g.GPIO_PuPd = GPIO_PuPd_NOPULL;
+//	g.GPIO_Speed = GPIO_Speed_Level_3;
+	g.GPIO_Pin = GPIO_Pin_7;
+
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
+	GPIO_Init(GPIOA, &g);
+
+	g.GPIO_Mode = GPIO_Mode_AF;
+	g.GPIO_OType = GPIO_OType_PP;
+	g.GPIO_PuPd = GPIO_PuPd_NOPULL;
+//	g.GPIO_Speed = GPIO_Speed_Level_3;
+	g.GPIO_Pin = GPIO_Pin_9;
+
+	GPIO_PinAFConfig(GPIOB, GPIO_PinSource9, GPIO_AF_8);
+	GPIO_Init(GPIOB, &g);
+
+	RCC_PCLK2Config(RCC_HCLK_Div1);
+
+	COMP_InitTypeDef c;
+
+	c.COMP_InvertingInput = COMP_InvertingInput_VREFINT;
+	c.COMP_NonInvertingInput = COMP_NonInvertingInput_IO1;
+	c.COMP_Mode = COMP_Mode_MediumSpeed;
+	c.COMP_Output = COMP_Output_None;
+	c.COMP_OutputPol = COMP_OutputPol_NonInverted;
+	c.COMP_Hysteresis = COMP_Hysteresis_Low;
+	c.COMP_BlankingSrce = COMP_BlankingSrce_None;
+
+	COMP_Init(COMP_Selection_COMP2, &c);
+	COMP_Cmd(COMP_Selection_COMP2, ENABLE);
 }
 
 int16_t calc_gyro_bias(void)
