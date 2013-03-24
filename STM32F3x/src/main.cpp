@@ -147,10 +147,10 @@ int main(void)
 
 	// Ping Sensor Init:
 
-	ping_pin_init();
-	timer2_timebase_init();
+//	ping_pin_init();
+//	timer2_timebase_init();
 
-	imu_update_ISR_init();
+//	imu_update_ISR_init();
 
 	comp_init();
 
@@ -179,9 +179,9 @@ int main(void)
 		mtr_out = 0.6;//(float)adcData[0]/(float)4096;
 		pwm1_output(0.75);//mtr_out);
 		pwm2_output(0.25);//1-mtr_out);
-//		printf("%d\n\r", COMP_GetOutputLevel(COMP_Selection_COMP2));
+		printf("COMP7 %d\n\r", (int)COMP_GetOutputLevel(COMP_Selection_COMP7));
 //		printf("Left: %d | Right: %d\n\r", left_enc.position, right_enc.position);//, mode);
-		printf("%3.3f Counter: %d\n\r", ((float)count*(float)0.5*(float)K_ULTRASONIC), TIM_GetCounter(TIM2));
+//		printf("%3.3f Counter: %d\n\r", ((float)count*(float)0.5*(float)K_ULTRASONIC), TIM_GetCounter(TIM2));
 
 //		printf("Bias_x: %d | Theta_x: %5.2f | Left: %d | Right: %d\n\r", gyro_bias_x, gyro_angle_x, left_enc.position, right_enc.position);
 //		printf("ADC Value on Channel 3: %d || Theta_x: %5.2f\n\r", adcval, gyro_angle_x);
@@ -367,19 +367,27 @@ void timer2_timebase_init(void)
 }
 
 /*
- * Use COMP2, COMP3, COMP4, COMP5
+ * Use COMP2, COMP3, COMP4, COMP7
+ * COMP2: 	Input->		PA7  (IO1)
+ * 			Output->	PB9
+ * COMP3:	Input->		PB14 (IO1)
+ * 			Output->	PA8
+ * COMP4:	Input->		PE7  (IO2)
+ * 			Output->	PB1
+ * COMP7:	Input->		PC1	 (IO2)
+ * 			Output->	PC2
  */
 
 void comp_init(void)
 {
+	//COMP2 Init:
+
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
 
 	GPIO_InitTypeDef g;
 
 	g.GPIO_Mode = GPIO_Mode_AN;
-//	g.GPIO_OType = GPIO_OType_OD;
 	g.GPIO_PuPd = GPIO_PuPd_NOPULL;
-//	g.GPIO_Speed = GPIO_Speed_Level_3;
 	g.GPIO_Pin = GPIO_Pin_7;
 
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
@@ -388,7 +396,6 @@ void comp_init(void)
 	g.GPIO_Mode = GPIO_Mode_AF;
 	g.GPIO_OType = GPIO_OType_PP;
 	g.GPIO_PuPd = GPIO_PuPd_NOPULL;
-//	g.GPIO_Speed = GPIO_Speed_Level_3;
 	g.GPIO_Pin = GPIO_Pin_9;
 
 	GPIO_PinAFConfig(GPIOB, GPIO_PinSource9, GPIO_AF_8);
@@ -408,6 +415,102 @@ void comp_init(void)
 
 	COMP_Init(COMP_Selection_COMP2, &c);
 	COMP_Cmd(COMP_Selection_COMP2, ENABLE);
+
+	//COMP3 Init:
+
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+
+	g.GPIO_Mode = GPIO_Mode_AN;
+	g.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	g.GPIO_Pin = GPIO_Pin_14; 	//PB14 = INPUT
+
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB | RCC_AHBPeriph_GPIOA, ENABLE);
+	GPIO_Init(GPIOB, &g);
+
+	g.GPIO_Mode = GPIO_Mode_AF;
+	g.GPIO_OType = GPIO_OType_PP;
+	g.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	g.GPIO_Pin = GPIO_Pin_8; 	//PA8 = OUTPUT
+
+	GPIO_PinAFConfig(GPIOC, GPIO_PinSource8, GPIO_AF_7);
+	GPIO_Init(GPIOC, &g);
+
+	RCC_PCLK2Config(RCC_HCLK_Div1);
+
+	c.COMP_InvertingInput = COMP_InvertingInput_VREFINT;
+	c.COMP_NonInvertingInput = COMP_NonInvertingInput_IO1;
+	c.COMP_Mode = COMP_Mode_MediumSpeed;
+	c.COMP_Output = COMP_Output_None;
+	c.COMP_OutputPol = COMP_OutputPol_NonInverted;
+	c.COMP_Hysteresis = COMP_Hysteresis_Low;
+	c.COMP_BlankingSrce = COMP_BlankingSrce_None;
+
+	COMP_Init(COMP_Selection_COMP3, &c);
+	COMP_Cmd(COMP_Selection_COMP3, ENABLE);
+
+	//COMP4 Init:
+
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+
+	g.GPIO_Mode = GPIO_Mode_AN;
+	g.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	g.GPIO_Pin = GPIO_Pin_7; 	//PE7 = INPUT
+
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOE | RCC_AHBPeriph_GPIOB, ENABLE);
+	GPIO_Init(GPIOE, &g);
+
+	g.GPIO_Mode = GPIO_Mode_AF;
+	g.GPIO_OType = GPIO_OType_PP;
+	g.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	g.GPIO_Pin = GPIO_Pin_1; 	//PB1 = OUTPUT
+
+	GPIO_PinAFConfig(GPIOB, GPIO_PinSource1, GPIO_AF_8);
+	GPIO_Init(GPIOB, &g);
+
+	RCC_PCLK2Config(RCC_HCLK_Div1);
+
+	c.COMP_InvertingInput = COMP_InvertingInput_VREFINT;
+	c.COMP_NonInvertingInput = COMP_NonInvertingInput_IO2;
+	c.COMP_Mode = COMP_Mode_MediumSpeed;
+	c.COMP_Output = COMP_Output_None;
+	c.COMP_OutputPol = COMP_OutputPol_NonInverted;
+	c.COMP_Hysteresis = COMP_Hysteresis_Low;
+	c.COMP_BlankingSrce = COMP_BlankingSrce_None;
+
+	COMP_Init(COMP_Selection_COMP4, &c);
+	COMP_Cmd(COMP_Selection_COMP4, ENABLE);
+
+	//COMP7 Init:
+
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+
+	g.GPIO_Mode = GPIO_Mode_AN;
+	g.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	g.GPIO_Pin = GPIO_Pin_1; 	//PC1 = INPUT
+
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC, ENABLE);
+	GPIO_Init(GPIOC, &g);
+
+	g.GPIO_Mode = GPIO_Mode_AF;
+	g.GPIO_OType = GPIO_OType_PP;
+	g.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	g.GPIO_Pin = GPIO_Pin_2; 	//PC2 = OUTPUT
+
+	GPIO_PinAFConfig(GPIOC, GPIO_PinSource2, GPIO_AF_3);////////!!!!!!!!!!
+	GPIO_Init(GPIOC, &g);
+
+	RCC_PCLK2Config(RCC_HCLK_Div1);
+
+	c.COMP_InvertingInput = COMP_InvertingInput_VREFINT;
+	c.COMP_NonInvertingInput = COMP_NonInvertingInput_IO2;
+	c.COMP_Mode = COMP_Mode_MediumSpeed;
+	c.COMP_Output = COMP_Output_None;
+	c.COMP_OutputPol = COMP_OutputPol_NonInverted;
+	c.COMP_Hysteresis = COMP_Hysteresis_Low;
+	c.COMP_BlankingSrce = COMP_BlankingSrce_None;
+
+	COMP_Init(COMP_Selection_COMP7, &c);
+	COMP_Cmd(COMP_Selection_COMP7, ENABLE);
 }
 
 int16_t calc_gyro_bias(void)
