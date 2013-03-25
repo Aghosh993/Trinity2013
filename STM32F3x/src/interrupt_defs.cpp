@@ -148,7 +148,7 @@ extern int count, stage;
 
 		EXTI_InitTypeDef e;
 
-		e.EXTI_Line = EXTI_Line1;
+		e.EXTI_Line = EXTI_Line5;
 		e.EXTI_LineCmd = DISABLE;
 		e.EXTI_Mode = EXTI_Mode_Interrupt;
 		e.EXTI_Trigger = EXTI_Trigger_Rising;
@@ -185,7 +185,7 @@ extern int count, stage;
 
 		stage = 0;
 
-		e.EXTI_Line = EXTI_Line1;
+		e.EXTI_Line = EXTI_Line5;
 		e.EXTI_LineCmd = ENABLE;
 		e.EXTI_Mode = EXTI_Mode_Interrupt;
 		e.EXTI_Trigger = EXTI_Trigger_Rising;
@@ -194,7 +194,7 @@ extern int count, stage;
 
 		NVIC_InitTypeDef nv;
 
-		nv.NVIC_IRQChannel = EXTI1_IRQn;
+		nv.NVIC_IRQChannel = EXTI9_5_IRQn;
 		nv.NVIC_IRQChannelCmd = ENABLE;
 		nv.NVIC_IRQChannelPreemptionPriority = 0;
 		nv.NVIC_IRQChannelSubPriority = 0;
@@ -256,9 +256,9 @@ extern int count, stage;
 		}
 	}
 
-	void EXTI1_IRQHandler(void)
+	void EXTI9_5_IRQHandler(void)//EXTI5_IRQHandler(void)
 	{
-		EXTI_ClearITPendingBit(EXTI_Line1);
+		EXTI_ClearITPendingBit(EXTI_Line5);
 		if(stage == 0)
 		{
 			TIM_SetCounter(TIM2, 0);
@@ -266,10 +266,10 @@ extern int count, stage;
 
 			EXTI_InitTypeDef e;
 
-			e.EXTI_Line = EXTI_Line1;
+			e.EXTI_Line = EXTI_Line5;
 			e.EXTI_LineCmd = ENABLE;
 			e.EXTI_Mode = EXTI_Mode_Interrupt;
-			e.EXTI_Trigger = EXTI_Trigger_Falling; //EXTI_Trigger_Rising;
+			e.EXTI_Trigger = EXTI_Trigger_Falling;
 
 			EXTI_Init(&e);
 
@@ -283,7 +283,7 @@ extern int count, stage;
 
 			NVIC_InitTypeDef nv;
 
-			nv.NVIC_IRQChannel = EXTI1_IRQn;
+			nv.NVIC_IRQChannel = EXTI9_5_IRQn;
 			nv.NVIC_IRQChannelCmd = DISABLE;
 			nv.NVIC_IRQChannelPreemptionPriority = 0;
 			nv.NVIC_IRQChannelSubPriority = 0;

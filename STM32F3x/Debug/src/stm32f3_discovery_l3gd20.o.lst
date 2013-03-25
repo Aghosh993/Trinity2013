@@ -1,35 +1,34 @@
    1              		.syntax unified
    2              		.cpu cortex-m4
    3              		.eabi_attribute 27, 3
-   4              		.eabi_attribute 28, 1
-   5              		.fpu fpv4-sp-d16
-   6              		.eabi_attribute 20, 1
-   7              		.eabi_attribute 21, 1
-   8              		.eabi_attribute 23, 3
-   9              		.eabi_attribute 24, 1
-  10              		.eabi_attribute 25, 1
-  11              		.eabi_attribute 26, 1
-  12              		.eabi_attribute 30, 6
-  13              		.eabi_attribute 34, 1
-  14              		.eabi_attribute 18, 4
-  15              		.thumb
-  16              		.file	"stm32f3_discovery_l3gd20.c"
-  17              		.text
-  18              	.Ltext0:
-  19              		.cfi_sections	.debug_frame
-  20              		.global	L3GD20Timeout
-  21              		.data
-  22              		.align	2
-  25              	L3GD20Timeout:
-  26 0000 00100000 		.word	4096
-  27              		.text
-  28              		.align	2
-  29              		.global	L3GD20_Init
-  30              		.thumb
-  31              		.thumb_func
-  33              	L3GD20_Init:
-  34              	.LFB111:
-  35              		.file 1 "../src/stm32f3_discovery_l3gd20.c"
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"stm32f3_discovery_l3gd20.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.global	L3GD20Timeout
+  20              		.data
+  21              		.align	2
+  24              	L3GD20Timeout:
+  25 0000 00100000 		.word	4096
+  26              		.text
+  27              		.align	2
+  28              		.global	L3GD20_Init
+  29              		.thumb
+  30              		.thumb_func
+  32              	L3GD20_Init:
+  33              	.LFB111:
+  34              		.file 1 "../src/stm32f3_discovery_l3gd20.c"
    1:../src/stm32f3_discovery_l3gd20.c **** /**
    2:../src/stm32f3_discovery_l3gd20.c ****   ******************************************************************************
    3:../src/stm32f3_discovery_l3gd20.c ****   * @file    stm32f3_discovery_l3gd20.c
@@ -126,114 +125,114 @@
   94:../src/stm32f3_discovery_l3gd20.c ****   */
   95:../src/stm32f3_discovery_l3gd20.c **** void L3GD20_Init(L3GD20_InitTypeDef *L3GD20_InitStruct)
   96:../src/stm32f3_discovery_l3gd20.c **** {  
-  36              		.loc 1 96 0
-  37              		.cfi_startproc
-  38              		@ args = 0, pretend = 0, frame = 16
-  39              		@ frame_needed = 1, uses_anonymous_args = 0
-  40 0000 80B5     		push	{r7, lr}
-  41              	.LCFI0:
-  42              		.cfi_def_cfa_offset 8
-  43              		.cfi_offset 7, -8
-  44              		.cfi_offset 14, -4
-  45 0002 84B0     		sub	sp, sp, #16
-  46              	.LCFI1:
-  47              		.cfi_def_cfa_offset 24
-  48 0004 00AF     		add	r7, sp, #0
-  49              	.LCFI2:
-  50              		.cfi_def_cfa_register 7
-  51 0006 7860     		str	r0, [r7, #4]
+  35              		.loc 1 96 0
+  36              		.cfi_startproc
+  37              		@ args = 0, pretend = 0, frame = 16
+  38              		@ frame_needed = 1, uses_anonymous_args = 0
+  39 0000 80B5     		push	{r7, lr}
+  40              	.LCFI0:
+  41              		.cfi_def_cfa_offset 8
+  42              		.cfi_offset 7, -8
+  43              		.cfi_offset 14, -4
+  44 0002 84B0     		sub	sp, sp, #16
+  45              	.LCFI1:
+  46              		.cfi_def_cfa_offset 24
+  47 0004 00AF     		add	r7, sp, #0
+  48              	.LCFI2:
+  49              		.cfi_def_cfa_register 7
+  50 0006 7860     		str	r0, [r7, #4]
   97:../src/stm32f3_discovery_l3gd20.c ****   uint8_t ctrl1 = 0x00, ctrl4 = 0x00;
-  52              		.loc 1 97 0
-  53 0008 4FF00003 		mov	r3, #0
-  54 000c FB73     		strb	r3, [r7, #15]
-  55 000e 4FF00003 		mov	r3, #0
-  56 0012 BB73     		strb	r3, [r7, #14]
+  51              		.loc 1 97 0
+  52 0008 4FF00003 		mov	r3, #0
+  53 000c FB73     		strb	r3, [r7, #15]
+  54 000e 4FF00003 		mov	r3, #0
+  55 0012 BB73     		strb	r3, [r7, #14]
   98:../src/stm32f3_discovery_l3gd20.c ****   
   99:../src/stm32f3_discovery_l3gd20.c ****   /* Configure the low level interface ---------------------------------------*/
  100:../src/stm32f3_discovery_l3gd20.c ****   L3GD20_LowLevel_Init();
-  57              		.loc 1 100 0
-  58 0014 00F0C6F9 		bl	L3GD20_LowLevel_Init
+  56              		.loc 1 100 0
+  57 0014 00F0C6F9 		bl	L3GD20_LowLevel_Init
  101:../src/stm32f3_discovery_l3gd20.c ****   
  102:../src/stm32f3_discovery_l3gd20.c ****   /* Configure MEMS: data rate, power mode, full scale and axes */
  103:../src/stm32f3_discovery_l3gd20.c ****   ctrl1 |= (uint8_t) (L3GD20_InitStruct->Power_Mode | L3GD20_InitStruct->Output_DataRate | \
-  59              		.loc 1 103 0
-  60 0018 7B68     		ldr	r3, [r7, #4]
-  61 001a 1A78     		ldrb	r2, [r3, #0]	@ zero_extendqisi2
-  62 001c 7B68     		ldr	r3, [r7, #4]
-  63 001e 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
-  64 0020 1343     		orrs	r3, r3, r2
-  65 0022 DAB2     		uxtb	r2, r3
+  58              		.loc 1 103 0
+  59 0018 7B68     		ldr	r3, [r7, #4]
+  60 001a 1A78     		ldrb	r2, [r3, #0]	@ zero_extendqisi2
+  61 001c 7B68     		ldr	r3, [r7, #4]
+  62 001e 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+  63 0020 1343     		orrs	r3, r3, r2
+  64 0022 DAB2     		uxtb	r2, r3
  104:../src/stm32f3_discovery_l3gd20.c ****                     L3GD20_InitStruct->Axes_Enable | L3GD20_InitStruct->Band_Width);
-  66              		.loc 1 104 0
-  67 0024 7B68     		ldr	r3, [r7, #4]
-  68 0026 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+  65              		.loc 1 104 0
+  66 0024 7B68     		ldr	r3, [r7, #4]
+  67 0026 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
  103:../src/stm32f3_discovery_l3gd20.c ****   ctrl1 |= (uint8_t) (L3GD20_InitStruct->Power_Mode | L3GD20_InitStruct->Output_DataRate | \
-  69              		.loc 1 103 0
-  70 0028 1343     		orrs	r3, r3, r2
-  71 002a DAB2     		uxtb	r2, r3
-  72              		.loc 1 104 0
-  73 002c 7B68     		ldr	r3, [r7, #4]
-  74 002e DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+  68              		.loc 1 103 0
+  69 0028 1343     		orrs	r3, r3, r2
+  70 002a DAB2     		uxtb	r2, r3
+  71              		.loc 1 104 0
+  72 002c 7B68     		ldr	r3, [r7, #4]
+  73 002e DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
  103:../src/stm32f3_discovery_l3gd20.c ****   ctrl1 |= (uint8_t) (L3GD20_InitStruct->Power_Mode | L3GD20_InitStruct->Output_DataRate | \
-  75              		.loc 1 103 0
-  76 0030 1343     		orrs	r3, r3, r2
-  77 0032 DAB2     		uxtb	r2, r3
-  78 0034 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
-  79 0036 1343     		orrs	r3, r3, r2
-  80 0038 DBB2     		uxtb	r3, r3
-  81 003a FB73     		strb	r3, [r7, #15]
+  74              		.loc 1 103 0
+  75 0030 1343     		orrs	r3, r3, r2
+  76 0032 DAB2     		uxtb	r2, r3
+  77 0034 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+  78 0036 1343     		orrs	r3, r3, r2
+  79 0038 DBB2     		uxtb	r3, r3
+  80 003a FB73     		strb	r3, [r7, #15]
  105:../src/stm32f3_discovery_l3gd20.c ****   
  106:../src/stm32f3_discovery_l3gd20.c ****   ctrl4 |= (uint8_t) (L3GD20_InitStruct->BlockData_Update | L3GD20_InitStruct->Endianness | \
-  82              		.loc 1 106 0
-  83 003c 7B68     		ldr	r3, [r7, #4]
-  84 003e 1A79     		ldrb	r2, [r3, #4]	@ zero_extendqisi2
-  85 0040 7B68     		ldr	r3, [r7, #4]
-  86 0042 5B79     		ldrb	r3, [r3, #5]	@ zero_extendqisi2
-  87 0044 1343     		orrs	r3, r3, r2
-  88 0046 DAB2     		uxtb	r2, r3
+  81              		.loc 1 106 0
+  82 003c 7B68     		ldr	r3, [r7, #4]
+  83 003e 1A79     		ldrb	r2, [r3, #4]	@ zero_extendqisi2
+  84 0040 7B68     		ldr	r3, [r7, #4]
+  85 0042 5B79     		ldrb	r3, [r3, #5]	@ zero_extendqisi2
+  86 0044 1343     		orrs	r3, r3, r2
+  87 0046 DAB2     		uxtb	r2, r3
  107:../src/stm32f3_discovery_l3gd20.c ****                     L3GD20_InitStruct->Full_Scale);
-  89              		.loc 1 107 0
-  90 0048 7B68     		ldr	r3, [r7, #4]
-  91 004a 9B79     		ldrb	r3, [r3, #6]	@ zero_extendqisi2
+  88              		.loc 1 107 0
+  89 0048 7B68     		ldr	r3, [r7, #4]
+  90 004a 9B79     		ldrb	r3, [r3, #6]	@ zero_extendqisi2
  106:../src/stm32f3_discovery_l3gd20.c ****   ctrl4 |= (uint8_t) (L3GD20_InitStruct->BlockData_Update | L3GD20_InitStruct->Endianness | \
-  92              		.loc 1 106 0
-  93 004c 1343     		orrs	r3, r3, r2
-  94 004e DAB2     		uxtb	r2, r3
-  95 0050 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
-  96 0052 1343     		orrs	r3, r3, r2
-  97 0054 DBB2     		uxtb	r3, r3
-  98 0056 BB73     		strb	r3, [r7, #14]
+  91              		.loc 1 106 0
+  92 004c 1343     		orrs	r3, r3, r2
+  93 004e DAB2     		uxtb	r2, r3
+  94 0050 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+  95 0052 1343     		orrs	r3, r3, r2
+  96 0054 DBB2     		uxtb	r3, r3
+  97 0056 BB73     		strb	r3, [r7, #14]
  108:../src/stm32f3_discovery_l3gd20.c ****                     
  109:../src/stm32f3_discovery_l3gd20.c ****   /* Write value to MEMS CTRL_REG1 regsister */
  110:../src/stm32f3_discovery_l3gd20.c ****   L3GD20_Write(&ctrl1, L3GD20_CTRL_REG1_ADDR, 1);
-  99              		.loc 1 110 0
- 100 0058 07F10F03 		add	r3, r7, #15
- 101 005c 1846     		mov	r0, r3
- 102 005e 4FF02001 		mov	r1, #32
- 103 0062 4FF00102 		mov	r2, #1
- 104 0066 FFF7FEFF 		bl	L3GD20_Write
+  98              		.loc 1 110 0
+  99 0058 07F10F03 		add	r3, r7, #15
+ 100 005c 1846     		mov	r0, r3
+ 101 005e 4FF02001 		mov	r1, #32
+ 102 0062 4FF00102 		mov	r2, #1
+ 103 0066 FFF7FEFF 		bl	L3GD20_Write
  111:../src/stm32f3_discovery_l3gd20.c ****   
  112:../src/stm32f3_discovery_l3gd20.c ****   /* Write value to MEMS CTRL_REG4 regsister */
  113:../src/stm32f3_discovery_l3gd20.c ****   L3GD20_Write(&ctrl4, L3GD20_CTRL_REG4_ADDR, 1);
- 105              		.loc 1 113 0
- 106 006a 07F10E03 		add	r3, r7, #14
- 107 006e 1846     		mov	r0, r3
- 108 0070 4FF02301 		mov	r1, #35
- 109 0074 4FF00102 		mov	r2, #1
- 110 0078 FFF7FEFF 		bl	L3GD20_Write
+ 104              		.loc 1 113 0
+ 105 006a 07F10E03 		add	r3, r7, #14
+ 106 006e 1846     		mov	r0, r3
+ 107 0070 4FF02301 		mov	r1, #35
+ 108 0074 4FF00102 		mov	r2, #1
+ 109 0078 FFF7FEFF 		bl	L3GD20_Write
  114:../src/stm32f3_discovery_l3gd20.c **** }
- 111              		.loc 1 114 0
- 112 007c 07F11007 		add	r7, r7, #16
- 113 0080 BD46     		mov	sp, r7
- 114 0082 80BD     		pop	{r7, pc}
- 115              		.cfi_endproc
- 116              	.LFE111:
- 118              		.align	2
- 119              		.global	L3GD20_RebootCmd
- 120              		.thumb
- 121              		.thumb_func
- 123              	L3GD20_RebootCmd:
- 124              	.LFB112:
+ 110              		.loc 1 114 0
+ 111 007c 07F11007 		add	r7, r7, #16
+ 112 0080 BD46     		mov	sp, r7
+ 113 0082 80BD     		pop	{r7, pc}
+ 114              		.cfi_endproc
+ 115              	.LFE111:
+ 117              		.align	2
+ 118              		.global	L3GD20_RebootCmd
+ 119              		.thumb
+ 120              		.thumb_func
+ 122              	L3GD20_RebootCmd:
+ 123              	.LFB112:
  115:../src/stm32f3_discovery_l3gd20.c **** 
  116:../src/stm32f3_discovery_l3gd20.c **** /**
  117:../src/stm32f3_discovery_l3gd20.c ****   * @brief  Reboot memory content of L3GD20
@@ -242,61 +241,61 @@
  120:../src/stm32f3_discovery_l3gd20.c ****   */
  121:../src/stm32f3_discovery_l3gd20.c **** void L3GD20_RebootCmd(void)
  122:../src/stm32f3_discovery_l3gd20.c **** {
- 125              		.loc 1 122 0
- 126              		.cfi_startproc
- 127              		@ args = 0, pretend = 0, frame = 8
- 128              		@ frame_needed = 1, uses_anonymous_args = 0
- 129 0084 80B5     		push	{r7, lr}
- 130              	.LCFI3:
- 131              		.cfi_def_cfa_offset 8
- 132              		.cfi_offset 7, -8
- 133              		.cfi_offset 14, -4
- 134 0086 82B0     		sub	sp, sp, #8
- 135              	.LCFI4:
- 136              		.cfi_def_cfa_offset 16
- 137 0088 00AF     		add	r7, sp, #0
- 138              	.LCFI5:
- 139              		.cfi_def_cfa_register 7
+ 124              		.loc 1 122 0
+ 125              		.cfi_startproc
+ 126              		@ args = 0, pretend = 0, frame = 8
+ 127              		@ frame_needed = 1, uses_anonymous_args = 0
+ 128 0084 80B5     		push	{r7, lr}
+ 129              	.LCFI3:
+ 130              		.cfi_def_cfa_offset 8
+ 131              		.cfi_offset 7, -8
+ 132              		.cfi_offset 14, -4
+ 133 0086 82B0     		sub	sp, sp, #8
+ 134              	.LCFI4:
+ 135              		.cfi_def_cfa_offset 16
+ 136 0088 00AF     		add	r7, sp, #0
+ 137              	.LCFI5:
+ 138              		.cfi_def_cfa_register 7
  123:../src/stm32f3_discovery_l3gd20.c ****   uint8_t tmpreg;
  124:../src/stm32f3_discovery_l3gd20.c ****   
  125:../src/stm32f3_discovery_l3gd20.c ****   /* Read CTRL_REG5 register */
  126:../src/stm32f3_discovery_l3gd20.c ****   L3GD20_Read(&tmpreg, L3GD20_CTRL_REG5_ADDR, 1);
- 140              		.loc 1 126 0
- 141 008a 07F10703 		add	r3, r7, #7
- 142 008e 1846     		mov	r0, r3
- 143 0090 4FF02401 		mov	r1, #36
- 144 0094 4FF00102 		mov	r2, #1
- 145 0098 FFF7FEFF 		bl	L3GD20_Read
+ 139              		.loc 1 126 0
+ 140 008a 07F10703 		add	r3, r7, #7
+ 141 008e 1846     		mov	r0, r3
+ 142 0090 4FF02401 		mov	r1, #36
+ 143 0094 4FF00102 		mov	r2, #1
+ 144 0098 FFF7FEFF 		bl	L3GD20_Read
  127:../src/stm32f3_discovery_l3gd20.c ****   
  128:../src/stm32f3_discovery_l3gd20.c ****   /* Enable or Disable the reboot memory */
  129:../src/stm32f3_discovery_l3gd20.c ****   tmpreg |= L3GD20_BOOT_REBOOTMEMORY;
- 146              		.loc 1 129 0
- 147 009c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
- 148 009e 63F07F03 		orn	r3, r3, #127
- 149 00a2 DBB2     		uxtb	r3, r3
- 150 00a4 FB71     		strb	r3, [r7, #7]
+ 145              		.loc 1 129 0
+ 146 009c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 147 009e 63F07F03 		orn	r3, r3, #127
+ 148 00a2 DBB2     		uxtb	r3, r3
+ 149 00a4 FB71     		strb	r3, [r7, #7]
  130:../src/stm32f3_discovery_l3gd20.c ****   
  131:../src/stm32f3_discovery_l3gd20.c ****   /* Write value to MEMS CTRL_REG5 regsister */
  132:../src/stm32f3_discovery_l3gd20.c ****   L3GD20_Write(&tmpreg, L3GD20_CTRL_REG5_ADDR, 1);
- 151              		.loc 1 132 0
- 152 00a6 07F10703 		add	r3, r7, #7
- 153 00aa 1846     		mov	r0, r3
- 154 00ac 4FF02401 		mov	r1, #36
- 155 00b0 4FF00102 		mov	r2, #1
- 156 00b4 FFF7FEFF 		bl	L3GD20_Write
+ 150              		.loc 1 132 0
+ 151 00a6 07F10703 		add	r3, r7, #7
+ 152 00aa 1846     		mov	r0, r3
+ 153 00ac 4FF02401 		mov	r1, #36
+ 154 00b0 4FF00102 		mov	r2, #1
+ 155 00b4 FFF7FEFF 		bl	L3GD20_Write
  133:../src/stm32f3_discovery_l3gd20.c **** }
- 157              		.loc 1 133 0
- 158 00b8 07F10807 		add	r7, r7, #8
- 159 00bc BD46     		mov	sp, r7
- 160 00be 80BD     		pop	{r7, pc}
- 161              		.cfi_endproc
- 162              	.LFE112:
- 164              		.align	2
- 165              		.global	L3GD20_INT1InterruptConfig
- 166              		.thumb
- 167              		.thumb_func
- 169              	L3GD20_INT1InterruptConfig:
- 170              	.LFB113:
+ 156              		.loc 1 133 0
+ 157 00b8 07F10807 		add	r7, r7, #8
+ 158 00bc BD46     		mov	sp, r7
+ 159 00be 80BD     		pop	{r7, pc}
+ 160              		.cfi_endproc
+ 161              	.LFE112:
+ 163              		.align	2
+ 164              		.global	L3GD20_INT1InterruptConfig
+ 165              		.thumb
+ 166              		.thumb_func
+ 168              	L3GD20_INT1InterruptConfig:
+ 169              	.LFB113:
  134:../src/stm32f3_discovery_l3gd20.c **** 
  135:../src/stm32f3_discovery_l3gd20.c **** /**
  136:../src/stm32f3_discovery_l3gd20.c ****   * @brief Set L3GD20 Interrupt configuration
@@ -306,118 +305,118 @@
  140:../src/stm32f3_discovery_l3gd20.c ****   */
  141:../src/stm32f3_discovery_l3gd20.c **** void L3GD20_INT1InterruptConfig(L3GD20_InterruptConfigTypeDef *L3GD20_IntConfigStruct)
  142:../src/stm32f3_discovery_l3gd20.c **** {
- 171              		.loc 1 142 0
- 172              		.cfi_startproc
- 173              		@ args = 0, pretend = 0, frame = 16
- 174              		@ frame_needed = 1, uses_anonymous_args = 0
- 175 00c0 80B5     		push	{r7, lr}
- 176              	.LCFI6:
- 177              		.cfi_def_cfa_offset 8
- 178              		.cfi_offset 7, -8
- 179              		.cfi_offset 14, -4
- 180 00c2 84B0     		sub	sp, sp, #16
- 181              	.LCFI7:
- 182              		.cfi_def_cfa_offset 24
- 183 00c4 00AF     		add	r7, sp, #0
- 184              	.LCFI8:
- 185              		.cfi_def_cfa_register 7
- 186 00c6 7860     		str	r0, [r7, #4]
+ 170              		.loc 1 142 0
+ 171              		.cfi_startproc
+ 172              		@ args = 0, pretend = 0, frame = 16
+ 173              		@ frame_needed = 1, uses_anonymous_args = 0
+ 174 00c0 80B5     		push	{r7, lr}
+ 175              	.LCFI6:
+ 176              		.cfi_def_cfa_offset 8
+ 177              		.cfi_offset 7, -8
+ 178              		.cfi_offset 14, -4
+ 179 00c2 84B0     		sub	sp, sp, #16
+ 180              	.LCFI7:
+ 181              		.cfi_def_cfa_offset 24
+ 182 00c4 00AF     		add	r7, sp, #0
+ 183              	.LCFI8:
+ 184              		.cfi_def_cfa_register 7
+ 185 00c6 7860     		str	r0, [r7, #4]
  143:../src/stm32f3_discovery_l3gd20.c ****   uint8_t ctrl_cfr = 0x00, ctrl3 = 0x00;
- 187              		.loc 1 143 0
- 188 00c8 4FF00003 		mov	r3, #0
- 189 00cc FB73     		strb	r3, [r7, #15]
- 190 00ce 4FF00003 		mov	r3, #0
- 191 00d2 BB73     		strb	r3, [r7, #14]
+ 186              		.loc 1 143 0
+ 187 00c8 4FF00003 		mov	r3, #0
+ 188 00cc FB73     		strb	r3, [r7, #15]
+ 189 00ce 4FF00003 		mov	r3, #0
+ 190 00d2 BB73     		strb	r3, [r7, #14]
  144:../src/stm32f3_discovery_l3gd20.c ****   
  145:../src/stm32f3_discovery_l3gd20.c ****   /* Read INT1_CFG register */
  146:../src/stm32f3_discovery_l3gd20.c ****   L3GD20_Read(&ctrl_cfr, L3GD20_INT1_CFG_ADDR, 1);
- 192              		.loc 1 146 0
- 193 00d4 07F10F03 		add	r3, r7, #15
- 194 00d8 1846     		mov	r0, r3
- 195 00da 4FF03001 		mov	r1, #48
- 196 00de 4FF00102 		mov	r2, #1
- 197 00e2 FFF7FEFF 		bl	L3GD20_Read
+ 191              		.loc 1 146 0
+ 192 00d4 07F10F03 		add	r3, r7, #15
+ 193 00d8 1846     		mov	r0, r3
+ 194 00da 4FF03001 		mov	r1, #48
+ 195 00de 4FF00102 		mov	r2, #1
+ 196 00e2 FFF7FEFF 		bl	L3GD20_Read
  147:../src/stm32f3_discovery_l3gd20.c ****   
  148:../src/stm32f3_discovery_l3gd20.c ****   /* Read CTRL_REG3 register */
  149:../src/stm32f3_discovery_l3gd20.c ****   L3GD20_Read(&ctrl3, L3GD20_CTRL_REG3_ADDR, 1);
- 198              		.loc 1 149 0
- 199 00e6 07F10E03 		add	r3, r7, #14
- 200 00ea 1846     		mov	r0, r3
- 201 00ec 4FF02201 		mov	r1, #34
- 202 00f0 4FF00102 		mov	r2, #1
- 203 00f4 FFF7FEFF 		bl	L3GD20_Read
+ 197              		.loc 1 149 0
+ 198 00e6 07F10E03 		add	r3, r7, #14
+ 199 00ea 1846     		mov	r0, r3
+ 200 00ec 4FF02201 		mov	r1, #34
+ 201 00f0 4FF00102 		mov	r2, #1
+ 202 00f4 FFF7FEFF 		bl	L3GD20_Read
  150:../src/stm32f3_discovery_l3gd20.c ****   
  151:../src/stm32f3_discovery_l3gd20.c ****   ctrl_cfr &= 0x80;
- 204              		.loc 1 151 0
- 205 00f8 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
- 206 00fa 23F07F03 		bic	r3, r3, #127
- 207 00fe DBB2     		uxtb	r3, r3
- 208 0100 FB73     		strb	r3, [r7, #15]
+ 203              		.loc 1 151 0
+ 204 00f8 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 205 00fa 23F07F03 		bic	r3, r3, #127
+ 206 00fe DBB2     		uxtb	r3, r3
+ 207 0100 FB73     		strb	r3, [r7, #15]
  152:../src/stm32f3_discovery_l3gd20.c ****   
  153:../src/stm32f3_discovery_l3gd20.c ****   ctrl3 &= 0xDF;
- 209              		.loc 1 153 0
- 210 0102 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
- 211 0104 23F02003 		bic	r3, r3, #32
- 212 0108 DBB2     		uxtb	r3, r3
- 213 010a BB73     		strb	r3, [r7, #14]
+ 208              		.loc 1 153 0
+ 209 0102 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+ 210 0104 23F02003 		bic	r3, r3, #32
+ 211 0108 DBB2     		uxtb	r3, r3
+ 212 010a BB73     		strb	r3, [r7, #14]
  154:../src/stm32f3_discovery_l3gd20.c ****   
  155:../src/stm32f3_discovery_l3gd20.c ****   /* Configure latch Interrupt request and axe interrupts */                   
  156:../src/stm32f3_discovery_l3gd20.c ****   ctrl_cfr |= (uint8_t)(L3GD20_IntConfigStruct->Latch_Request| \
- 214              		.loc 1 156 0
- 215 010c 7B68     		ldr	r3, [r7, #4]
- 216 010e 1A78     		ldrb	r2, [r3, #0]	@ zero_extendqisi2
+ 213              		.loc 1 156 0
+ 214 010c 7B68     		ldr	r3, [r7, #4]
+ 215 010e 1A78     		ldrb	r2, [r3, #0]	@ zero_extendqisi2
  157:../src/stm32f3_discovery_l3gd20.c ****                    L3GD20_IntConfigStruct->Interrupt_Axes);
- 217              		.loc 1 157 0
- 218 0110 7B68     		ldr	r3, [r7, #4]
- 219 0112 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 216              		.loc 1 157 0
+ 217 0110 7B68     		ldr	r3, [r7, #4]
+ 218 0112 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
  156:../src/stm32f3_discovery_l3gd20.c ****   ctrl_cfr |= (uint8_t)(L3GD20_IntConfigStruct->Latch_Request| \
- 220              		.loc 1 156 0
- 221 0114 1343     		orrs	r3, r3, r2
- 222 0116 DAB2     		uxtb	r2, r3
- 223 0118 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
- 224 011a 1343     		orrs	r3, r3, r2
- 225 011c DBB2     		uxtb	r3, r3
- 226 011e FB73     		strb	r3, [r7, #15]
+ 219              		.loc 1 156 0
+ 220 0114 1343     		orrs	r3, r3, r2
+ 221 0116 DAB2     		uxtb	r2, r3
+ 222 0118 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 223 011a 1343     		orrs	r3, r3, r2
+ 224 011c DBB2     		uxtb	r3, r3
+ 225 011e FB73     		strb	r3, [r7, #15]
  158:../src/stm32f3_discovery_l3gd20.c ****                    
  159:../src/stm32f3_discovery_l3gd20.c ****   ctrl3 |= (uint8_t)(L3GD20_IntConfigStruct->Interrupt_ActiveEdge);
- 227              		.loc 1 159 0
- 228 0120 7B68     		ldr	r3, [r7, #4]
- 229 0122 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
- 230 0124 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
- 231 0126 1343     		orrs	r3, r3, r2
- 232 0128 DBB2     		uxtb	r3, r3
- 233 012a BB73     		strb	r3, [r7, #14]
+ 226              		.loc 1 159 0
+ 227 0120 7B68     		ldr	r3, [r7, #4]
+ 228 0122 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
+ 229 0124 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+ 230 0126 1343     		orrs	r3, r3, r2
+ 231 0128 DBB2     		uxtb	r3, r3
+ 232 012a BB73     		strb	r3, [r7, #14]
  160:../src/stm32f3_discovery_l3gd20.c ****   
  161:../src/stm32f3_discovery_l3gd20.c ****   /* Write value to MEMS INT1_CFG register */
  162:../src/stm32f3_discovery_l3gd20.c ****   L3GD20_Write(&ctrl_cfr, L3GD20_INT1_CFG_ADDR, 1);
- 234              		.loc 1 162 0
- 235 012c 07F10F03 		add	r3, r7, #15
- 236 0130 1846     		mov	r0, r3
- 237 0132 4FF03001 		mov	r1, #48
- 238 0136 4FF00102 		mov	r2, #1
- 239 013a FFF7FEFF 		bl	L3GD20_Write
+ 233              		.loc 1 162 0
+ 234 012c 07F10F03 		add	r3, r7, #15
+ 235 0130 1846     		mov	r0, r3
+ 236 0132 4FF03001 		mov	r1, #48
+ 237 0136 4FF00102 		mov	r2, #1
+ 238 013a FFF7FEFF 		bl	L3GD20_Write
  163:../src/stm32f3_discovery_l3gd20.c ****   
  164:../src/stm32f3_discovery_l3gd20.c ****   /* Write value to MEMS CTRL_REG3 register */
  165:../src/stm32f3_discovery_l3gd20.c ****   L3GD20_Write(&ctrl3, L3GD20_CTRL_REG3_ADDR, 1);
- 240              		.loc 1 165 0
- 241 013e 07F10E03 		add	r3, r7, #14
- 242 0142 1846     		mov	r0, r3
- 243 0144 4FF02201 		mov	r1, #34
- 244 0148 4FF00102 		mov	r2, #1
- 245 014c FFF7FEFF 		bl	L3GD20_Write
+ 239              		.loc 1 165 0
+ 240 013e 07F10E03 		add	r3, r7, #14
+ 241 0142 1846     		mov	r0, r3
+ 242 0144 4FF02201 		mov	r1, #34
+ 243 0148 4FF00102 		mov	r2, #1
+ 244 014c FFF7FEFF 		bl	L3GD20_Write
  166:../src/stm32f3_discovery_l3gd20.c **** }
- 246              		.loc 1 166 0
- 247 0150 07F11007 		add	r7, r7, #16
- 248 0154 BD46     		mov	sp, r7
- 249 0156 80BD     		pop	{r7, pc}
- 250              		.cfi_endproc
- 251              	.LFE113:
- 253              		.align	2
- 254              		.global	L3GD20_INT1InterruptCmd
- 255              		.thumb
- 256              		.thumb_func
- 258              	L3GD20_INT1InterruptCmd:
- 259              	.LFB114:
+ 245              		.loc 1 166 0
+ 246 0150 07F11007 		add	r7, r7, #16
+ 247 0154 BD46     		mov	sp, r7
+ 248 0156 80BD     		pop	{r7, pc}
+ 249              		.cfi_endproc
+ 250              	.LFE113:
+ 252              		.align	2
+ 253              		.global	L3GD20_INT1InterruptCmd
+ 254              		.thumb
+ 255              		.thumb_func
+ 257              	L3GD20_INT1InterruptCmd:
+ 258              	.LFB114:
  167:../src/stm32f3_discovery_l3gd20.c **** 
  168:../src/stm32f3_discovery_l3gd20.c **** /**
  169:../src/stm32f3_discovery_l3gd20.c ****   * @brief  Enable or disable INT1 interrupt
@@ -429,69 +428,69 @@
  175:../src/stm32f3_discovery_l3gd20.c ****   */
  176:../src/stm32f3_discovery_l3gd20.c **** void L3GD20_INT1InterruptCmd(uint8_t InterruptState)
  177:../src/stm32f3_discovery_l3gd20.c **** {  
- 260              		.loc 1 177 0
- 261              		.cfi_startproc
- 262              		@ args = 0, pretend = 0, frame = 16
- 263              		@ frame_needed = 1, uses_anonymous_args = 0
- 264 0158 80B5     		push	{r7, lr}
- 265              	.LCFI9:
- 266              		.cfi_def_cfa_offset 8
- 267              		.cfi_offset 7, -8
- 268              		.cfi_offset 14, -4
- 269 015a 84B0     		sub	sp, sp, #16
- 270              	.LCFI10:
- 271              		.cfi_def_cfa_offset 24
- 272 015c 00AF     		add	r7, sp, #0
- 273              	.LCFI11:
- 274              		.cfi_def_cfa_register 7
- 275 015e 0346     		mov	r3, r0
- 276 0160 FB71     		strb	r3, [r7, #7]
+ 259              		.loc 1 177 0
+ 260              		.cfi_startproc
+ 261              		@ args = 0, pretend = 0, frame = 16
+ 262              		@ frame_needed = 1, uses_anonymous_args = 0
+ 263 0158 80B5     		push	{r7, lr}
+ 264              	.LCFI9:
+ 265              		.cfi_def_cfa_offset 8
+ 266              		.cfi_offset 7, -8
+ 267              		.cfi_offset 14, -4
+ 268 015a 84B0     		sub	sp, sp, #16
+ 269              	.LCFI10:
+ 270              		.cfi_def_cfa_offset 24
+ 271 015c 00AF     		add	r7, sp, #0
+ 272              	.LCFI11:
+ 273              		.cfi_def_cfa_register 7
+ 274 015e 0346     		mov	r3, r0
+ 275 0160 FB71     		strb	r3, [r7, #7]
  178:../src/stm32f3_discovery_l3gd20.c ****   uint8_t tmpreg;
  179:../src/stm32f3_discovery_l3gd20.c ****   
  180:../src/stm32f3_discovery_l3gd20.c ****   /* Read CTRL_REG3 register */
  181:../src/stm32f3_discovery_l3gd20.c ****   L3GD20_Read(&tmpreg, L3GD20_CTRL_REG3_ADDR, 1);
- 277              		.loc 1 181 0
- 278 0162 07F10F03 		add	r3, r7, #15
- 279 0166 1846     		mov	r0, r3
- 280 0168 4FF02201 		mov	r1, #34
- 281 016c 4FF00102 		mov	r2, #1
- 282 0170 FFF7FEFF 		bl	L3GD20_Read
+ 276              		.loc 1 181 0
+ 277 0162 07F10F03 		add	r3, r7, #15
+ 278 0166 1846     		mov	r0, r3
+ 279 0168 4FF02201 		mov	r1, #34
+ 280 016c 4FF00102 		mov	r2, #1
+ 281 0170 FFF7FEFF 		bl	L3GD20_Read
  182:../src/stm32f3_discovery_l3gd20.c ****                   
  183:../src/stm32f3_discovery_l3gd20.c ****   tmpreg &= 0x7F;	
- 283              		.loc 1 183 0
- 284 0174 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
- 285 0176 03F07F03 		and	r3, r3, #127
- 286 017a DBB2     		uxtb	r3, r3
- 287 017c FB73     		strb	r3, [r7, #15]
+ 282              		.loc 1 183 0
+ 283 0174 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 284 0176 03F07F03 		and	r3, r3, #127
+ 285 017a DBB2     		uxtb	r3, r3
+ 286 017c FB73     		strb	r3, [r7, #15]
  184:../src/stm32f3_discovery_l3gd20.c ****   tmpreg |= InterruptState;
- 288              		.loc 1 184 0
- 289 017e FA7B     		ldrb	r2, [r7, #15]	@ zero_extendqisi2
- 290 0180 FB79     		ldrb	r3, [r7, #7]
- 291 0182 1343     		orrs	r3, r3, r2
- 292 0184 DBB2     		uxtb	r3, r3
- 293 0186 FB73     		strb	r3, [r7, #15]
+ 287              		.loc 1 184 0
+ 288 017e FA7B     		ldrb	r2, [r7, #15]	@ zero_extendqisi2
+ 289 0180 FB79     		ldrb	r3, [r7, #7]
+ 290 0182 1343     		orrs	r3, r3, r2
+ 291 0184 DBB2     		uxtb	r3, r3
+ 292 0186 FB73     		strb	r3, [r7, #15]
  185:../src/stm32f3_discovery_l3gd20.c ****   
  186:../src/stm32f3_discovery_l3gd20.c ****   /* Write value to MEMS CTRL_REG3 regsister */
  187:../src/stm32f3_discovery_l3gd20.c ****   L3GD20_Write(&tmpreg, L3GD20_CTRL_REG3_ADDR, 1);
- 294              		.loc 1 187 0
- 295 0188 07F10F03 		add	r3, r7, #15
- 296 018c 1846     		mov	r0, r3
- 297 018e 4FF02201 		mov	r1, #34
- 298 0192 4FF00102 		mov	r2, #1
- 299 0196 FFF7FEFF 		bl	L3GD20_Write
+ 293              		.loc 1 187 0
+ 294 0188 07F10F03 		add	r3, r7, #15
+ 295 018c 1846     		mov	r0, r3
+ 296 018e 4FF02201 		mov	r1, #34
+ 297 0192 4FF00102 		mov	r2, #1
+ 298 0196 FFF7FEFF 		bl	L3GD20_Write
  188:../src/stm32f3_discovery_l3gd20.c **** }
- 300              		.loc 1 188 0
- 301 019a 07F11007 		add	r7, r7, #16
- 302 019e BD46     		mov	sp, r7
- 303 01a0 80BD     		pop	{r7, pc}
- 304              		.cfi_endproc
- 305              	.LFE114:
- 307 01a2 00BF     		.align	2
- 308              		.global	L3GD20_INT2InterruptCmd
- 309              		.thumb
- 310              		.thumb_func
- 312              	L3GD20_INT2InterruptCmd:
- 313              	.LFB115:
+ 299              		.loc 1 188 0
+ 300 019a 07F11007 		add	r7, r7, #16
+ 301 019e BD46     		mov	sp, r7
+ 302 01a0 80BD     		pop	{r7, pc}
+ 303              		.cfi_endproc
+ 304              	.LFE114:
+ 306 01a2 00BF     		.align	2
+ 307              		.global	L3GD20_INT2InterruptCmd
+ 308              		.thumb
+ 309              		.thumb_func
+ 311              	L3GD20_INT2InterruptCmd:
+ 312              	.LFB115:
  189:../src/stm32f3_discovery_l3gd20.c **** 
  190:../src/stm32f3_discovery_l3gd20.c **** /**
  191:../src/stm32f3_discovery_l3gd20.c ****   * @brief  Enable or disable INT2 interrupt
@@ -503,69 +502,69 @@
  197:../src/stm32f3_discovery_l3gd20.c ****   */
  198:../src/stm32f3_discovery_l3gd20.c **** void L3GD20_INT2InterruptCmd(uint8_t InterruptState)
  199:../src/stm32f3_discovery_l3gd20.c **** {  
- 314              		.loc 1 199 0
- 315              		.cfi_startproc
- 316              		@ args = 0, pretend = 0, frame = 16
- 317              		@ frame_needed = 1, uses_anonymous_args = 0
- 318 01a4 80B5     		push	{r7, lr}
- 319              	.LCFI12:
- 320              		.cfi_def_cfa_offset 8
- 321              		.cfi_offset 7, -8
- 322              		.cfi_offset 14, -4
- 323 01a6 84B0     		sub	sp, sp, #16
- 324              	.LCFI13:
- 325              		.cfi_def_cfa_offset 24
- 326 01a8 00AF     		add	r7, sp, #0
- 327              	.LCFI14:
- 328              		.cfi_def_cfa_register 7
- 329 01aa 0346     		mov	r3, r0
- 330 01ac FB71     		strb	r3, [r7, #7]
+ 313              		.loc 1 199 0
+ 314              		.cfi_startproc
+ 315              		@ args = 0, pretend = 0, frame = 16
+ 316              		@ frame_needed = 1, uses_anonymous_args = 0
+ 317 01a4 80B5     		push	{r7, lr}
+ 318              	.LCFI12:
+ 319              		.cfi_def_cfa_offset 8
+ 320              		.cfi_offset 7, -8
+ 321              		.cfi_offset 14, -4
+ 322 01a6 84B0     		sub	sp, sp, #16
+ 323              	.LCFI13:
+ 324              		.cfi_def_cfa_offset 24
+ 325 01a8 00AF     		add	r7, sp, #0
+ 326              	.LCFI14:
+ 327              		.cfi_def_cfa_register 7
+ 328 01aa 0346     		mov	r3, r0
+ 329 01ac FB71     		strb	r3, [r7, #7]
  200:../src/stm32f3_discovery_l3gd20.c ****   uint8_t tmpreg;
  201:../src/stm32f3_discovery_l3gd20.c ****   
  202:../src/stm32f3_discovery_l3gd20.c ****   /* Read CTRL_REG3 register */
  203:../src/stm32f3_discovery_l3gd20.c ****   L3GD20_Read(&tmpreg, L3GD20_CTRL_REG3_ADDR, 1);
- 331              		.loc 1 203 0
- 332 01ae 07F10F03 		add	r3, r7, #15
- 333 01b2 1846     		mov	r0, r3
- 334 01b4 4FF02201 		mov	r1, #34
- 335 01b8 4FF00102 		mov	r2, #1
- 336 01bc FFF7FEFF 		bl	L3GD20_Read
+ 330              		.loc 1 203 0
+ 331 01ae 07F10F03 		add	r3, r7, #15
+ 332 01b2 1846     		mov	r0, r3
+ 333 01b4 4FF02201 		mov	r1, #34
+ 334 01b8 4FF00102 		mov	r2, #1
+ 335 01bc FFF7FEFF 		bl	L3GD20_Read
  204:../src/stm32f3_discovery_l3gd20.c ****                   
  205:../src/stm32f3_discovery_l3gd20.c ****   tmpreg &= 0xF7;	
- 337              		.loc 1 205 0
- 338 01c0 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
- 339 01c2 23F00803 		bic	r3, r3, #8
- 340 01c6 DBB2     		uxtb	r3, r3
- 341 01c8 FB73     		strb	r3, [r7, #15]
+ 336              		.loc 1 205 0
+ 337 01c0 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 338 01c2 23F00803 		bic	r3, r3, #8
+ 339 01c6 DBB2     		uxtb	r3, r3
+ 340 01c8 FB73     		strb	r3, [r7, #15]
  206:../src/stm32f3_discovery_l3gd20.c ****   tmpreg |= InterruptState;
- 342              		.loc 1 206 0
- 343 01ca FA7B     		ldrb	r2, [r7, #15]	@ zero_extendqisi2
- 344 01cc FB79     		ldrb	r3, [r7, #7]
- 345 01ce 1343     		orrs	r3, r3, r2
- 346 01d0 DBB2     		uxtb	r3, r3
- 347 01d2 FB73     		strb	r3, [r7, #15]
+ 341              		.loc 1 206 0
+ 342 01ca FA7B     		ldrb	r2, [r7, #15]	@ zero_extendqisi2
+ 343 01cc FB79     		ldrb	r3, [r7, #7]
+ 344 01ce 1343     		orrs	r3, r3, r2
+ 345 01d0 DBB2     		uxtb	r3, r3
+ 346 01d2 FB73     		strb	r3, [r7, #15]
  207:../src/stm32f3_discovery_l3gd20.c ****   
  208:../src/stm32f3_discovery_l3gd20.c ****   /* Write value to MEMS CTRL_REG3 regsister */
  209:../src/stm32f3_discovery_l3gd20.c ****   L3GD20_Write(&tmpreg, L3GD20_CTRL_REG3_ADDR, 1);
- 348              		.loc 1 209 0
- 349 01d4 07F10F03 		add	r3, r7, #15
- 350 01d8 1846     		mov	r0, r3
- 351 01da 4FF02201 		mov	r1, #34
- 352 01de 4FF00102 		mov	r2, #1
- 353 01e2 FFF7FEFF 		bl	L3GD20_Write
+ 347              		.loc 1 209 0
+ 348 01d4 07F10F03 		add	r3, r7, #15
+ 349 01d8 1846     		mov	r0, r3
+ 350 01da 4FF02201 		mov	r1, #34
+ 351 01de 4FF00102 		mov	r2, #1
+ 352 01e2 FFF7FEFF 		bl	L3GD20_Write
  210:../src/stm32f3_discovery_l3gd20.c **** }
- 354              		.loc 1 210 0
- 355 01e6 07F11007 		add	r7, r7, #16
- 356 01ea BD46     		mov	sp, r7
- 357 01ec 80BD     		pop	{r7, pc}
- 358              		.cfi_endproc
- 359              	.LFE115:
- 361 01ee 00BF     		.align	2
- 362              		.global	L3GD20_FilterConfig
- 363              		.thumb
- 364              		.thumb_func
- 366              	L3GD20_FilterConfig:
- 367              	.LFB116:
+ 353              		.loc 1 210 0
+ 354 01e6 07F11007 		add	r7, r7, #16
+ 355 01ea BD46     		mov	sp, r7
+ 356 01ec 80BD     		pop	{r7, pc}
+ 357              		.cfi_endproc
+ 358              	.LFE115:
+ 360 01ee 00BF     		.align	2
+ 361              		.global	L3GD20_FilterConfig
+ 362              		.thumb
+ 363              		.thumb_func
+ 365              	L3GD20_FilterConfig:
+ 366              	.LFB116:
  211:../src/stm32f3_discovery_l3gd20.c **** 
  212:../src/stm32f3_discovery_l3gd20.c **** /**
  213:../src/stm32f3_discovery_l3gd20.c ****   * @brief  Set High Pass Filter Modality
@@ -575,79 +574,79 @@
  217:../src/stm32f3_discovery_l3gd20.c ****   */
  218:../src/stm32f3_discovery_l3gd20.c **** void L3GD20_FilterConfig(L3GD20_FilterConfigTypeDef *L3GD20_FilterStruct) 
  219:../src/stm32f3_discovery_l3gd20.c **** {
- 368              		.loc 1 219 0
- 369              		.cfi_startproc
- 370              		@ args = 0, pretend = 0, frame = 16
- 371              		@ frame_needed = 1, uses_anonymous_args = 0
- 372 01f0 80B5     		push	{r7, lr}
- 373              	.LCFI15:
- 374              		.cfi_def_cfa_offset 8
- 375              		.cfi_offset 7, -8
- 376              		.cfi_offset 14, -4
- 377 01f2 84B0     		sub	sp, sp, #16
- 378              	.LCFI16:
- 379              		.cfi_def_cfa_offset 24
- 380 01f4 00AF     		add	r7, sp, #0
- 381              	.LCFI17:
- 382              		.cfi_def_cfa_register 7
- 383 01f6 7860     		str	r0, [r7, #4]
+ 367              		.loc 1 219 0
+ 368              		.cfi_startproc
+ 369              		@ args = 0, pretend = 0, frame = 16
+ 370              		@ frame_needed = 1, uses_anonymous_args = 0
+ 371 01f0 80B5     		push	{r7, lr}
+ 372              	.LCFI15:
+ 373              		.cfi_def_cfa_offset 8
+ 374              		.cfi_offset 7, -8
+ 375              		.cfi_offset 14, -4
+ 376 01f2 84B0     		sub	sp, sp, #16
+ 377              	.LCFI16:
+ 378              		.cfi_def_cfa_offset 24
+ 379 01f4 00AF     		add	r7, sp, #0
+ 380              	.LCFI17:
+ 381              		.cfi_def_cfa_register 7
+ 382 01f6 7860     		str	r0, [r7, #4]
  220:../src/stm32f3_discovery_l3gd20.c ****   uint8_t tmpreg;
  221:../src/stm32f3_discovery_l3gd20.c ****   
  222:../src/stm32f3_discovery_l3gd20.c ****   /* Read CTRL_REG2 register */
  223:../src/stm32f3_discovery_l3gd20.c ****   L3GD20_Read(&tmpreg, L3GD20_CTRL_REG2_ADDR, 1);
- 384              		.loc 1 223 0
- 385 01f8 07F10F03 		add	r3, r7, #15
- 386 01fc 1846     		mov	r0, r3
- 387 01fe 4FF02101 		mov	r1, #33
- 388 0202 4FF00102 		mov	r2, #1
- 389 0206 FFF7FEFF 		bl	L3GD20_Read
+ 383              		.loc 1 223 0
+ 384 01f8 07F10F03 		add	r3, r7, #15
+ 385 01fc 1846     		mov	r0, r3
+ 386 01fe 4FF02101 		mov	r1, #33
+ 387 0202 4FF00102 		mov	r2, #1
+ 388 0206 FFF7FEFF 		bl	L3GD20_Read
  224:../src/stm32f3_discovery_l3gd20.c ****   
  225:../src/stm32f3_discovery_l3gd20.c ****   tmpreg &= 0xC0;
- 390              		.loc 1 225 0
- 391 020a FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
- 392 020c 23F03F03 		bic	r3, r3, #63
- 393 0210 DBB2     		uxtb	r3, r3
- 394 0212 FB73     		strb	r3, [r7, #15]
+ 389              		.loc 1 225 0
+ 390 020a FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 391 020c 23F03F03 		bic	r3, r3, #63
+ 392 0210 DBB2     		uxtb	r3, r3
+ 393 0212 FB73     		strb	r3, [r7, #15]
  226:../src/stm32f3_discovery_l3gd20.c ****   
  227:../src/stm32f3_discovery_l3gd20.c ****   /* Configure MEMS: mode and cutoff frquency */
  228:../src/stm32f3_discovery_l3gd20.c ****   tmpreg |= (uint8_t) (L3GD20_FilterStruct->HighPassFilter_Mode_Selection |\
- 395              		.loc 1 228 0
- 396 0214 7B68     		ldr	r3, [r7, #4]
- 397 0216 1A78     		ldrb	r2, [r3, #0]	@ zero_extendqisi2
+ 394              		.loc 1 228 0
+ 395 0214 7B68     		ldr	r3, [r7, #4]
+ 396 0216 1A78     		ldrb	r2, [r3, #0]	@ zero_extendqisi2
  229:../src/stm32f3_discovery_l3gd20.c ****                       L3GD20_FilterStruct->HighPassFilter_CutOff_Frequency);                       
- 398              		.loc 1 229 0
- 399 0218 7B68     		ldr	r3, [r7, #4]
- 400 021a 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 397              		.loc 1 229 0
+ 398 0218 7B68     		ldr	r3, [r7, #4]
+ 399 021a 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
  228:../src/stm32f3_discovery_l3gd20.c ****   tmpreg |= (uint8_t) (L3GD20_FilterStruct->HighPassFilter_Mode_Selection |\
- 401              		.loc 1 228 0
- 402 021c 1343     		orrs	r3, r3, r2
- 403 021e DAB2     		uxtb	r2, r3
- 404 0220 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
- 405 0222 1343     		orrs	r3, r3, r2
- 406 0224 DBB2     		uxtb	r3, r3
- 407 0226 FB73     		strb	r3, [r7, #15]
+ 400              		.loc 1 228 0
+ 401 021c 1343     		orrs	r3, r3, r2
+ 402 021e DAB2     		uxtb	r2, r3
+ 403 0220 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 404 0222 1343     		orrs	r3, r3, r2
+ 405 0224 DBB2     		uxtb	r3, r3
+ 406 0226 FB73     		strb	r3, [r7, #15]
  230:../src/stm32f3_discovery_l3gd20.c **** 
  231:../src/stm32f3_discovery_l3gd20.c ****   /* Write value to MEMS CTRL_REG2 regsister */
  232:../src/stm32f3_discovery_l3gd20.c ****   L3GD20_Write(&tmpreg, L3GD20_CTRL_REG2_ADDR, 1);
- 408              		.loc 1 232 0
- 409 0228 07F10F03 		add	r3, r7, #15
- 410 022c 1846     		mov	r0, r3
- 411 022e 4FF02101 		mov	r1, #33
- 412 0232 4FF00102 		mov	r2, #1
- 413 0236 FFF7FEFF 		bl	L3GD20_Write
+ 407              		.loc 1 232 0
+ 408 0228 07F10F03 		add	r3, r7, #15
+ 409 022c 1846     		mov	r0, r3
+ 410 022e 4FF02101 		mov	r1, #33
+ 411 0232 4FF00102 		mov	r2, #1
+ 412 0236 FFF7FEFF 		bl	L3GD20_Write
  233:../src/stm32f3_discovery_l3gd20.c **** }
- 414              		.loc 1 233 0
- 415 023a 07F11007 		add	r7, r7, #16
- 416 023e BD46     		mov	sp, r7
- 417 0240 80BD     		pop	{r7, pc}
- 418              		.cfi_endproc
- 419              	.LFE116:
- 421 0242 00BF     		.align	2
- 422              		.global	L3GD20_FilterCmd
- 423              		.thumb
- 424              		.thumb_func
- 426              	L3GD20_FilterCmd:
- 427              	.LFB117:
+ 413              		.loc 1 233 0
+ 414 023a 07F11007 		add	r7, r7, #16
+ 415 023e BD46     		mov	sp, r7
+ 416 0240 80BD     		pop	{r7, pc}
+ 417              		.cfi_endproc
+ 418              	.LFE116:
+ 420 0242 00BF     		.align	2
+ 421              		.global	L3GD20_FilterCmd
+ 422              		.thumb
+ 423              		.thumb_func
+ 425              	L3GD20_FilterCmd:
+ 426              	.LFB117:
  234:../src/stm32f3_discovery_l3gd20.c **** 
  235:../src/stm32f3_discovery_l3gd20.c **** /**
  236:../src/stm32f3_discovery_l3gd20.c ****   * @brief  Enable or Disable High Pass Filter
@@ -659,70 +658,70 @@
  242:../src/stm32f3_discovery_l3gd20.c ****   */
  243:../src/stm32f3_discovery_l3gd20.c **** void L3GD20_FilterCmd(uint8_t HighPassFilterState)
  244:../src/stm32f3_discovery_l3gd20.c ****  {
- 428              		.loc 1 244 0
- 429              		.cfi_startproc
- 430              		@ args = 0, pretend = 0, frame = 16
- 431              		@ frame_needed = 1, uses_anonymous_args = 0
- 432 0244 80B5     		push	{r7, lr}
- 433              	.LCFI18:
- 434              		.cfi_def_cfa_offset 8
- 435              		.cfi_offset 7, -8
- 436              		.cfi_offset 14, -4
- 437 0246 84B0     		sub	sp, sp, #16
- 438              	.LCFI19:
- 439              		.cfi_def_cfa_offset 24
- 440 0248 00AF     		add	r7, sp, #0
- 441              	.LCFI20:
- 442              		.cfi_def_cfa_register 7
- 443 024a 0346     		mov	r3, r0
- 444 024c FB71     		strb	r3, [r7, #7]
+ 427              		.loc 1 244 0
+ 428              		.cfi_startproc
+ 429              		@ args = 0, pretend = 0, frame = 16
+ 430              		@ frame_needed = 1, uses_anonymous_args = 0
+ 431 0244 80B5     		push	{r7, lr}
+ 432              	.LCFI18:
+ 433              		.cfi_def_cfa_offset 8
+ 434              		.cfi_offset 7, -8
+ 435              		.cfi_offset 14, -4
+ 436 0246 84B0     		sub	sp, sp, #16
+ 437              	.LCFI19:
+ 438              		.cfi_def_cfa_offset 24
+ 439 0248 00AF     		add	r7, sp, #0
+ 440              	.LCFI20:
+ 441              		.cfi_def_cfa_register 7
+ 442 024a 0346     		mov	r3, r0
+ 443 024c FB71     		strb	r3, [r7, #7]
  245:../src/stm32f3_discovery_l3gd20.c ****   uint8_t tmpreg;
  246:../src/stm32f3_discovery_l3gd20.c ****   
  247:../src/stm32f3_discovery_l3gd20.c ****   /* Read CTRL_REG5 register */
  248:../src/stm32f3_discovery_l3gd20.c ****   L3GD20_Read(&tmpreg, L3GD20_CTRL_REG5_ADDR, 1);
- 445              		.loc 1 248 0
- 446 024e 07F10F03 		add	r3, r7, #15
- 447 0252 1846     		mov	r0, r3
- 448 0254 4FF02401 		mov	r1, #36
- 449 0258 4FF00102 		mov	r2, #1
- 450 025c FFF7FEFF 		bl	L3GD20_Read
+ 444              		.loc 1 248 0
+ 445 024e 07F10F03 		add	r3, r7, #15
+ 446 0252 1846     		mov	r0, r3
+ 447 0254 4FF02401 		mov	r1, #36
+ 448 0258 4FF00102 		mov	r2, #1
+ 449 025c FFF7FEFF 		bl	L3GD20_Read
  249:../src/stm32f3_discovery_l3gd20.c ****                   
  250:../src/stm32f3_discovery_l3gd20.c ****   tmpreg &= 0xEF;
- 451              		.loc 1 250 0
- 452 0260 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
- 453 0262 23F01003 		bic	r3, r3, #16
- 454 0266 DBB2     		uxtb	r3, r3
- 455 0268 FB73     		strb	r3, [r7, #15]
+ 450              		.loc 1 250 0
+ 451 0260 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 452 0262 23F01003 		bic	r3, r3, #16
+ 453 0266 DBB2     		uxtb	r3, r3
+ 454 0268 FB73     		strb	r3, [r7, #15]
  251:../src/stm32f3_discovery_l3gd20.c **** 
  252:../src/stm32f3_discovery_l3gd20.c ****   tmpreg |= HighPassFilterState;
- 456              		.loc 1 252 0
- 457 026a FA7B     		ldrb	r2, [r7, #15]	@ zero_extendqisi2
- 458 026c FB79     		ldrb	r3, [r7, #7]
- 459 026e 1343     		orrs	r3, r3, r2
- 460 0270 DBB2     		uxtb	r3, r3
- 461 0272 FB73     		strb	r3, [r7, #15]
+ 455              		.loc 1 252 0
+ 456 026a FA7B     		ldrb	r2, [r7, #15]	@ zero_extendqisi2
+ 457 026c FB79     		ldrb	r3, [r7, #7]
+ 458 026e 1343     		orrs	r3, r3, r2
+ 459 0270 DBB2     		uxtb	r3, r3
+ 460 0272 FB73     		strb	r3, [r7, #15]
  253:../src/stm32f3_discovery_l3gd20.c **** 
  254:../src/stm32f3_discovery_l3gd20.c ****   /* Write value to MEMS CTRL_REG5 regsister */
  255:../src/stm32f3_discovery_l3gd20.c ****   L3GD20_Write(&tmpreg, L3GD20_CTRL_REG5_ADDR, 1);
- 462              		.loc 1 255 0
- 463 0274 07F10F03 		add	r3, r7, #15
- 464 0278 1846     		mov	r0, r3
- 465 027a 4FF02401 		mov	r1, #36
- 466 027e 4FF00102 		mov	r2, #1
- 467 0282 FFF7FEFF 		bl	L3GD20_Write
+ 461              		.loc 1 255 0
+ 462 0274 07F10F03 		add	r3, r7, #15
+ 463 0278 1846     		mov	r0, r3
+ 464 027a 4FF02401 		mov	r1, #36
+ 465 027e 4FF00102 		mov	r2, #1
+ 466 0282 FFF7FEFF 		bl	L3GD20_Write
  256:../src/stm32f3_discovery_l3gd20.c **** }
- 468              		.loc 1 256 0
- 469 0286 07F11007 		add	r7, r7, #16
- 470 028a BD46     		mov	sp, r7
- 471 028c 80BD     		pop	{r7, pc}
- 472              		.cfi_endproc
- 473              	.LFE117:
- 475 028e 00BF     		.align	2
- 476              		.global	L3GD20_GetDataStatus
- 477              		.thumb
- 478              		.thumb_func
- 480              	L3GD20_GetDataStatus:
- 481              	.LFB118:
+ 467              		.loc 1 256 0
+ 468 0286 07F11007 		add	r7, r7, #16
+ 469 028a BD46     		mov	sp, r7
+ 470 028c 80BD     		pop	{r7, pc}
+ 471              		.cfi_endproc
+ 472              	.LFE117:
+ 474 028e 00BF     		.align	2
+ 475              		.global	L3GD20_GetDataStatus
+ 476              		.thumb
+ 477              		.thumb_func
+ 479              	L3GD20_GetDataStatus:
+ 480              	.LFB118:
  257:../src/stm32f3_discovery_l3gd20.c **** 
  258:../src/stm32f3_discovery_l3gd20.c **** /**
  259:../src/stm32f3_discovery_l3gd20.c ****   * @brief  Get status for L3GD20 data
@@ -731,49 +730,49 @@
  262:../src/stm32f3_discovery_l3gd20.c ****   */
  263:../src/stm32f3_discovery_l3gd20.c **** uint8_t L3GD20_GetDataStatus(void)
  264:../src/stm32f3_discovery_l3gd20.c **** {
- 482              		.loc 1 264 0
- 483              		.cfi_startproc
- 484              		@ args = 0, pretend = 0, frame = 8
- 485              		@ frame_needed = 1, uses_anonymous_args = 0
- 486 0290 80B5     		push	{r7, lr}
- 487              	.LCFI21:
- 488              		.cfi_def_cfa_offset 8
- 489              		.cfi_offset 7, -8
- 490              		.cfi_offset 14, -4
- 491 0292 82B0     		sub	sp, sp, #8
- 492              	.LCFI22:
- 493              		.cfi_def_cfa_offset 16
- 494 0294 00AF     		add	r7, sp, #0
- 495              	.LCFI23:
- 496              		.cfi_def_cfa_register 7
+ 481              		.loc 1 264 0
+ 482              		.cfi_startproc
+ 483              		@ args = 0, pretend = 0, frame = 8
+ 484              		@ frame_needed = 1, uses_anonymous_args = 0
+ 485 0290 80B5     		push	{r7, lr}
+ 486              	.LCFI21:
+ 487              		.cfi_def_cfa_offset 8
+ 488              		.cfi_offset 7, -8
+ 489              		.cfi_offset 14, -4
+ 490 0292 82B0     		sub	sp, sp, #8
+ 491              	.LCFI22:
+ 492              		.cfi_def_cfa_offset 16
+ 493 0294 00AF     		add	r7, sp, #0
+ 494              	.LCFI23:
+ 495              		.cfi_def_cfa_register 7
  265:../src/stm32f3_discovery_l3gd20.c ****   uint8_t tmpreg;
  266:../src/stm32f3_discovery_l3gd20.c ****   
  267:../src/stm32f3_discovery_l3gd20.c ****   /* Read STATUS_REG register */
  268:../src/stm32f3_discovery_l3gd20.c ****   L3GD20_Read(&tmpreg, L3GD20_STATUS_REG_ADDR, 1);
- 497              		.loc 1 268 0
- 498 0296 07F10703 		add	r3, r7, #7
- 499 029a 1846     		mov	r0, r3
- 500 029c 4FF02701 		mov	r1, #39
- 501 02a0 4FF00102 		mov	r2, #1
- 502 02a4 FFF7FEFF 		bl	L3GD20_Read
+ 496              		.loc 1 268 0
+ 497 0296 07F10703 		add	r3, r7, #7
+ 498 029a 1846     		mov	r0, r3
+ 499 029c 4FF02701 		mov	r1, #39
+ 500 02a0 4FF00102 		mov	r2, #1
+ 501 02a4 FFF7FEFF 		bl	L3GD20_Read
  269:../src/stm32f3_discovery_l3gd20.c ****                   
  270:../src/stm32f3_discovery_l3gd20.c ****   return tmpreg;
- 503              		.loc 1 270 0
- 504 02a8 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 502              		.loc 1 270 0
+ 503 02a8 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
  271:../src/stm32f3_discovery_l3gd20.c **** }
- 505              		.loc 1 271 0
- 506 02aa 1846     		mov	r0, r3
- 507 02ac 07F10807 		add	r7, r7, #8
- 508 02b0 BD46     		mov	sp, r7
- 509 02b2 80BD     		pop	{r7, pc}
- 510              		.cfi_endproc
- 511              	.LFE118:
- 513              		.align	2
- 514              		.global	L3GD20_Write
- 515              		.thumb
- 516              		.thumb_func
- 518              	L3GD20_Write:
- 519              	.LFB119:
+ 504              		.loc 1 271 0
+ 505 02aa 1846     		mov	r0, r3
+ 506 02ac 07F10807 		add	r7, r7, #8
+ 507 02b0 BD46     		mov	sp, r7
+ 508 02b2 80BD     		pop	{r7, pc}
+ 509              		.cfi_endproc
+ 510              	.LFE118:
+ 512              		.align	2
+ 513              		.global	L3GD20_Write
+ 514              		.thumb
+ 515              		.thumb_func
+ 517              	L3GD20_Write:
+ 518              	.LFB119:
  272:../src/stm32f3_discovery_l3gd20.c **** 
  273:../src/stm32f3_discovery_l3gd20.c **** /**
  274:../src/stm32f3_discovery_l3gd20.c ****   * @brief  Writes one byte to the L3GD20.
@@ -784,107 +783,107 @@
  279:../src/stm32f3_discovery_l3gd20.c ****   */
  280:../src/stm32f3_discovery_l3gd20.c **** void L3GD20_Write(uint8_t* pBuffer, uint8_t WriteAddr, uint16_t NumByteToWrite)
  281:../src/stm32f3_discovery_l3gd20.c **** {
- 520              		.loc 1 281 0
- 521              		.cfi_startproc
- 522              		@ args = 0, pretend = 0, frame = 8
- 523              		@ frame_needed = 1, uses_anonymous_args = 0
- 524 02b4 80B5     		push	{r7, lr}
- 525              	.LCFI24:
- 526              		.cfi_def_cfa_offset 8
- 527              		.cfi_offset 7, -8
- 528              		.cfi_offset 14, -4
- 529 02b6 82B0     		sub	sp, sp, #8
- 530              	.LCFI25:
- 531              		.cfi_def_cfa_offset 16
- 532 02b8 00AF     		add	r7, sp, #0
- 533              	.LCFI26:
- 534              		.cfi_def_cfa_register 7
- 535 02ba 7860     		str	r0, [r7, #4]
- 536 02bc 1346     		mov	r3, r2
- 537 02be 0A46     		mov	r2, r1
- 538 02c0 FA70     		strb	r2, [r7, #3]
- 539 02c2 3B80     		strh	r3, [r7, #0]	@ movhi
+ 519              		.loc 1 281 0
+ 520              		.cfi_startproc
+ 521              		@ args = 0, pretend = 0, frame = 8
+ 522              		@ frame_needed = 1, uses_anonymous_args = 0
+ 523 02b4 80B5     		push	{r7, lr}
+ 524              	.LCFI24:
+ 525              		.cfi_def_cfa_offset 8
+ 526              		.cfi_offset 7, -8
+ 527              		.cfi_offset 14, -4
+ 528 02b6 82B0     		sub	sp, sp, #8
+ 529              	.LCFI25:
+ 530              		.cfi_def_cfa_offset 16
+ 531 02b8 00AF     		add	r7, sp, #0
+ 532              	.LCFI26:
+ 533              		.cfi_def_cfa_register 7
+ 534 02ba 7860     		str	r0, [r7, #4]
+ 535 02bc 1346     		mov	r3, r2
+ 536 02be 0A46     		mov	r2, r1
+ 537 02c0 FA70     		strb	r2, [r7, #3]
+ 538 02c2 3B80     		strh	r3, [r7, #0]	@ movhi
  282:../src/stm32f3_discovery_l3gd20.c ****   /* Configure the MS bit: 
  283:../src/stm32f3_discovery_l3gd20.c ****        - When 0, the address will remain unchanged in multiple read/write commands.
  284:../src/stm32f3_discovery_l3gd20.c ****        - When 1, the address will be auto incremented in multiple read/write commands.
  285:../src/stm32f3_discovery_l3gd20.c ****   */
  286:../src/stm32f3_discovery_l3gd20.c ****   if(NumByteToWrite > 0x01)
- 540              		.loc 1 286 0
- 541 02c4 3B88     		ldrh	r3, [r7, #0]
- 542 02c6 012B     		cmp	r3, #1
- 543 02c8 03D9     		bls	.L11
+ 539              		.loc 1 286 0
+ 540 02c4 3B88     		ldrh	r3, [r7, #0]
+ 541 02c6 012B     		cmp	r3, #1
+ 542 02c8 03D9     		bls	.L11
  287:../src/stm32f3_discovery_l3gd20.c ****   {
  288:../src/stm32f3_discovery_l3gd20.c ****     WriteAddr |= (uint8_t)MULTIPLEBYTE_CMD;
- 544              		.loc 1 288 0
- 545 02ca FB78     		ldrb	r3, [r7, #3]
- 546 02cc 43F04003 		orr	r3, r3, #64
- 547 02d0 FB70     		strb	r3, [r7, #3]
- 548              	.L11:
+ 543              		.loc 1 288 0
+ 544 02ca FB78     		ldrb	r3, [r7, #3]
+ 545 02cc 43F04003 		orr	r3, r3, #64
+ 546 02d0 FB70     		strb	r3, [r7, #3]
+ 547              	.L11:
  289:../src/stm32f3_discovery_l3gd20.c ****   }
  290:../src/stm32f3_discovery_l3gd20.c ****   /* Set chip select Low at the start of the transmission */
  291:../src/stm32f3_discovery_l3gd20.c ****   L3GD20_CS_LOW();
- 549              		.loc 1 291 0
- 550 02d2 4FF48050 		mov	r0, #4096
- 551 02d6 C4F60000 		movt	r0, 18432
- 552 02da 4FF00801 		mov	r1, #8
- 553 02de FFF7FEFF 		bl	GPIO_ResetBits
+ 548              		.loc 1 291 0
+ 549 02d2 4FF48050 		mov	r0, #4096
+ 550 02d6 C4F60000 		movt	r0, 18432
+ 551 02da 4FF00801 		mov	r1, #8
+ 552 02de FFF7FEFF 		bl	GPIO_ResetBits
  292:../src/stm32f3_discovery_l3gd20.c ****   
  293:../src/stm32f3_discovery_l3gd20.c ****   /* Send the Address of the indexed register */
  294:../src/stm32f3_discovery_l3gd20.c ****   L3GD20_SendByte(WriteAddr);
- 554              		.loc 1 294 0
- 555 02e2 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
- 556 02e4 1846     		mov	r0, r3
- 557 02e6 00F03FF9 		bl	L3GD20_SendByte
+ 553              		.loc 1 294 0
+ 554 02e2 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 555 02e4 1846     		mov	r0, r3
+ 556 02e6 00F03FF9 		bl	L3GD20_SendByte
  295:../src/stm32f3_discovery_l3gd20.c ****   /* Send the data that will be written into the device (MSB First) */
  296:../src/stm32f3_discovery_l3gd20.c ****   while(NumByteToWrite >= 0x01)
- 558              		.loc 1 296 0
- 559 02ea 0CE0     		b	.L12
- 560              	.L13:
+ 557              		.loc 1 296 0
+ 558 02ea 0CE0     		b	.L12
+ 559              	.L13:
  297:../src/stm32f3_discovery_l3gd20.c ****   {
  298:../src/stm32f3_discovery_l3gd20.c ****     L3GD20_SendByte(*pBuffer);
- 561              		.loc 1 298 0
- 562 02ec 7B68     		ldr	r3, [r7, #4]
- 563 02ee 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
- 564 02f0 1846     		mov	r0, r3
- 565 02f2 00F039F9 		bl	L3GD20_SendByte
+ 560              		.loc 1 298 0
+ 561 02ec 7B68     		ldr	r3, [r7, #4]
+ 562 02ee 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 563 02f0 1846     		mov	r0, r3
+ 564 02f2 00F039F9 		bl	L3GD20_SendByte
  299:../src/stm32f3_discovery_l3gd20.c ****     NumByteToWrite--;
- 566              		.loc 1 299 0
- 567 02f6 3B88     		ldrh	r3, [r7, #0]	@ movhi
- 568 02f8 03F1FF33 		add	r3, r3, #-1
- 569 02fc 3B80     		strh	r3, [r7, #0]	@ movhi
+ 565              		.loc 1 299 0
+ 566 02f6 3B88     		ldrh	r3, [r7, #0]	@ movhi
+ 567 02f8 03F1FF33 		add	r3, r3, #-1
+ 568 02fc 3B80     		strh	r3, [r7, #0]	@ movhi
  300:../src/stm32f3_discovery_l3gd20.c ****     pBuffer++;
- 570              		.loc 1 300 0
- 571 02fe 7B68     		ldr	r3, [r7, #4]
- 572 0300 03F10103 		add	r3, r3, #1
- 573 0304 7B60     		str	r3, [r7, #4]
- 574              	.L12:
+ 569              		.loc 1 300 0
+ 570 02fe 7B68     		ldr	r3, [r7, #4]
+ 571 0300 03F10103 		add	r3, r3, #1
+ 572 0304 7B60     		str	r3, [r7, #4]
+ 573              	.L12:
  296:../src/stm32f3_discovery_l3gd20.c ****   while(NumByteToWrite >= 0x01)
- 575              		.loc 1 296 0 discriminator 1
- 576 0306 3B88     		ldrh	r3, [r7, #0]
- 577 0308 002B     		cmp	r3, #0
- 578 030a EFD1     		bne	.L13
+ 574              		.loc 1 296 0 discriminator 1
+ 575 0306 3B88     		ldrh	r3, [r7, #0]
+ 576 0308 002B     		cmp	r3, #0
+ 577 030a EFD1     		bne	.L13
  301:../src/stm32f3_discovery_l3gd20.c ****   }
  302:../src/stm32f3_discovery_l3gd20.c ****   
  303:../src/stm32f3_discovery_l3gd20.c ****   /* Set chip select High at the end of the transmission */ 
  304:../src/stm32f3_discovery_l3gd20.c ****   L3GD20_CS_HIGH();
- 579              		.loc 1 304 0
- 580 030c 4FF48050 		mov	r0, #4096
- 581 0310 C4F60000 		movt	r0, 18432
- 582 0314 4FF00801 		mov	r1, #8
- 583 0318 FFF7FEFF 		bl	GPIO_SetBits
+ 578              		.loc 1 304 0
+ 579 030c 4FF48050 		mov	r0, #4096
+ 580 0310 C4F60000 		movt	r0, 18432
+ 581 0314 4FF00801 		mov	r1, #8
+ 582 0318 FFF7FEFF 		bl	GPIO_SetBits
  305:../src/stm32f3_discovery_l3gd20.c **** }
- 584              		.loc 1 305 0
- 585 031c 07F10807 		add	r7, r7, #8
- 586 0320 BD46     		mov	sp, r7
- 587 0322 80BD     		pop	{r7, pc}
- 588              		.cfi_endproc
- 589              	.LFE119:
- 591              		.align	2
- 592              		.global	L3GD20_Read
- 593              		.thumb
- 594              		.thumb_func
- 596              	L3GD20_Read:
- 597              	.LFB120:
+ 583              		.loc 1 305 0
+ 584 031c 07F10807 		add	r7, r7, #8
+ 585 0320 BD46     		mov	sp, r7
+ 586 0322 80BD     		pop	{r7, pc}
+ 587              		.cfi_endproc
+ 588              	.LFE119:
+ 590              		.align	2
+ 591              		.global	L3GD20_Read
+ 592              		.thumb
+ 593              		.thumb_func
+ 595              	L3GD20_Read:
+ 596              	.LFB120:
  306:../src/stm32f3_discovery_l3gd20.c **** 
  307:../src/stm32f3_discovery_l3gd20.c **** /**
  308:../src/stm32f3_discovery_l3gd20.c ****   * @brief  Reads a block of data from the L3GD20.
@@ -895,116 +894,116 @@
  313:../src/stm32f3_discovery_l3gd20.c ****   */
  314:../src/stm32f3_discovery_l3gd20.c **** void L3GD20_Read(uint8_t* pBuffer, uint8_t ReadAddr, uint16_t NumByteToRead)
  315:../src/stm32f3_discovery_l3gd20.c **** {  
- 598              		.loc 1 315 0
- 599              		.cfi_startproc
- 600              		@ args = 0, pretend = 0, frame = 8
- 601              		@ frame_needed = 1, uses_anonymous_args = 0
- 602 0324 80B5     		push	{r7, lr}
- 603              	.LCFI27:
- 604              		.cfi_def_cfa_offset 8
- 605              		.cfi_offset 7, -8
- 606              		.cfi_offset 14, -4
- 607 0326 82B0     		sub	sp, sp, #8
- 608              	.LCFI28:
- 609              		.cfi_def_cfa_offset 16
- 610 0328 00AF     		add	r7, sp, #0
- 611              	.LCFI29:
- 612              		.cfi_def_cfa_register 7
- 613 032a 7860     		str	r0, [r7, #4]
- 614 032c 1346     		mov	r3, r2
- 615 032e 0A46     		mov	r2, r1
- 616 0330 FA70     		strb	r2, [r7, #3]
- 617 0332 3B80     		strh	r3, [r7, #0]	@ movhi
+ 597              		.loc 1 315 0
+ 598              		.cfi_startproc
+ 599              		@ args = 0, pretend = 0, frame = 8
+ 600              		@ frame_needed = 1, uses_anonymous_args = 0
+ 601 0324 80B5     		push	{r7, lr}
+ 602              	.LCFI27:
+ 603              		.cfi_def_cfa_offset 8
+ 604              		.cfi_offset 7, -8
+ 605              		.cfi_offset 14, -4
+ 606 0326 82B0     		sub	sp, sp, #8
+ 607              	.LCFI28:
+ 608              		.cfi_def_cfa_offset 16
+ 609 0328 00AF     		add	r7, sp, #0
+ 610              	.LCFI29:
+ 611              		.cfi_def_cfa_register 7
+ 612 032a 7860     		str	r0, [r7, #4]
+ 613 032c 1346     		mov	r3, r2
+ 614 032e 0A46     		mov	r2, r1
+ 615 0330 FA70     		strb	r2, [r7, #3]
+ 616 0332 3B80     		strh	r3, [r7, #0]	@ movhi
  316:../src/stm32f3_discovery_l3gd20.c ****   if(NumByteToRead > 0x01)
- 618              		.loc 1 316 0
- 619 0334 3B88     		ldrh	r3, [r7, #0]
- 620 0336 012B     		cmp	r3, #1
- 621 0338 04D9     		bls	.L15
+ 617              		.loc 1 316 0
+ 618 0334 3B88     		ldrh	r3, [r7, #0]
+ 619 0336 012B     		cmp	r3, #1
+ 620 0338 04D9     		bls	.L15
  317:../src/stm32f3_discovery_l3gd20.c ****   {
  318:../src/stm32f3_discovery_l3gd20.c ****     ReadAddr |= (uint8_t)(READWRITE_CMD | MULTIPLEBYTE_CMD);
- 622              		.loc 1 318 0
- 623 033a FB78     		ldrb	r3, [r7, #3]
- 624 033c 63F03F03 		orn	r3, r3, #63
- 625 0340 FB70     		strb	r3, [r7, #3]
- 626 0342 03E0     		b	.L16
- 627              	.L15:
+ 621              		.loc 1 318 0
+ 622 033a FB78     		ldrb	r3, [r7, #3]
+ 623 033c 63F03F03 		orn	r3, r3, #63
+ 624 0340 FB70     		strb	r3, [r7, #3]
+ 625 0342 03E0     		b	.L16
+ 626              	.L15:
  319:../src/stm32f3_discovery_l3gd20.c ****   }
  320:../src/stm32f3_discovery_l3gd20.c ****   else
  321:../src/stm32f3_discovery_l3gd20.c ****   {
  322:../src/stm32f3_discovery_l3gd20.c ****     ReadAddr |= (uint8_t)READWRITE_CMD;
- 628              		.loc 1 322 0
- 629 0344 FB78     		ldrb	r3, [r7, #3]
- 630 0346 63F07F03 		orn	r3, r3, #127
- 631 034a FB70     		strb	r3, [r7, #3]
- 632              	.L16:
+ 627              		.loc 1 322 0
+ 628 0344 FB78     		ldrb	r3, [r7, #3]
+ 629 0346 63F07F03 		orn	r3, r3, #127
+ 630 034a FB70     		strb	r3, [r7, #3]
+ 631              	.L16:
  323:../src/stm32f3_discovery_l3gd20.c ****   }
  324:../src/stm32f3_discovery_l3gd20.c ****   /* Set chip select Low at the start of the transmission */
  325:../src/stm32f3_discovery_l3gd20.c ****   L3GD20_CS_LOW();
- 633              		.loc 1 325 0
- 634 034c 4FF48050 		mov	r0, #4096
- 635 0350 C4F60000 		movt	r0, 18432
- 636 0354 4FF00801 		mov	r1, #8
- 637 0358 FFF7FEFF 		bl	GPIO_ResetBits
+ 632              		.loc 1 325 0
+ 633 034c 4FF48050 		mov	r0, #4096
+ 634 0350 C4F60000 		movt	r0, 18432
+ 635 0354 4FF00801 		mov	r1, #8
+ 636 0358 FFF7FEFF 		bl	GPIO_ResetBits
  326:../src/stm32f3_discovery_l3gd20.c ****   
  327:../src/stm32f3_discovery_l3gd20.c ****   /* Send the Address of the indexed register */
  328:../src/stm32f3_discovery_l3gd20.c ****   L3GD20_SendByte(ReadAddr);
- 638              		.loc 1 328 0
- 639 035c FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
- 640 035e 1846     		mov	r0, r3
- 641 0360 00F002F9 		bl	L3GD20_SendByte
+ 637              		.loc 1 328 0
+ 638 035c FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 639 035e 1846     		mov	r0, r3
+ 640 0360 00F002F9 		bl	L3GD20_SendByte
  329:../src/stm32f3_discovery_l3gd20.c ****   
  330:../src/stm32f3_discovery_l3gd20.c ****   /* Receive the data that will be read from the device (MSB First) */
  331:../src/stm32f3_discovery_l3gd20.c ****   while(NumByteToRead > 0x00)
- 642              		.loc 1 331 0
- 643 0364 0FE0     		b	.L17
- 644              	.L18:
+ 641              		.loc 1 331 0
+ 642 0364 0FE0     		b	.L17
+ 643              	.L18:
  332:../src/stm32f3_discovery_l3gd20.c ****   {
  333:../src/stm32f3_discovery_l3gd20.c ****     /* Send dummy byte (0x00) to generate the SPI clock to L3GD20 (Slave device) */
  334:../src/stm32f3_discovery_l3gd20.c ****     *pBuffer = L3GD20_SendByte(DUMMY_BYTE);
- 645              		.loc 1 334 0
- 646 0366 4FF00000 		mov	r0, #0
- 647 036a 00F0FDF8 		bl	L3GD20_SendByte
- 648 036e 0346     		mov	r3, r0
- 649 0370 1A46     		mov	r2, r3
- 650 0372 7B68     		ldr	r3, [r7, #4]
- 651 0374 1A70     		strb	r2, [r3, #0]
+ 644              		.loc 1 334 0
+ 645 0366 4FF00000 		mov	r0, #0
+ 646 036a 00F0FDF8 		bl	L3GD20_SendByte
+ 647 036e 0346     		mov	r3, r0
+ 648 0370 1A46     		mov	r2, r3
+ 649 0372 7B68     		ldr	r3, [r7, #4]
+ 650 0374 1A70     		strb	r2, [r3, #0]
  335:../src/stm32f3_discovery_l3gd20.c ****     NumByteToRead--;
- 652              		.loc 1 335 0
- 653 0376 3B88     		ldrh	r3, [r7, #0]	@ movhi
- 654 0378 03F1FF33 		add	r3, r3, #-1
- 655 037c 3B80     		strh	r3, [r7, #0]	@ movhi
+ 651              		.loc 1 335 0
+ 652 0376 3B88     		ldrh	r3, [r7, #0]	@ movhi
+ 653 0378 03F1FF33 		add	r3, r3, #-1
+ 654 037c 3B80     		strh	r3, [r7, #0]	@ movhi
  336:../src/stm32f3_discovery_l3gd20.c ****     pBuffer++;
- 656              		.loc 1 336 0
- 657 037e 7B68     		ldr	r3, [r7, #4]
- 658 0380 03F10103 		add	r3, r3, #1
- 659 0384 7B60     		str	r3, [r7, #4]
- 660              	.L17:
+ 655              		.loc 1 336 0
+ 656 037e 7B68     		ldr	r3, [r7, #4]
+ 657 0380 03F10103 		add	r3, r3, #1
+ 658 0384 7B60     		str	r3, [r7, #4]
+ 659              	.L17:
  331:../src/stm32f3_discovery_l3gd20.c ****   while(NumByteToRead > 0x00)
- 661              		.loc 1 331 0 discriminator 1
- 662 0386 3B88     		ldrh	r3, [r7, #0]
- 663 0388 002B     		cmp	r3, #0
- 664 038a ECD1     		bne	.L18
+ 660              		.loc 1 331 0 discriminator 1
+ 661 0386 3B88     		ldrh	r3, [r7, #0]
+ 662 0388 002B     		cmp	r3, #0
+ 663 038a ECD1     		bne	.L18
  337:../src/stm32f3_discovery_l3gd20.c ****   }
  338:../src/stm32f3_discovery_l3gd20.c ****   
  339:../src/stm32f3_discovery_l3gd20.c ****   /* Set chip select High at the end of the transmission */ 
  340:../src/stm32f3_discovery_l3gd20.c ****   L3GD20_CS_HIGH();
- 665              		.loc 1 340 0
- 666 038c 4FF48050 		mov	r0, #4096
- 667 0390 C4F60000 		movt	r0, 18432
- 668 0394 4FF00801 		mov	r1, #8
- 669 0398 FFF7FEFF 		bl	GPIO_SetBits
+ 664              		.loc 1 340 0
+ 665 038c 4FF48050 		mov	r0, #4096
+ 666 0390 C4F60000 		movt	r0, 18432
+ 667 0394 4FF00801 		mov	r1, #8
+ 668 0398 FFF7FEFF 		bl	GPIO_SetBits
  341:../src/stm32f3_discovery_l3gd20.c **** }  
- 670              		.loc 1 341 0
- 671 039c 07F10807 		add	r7, r7, #8
- 672 03a0 BD46     		mov	sp, r7
- 673 03a2 80BD     		pop	{r7, pc}
- 674              		.cfi_endproc
- 675              	.LFE120:
- 677              		.align	2
- 678              		.thumb
- 679              		.thumb_func
- 681              	L3GD20_LowLevel_Init:
- 682              	.LFB121:
+ 669              		.loc 1 341 0
+ 670 039c 07F10807 		add	r7, r7, #8
+ 671 03a0 BD46     		mov	sp, r7
+ 672 03a2 80BD     		pop	{r7, pc}
+ 673              		.cfi_endproc
+ 674              	.LFE120:
+ 676              		.align	2
+ 677              		.thumb
+ 678              		.thumb_func
+ 680              	L3GD20_LowLevel_Init:
+ 681              	.LFB121:
  342:../src/stm32f3_discovery_l3gd20.c **** /**
  343:../src/stm32f3_discovery_l3gd20.c ****   * @brief  Initializes the low level interface used to drive the L3GD20
  344:../src/stm32f3_discovery_l3gd20.c ****   * @param  None
@@ -1012,281 +1011,281 @@
  346:../src/stm32f3_discovery_l3gd20.c ****   */
  347:../src/stm32f3_discovery_l3gd20.c **** static void L3GD20_LowLevel_Init(void)
  348:../src/stm32f3_discovery_l3gd20.c **** {
- 683              		.loc 1 348 0
- 684              		.cfi_startproc
- 685              		@ args = 0, pretend = 0, frame = 32
- 686              		@ frame_needed = 1, uses_anonymous_args = 0
- 687 03a4 80B5     		push	{r7, lr}
- 688              	.LCFI30:
- 689              		.cfi_def_cfa_offset 8
- 690              		.cfi_offset 7, -8
- 691              		.cfi_offset 14, -4
- 692 03a6 88B0     		sub	sp, sp, #32
- 693              	.LCFI31:
- 694              		.cfi_def_cfa_offset 40
- 695 03a8 00AF     		add	r7, sp, #0
- 696              	.LCFI32:
- 697              		.cfi_def_cfa_register 7
+ 682              		.loc 1 348 0
+ 683              		.cfi_startproc
+ 684              		@ args = 0, pretend = 0, frame = 32
+ 685              		@ frame_needed = 1, uses_anonymous_args = 0
+ 686 03a4 80B5     		push	{r7, lr}
+ 687              	.LCFI30:
+ 688              		.cfi_def_cfa_offset 8
+ 689              		.cfi_offset 7, -8
+ 690              		.cfi_offset 14, -4
+ 691 03a6 88B0     		sub	sp, sp, #32
+ 692              	.LCFI31:
+ 693              		.cfi_def_cfa_offset 40
+ 694 03a8 00AF     		add	r7, sp, #0
+ 695              	.LCFI32:
+ 696              		.cfi_def_cfa_register 7
  349:../src/stm32f3_discovery_l3gd20.c ****   GPIO_InitTypeDef GPIO_InitStructure;
  350:../src/stm32f3_discovery_l3gd20.c ****   SPI_InitTypeDef  SPI_InitStructure;
  351:../src/stm32f3_discovery_l3gd20.c **** 
  352:../src/stm32f3_discovery_l3gd20.c ****   /* Enable the SPI periph */
  353:../src/stm32f3_discovery_l3gd20.c ****   RCC_APB2PeriphClockCmd(L3GD20_SPI_CLK, ENABLE);
- 698              		.loc 1 353 0
- 699 03aa 4FF48050 		mov	r0, #4096
- 700 03ae 4FF00101 		mov	r1, #1
- 701 03b2 FFF7FEFF 		bl	RCC_APB2PeriphClockCmd
+ 697              		.loc 1 353 0
+ 698 03aa 4FF48050 		mov	r0, #4096
+ 699 03ae 4FF00101 		mov	r1, #1
+ 700 03b2 FFF7FEFF 		bl	RCC_APB2PeriphClockCmd
  354:../src/stm32f3_discovery_l3gd20.c **** 
  355:../src/stm32f3_discovery_l3gd20.c ****   /* Enable SCK, MOSI and MISO GPIO clocks */
  356:../src/stm32f3_discovery_l3gd20.c ****   RCC_AHBPeriphClockCmd(L3GD20_SPI_SCK_GPIO_CLK | L3GD20_SPI_MISO_GPIO_CLK | L3GD20_SPI_MOSI_GPIO_C
- 702              		.loc 1 356 0
- 703 03b6 4FF40030 		mov	r0, #131072
- 704 03ba 4FF00101 		mov	r1, #1
- 705 03be FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
+ 701              		.loc 1 356 0
+ 702 03b6 4FF40030 		mov	r0, #131072
+ 703 03ba 4FF00101 		mov	r1, #1
+ 704 03be FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
  357:../src/stm32f3_discovery_l3gd20.c **** 
  358:../src/stm32f3_discovery_l3gd20.c ****   /* Enable CS  GPIO clock */
  359:../src/stm32f3_discovery_l3gd20.c ****   RCC_AHBPeriphClockCmd(L3GD20_SPI_CS_GPIO_CLK, ENABLE);
- 706              		.loc 1 359 0
- 707 03c2 4FF40010 		mov	r0, #2097152
- 708 03c6 4FF00101 		mov	r1, #1
- 709 03ca FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
+ 705              		.loc 1 359 0
+ 706 03c2 4FF40010 		mov	r0, #2097152
+ 707 03c6 4FF00101 		mov	r1, #1
+ 708 03ca FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
  360:../src/stm32f3_discovery_l3gd20.c ****   
  361:../src/stm32f3_discovery_l3gd20.c ****   /* Enable INT1 GPIO clock */
  362:../src/stm32f3_discovery_l3gd20.c ****   RCC_AHBPeriphClockCmd(L3GD20_SPI_INT1_GPIO_CLK, ENABLE);
- 710              		.loc 1 362 0
- 711 03ce 4FF40010 		mov	r0, #2097152
- 712 03d2 4FF00101 		mov	r1, #1
- 713 03d6 FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
+ 709              		.loc 1 362 0
+ 710 03ce 4FF40010 		mov	r0, #2097152
+ 711 03d2 4FF00101 		mov	r1, #1
+ 712 03d6 FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
  363:../src/stm32f3_discovery_l3gd20.c ****   
  364:../src/stm32f3_discovery_l3gd20.c ****   /* Enable INT2 GPIO clock */
  365:../src/stm32f3_discovery_l3gd20.c ****   RCC_AHBPeriphClockCmd(L3GD20_SPI_INT2_GPIO_CLK, ENABLE);
- 714              		.loc 1 365 0
- 715 03da 4FF40010 		mov	r0, #2097152
- 716 03de 4FF00101 		mov	r1, #1
- 717 03e2 FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
+ 713              		.loc 1 365 0
+ 714 03da 4FF40010 		mov	r0, #2097152
+ 715 03de 4FF00101 		mov	r1, #1
+ 716 03e2 FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
  366:../src/stm32f3_discovery_l3gd20.c **** 
  367:../src/stm32f3_discovery_l3gd20.c ****   GPIO_PinAFConfig(L3GD20_SPI_SCK_GPIO_PORT, L3GD20_SPI_SCK_SOURCE, L3GD20_SPI_SCK_AF);
- 718              		.loc 1 367 0
- 719 03e6 4FF09040 		mov	r0, #1207959552
- 720 03ea 4FF00501 		mov	r1, #5
- 721 03ee 4FF00502 		mov	r2, #5
- 722 03f2 FFF7FEFF 		bl	GPIO_PinAFConfig
+ 717              		.loc 1 367 0
+ 718 03e6 4FF09040 		mov	r0, #1207959552
+ 719 03ea 4FF00501 		mov	r1, #5
+ 720 03ee 4FF00502 		mov	r2, #5
+ 721 03f2 FFF7FEFF 		bl	GPIO_PinAFConfig
  368:../src/stm32f3_discovery_l3gd20.c ****   GPIO_PinAFConfig(L3GD20_SPI_MISO_GPIO_PORT, L3GD20_SPI_MISO_SOURCE, L3GD20_SPI_MISO_AF);
- 723              		.loc 1 368 0
- 724 03f6 4FF09040 		mov	r0, #1207959552
- 725 03fa 4FF00601 		mov	r1, #6
- 726 03fe 4FF00502 		mov	r2, #5
- 727 0402 FFF7FEFF 		bl	GPIO_PinAFConfig
+ 722              		.loc 1 368 0
+ 723 03f6 4FF09040 		mov	r0, #1207959552
+ 724 03fa 4FF00601 		mov	r1, #6
+ 725 03fe 4FF00502 		mov	r2, #5
+ 726 0402 FFF7FEFF 		bl	GPIO_PinAFConfig
  369:../src/stm32f3_discovery_l3gd20.c ****   GPIO_PinAFConfig(L3GD20_SPI_MOSI_GPIO_PORT, L3GD20_SPI_MOSI_SOURCE, L3GD20_SPI_MOSI_AF);
- 728              		.loc 1 369 0
- 729 0406 4FF09040 		mov	r0, #1207959552
- 730 040a 4FF00701 		mov	r1, #7
- 731 040e 4FF00502 		mov	r2, #5
- 732 0412 FFF7FEFF 		bl	GPIO_PinAFConfig
+ 727              		.loc 1 369 0
+ 728 0406 4FF09040 		mov	r0, #1207959552
+ 729 040a 4FF00701 		mov	r1, #7
+ 730 040e 4FF00502 		mov	r2, #5
+ 731 0412 FFF7FEFF 		bl	GPIO_PinAFConfig
  370:../src/stm32f3_discovery_l3gd20.c **** 
  371:../src/stm32f3_discovery_l3gd20.c ****   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
- 733              		.loc 1 371 0
- 734 0416 4FF00203 		mov	r3, #2
- 735 041a 3B77     		strb	r3, [r7, #28]
+ 732              		.loc 1 371 0
+ 733 0416 4FF00203 		mov	r3, #2
+ 734 041a 3B77     		strb	r3, [r7, #28]
  372:../src/stm32f3_discovery_l3gd20.c ****   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
- 736              		.loc 1 372 0
- 737 041c 4FF00003 		mov	r3, #0
- 738 0420 BB77     		strb	r3, [r7, #30]
+ 735              		.loc 1 372 0
+ 736 041c 4FF00003 		mov	r3, #0
+ 737 0420 BB77     		strb	r3, [r7, #30]
  373:../src/stm32f3_discovery_l3gd20.c ****   GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;//GPIO_PuPd_DOWN;
- 739              		.loc 1 373 0
- 740 0422 4FF00003 		mov	r3, #0
- 741 0426 FB77     		strb	r3, [r7, #31]
+ 738              		.loc 1 373 0
+ 739 0422 4FF00003 		mov	r3, #0
+ 740 0426 FB77     		strb	r3, [r7, #31]
  374:../src/stm32f3_discovery_l3gd20.c ****   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
- 742              		.loc 1 374 0
- 743 0428 4FF00303 		mov	r3, #3
- 744 042c 7B77     		strb	r3, [r7, #29]
+ 741              		.loc 1 374 0
+ 742 0428 4FF00303 		mov	r3, #3
+ 743 042c 7B77     		strb	r3, [r7, #29]
  375:../src/stm32f3_discovery_l3gd20.c **** 
  376:../src/stm32f3_discovery_l3gd20.c ****   /* SPI SCK pin configuration */
  377:../src/stm32f3_discovery_l3gd20.c ****   GPIO_InitStructure.GPIO_Pin = L3GD20_SPI_SCK_PIN;
- 745              		.loc 1 377 0
- 746 042e 4FF02003 		mov	r3, #32
- 747 0432 BB61     		str	r3, [r7, #24]
+ 744              		.loc 1 377 0
+ 745 042e 4FF02003 		mov	r3, #32
+ 746 0432 BB61     		str	r3, [r7, #24]
  378:../src/stm32f3_discovery_l3gd20.c ****   GPIO_Init(L3GD20_SPI_SCK_GPIO_PORT, &GPIO_InitStructure);
- 748              		.loc 1 378 0
- 749 0434 07F11803 		add	r3, r7, #24
- 750 0438 4FF09040 		mov	r0, #1207959552
- 751 043c 1946     		mov	r1, r3
- 752 043e FFF7FEFF 		bl	GPIO_Init
+ 747              		.loc 1 378 0
+ 748 0434 07F11803 		add	r3, r7, #24
+ 749 0438 4FF09040 		mov	r0, #1207959552
+ 750 043c 1946     		mov	r1, r3
+ 751 043e FFF7FEFF 		bl	GPIO_Init
  379:../src/stm32f3_discovery_l3gd20.c **** 
  380:../src/stm32f3_discovery_l3gd20.c ****   /* SPI  MOSI pin configuration */
  381:../src/stm32f3_discovery_l3gd20.c ****   GPIO_InitStructure.GPIO_Pin =  L3GD20_SPI_MOSI_PIN;
- 753              		.loc 1 381 0
- 754 0442 4FF08003 		mov	r3, #128
- 755 0446 BB61     		str	r3, [r7, #24]
+ 752              		.loc 1 381 0
+ 753 0442 4FF08003 		mov	r3, #128
+ 754 0446 BB61     		str	r3, [r7, #24]
  382:../src/stm32f3_discovery_l3gd20.c ****   GPIO_Init(L3GD20_SPI_MOSI_GPIO_PORT, &GPIO_InitStructure);
- 756              		.loc 1 382 0
- 757 0448 07F11803 		add	r3, r7, #24
- 758 044c 4FF09040 		mov	r0, #1207959552
- 759 0450 1946     		mov	r1, r3
- 760 0452 FFF7FEFF 		bl	GPIO_Init
+ 755              		.loc 1 382 0
+ 756 0448 07F11803 		add	r3, r7, #24
+ 757 044c 4FF09040 		mov	r0, #1207959552
+ 758 0450 1946     		mov	r1, r3
+ 759 0452 FFF7FEFF 		bl	GPIO_Init
  383:../src/stm32f3_discovery_l3gd20.c **** 
  384:../src/stm32f3_discovery_l3gd20.c ****   /* SPI MISO pin configuration */
  385:../src/stm32f3_discovery_l3gd20.c ****   GPIO_InitStructure.GPIO_Pin = L3GD20_SPI_MISO_PIN;
- 761              		.loc 1 385 0
- 762 0456 4FF04003 		mov	r3, #64
- 763 045a BB61     		str	r3, [r7, #24]
+ 760              		.loc 1 385 0
+ 761 0456 4FF04003 		mov	r3, #64
+ 762 045a BB61     		str	r3, [r7, #24]
  386:../src/stm32f3_discovery_l3gd20.c ****   GPIO_Init(L3GD20_SPI_MISO_GPIO_PORT, &GPIO_InitStructure);
- 764              		.loc 1 386 0
- 765 045c 07F11803 		add	r3, r7, #24
- 766 0460 4FF09040 		mov	r0, #1207959552
- 767 0464 1946     		mov	r1, r3
- 768 0466 FFF7FEFF 		bl	GPIO_Init
+ 763              		.loc 1 386 0
+ 764 045c 07F11803 		add	r3, r7, #24
+ 765 0460 4FF09040 		mov	r0, #1207959552
+ 766 0464 1946     		mov	r1, r3
+ 767 0466 FFF7FEFF 		bl	GPIO_Init
  387:../src/stm32f3_discovery_l3gd20.c **** 
  388:../src/stm32f3_discovery_l3gd20.c ****   /* SPI configuration -------------------------------------------------------*/
  389:../src/stm32f3_discovery_l3gd20.c ****   SPI_I2S_DeInit(L3GD20_SPI);
- 769              		.loc 1 389 0
- 770 046a 4FF44050 		mov	r0, #12288
- 771 046e C4F20100 		movt	r0, 16385
- 772 0472 FFF7FEFF 		bl	SPI_I2S_DeInit
+ 768              		.loc 1 389 0
+ 769 046a 4FF44050 		mov	r0, #12288
+ 770 046e C4F20100 		movt	r0, 16385
+ 771 0472 FFF7FEFF 		bl	SPI_I2S_DeInit
  390:../src/stm32f3_discovery_l3gd20.c ****   SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
- 773              		.loc 1 390 0
- 774 0476 4FF00003 		mov	r3, #0
- 775 047a BB80     		strh	r3, [r7, #4]	@ movhi
+ 772              		.loc 1 390 0
+ 773 0476 4FF00003 		mov	r3, #0
+ 774 047a BB80     		strh	r3, [r7, #4]	@ movhi
  391:../src/stm32f3_discovery_l3gd20.c ****   SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;
- 776              		.loc 1 391 0
- 777 047c 4FF4E063 		mov	r3, #1792
- 778 0480 3B81     		strh	r3, [r7, #8]	@ movhi
+ 775              		.loc 1 391 0
+ 776 047c 4FF4E063 		mov	r3, #1792
+ 777 0480 3B81     		strh	r3, [r7, #8]	@ movhi
  392:../src/stm32f3_discovery_l3gd20.c ****   SPI_InitStructure.SPI_CPOL = SPI_CPOL_Low;
- 779              		.loc 1 392 0
- 780 0482 4FF00003 		mov	r3, #0
- 781 0486 7B81     		strh	r3, [r7, #10]	@ movhi
+ 778              		.loc 1 392 0
+ 779 0482 4FF00003 		mov	r3, #0
+ 780 0486 7B81     		strh	r3, [r7, #10]	@ movhi
  393:../src/stm32f3_discovery_l3gd20.c ****   SPI_InitStructure.SPI_CPHA = SPI_CPHA_1Edge;
- 782              		.loc 1 393 0
- 783 0488 4FF00003 		mov	r3, #0
- 784 048c BB81     		strh	r3, [r7, #12]	@ movhi
+ 781              		.loc 1 393 0
+ 782 0488 4FF00003 		mov	r3, #0
+ 783 048c BB81     		strh	r3, [r7, #12]	@ movhi
  394:../src/stm32f3_discovery_l3gd20.c ****   SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
- 785              		.loc 1 394 0
- 786 048e 4FF40073 		mov	r3, #512
- 787 0492 FB81     		strh	r3, [r7, #14]	@ movhi
+ 784              		.loc 1 394 0
+ 785 048e 4FF40073 		mov	r3, #512
+ 786 0492 FB81     		strh	r3, [r7, #14]	@ movhi
  395:../src/stm32f3_discovery_l3gd20.c ****   SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8;
- 788              		.loc 1 395 0
- 789 0494 4FF01003 		mov	r3, #16
- 790 0498 3B82     		strh	r3, [r7, #16]	@ movhi
+ 787              		.loc 1 395 0
+ 788 0494 4FF01003 		mov	r3, #16
+ 789 0498 3B82     		strh	r3, [r7, #16]	@ movhi
  396:../src/stm32f3_discovery_l3gd20.c ****   SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
- 791              		.loc 1 396 0
- 792 049a 4FF00003 		mov	r3, #0
- 793 049e 7B82     		strh	r3, [r7, #18]	@ movhi
+ 790              		.loc 1 396 0
+ 791 049a 4FF00003 		mov	r3, #0
+ 792 049e 7B82     		strh	r3, [r7, #18]	@ movhi
  397:../src/stm32f3_discovery_l3gd20.c ****   SPI_InitStructure.SPI_CRCPolynomial = 7;
- 794              		.loc 1 397 0
- 795 04a0 4FF00703 		mov	r3, #7
- 796 04a4 BB82     		strh	r3, [r7, #20]	@ movhi
+ 793              		.loc 1 397 0
+ 794 04a0 4FF00703 		mov	r3, #7
+ 795 04a4 BB82     		strh	r3, [r7, #20]	@ movhi
  398:../src/stm32f3_discovery_l3gd20.c ****   SPI_InitStructure.SPI_Mode = SPI_Mode_Master;
- 797              		.loc 1 398 0
- 798 04a6 4FF48273 		mov	r3, #260
- 799 04aa FB80     		strh	r3, [r7, #6]	@ movhi
+ 796              		.loc 1 398 0
+ 797 04a6 4FF48273 		mov	r3, #260
+ 798 04aa FB80     		strh	r3, [r7, #6]	@ movhi
  399:../src/stm32f3_discovery_l3gd20.c ****   SPI_Init(L3GD20_SPI, &SPI_InitStructure);
- 800              		.loc 1 399 0
- 801 04ac 07F10403 		add	r3, r7, #4
- 802 04b0 4FF44050 		mov	r0, #12288
- 803 04b4 C4F20100 		movt	r0, 16385
- 804 04b8 1946     		mov	r1, r3
- 805 04ba FFF7FEFF 		bl	SPI_Init
+ 799              		.loc 1 399 0
+ 800 04ac 07F10403 		add	r3, r7, #4
+ 801 04b0 4FF44050 		mov	r0, #12288
+ 802 04b4 C4F20100 		movt	r0, 16385
+ 803 04b8 1946     		mov	r1, r3
+ 804 04ba FFF7FEFF 		bl	SPI_Init
  400:../src/stm32f3_discovery_l3gd20.c **** 
  401:../src/stm32f3_discovery_l3gd20.c ****   /* Configure the RX FIFO Threshold */
  402:../src/stm32f3_discovery_l3gd20.c ****   SPI_RxFIFOThresholdConfig(L3GD20_SPI, SPI_RxFIFOThreshold_QF);
- 806              		.loc 1 402 0
- 807 04be 4FF44050 		mov	r0, #12288
- 808 04c2 C4F20100 		movt	r0, 16385
- 809 04c6 4FF48051 		mov	r1, #4096
- 810 04ca FFF7FEFF 		bl	SPI_RxFIFOThresholdConfig
+ 805              		.loc 1 402 0
+ 806 04be 4FF44050 		mov	r0, #12288
+ 807 04c2 C4F20100 		movt	r0, 16385
+ 808 04c6 4FF48051 		mov	r1, #4096
+ 809 04ca FFF7FEFF 		bl	SPI_RxFIFOThresholdConfig
  403:../src/stm32f3_discovery_l3gd20.c ****   /* Enable SPI1  */
  404:../src/stm32f3_discovery_l3gd20.c ****   SPI_Cmd(L3GD20_SPI, ENABLE);
- 811              		.loc 1 404 0
- 812 04ce 4FF44050 		mov	r0, #12288
- 813 04d2 C4F20100 		movt	r0, 16385
- 814 04d6 4FF00101 		mov	r1, #1
- 815 04da FFF7FEFF 		bl	SPI_Cmd
+ 810              		.loc 1 404 0
+ 811 04ce 4FF44050 		mov	r0, #12288
+ 812 04d2 C4F20100 		movt	r0, 16385
+ 813 04d6 4FF00101 		mov	r1, #1
+ 814 04da FFF7FEFF 		bl	SPI_Cmd
  405:../src/stm32f3_discovery_l3gd20.c **** 
  406:../src/stm32f3_discovery_l3gd20.c ****   /* Configure GPIO PIN for Lis Chip select */
  407:../src/stm32f3_discovery_l3gd20.c ****   GPIO_InitStructure.GPIO_Pin = L3GD20_SPI_CS_PIN;
- 816              		.loc 1 407 0
- 817 04de 4FF00803 		mov	r3, #8
- 818 04e2 BB61     		str	r3, [r7, #24]
+ 815              		.loc 1 407 0
+ 816 04de 4FF00803 		mov	r3, #8
+ 817 04e2 BB61     		str	r3, [r7, #24]
  408:../src/stm32f3_discovery_l3gd20.c ****   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
- 819              		.loc 1 408 0
- 820 04e4 4FF00103 		mov	r3, #1
- 821 04e8 3B77     		strb	r3, [r7, #28]
+ 818              		.loc 1 408 0
+ 819 04e4 4FF00103 		mov	r3, #1
+ 820 04e8 3B77     		strb	r3, [r7, #28]
  409:../src/stm32f3_discovery_l3gd20.c ****   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
- 822              		.loc 1 409 0
- 823 04ea 4FF00003 		mov	r3, #0
- 824 04ee BB77     		strb	r3, [r7, #30]
+ 821              		.loc 1 409 0
+ 822 04ea 4FF00003 		mov	r3, #0
+ 823 04ee BB77     		strb	r3, [r7, #30]
  410:../src/stm32f3_discovery_l3gd20.c ****   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
- 825              		.loc 1 410 0
- 826 04f0 4FF00303 		mov	r3, #3
- 827 04f4 7B77     		strb	r3, [r7, #29]
+ 824              		.loc 1 410 0
+ 825 04f0 4FF00303 		mov	r3, #3
+ 826 04f4 7B77     		strb	r3, [r7, #29]
  411:../src/stm32f3_discovery_l3gd20.c ****   GPIO_Init(L3GD20_SPI_CS_GPIO_PORT, &GPIO_InitStructure);
- 828              		.loc 1 411 0
- 829 04f6 07F11803 		add	r3, r7, #24
- 830 04fa 4FF48050 		mov	r0, #4096
- 831 04fe C4F60000 		movt	r0, 18432
- 832 0502 1946     		mov	r1, r3
- 833 0504 FFF7FEFF 		bl	GPIO_Init
+ 827              		.loc 1 411 0
+ 828 04f6 07F11803 		add	r3, r7, #24
+ 829 04fa 4FF48050 		mov	r0, #4096
+ 830 04fe C4F60000 		movt	r0, 18432
+ 831 0502 1946     		mov	r1, r3
+ 832 0504 FFF7FEFF 		bl	GPIO_Init
  412:../src/stm32f3_discovery_l3gd20.c **** 
  413:../src/stm32f3_discovery_l3gd20.c ****   /* Deselect : Chip Select high */
  414:../src/stm32f3_discovery_l3gd20.c ****   GPIO_SetBits(L3GD20_SPI_CS_GPIO_PORT, L3GD20_SPI_CS_PIN);
- 834              		.loc 1 414 0
- 835 0508 4FF48050 		mov	r0, #4096
- 836 050c C4F60000 		movt	r0, 18432
- 837 0510 4FF00801 		mov	r1, #8
- 838 0514 FFF7FEFF 		bl	GPIO_SetBits
+ 833              		.loc 1 414 0
+ 834 0508 4FF48050 		mov	r0, #4096
+ 835 050c C4F60000 		movt	r0, 18432
+ 836 0510 4FF00801 		mov	r1, #8
+ 837 0514 FFF7FEFF 		bl	GPIO_SetBits
  415:../src/stm32f3_discovery_l3gd20.c ****   
  416:../src/stm32f3_discovery_l3gd20.c ****   /* Configure GPIO PINs to detect Interrupts */
  417:../src/stm32f3_discovery_l3gd20.c ****   GPIO_InitStructure.GPIO_Pin = L3GD20_SPI_INT1_PIN;
- 839              		.loc 1 417 0
- 840 0518 4FF00103 		mov	r3, #1
- 841 051c BB61     		str	r3, [r7, #24]
+ 838              		.loc 1 417 0
+ 839 0518 4FF00103 		mov	r3, #1
+ 840 051c BB61     		str	r3, [r7, #24]
  418:../src/stm32f3_discovery_l3gd20.c ****   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
- 842              		.loc 1 418 0
- 843 051e 4FF00003 		mov	r3, #0
- 844 0522 3B77     		strb	r3, [r7, #28]
+ 841              		.loc 1 418 0
+ 842 051e 4FF00003 		mov	r3, #0
+ 843 0522 3B77     		strb	r3, [r7, #28]
  419:../src/stm32f3_discovery_l3gd20.c ****   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
- 845              		.loc 1 419 0
- 846 0524 4FF00003 		mov	r3, #0
- 847 0528 BB77     		strb	r3, [r7, #30]
+ 844              		.loc 1 419 0
+ 845 0524 4FF00003 		mov	r3, #0
+ 846 0528 BB77     		strb	r3, [r7, #30]
  420:../src/stm32f3_discovery_l3gd20.c ****   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
- 848              		.loc 1 420 0
- 849 052a 4FF00303 		mov	r3, #3
- 850 052e 7B77     		strb	r3, [r7, #29]
+ 847              		.loc 1 420 0
+ 848 052a 4FF00303 		mov	r3, #3
+ 849 052e 7B77     		strb	r3, [r7, #29]
  421:../src/stm32f3_discovery_l3gd20.c ****   GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
- 851              		.loc 1 421 0
- 852 0530 4FF00003 		mov	r3, #0
- 853 0534 FB77     		strb	r3, [r7, #31]
+ 850              		.loc 1 421 0
+ 851 0530 4FF00003 		mov	r3, #0
+ 852 0534 FB77     		strb	r3, [r7, #31]
  422:../src/stm32f3_discovery_l3gd20.c ****   GPIO_Init(L3GD20_SPI_INT1_GPIO_PORT, &GPIO_InitStructure);
- 854              		.loc 1 422 0
- 855 0536 07F11803 		add	r3, r7, #24
- 856 053a 4FF48050 		mov	r0, #4096
- 857 053e C4F60000 		movt	r0, 18432
- 858 0542 1946     		mov	r1, r3
- 859 0544 FFF7FEFF 		bl	GPIO_Init
+ 853              		.loc 1 422 0
+ 854 0536 07F11803 		add	r3, r7, #24
+ 855 053a 4FF48050 		mov	r0, #4096
+ 856 053e C4F60000 		movt	r0, 18432
+ 857 0542 1946     		mov	r1, r3
+ 858 0544 FFF7FEFF 		bl	GPIO_Init
  423:../src/stm32f3_discovery_l3gd20.c ****   
  424:../src/stm32f3_discovery_l3gd20.c ****   GPIO_InitStructure.GPIO_Pin = L3GD20_SPI_INT2_PIN;
- 860              		.loc 1 424 0
- 861 0548 4FF00203 		mov	r3, #2
- 862 054c BB61     		str	r3, [r7, #24]
+ 859              		.loc 1 424 0
+ 860 0548 4FF00203 		mov	r3, #2
+ 861 054c BB61     		str	r3, [r7, #24]
  425:../src/stm32f3_discovery_l3gd20.c ****   GPIO_Init(L3GD20_SPI_INT2_GPIO_PORT, &GPIO_InitStructure);
- 863              		.loc 1 425 0
- 864 054e 07F11803 		add	r3, r7, #24
- 865 0552 4FF48050 		mov	r0, #4096
- 866 0556 C4F60000 		movt	r0, 18432
- 867 055a 1946     		mov	r1, r3
- 868 055c FFF7FEFF 		bl	GPIO_Init
+ 862              		.loc 1 425 0
+ 863 054e 07F11803 		add	r3, r7, #24
+ 864 0552 4FF48050 		mov	r0, #4096
+ 865 0556 C4F60000 		movt	r0, 18432
+ 866 055a 1946     		mov	r1, r3
+ 867 055c FFF7FEFF 		bl	GPIO_Init
  426:../src/stm32f3_discovery_l3gd20.c **** }  
- 869              		.loc 1 426 0
- 870 0560 07F12007 		add	r7, r7, #32
- 871 0564 BD46     		mov	sp, r7
- 872 0566 80BD     		pop	{r7, pc}
- 873              		.cfi_endproc
- 874              	.LFE121:
- 876              		.align	2
- 877              		.thumb
- 878              		.thumb_func
- 880              	L3GD20_SendByte:
- 881              	.LFB122:
+ 868              		.loc 1 426 0
+ 869 0560 07F12007 		add	r7, r7, #32
+ 870 0564 BD46     		mov	sp, r7
+ 871 0566 80BD     		pop	{r7, pc}
+ 872              		.cfi_endproc
+ 873              	.LFE121:
+ 875              		.align	2
+ 876              		.thumb
+ 877              		.thumb_func
+ 879              	L3GD20_SendByte:
+ 880              	.LFB122:
  427:../src/stm32f3_discovery_l3gd20.c **** 
  428:../src/stm32f3_discovery_l3gd20.c **** /**
  429:../src/stm32f3_discovery_l3gd20.c ****   * @brief  Sends a Byte through the SPI interface and return the Byte received 
@@ -1296,164 +1295,164 @@
  433:../src/stm32f3_discovery_l3gd20.c ****   */
  434:../src/stm32f3_discovery_l3gd20.c **** static uint8_t L3GD20_SendByte(uint8_t byte)
  435:../src/stm32f3_discovery_l3gd20.c **** {
- 882              		.loc 1 435 0
- 883              		.cfi_startproc
- 884              		@ args = 0, pretend = 0, frame = 8
- 885              		@ frame_needed = 1, uses_anonymous_args = 0
- 886 0568 80B5     		push	{r7, lr}
- 887              	.LCFI33:
- 888              		.cfi_def_cfa_offset 8
- 889              		.cfi_offset 7, -8
- 890              		.cfi_offset 14, -4
- 891 056a 82B0     		sub	sp, sp, #8
- 892              	.LCFI34:
- 893              		.cfi_def_cfa_offset 16
- 894 056c 00AF     		add	r7, sp, #0
- 895              	.LCFI35:
- 896              		.cfi_def_cfa_register 7
- 897 056e 0346     		mov	r3, r0
- 898 0570 FB71     		strb	r3, [r7, #7]
+ 881              		.loc 1 435 0
+ 882              		.cfi_startproc
+ 883              		@ args = 0, pretend = 0, frame = 8
+ 884              		@ frame_needed = 1, uses_anonymous_args = 0
+ 885 0568 80B5     		push	{r7, lr}
+ 886              	.LCFI33:
+ 887              		.cfi_def_cfa_offset 8
+ 888              		.cfi_offset 7, -8
+ 889              		.cfi_offset 14, -4
+ 890 056a 82B0     		sub	sp, sp, #8
+ 891              	.LCFI34:
+ 892              		.cfi_def_cfa_offset 16
+ 893 056c 00AF     		add	r7, sp, #0
+ 894              	.LCFI35:
+ 895              		.cfi_def_cfa_register 7
+ 896 056e 0346     		mov	r3, r0
+ 897 0570 FB71     		strb	r3, [r7, #7]
  436:../src/stm32f3_discovery_l3gd20.c ****   /* Loop while DR register in not empty */
  437:../src/stm32f3_discovery_l3gd20.c ****   L3GD20Timeout = L3GD20_FLAG_TIMEOUT;
- 899              		.loc 1 437 0
- 900 0572 40F20003 		movw	r3, #:lower16:L3GD20Timeout
- 901 0576 C0F20003 		movt	r3, #:upper16:L3GD20Timeout
- 902 057a 4FF48052 		mov	r2, #4096
- 903 057e 1A60     		str	r2, [r3, #0]
+ 898              		.loc 1 437 0
+ 899 0572 40F20003 		movw	r3, #:lower16:L3GD20Timeout
+ 900 0576 C0F20003 		movt	r3, #:upper16:L3GD20Timeout
+ 901 057a 4FF48052 		mov	r2, #4096
+ 902 057e 1A60     		str	r2, [r3, #0]
  438:../src/stm32f3_discovery_l3gd20.c ****   while (SPI_I2S_GetFlagStatus(L3GD20_SPI, SPI_I2S_FLAG_TXE) == RESET)
- 904              		.loc 1 438 0
- 905 0580 17E0     		b	.L21
- 906              	.L23:
+ 903              		.loc 1 438 0
+ 904 0580 17E0     		b	.L21
+ 905              	.L23:
  439:../src/stm32f3_discovery_l3gd20.c ****   {
  440:../src/stm32f3_discovery_l3gd20.c ****     if((L3GD20Timeout--) == 0) return L3GD20_TIMEOUT_UserCallback();
- 907              		.loc 1 440 0
- 908 0582 40F20003 		movw	r3, #:lower16:L3GD20Timeout
- 909 0586 C0F20003 		movt	r3, #:upper16:L3GD20Timeout
- 910 058a 1B68     		ldr	r3, [r3, #0]
- 911 058c 002B     		cmp	r3, #0
- 912 058e 14BF     		ite	ne
- 913 0590 0022     		movne	r2, #0
- 914 0592 0122     		moveq	r2, #1
- 915 0594 D2B2     		uxtb	r2, r2
- 916 0596 03F1FF31 		add	r1, r3, #-1
- 917 059a 40F20003 		movw	r3, #:lower16:L3GD20Timeout
- 918 059e C0F20003 		movt	r3, #:upper16:L3GD20Timeout
- 919 05a2 1960     		str	r1, [r3, #0]
- 920 05a4 002A     		cmp	r2, #0
- 921 05a6 04D0     		beq	.L21
- 922              		.loc 1 440 0 is_stmt 0 discriminator 1
- 923 05a8 FFF7FEFF 		bl	L3GD20_TIMEOUT_UserCallback
- 924 05ac 0346     		mov	r3, r0
- 925 05ae DBB2     		uxtb	r3, r3
- 926 05b0 44E0     		b	.L22
- 927              	.L21:
+ 906              		.loc 1 440 0
+ 907 0582 40F20003 		movw	r3, #:lower16:L3GD20Timeout
+ 908 0586 C0F20003 		movt	r3, #:upper16:L3GD20Timeout
+ 909 058a 1B68     		ldr	r3, [r3, #0]
+ 910 058c 002B     		cmp	r3, #0
+ 911 058e 14BF     		ite	ne
+ 912 0590 0022     		movne	r2, #0
+ 913 0592 0122     		moveq	r2, #1
+ 914 0594 D2B2     		uxtb	r2, r2
+ 915 0596 03F1FF31 		add	r1, r3, #-1
+ 916 059a 40F20003 		movw	r3, #:lower16:L3GD20Timeout
+ 917 059e C0F20003 		movt	r3, #:upper16:L3GD20Timeout
+ 918 05a2 1960     		str	r1, [r3, #0]
+ 919 05a4 002A     		cmp	r2, #0
+ 920 05a6 04D0     		beq	.L21
+ 921              		.loc 1 440 0 is_stmt 0 discriminator 1
+ 922 05a8 FFF7FEFF 		bl	L3GD20_TIMEOUT_UserCallback
+ 923 05ac 0346     		mov	r3, r0
+ 924 05ae DBB2     		uxtb	r3, r3
+ 925 05b0 44E0     		b	.L22
+ 926              	.L21:
  438:../src/stm32f3_discovery_l3gd20.c ****   while (SPI_I2S_GetFlagStatus(L3GD20_SPI, SPI_I2S_FLAG_TXE) == RESET)
- 928              		.loc 1 438 0 is_stmt 1 discriminator 1
- 929 05b2 4FF44050 		mov	r0, #12288
- 930 05b6 C4F20100 		movt	r0, 16385
- 931 05ba 4FF00201 		mov	r1, #2
- 932 05be FFF7FEFF 		bl	SPI_I2S_GetFlagStatus
- 933 05c2 0346     		mov	r3, r0
- 934 05c4 002B     		cmp	r3, #0
- 935 05c6 DCD0     		beq	.L23
+ 927              		.loc 1 438 0 is_stmt 1 discriminator 1
+ 928 05b2 4FF44050 		mov	r0, #12288
+ 929 05b6 C4F20100 		movt	r0, 16385
+ 930 05ba 4FF00201 		mov	r1, #2
+ 931 05be FFF7FEFF 		bl	SPI_I2S_GetFlagStatus
+ 932 05c2 0346     		mov	r3, r0
+ 933 05c4 002B     		cmp	r3, #0
+ 934 05c6 DCD0     		beq	.L23
  441:../src/stm32f3_discovery_l3gd20.c ****   }
  442:../src/stm32f3_discovery_l3gd20.c ****   
  443:../src/stm32f3_discovery_l3gd20.c ****   /* Send a Byte through the SPI peripheral */
  444:../src/stm32f3_discovery_l3gd20.c ****   SPI_SendData8(L3GD20_SPI, byte);
- 936              		.loc 1 444 0
- 937 05c8 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
- 938 05ca 4FF44050 		mov	r0, #12288
- 939 05ce C4F20100 		movt	r0, 16385
- 940 05d2 1946     		mov	r1, r3
- 941 05d4 FFF7FEFF 		bl	SPI_SendData8
+ 935              		.loc 1 444 0
+ 936 05c8 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 937 05ca 4FF44050 		mov	r0, #12288
+ 938 05ce C4F20100 		movt	r0, 16385
+ 939 05d2 1946     		mov	r1, r3
+ 940 05d4 FFF7FEFF 		bl	SPI_SendData8
  445:../src/stm32f3_discovery_l3gd20.c ****   
  446:../src/stm32f3_discovery_l3gd20.c ****   /* Wait to receive a Byte */
  447:../src/stm32f3_discovery_l3gd20.c ****   L3GD20Timeout = L3GD20_FLAG_TIMEOUT;
- 942              		.loc 1 447 0
- 943 05d8 40F20003 		movw	r3, #:lower16:L3GD20Timeout
- 944 05dc C0F20003 		movt	r3, #:upper16:L3GD20Timeout
- 945 05e0 4FF48052 		mov	r2, #4096
- 946 05e4 1A60     		str	r2, [r3, #0]
+ 941              		.loc 1 447 0
+ 942 05d8 40F20003 		movw	r3, #:lower16:L3GD20Timeout
+ 943 05dc C0F20003 		movt	r3, #:upper16:L3GD20Timeout
+ 944 05e0 4FF48052 		mov	r2, #4096
+ 945 05e4 1A60     		str	r2, [r3, #0]
  448:../src/stm32f3_discovery_l3gd20.c ****   while (SPI_I2S_GetFlagStatus(L3GD20_SPI, SPI_I2S_FLAG_RXNE) == RESET)
- 947              		.loc 1 448 0
- 948 05e6 17E0     		b	.L24
- 949              	.L25:
+ 946              		.loc 1 448 0
+ 947 05e6 17E0     		b	.L24
+ 948              	.L25:
  449:../src/stm32f3_discovery_l3gd20.c ****   {
  450:../src/stm32f3_discovery_l3gd20.c ****     if((L3GD20Timeout--) == 0) return L3GD20_TIMEOUT_UserCallback();
- 950              		.loc 1 450 0
- 951 05e8 40F20003 		movw	r3, #:lower16:L3GD20Timeout
- 952 05ec C0F20003 		movt	r3, #:upper16:L3GD20Timeout
- 953 05f0 1B68     		ldr	r3, [r3, #0]
- 954 05f2 002B     		cmp	r3, #0
- 955 05f4 14BF     		ite	ne
- 956 05f6 0022     		movne	r2, #0
- 957 05f8 0122     		moveq	r2, #1
- 958 05fa D2B2     		uxtb	r2, r2
- 959 05fc 03F1FF31 		add	r1, r3, #-1
- 960 0600 40F20003 		movw	r3, #:lower16:L3GD20Timeout
- 961 0604 C0F20003 		movt	r3, #:upper16:L3GD20Timeout
- 962 0608 1960     		str	r1, [r3, #0]
- 963 060a 002A     		cmp	r2, #0
- 964 060c 04D0     		beq	.L24
- 965              		.loc 1 450 0 is_stmt 0 discriminator 1
- 966 060e FFF7FEFF 		bl	L3GD20_TIMEOUT_UserCallback
- 967 0612 0346     		mov	r3, r0
- 968 0614 DBB2     		uxtb	r3, r3
- 969 0616 11E0     		b	.L22
- 970              	.L24:
+ 949              		.loc 1 450 0
+ 950 05e8 40F20003 		movw	r3, #:lower16:L3GD20Timeout
+ 951 05ec C0F20003 		movt	r3, #:upper16:L3GD20Timeout
+ 952 05f0 1B68     		ldr	r3, [r3, #0]
+ 953 05f2 002B     		cmp	r3, #0
+ 954 05f4 14BF     		ite	ne
+ 955 05f6 0022     		movne	r2, #0
+ 956 05f8 0122     		moveq	r2, #1
+ 957 05fa D2B2     		uxtb	r2, r2
+ 958 05fc 03F1FF31 		add	r1, r3, #-1
+ 959 0600 40F20003 		movw	r3, #:lower16:L3GD20Timeout
+ 960 0604 C0F20003 		movt	r3, #:upper16:L3GD20Timeout
+ 961 0608 1960     		str	r1, [r3, #0]
+ 962 060a 002A     		cmp	r2, #0
+ 963 060c 04D0     		beq	.L24
+ 964              		.loc 1 450 0 is_stmt 0 discriminator 1
+ 965 060e FFF7FEFF 		bl	L3GD20_TIMEOUT_UserCallback
+ 966 0612 0346     		mov	r3, r0
+ 967 0614 DBB2     		uxtb	r3, r3
+ 968 0616 11E0     		b	.L22
+ 969              	.L24:
  448:../src/stm32f3_discovery_l3gd20.c ****   while (SPI_I2S_GetFlagStatus(L3GD20_SPI, SPI_I2S_FLAG_RXNE) == RESET)
- 971              		.loc 1 448 0 is_stmt 1 discriminator 1
- 972 0618 4FF44050 		mov	r0, #12288
- 973 061c C4F20100 		movt	r0, 16385
- 974 0620 4FF00101 		mov	r1, #1
- 975 0624 FFF7FEFF 		bl	SPI_I2S_GetFlagStatus
- 976 0628 0346     		mov	r3, r0
- 977 062a 002B     		cmp	r3, #0
- 978 062c DCD0     		beq	.L25
+ 970              		.loc 1 448 0 is_stmt 1 discriminator 1
+ 971 0618 4FF44050 		mov	r0, #12288
+ 972 061c C4F20100 		movt	r0, 16385
+ 973 0620 4FF00101 		mov	r1, #1
+ 974 0624 FFF7FEFF 		bl	SPI_I2S_GetFlagStatus
+ 975 0628 0346     		mov	r3, r0
+ 976 062a 002B     		cmp	r3, #0
+ 977 062c DCD0     		beq	.L25
  451:../src/stm32f3_discovery_l3gd20.c ****   }
  452:../src/stm32f3_discovery_l3gd20.c ****   
  453:../src/stm32f3_discovery_l3gd20.c ****   /* Return the Byte read from the SPI bus */
  454:../src/stm32f3_discovery_l3gd20.c ****   return (uint8_t)SPI_ReceiveData8(L3GD20_SPI);
- 979              		.loc 1 454 0
- 980 062e 4FF44050 		mov	r0, #12288
- 981 0632 C4F20100 		movt	r0, 16385
- 982 0636 FFF7FEFF 		bl	SPI_ReceiveData8
- 983 063a 0346     		mov	r3, r0
- 984              	.L22:
+ 978              		.loc 1 454 0
+ 979 062e 4FF44050 		mov	r0, #12288
+ 980 0632 C4F20100 		movt	r0, 16385
+ 981 0636 FFF7FEFF 		bl	SPI_ReceiveData8
+ 982 063a 0346     		mov	r3, r0
+ 983              	.L22:
  455:../src/stm32f3_discovery_l3gd20.c **** }
- 985              		.loc 1 455 0
- 986 063c 1846     		mov	r0, r3
- 987 063e 07F10807 		add	r7, r7, #8
- 988 0642 BD46     		mov	sp, r7
- 989 0644 80BD     		pop	{r7, pc}
- 990              		.cfi_endproc
- 991              	.LFE122:
- 993              	.Letext0:
- 994              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
- 995              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
- 996              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_gpio.h"
- 997              		.file 5 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_spi.h"
- 998              		.file 6 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f3_discovery_l3gd20.h"
- 999              		.file 7 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
+ 984              		.loc 1 455 0
+ 985 063c 1846     		mov	r0, r3
+ 986 063e 07F10807 		add	r7, r7, #8
+ 987 0642 BD46     		mov	sp, r7
+ 988 0644 80BD     		pop	{r7, pc}
+ 989              		.cfi_endproc
+ 990              	.LFE122:
+ 992              	.Letext0:
+ 993              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
+ 994              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
+ 995              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_gpio.h"
+ 996              		.file 5 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_spi.h"
+ 997              		.file 6 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f3_discovery_l3gd20.h"
+ 998              		.file 7 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32f3_discovery_l3gd20.c
-     /tmp/ccBDqrmn.s:25     .data:00000000 L3GD20Timeout
-     /tmp/ccBDqrmn.s:22     .data:00000000 $d
-     /tmp/ccBDqrmn.s:28     .text:00000000 $t
-     /tmp/ccBDqrmn.s:33     .text:00000000 L3GD20_Init
-     /tmp/ccBDqrmn.s:681    .text:000003a4 L3GD20_LowLevel_Init
-     /tmp/ccBDqrmn.s:518    .text:000002b4 L3GD20_Write
-     /tmp/ccBDqrmn.s:123    .text:00000084 L3GD20_RebootCmd
-     /tmp/ccBDqrmn.s:596    .text:00000324 L3GD20_Read
-     /tmp/ccBDqrmn.s:169    .text:000000c0 L3GD20_INT1InterruptConfig
-     /tmp/ccBDqrmn.s:258    .text:00000158 L3GD20_INT1InterruptCmd
-     /tmp/ccBDqrmn.s:312    .text:000001a4 L3GD20_INT2InterruptCmd
-     /tmp/ccBDqrmn.s:366    .text:000001f0 L3GD20_FilterConfig
-     /tmp/ccBDqrmn.s:426    .text:00000244 L3GD20_FilterCmd
-     /tmp/ccBDqrmn.s:480    .text:00000290 L3GD20_GetDataStatus
-     /tmp/ccBDqrmn.s:880    .text:00000568 L3GD20_SendByte
+     /tmp/ccbg2kV4.s:24     .data:00000000 L3GD20Timeout
+     /tmp/ccbg2kV4.s:21     .data:00000000 $d
+     /tmp/ccbg2kV4.s:27     .text:00000000 $t
+     /tmp/ccbg2kV4.s:32     .text:00000000 L3GD20_Init
+     /tmp/ccbg2kV4.s:680    .text:000003a4 L3GD20_LowLevel_Init
+     /tmp/ccbg2kV4.s:517    .text:000002b4 L3GD20_Write
+     /tmp/ccbg2kV4.s:122    .text:00000084 L3GD20_RebootCmd
+     /tmp/ccbg2kV4.s:595    .text:00000324 L3GD20_Read
+     /tmp/ccbg2kV4.s:168    .text:000000c0 L3GD20_INT1InterruptConfig
+     /tmp/ccbg2kV4.s:257    .text:00000158 L3GD20_INT1InterruptCmd
+     /tmp/ccbg2kV4.s:311    .text:000001a4 L3GD20_INT2InterruptCmd
+     /tmp/ccbg2kV4.s:365    .text:000001f0 L3GD20_FilterConfig
+     /tmp/ccbg2kV4.s:425    .text:00000244 L3GD20_FilterCmd
+     /tmp/ccbg2kV4.s:479    .text:00000290 L3GD20_GetDataStatus
+     /tmp/ccbg2kV4.s:879    .text:00000568 L3GD20_SendByte
                      .debug_frame:00000010 $d
-                           .group:00000000 wm4.1.743cd71370ebc432b539c5dba7924ecc
+                           .group:00000000 wm4.1.323dce8664331a0daf4a2675e107c70c
                            .group:00000000 wm4.stm32f30x.h.56.6f19c65e98e3319a61449cb2b2455af5
                            .group:00000000 wm4.core_cm4.h.32.1434cd257ff5806b1b03cd32ab0641e9
                            .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05

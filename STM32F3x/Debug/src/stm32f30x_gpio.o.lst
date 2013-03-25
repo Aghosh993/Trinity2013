@@ -1,29 +1,28 @@
    1              		.syntax unified
    2              		.cpu cortex-m4
    3              		.eabi_attribute 27, 3
-   4              		.eabi_attribute 28, 1
-   5              		.fpu fpv4-sp-d16
-   6              		.eabi_attribute 20, 1
-   7              		.eabi_attribute 21, 1
-   8              		.eabi_attribute 23, 3
-   9              		.eabi_attribute 24, 1
-  10              		.eabi_attribute 25, 1
-  11              		.eabi_attribute 26, 1
-  12              		.eabi_attribute 30, 6
-  13              		.eabi_attribute 34, 1
-  14              		.eabi_attribute 18, 4
-  15              		.thumb
-  16              		.file	"stm32f30x_gpio.c"
-  17              		.text
-  18              	.Ltext0:
-  19              		.cfi_sections	.debug_frame
-  20              		.align	2
-  21              		.global	GPIO_DeInit
-  22              		.thumb
-  23              		.thumb_func
-  25              	GPIO_DeInit:
-  26              	.LFB111:
-  27              		.file 1 "../src/stm32f30x_gpio.c"
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"stm32f30x_gpio.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.align	2
+  20              		.global	GPIO_DeInit
+  21              		.thumb
+  22              		.thumb_func
+  24              	GPIO_DeInit:
+  25              	.LFB111:
+  26              		.file 1 "../src/stm32f30x_gpio.c"
    1:../src/stm32f30x_gpio.c **** /**
    2:../src/stm32f30x_gpio.c ****   ******************************************************************************
    3:../src/stm32f30x_gpio.c ****   * @file    stm32f30x_gpio.c
@@ -146,164 +145,164 @@
  120:../src/stm32f30x_gpio.c ****   */
  121:../src/stm32f30x_gpio.c **** void GPIO_DeInit(GPIO_TypeDef* GPIOx)
  122:../src/stm32f30x_gpio.c **** {
-  28              		.loc 1 122 0
-  29              		.cfi_startproc
-  30              		@ args = 0, pretend = 0, frame = 8
-  31              		@ frame_needed = 1, uses_anonymous_args = 0
-  32 0000 80B5     		push	{r7, lr}
-  33              	.LCFI0:
-  34              		.cfi_def_cfa_offset 8
-  35              		.cfi_offset 7, -8
-  36              		.cfi_offset 14, -4
-  37 0002 82B0     		sub	sp, sp, #8
-  38              	.LCFI1:
-  39              		.cfi_def_cfa_offset 16
-  40 0004 00AF     		add	r7, sp, #0
-  41              	.LCFI2:
-  42              		.cfi_def_cfa_register 7
-  43 0006 7860     		str	r0, [r7, #4]
+  27              		.loc 1 122 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 8
+  30              		@ frame_needed = 1, uses_anonymous_args = 0
+  31 0000 80B5     		push	{r7, lr}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 7, -8
+  35              		.cfi_offset 14, -4
+  36 0002 82B0     		sub	sp, sp, #8
+  37              	.LCFI1:
+  38              		.cfi_def_cfa_offset 16
+  39 0004 00AF     		add	r7, sp, #0
+  40              	.LCFI2:
+  41              		.cfi_def_cfa_register 7
+  42 0006 7860     		str	r0, [r7, #4]
  123:../src/stm32f30x_gpio.c ****   /* Check the parameters */
  124:../src/stm32f30x_gpio.c ****   assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
  125:../src/stm32f30x_gpio.c **** 
  126:../src/stm32f30x_gpio.c ****   if(GPIOx == GPIOA)
-  44              		.loc 1 126 0
-  45 0008 7B68     		ldr	r3, [r7, #4]
-  46 000a B3F1904F 		cmp	r3, #1207959552
-  47 000e 0CD1     		bne	.L2
+  43              		.loc 1 126 0
+  44 0008 7B68     		ldr	r3, [r7, #4]
+  45 000a B3F1904F 		cmp	r3, #1207959552
+  46 000e 0CD1     		bne	.L2
  127:../src/stm32f30x_gpio.c ****   {
  128:../src/stm32f30x_gpio.c ****     RCC_AHBPeriphResetCmd(RCC_AHBPeriph_GPIOA, ENABLE);
-  48              		.loc 1 128 0
-  49 0010 4FF40030 		mov	r0, #131072
-  50 0014 4FF00101 		mov	r1, #1
-  51 0018 FFF7FEFF 		bl	RCC_AHBPeriphResetCmd
+  47              		.loc 1 128 0
+  48 0010 4FF40030 		mov	r0, #131072
+  49 0014 4FF00101 		mov	r1, #1
+  50 0018 FFF7FEFF 		bl	RCC_AHBPeriphResetCmd
  129:../src/stm32f30x_gpio.c ****     RCC_AHBPeriphResetCmd(RCC_AHBPeriph_GPIOA, DISABLE);
-  52              		.loc 1 129 0
-  53 001c 4FF40030 		mov	r0, #131072
-  54 0020 4FF00001 		mov	r1, #0
-  55 0024 FFF7FEFF 		bl	RCC_AHBPeriphResetCmd
-  56 0028 62E0     		b	.L1
-  57              	.L2:
+  51              		.loc 1 129 0
+  52 001c 4FF40030 		mov	r0, #131072
+  53 0020 4FF00001 		mov	r1, #0
+  54 0024 FFF7FEFF 		bl	RCC_AHBPeriphResetCmd
+  55 0028 62E0     		b	.L1
+  56              	.L2:
  130:../src/stm32f30x_gpio.c ****   }
  131:../src/stm32f30x_gpio.c ****   else if(GPIOx == GPIOB)
-  58              		.loc 1 131 0
-  59 002a 7A68     		ldr	r2, [r7, #4]
-  60 002c 4FF48063 		mov	r3, #1024
-  61 0030 C4F60003 		movt	r3, 18432
-  62 0034 9A42     		cmp	r2, r3
-  63 0036 0CD1     		bne	.L4
+  57              		.loc 1 131 0
+  58 002a 7A68     		ldr	r2, [r7, #4]
+  59 002c 4FF48063 		mov	r3, #1024
+  60 0030 C4F60003 		movt	r3, 18432
+  61 0034 9A42     		cmp	r2, r3
+  62 0036 0CD1     		bne	.L4
  132:../src/stm32f30x_gpio.c ****   {
  133:../src/stm32f30x_gpio.c ****     RCC_AHBPeriphResetCmd(RCC_AHBPeriph_GPIOB, ENABLE);
-  64              		.loc 1 133 0
-  65 0038 4FF48020 		mov	r0, #262144
-  66 003c 4FF00101 		mov	r1, #1
-  67 0040 FFF7FEFF 		bl	RCC_AHBPeriphResetCmd
+  63              		.loc 1 133 0
+  64 0038 4FF48020 		mov	r0, #262144
+  65 003c 4FF00101 		mov	r1, #1
+  66 0040 FFF7FEFF 		bl	RCC_AHBPeriphResetCmd
  134:../src/stm32f30x_gpio.c ****     RCC_AHBPeriphResetCmd(RCC_AHBPeriph_GPIOB, DISABLE);
-  68              		.loc 1 134 0
-  69 0044 4FF48020 		mov	r0, #262144
-  70 0048 4FF00001 		mov	r1, #0
-  71 004c FFF7FEFF 		bl	RCC_AHBPeriphResetCmd
-  72 0050 4EE0     		b	.L1
-  73              	.L4:
+  67              		.loc 1 134 0
+  68 0044 4FF48020 		mov	r0, #262144
+  69 0048 4FF00001 		mov	r1, #0
+  70 004c FFF7FEFF 		bl	RCC_AHBPeriphResetCmd
+  71 0050 4EE0     		b	.L1
+  72              	.L4:
  135:../src/stm32f30x_gpio.c ****   }
  136:../src/stm32f30x_gpio.c ****   else if(GPIOx == GPIOC)
-  74              		.loc 1 136 0
-  75 0052 7A68     		ldr	r2, [r7, #4]
-  76 0054 4FF40063 		mov	r3, #2048
-  77 0058 C4F60003 		movt	r3, 18432
-  78 005c 9A42     		cmp	r2, r3
-  79 005e 0CD1     		bne	.L5
+  73              		.loc 1 136 0
+  74 0052 7A68     		ldr	r2, [r7, #4]
+  75 0054 4FF40063 		mov	r3, #2048
+  76 0058 C4F60003 		movt	r3, 18432
+  77 005c 9A42     		cmp	r2, r3
+  78 005e 0CD1     		bne	.L5
  137:../src/stm32f30x_gpio.c ****   {
  138:../src/stm32f30x_gpio.c ****     RCC_AHBPeriphResetCmd(RCC_AHBPeriph_GPIOC, ENABLE);
-  80              		.loc 1 138 0
-  81 0060 4FF40020 		mov	r0, #524288
-  82 0064 4FF00101 		mov	r1, #1
-  83 0068 FFF7FEFF 		bl	RCC_AHBPeriphResetCmd
+  79              		.loc 1 138 0
+  80 0060 4FF40020 		mov	r0, #524288
+  81 0064 4FF00101 		mov	r1, #1
+  82 0068 FFF7FEFF 		bl	RCC_AHBPeriphResetCmd
  139:../src/stm32f30x_gpio.c ****     RCC_AHBPeriphResetCmd(RCC_AHBPeriph_GPIOC, DISABLE);
-  84              		.loc 1 139 0
-  85 006c 4FF40020 		mov	r0, #524288
-  86 0070 4FF00001 		mov	r1, #0
-  87 0074 FFF7FEFF 		bl	RCC_AHBPeriphResetCmd
-  88 0078 3AE0     		b	.L1
-  89              	.L5:
+  83              		.loc 1 139 0
+  84 006c 4FF40020 		mov	r0, #524288
+  85 0070 4FF00001 		mov	r1, #0
+  86 0074 FFF7FEFF 		bl	RCC_AHBPeriphResetCmd
+  87 0078 3AE0     		b	.L1
+  88              	.L5:
  140:../src/stm32f30x_gpio.c ****   }
  141:../src/stm32f30x_gpio.c ****   else if(GPIOx == GPIOD)
-  90              		.loc 1 141 0
-  91 007a 7A68     		ldr	r2, [r7, #4]
-  92 007c 4FF44063 		mov	r3, #3072
-  93 0080 C4F60003 		movt	r3, 18432
-  94 0084 9A42     		cmp	r2, r3
-  95 0086 0CD1     		bne	.L6
+  89              		.loc 1 141 0
+  90 007a 7A68     		ldr	r2, [r7, #4]
+  91 007c 4FF44063 		mov	r3, #3072
+  92 0080 C4F60003 		movt	r3, 18432
+  93 0084 9A42     		cmp	r2, r3
+  94 0086 0CD1     		bne	.L6
  142:../src/stm32f30x_gpio.c ****   {
  143:../src/stm32f30x_gpio.c ****     RCC_AHBPeriphResetCmd(RCC_AHBPeriph_GPIOD, ENABLE);
-  96              		.loc 1 143 0
-  97 0088 4FF48010 		mov	r0, #1048576
-  98 008c 4FF00101 		mov	r1, #1
-  99 0090 FFF7FEFF 		bl	RCC_AHBPeriphResetCmd
+  95              		.loc 1 143 0
+  96 0088 4FF48010 		mov	r0, #1048576
+  97 008c 4FF00101 		mov	r1, #1
+  98 0090 FFF7FEFF 		bl	RCC_AHBPeriphResetCmd
  144:../src/stm32f30x_gpio.c ****     RCC_AHBPeriphResetCmd(RCC_AHBPeriph_GPIOD, DISABLE);
- 100              		.loc 1 144 0
- 101 0094 4FF48010 		mov	r0, #1048576
- 102 0098 4FF00001 		mov	r1, #0
- 103 009c FFF7FEFF 		bl	RCC_AHBPeriphResetCmd
- 104 00a0 26E0     		b	.L1
- 105              	.L6:
+  99              		.loc 1 144 0
+ 100 0094 4FF48010 		mov	r0, #1048576
+ 101 0098 4FF00001 		mov	r1, #0
+ 102 009c FFF7FEFF 		bl	RCC_AHBPeriphResetCmd
+ 103 00a0 26E0     		b	.L1
+ 104              	.L6:
  145:../src/stm32f30x_gpio.c ****   }
  146:../src/stm32f30x_gpio.c ****   else if(GPIOx == GPIOE)
- 106              		.loc 1 146 0
- 107 00a2 7A68     		ldr	r2, [r7, #4]
- 108 00a4 4FF48053 		mov	r3, #4096
- 109 00a8 C4F60003 		movt	r3, 18432
- 110 00ac 9A42     		cmp	r2, r3
- 111 00ae 0CD1     		bne	.L7
+ 105              		.loc 1 146 0
+ 106 00a2 7A68     		ldr	r2, [r7, #4]
+ 107 00a4 4FF48053 		mov	r3, #4096
+ 108 00a8 C4F60003 		movt	r3, 18432
+ 109 00ac 9A42     		cmp	r2, r3
+ 110 00ae 0CD1     		bne	.L7
  147:../src/stm32f30x_gpio.c ****   {
  148:../src/stm32f30x_gpio.c ****     RCC_AHBPeriphResetCmd(RCC_AHBPeriph_GPIOE, ENABLE);
- 112              		.loc 1 148 0
- 113 00b0 4FF40010 		mov	r0, #2097152
- 114 00b4 4FF00101 		mov	r1, #1
- 115 00b8 FFF7FEFF 		bl	RCC_AHBPeriphResetCmd
+ 111              		.loc 1 148 0
+ 112 00b0 4FF40010 		mov	r0, #2097152
+ 113 00b4 4FF00101 		mov	r1, #1
+ 114 00b8 FFF7FEFF 		bl	RCC_AHBPeriphResetCmd
  149:../src/stm32f30x_gpio.c ****     RCC_AHBPeriphResetCmd(RCC_AHBPeriph_GPIOE, DISABLE);
- 116              		.loc 1 149 0
- 117 00bc 4FF40010 		mov	r0, #2097152
- 118 00c0 4FF00001 		mov	r1, #0
- 119 00c4 FFF7FEFF 		bl	RCC_AHBPeriphResetCmd
- 120 00c8 12E0     		b	.L1
- 121              	.L7:
+ 115              		.loc 1 149 0
+ 116 00bc 4FF40010 		mov	r0, #2097152
+ 117 00c0 4FF00001 		mov	r1, #0
+ 118 00c4 FFF7FEFF 		bl	RCC_AHBPeriphResetCmd
+ 119 00c8 12E0     		b	.L1
+ 120              	.L7:
  150:../src/stm32f30x_gpio.c ****   }
  151:../src/stm32f30x_gpio.c ****   else
  152:../src/stm32f30x_gpio.c ****   {
  153:../src/stm32f30x_gpio.c ****     if(GPIOx == GPIOF)
- 122              		.loc 1 153 0
- 123 00ca 7A68     		ldr	r2, [r7, #4]
- 124 00cc 4FF4A053 		mov	r3, #5120
- 125 00d0 C4F60003 		movt	r3, 18432
- 126 00d4 9A42     		cmp	r2, r3
- 127 00d6 0BD1     		bne	.L1
+ 121              		.loc 1 153 0
+ 122 00ca 7A68     		ldr	r2, [r7, #4]
+ 123 00cc 4FF4A053 		mov	r3, #5120
+ 124 00d0 C4F60003 		movt	r3, 18432
+ 125 00d4 9A42     		cmp	r2, r3
+ 126 00d6 0BD1     		bne	.L1
  154:../src/stm32f30x_gpio.c ****     {
  155:../src/stm32f30x_gpio.c ****       RCC_AHBPeriphResetCmd(RCC_AHBPeriph_GPIOF, ENABLE);
- 128              		.loc 1 155 0
- 129 00d8 4FF48000 		mov	r0, #4194304
- 130 00dc 4FF00101 		mov	r1, #1
- 131 00e0 FFF7FEFF 		bl	RCC_AHBPeriphResetCmd
+ 127              		.loc 1 155 0
+ 128 00d8 4FF48000 		mov	r0, #4194304
+ 129 00dc 4FF00101 		mov	r1, #1
+ 130 00e0 FFF7FEFF 		bl	RCC_AHBPeriphResetCmd
  156:../src/stm32f30x_gpio.c ****       RCC_AHBPeriphResetCmd(RCC_AHBPeriph_GPIOF, DISABLE);
- 132              		.loc 1 156 0
- 133 00e4 4FF48000 		mov	r0, #4194304
- 134 00e8 4FF00001 		mov	r1, #0
- 135 00ec FFF7FEFF 		bl	RCC_AHBPeriphResetCmd
- 136              	.L1:
+ 131              		.loc 1 156 0
+ 132 00e4 4FF48000 		mov	r0, #4194304
+ 133 00e8 4FF00001 		mov	r1, #0
+ 134 00ec FFF7FEFF 		bl	RCC_AHBPeriphResetCmd
+ 135              	.L1:
  157:../src/stm32f30x_gpio.c ****     }
  158:../src/stm32f30x_gpio.c ****   }
  159:../src/stm32f30x_gpio.c **** }
- 137              		.loc 1 159 0
- 138 00f0 07F10807 		add	r7, r7, #8
- 139 00f4 BD46     		mov	sp, r7
- 140 00f6 80BD     		pop	{r7, pc}
- 141              		.cfi_endproc
- 142              	.LFE111:
- 144              		.align	2
- 145              		.global	GPIO_Init
- 146              		.thumb
- 147              		.thumb_func
- 149              	GPIO_Init:
- 150              	.LFB112:
+ 136              		.loc 1 159 0
+ 137 00f0 07F10807 		add	r7, r7, #8
+ 138 00f4 BD46     		mov	sp, r7
+ 139 00f6 80BD     		pop	{r7, pc}
+ 140              		.cfi_endproc
+ 141              	.LFE111:
+ 143              		.align	2
+ 144              		.global	GPIO_Init
+ 145              		.thumb
+ 146              		.thumb_func
+ 148              	GPIO_Init:
+ 149              	.LFB112:
  160:../src/stm32f30x_gpio.c **** 
  161:../src/stm32f30x_gpio.c **** /**
  162:../src/stm32f30x_gpio.c ****   * @brief  Initializes the GPIOx peripheral according to the specified 
@@ -320,31 +319,31 @@
  173:../src/stm32f30x_gpio.c ****   */
  174:../src/stm32f30x_gpio.c **** void GPIO_Init(GPIO_TypeDef* GPIOx, GPIO_InitTypeDef* GPIO_InitStruct)
  175:../src/stm32f30x_gpio.c **** { 
- 151              		.loc 1 175 0
- 152              		.cfi_startproc
- 153              		@ args = 0, pretend = 0, frame = 24
- 154              		@ frame_needed = 1, uses_anonymous_args = 0
- 155              		@ link register save eliminated.
- 156 00f8 80B4     		push	{r7}
- 157              	.LCFI3:
- 158              		.cfi_def_cfa_offset 4
- 159              		.cfi_offset 7, -4
- 160 00fa 87B0     		sub	sp, sp, #28
- 161              	.LCFI4:
- 162              		.cfi_def_cfa_offset 32
- 163 00fc 00AF     		add	r7, sp, #0
- 164              	.LCFI5:
- 165              		.cfi_def_cfa_register 7
- 166 00fe 7860     		str	r0, [r7, #4]
- 167 0100 3960     		str	r1, [r7, #0]
+ 150              		.loc 1 175 0
+ 151              		.cfi_startproc
+ 152              		@ args = 0, pretend = 0, frame = 24
+ 153              		@ frame_needed = 1, uses_anonymous_args = 0
+ 154              		@ link register save eliminated.
+ 155 00f8 80B4     		push	{r7}
+ 156              	.LCFI3:
+ 157              		.cfi_def_cfa_offset 4
+ 158              		.cfi_offset 7, -4
+ 159 00fa 87B0     		sub	sp, sp, #28
+ 160              	.LCFI4:
+ 161              		.cfi_def_cfa_offset 32
+ 162 00fc 00AF     		add	r7, sp, #0
+ 163              	.LCFI5:
+ 164              		.cfi_def_cfa_register 7
+ 165 00fe 7860     		str	r0, [r7, #4]
+ 166 0100 3960     		str	r1, [r7, #0]
  176:../src/stm32f30x_gpio.c ****   uint32_t pinpos = 0x00, pos = 0x00 , currentpin = 0x00;
- 168              		.loc 1 176 0
- 169 0102 4FF00003 		mov	r3, #0
- 170 0106 7B61     		str	r3, [r7, #20]
- 171 0108 4FF00003 		mov	r3, #0
- 172 010c 3B61     		str	r3, [r7, #16]
- 173 010e 4FF00003 		mov	r3, #0
- 174 0112 FB60     		str	r3, [r7, #12]
+ 167              		.loc 1 176 0
+ 168 0102 4FF00003 		mov	r3, #0
+ 169 0106 7B61     		str	r3, [r7, #20]
+ 170 0108 4FF00003 		mov	r3, #0
+ 171 010c 3B61     		str	r3, [r7, #16]
+ 172 010e 4FF00003 		mov	r3, #0
+ 173 0112 FB60     		str	r3, [r7, #12]
  177:../src/stm32f30x_gpio.c **** 
  178:../src/stm32f30x_gpio.c ****   /* Check the parameters */
  179:../src/stm32f30x_gpio.c ****   assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
@@ -355,199 +354,199 @@
  184:../src/stm32f30x_gpio.c ****   /*-------------------------- Configure the port pins -----------------------*/
  185:../src/stm32f30x_gpio.c ****   /*-- GPIO Mode Configuration --*/
  186:../src/stm32f30x_gpio.c ****   for (pinpos = 0x00; pinpos < 0x10; pinpos++)
- 175              		.loc 1 186 0
- 176 0114 4FF00003 		mov	r3, #0
- 177 0118 7B61     		str	r3, [r7, #20]
- 178 011a 8CE0     		b	.L9
- 179              	.L13:
+ 174              		.loc 1 186 0
+ 175 0114 4FF00003 		mov	r3, #0
+ 176 0118 7B61     		str	r3, [r7, #20]
+ 177 011a 8CE0     		b	.L9
+ 178              	.L13:
  187:../src/stm32f30x_gpio.c ****   {
  188:../src/stm32f30x_gpio.c ****     pos = ((uint32_t)0x01) << pinpos;
- 180              		.loc 1 188 0
- 181 011c 7B69     		ldr	r3, [r7, #20]
- 182 011e 4FF00102 		mov	r2, #1
- 183 0122 02FA03F3 		lsl	r3, r2, r3
- 184 0126 3B61     		str	r3, [r7, #16]
+ 179              		.loc 1 188 0
+ 180 011c 7B69     		ldr	r3, [r7, #20]
+ 181 011e 4FF00102 		mov	r2, #1
+ 182 0122 02FA03F3 		lsl	r3, r2, r3
+ 183 0126 3B61     		str	r3, [r7, #16]
  189:../src/stm32f30x_gpio.c **** 
  190:../src/stm32f30x_gpio.c ****     /* Get the port pins position */
  191:../src/stm32f30x_gpio.c ****     currentpin = (GPIO_InitStruct->GPIO_Pin) & pos;
- 185              		.loc 1 191 0
- 186 0128 3B68     		ldr	r3, [r7, #0]
- 187 012a 1A68     		ldr	r2, [r3, #0]
- 188 012c 3B69     		ldr	r3, [r7, #16]
- 189 012e 1340     		ands	r3, r3, r2
- 190 0130 FB60     		str	r3, [r7, #12]
+ 184              		.loc 1 191 0
+ 185 0128 3B68     		ldr	r3, [r7, #0]
+ 186 012a 1A68     		ldr	r2, [r3, #0]
+ 187 012c 3B69     		ldr	r3, [r7, #16]
+ 188 012e 1340     		ands	r3, r3, r2
+ 189 0130 FB60     		str	r3, [r7, #12]
  192:../src/stm32f30x_gpio.c **** 
  193:../src/stm32f30x_gpio.c ****     if (currentpin == pos)
- 191              		.loc 1 193 0
- 192 0132 FA68     		ldr	r2, [r7, #12]
- 193 0134 3B69     		ldr	r3, [r7, #16]
- 194 0136 9A42     		cmp	r2, r3
- 195 0138 79D1     		bne	.L10
+ 190              		.loc 1 193 0
+ 191 0132 FA68     		ldr	r2, [r7, #12]
+ 192 0134 3B69     		ldr	r3, [r7, #16]
+ 193 0136 9A42     		cmp	r2, r3
+ 194 0138 79D1     		bne	.L10
  194:../src/stm32f30x_gpio.c ****     {
  195:../src/stm32f30x_gpio.c ****       if ((GPIO_InitStruct->GPIO_Mode == GPIO_Mode_OUT) || (GPIO_InitStruct->GPIO_Mode == GPIO_Mode
- 196              		.loc 1 195 0
- 197 013a 3B68     		ldr	r3, [r7, #0]
- 198 013c 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
- 199 013e 012B     		cmp	r3, #1
- 200 0140 03D0     		beq	.L11
- 201              		.loc 1 195 0 is_stmt 0 discriminator 1
- 202 0142 3B68     		ldr	r3, [r7, #0]
- 203 0144 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
- 204 0146 022B     		cmp	r3, #2
- 205 0148 3AD1     		bne	.L12
- 206              	.L11:
+ 195              		.loc 1 195 0
+ 196 013a 3B68     		ldr	r3, [r7, #0]
+ 197 013c 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
+ 198 013e 012B     		cmp	r3, #1
+ 199 0140 03D0     		beq	.L11
+ 200              		.loc 1 195 0 is_stmt 0 discriminator 1
+ 201 0142 3B68     		ldr	r3, [r7, #0]
+ 202 0144 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
+ 203 0146 022B     		cmp	r3, #2
+ 204 0148 3AD1     		bne	.L12
+ 205              	.L11:
  196:../src/stm32f30x_gpio.c ****       {
  197:../src/stm32f30x_gpio.c ****         /* Check Speed mode parameters */
  198:../src/stm32f30x_gpio.c ****         assert_param(IS_GPIO_SPEED(GPIO_InitStruct->GPIO_Speed));
  199:../src/stm32f30x_gpio.c **** 
  200:../src/stm32f30x_gpio.c ****         /* Speed mode configuration */
  201:../src/stm32f30x_gpio.c ****         GPIOx->OSPEEDR &= ~(GPIO_OSPEEDER_OSPEEDR0 << (pinpos * 2));
- 207              		.loc 1 201 0 is_stmt 1
- 208 014a 7B68     		ldr	r3, [r7, #4]
- 209 014c 9A68     		ldr	r2, [r3, #8]
- 210 014e 7B69     		ldr	r3, [r7, #20]
- 211 0150 4FEA4303 		lsl	r3, r3, #1
- 212 0154 4FF00301 		mov	r1, #3
- 213 0158 01FA03F3 		lsl	r3, r1, r3
- 214 015c 6FEA0303 		mvn	r3, r3
- 215 0160 1A40     		ands	r2, r2, r3
- 216 0162 7B68     		ldr	r3, [r7, #4]
- 217 0164 9A60     		str	r2, [r3, #8]
+ 206              		.loc 1 201 0 is_stmt 1
+ 207 014a 7B68     		ldr	r3, [r7, #4]
+ 208 014c 9A68     		ldr	r2, [r3, #8]
+ 209 014e 7B69     		ldr	r3, [r7, #20]
+ 210 0150 4FEA4303 		lsl	r3, r3, #1
+ 211 0154 4FF00301 		mov	r1, #3
+ 212 0158 01FA03F3 		lsl	r3, r1, r3
+ 213 015c 6FEA0303 		mvn	r3, r3
+ 214 0160 1A40     		ands	r2, r2, r3
+ 215 0162 7B68     		ldr	r3, [r7, #4]
+ 216 0164 9A60     		str	r2, [r3, #8]
  202:../src/stm32f30x_gpio.c ****         GPIOx->OSPEEDR |= ((uint32_t)(GPIO_InitStruct->GPIO_Speed) << (pinpos * 2));
- 218              		.loc 1 202 0
- 219 0166 7B68     		ldr	r3, [r7, #4]
- 220 0168 9A68     		ldr	r2, [r3, #8]
- 221 016a 3B68     		ldr	r3, [r7, #0]
- 222 016c 5B79     		ldrb	r3, [r3, #5]	@ zero_extendqisi2
- 223 016e 1946     		mov	r1, r3
- 224 0170 7B69     		ldr	r3, [r7, #20]
- 225 0172 4FEA4303 		lsl	r3, r3, #1
- 226 0176 01FA03F3 		lsl	r3, r1, r3
- 227 017a 1A43     		orrs	r2, r2, r3
- 228 017c 7B68     		ldr	r3, [r7, #4]
- 229 017e 9A60     		str	r2, [r3, #8]
+ 217              		.loc 1 202 0
+ 218 0166 7B68     		ldr	r3, [r7, #4]
+ 219 0168 9A68     		ldr	r2, [r3, #8]
+ 220 016a 3B68     		ldr	r3, [r7, #0]
+ 221 016c 5B79     		ldrb	r3, [r3, #5]	@ zero_extendqisi2
+ 222 016e 1946     		mov	r1, r3
+ 223 0170 7B69     		ldr	r3, [r7, #20]
+ 224 0172 4FEA4303 		lsl	r3, r3, #1
+ 225 0176 01FA03F3 		lsl	r3, r1, r3
+ 226 017a 1A43     		orrs	r2, r2, r3
+ 227 017c 7B68     		ldr	r3, [r7, #4]
+ 228 017e 9A60     		str	r2, [r3, #8]
  203:../src/stm32f30x_gpio.c **** 
  204:../src/stm32f30x_gpio.c ****         /* Check Output mode parameters */
  205:../src/stm32f30x_gpio.c ****         assert_param(IS_GPIO_OTYPE(GPIO_InitStruct->GPIO_OType));
  206:../src/stm32f30x_gpio.c **** 
  207:../src/stm32f30x_gpio.c ****         /* Output mode configuration */
  208:../src/stm32f30x_gpio.c ****         GPIOx->OTYPER &= ~((GPIO_OTYPER_OT_0) << ((uint16_t)pinpos));
- 230              		.loc 1 208 0
- 231 0180 7B68     		ldr	r3, [r7, #4]
- 232 0182 9B88     		ldrh	r3, [r3, #4]	@ movhi
- 233 0184 9AB2     		uxth	r2, r3
- 234 0186 7B69     		ldr	r3, [r7, #20]
- 235 0188 9BB2     		uxth	r3, r3
- 236 018a 4FF00101 		mov	r1, #1
- 237 018e 01FA03F3 		lsl	r3, r1, r3
- 238 0192 9BB2     		uxth	r3, r3
- 239 0194 6FEA0303 		mvn	r3, r3
- 240 0198 9BB2     		uxth	r3, r3
- 241 019a 1340     		ands	r3, r3, r2
- 242 019c 9AB2     		uxth	r2, r3
- 243 019e 7B68     		ldr	r3, [r7, #4]
- 244 01a0 9A80     		strh	r2, [r3, #4]	@ movhi
+ 229              		.loc 1 208 0
+ 230 0180 7B68     		ldr	r3, [r7, #4]
+ 231 0182 9B88     		ldrh	r3, [r3, #4]	@ movhi
+ 232 0184 9AB2     		uxth	r2, r3
+ 233 0186 7B69     		ldr	r3, [r7, #20]
+ 234 0188 9BB2     		uxth	r3, r3
+ 235 018a 4FF00101 		mov	r1, #1
+ 236 018e 01FA03F3 		lsl	r3, r1, r3
+ 237 0192 9BB2     		uxth	r3, r3
+ 238 0194 6FEA0303 		mvn	r3, r3
+ 239 0198 9BB2     		uxth	r3, r3
+ 240 019a 1340     		ands	r3, r3, r2
+ 241 019c 9AB2     		uxth	r2, r3
+ 242 019e 7B68     		ldr	r3, [r7, #4]
+ 243 01a0 9A80     		strh	r2, [r3, #4]	@ movhi
  209:../src/stm32f30x_gpio.c ****         GPIOx->OTYPER |= (uint16_t)(((uint16_t)GPIO_InitStruct->GPIO_OType) << ((uint16_t)pinpos));
- 245              		.loc 1 209 0
- 246 01a2 7B68     		ldr	r3, [r7, #4]
- 247 01a4 9B88     		ldrh	r3, [r3, #4]	@ movhi
- 248 01a6 9AB2     		uxth	r2, r3
- 249 01a8 3B68     		ldr	r3, [r7, #0]
- 250 01aa 9B79     		ldrb	r3, [r3, #6]	@ zero_extendqisi2
- 251 01ac 1946     		mov	r1, r3
- 252 01ae 7B69     		ldr	r3, [r7, #20]
- 253 01b0 9BB2     		uxth	r3, r3
- 254 01b2 01FA03F3 		lsl	r3, r1, r3
- 255 01b6 9BB2     		uxth	r3, r3
- 256 01b8 1343     		orrs	r3, r3, r2
- 257 01ba 9AB2     		uxth	r2, r3
- 258 01bc 7B68     		ldr	r3, [r7, #4]
- 259 01be 9A80     		strh	r2, [r3, #4]	@ movhi
- 260              	.L12:
+ 244              		.loc 1 209 0
+ 245 01a2 7B68     		ldr	r3, [r7, #4]
+ 246 01a4 9B88     		ldrh	r3, [r3, #4]	@ movhi
+ 247 01a6 9AB2     		uxth	r2, r3
+ 248 01a8 3B68     		ldr	r3, [r7, #0]
+ 249 01aa 9B79     		ldrb	r3, [r3, #6]	@ zero_extendqisi2
+ 250 01ac 1946     		mov	r1, r3
+ 251 01ae 7B69     		ldr	r3, [r7, #20]
+ 252 01b0 9BB2     		uxth	r3, r3
+ 253 01b2 01FA03F3 		lsl	r3, r1, r3
+ 254 01b6 9BB2     		uxth	r3, r3
+ 255 01b8 1343     		orrs	r3, r3, r2
+ 256 01ba 9AB2     		uxth	r2, r3
+ 257 01bc 7B68     		ldr	r3, [r7, #4]
+ 258 01be 9A80     		strh	r2, [r3, #4]	@ movhi
+ 259              	.L12:
  210:../src/stm32f30x_gpio.c ****       }
  211:../src/stm32f30x_gpio.c ****       
  212:../src/stm32f30x_gpio.c ****       GPIOx->MODER  &= ~(GPIO_MODER_MODER0 << (pinpos * 2));
- 261              		.loc 1 212 0
- 262 01c0 7B68     		ldr	r3, [r7, #4]
- 263 01c2 1A68     		ldr	r2, [r3, #0]
- 264 01c4 7B69     		ldr	r3, [r7, #20]
- 265 01c6 4FEA4303 		lsl	r3, r3, #1
- 266 01ca 4FF00301 		mov	r1, #3
- 267 01ce 01FA03F3 		lsl	r3, r1, r3
- 268 01d2 6FEA0303 		mvn	r3, r3
- 269 01d6 1A40     		ands	r2, r2, r3
- 270 01d8 7B68     		ldr	r3, [r7, #4]
- 271 01da 1A60     		str	r2, [r3, #0]
+ 260              		.loc 1 212 0
+ 261 01c0 7B68     		ldr	r3, [r7, #4]
+ 262 01c2 1A68     		ldr	r2, [r3, #0]
+ 263 01c4 7B69     		ldr	r3, [r7, #20]
+ 264 01c6 4FEA4303 		lsl	r3, r3, #1
+ 265 01ca 4FF00301 		mov	r1, #3
+ 266 01ce 01FA03F3 		lsl	r3, r1, r3
+ 267 01d2 6FEA0303 		mvn	r3, r3
+ 268 01d6 1A40     		ands	r2, r2, r3
+ 269 01d8 7B68     		ldr	r3, [r7, #4]
+ 270 01da 1A60     		str	r2, [r3, #0]
  213:../src/stm32f30x_gpio.c **** 
  214:../src/stm32f30x_gpio.c ****       GPIOx->MODER |= (((uint32_t)GPIO_InitStruct->GPIO_Mode) << (pinpos * 2));
- 272              		.loc 1 214 0
- 273 01dc 7B68     		ldr	r3, [r7, #4]
- 274 01de 1A68     		ldr	r2, [r3, #0]
- 275 01e0 3B68     		ldr	r3, [r7, #0]
- 276 01e2 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
- 277 01e4 1946     		mov	r1, r3
- 278 01e6 7B69     		ldr	r3, [r7, #20]
- 279 01e8 4FEA4303 		lsl	r3, r3, #1
- 280 01ec 01FA03F3 		lsl	r3, r1, r3
- 281 01f0 1A43     		orrs	r2, r2, r3
- 282 01f2 7B68     		ldr	r3, [r7, #4]
- 283 01f4 1A60     		str	r2, [r3, #0]
+ 271              		.loc 1 214 0
+ 272 01dc 7B68     		ldr	r3, [r7, #4]
+ 273 01de 1A68     		ldr	r2, [r3, #0]
+ 274 01e0 3B68     		ldr	r3, [r7, #0]
+ 275 01e2 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
+ 276 01e4 1946     		mov	r1, r3
+ 277 01e6 7B69     		ldr	r3, [r7, #20]
+ 278 01e8 4FEA4303 		lsl	r3, r3, #1
+ 279 01ec 01FA03F3 		lsl	r3, r1, r3
+ 280 01f0 1A43     		orrs	r2, r2, r3
+ 281 01f2 7B68     		ldr	r3, [r7, #4]
+ 282 01f4 1A60     		str	r2, [r3, #0]
  215:../src/stm32f30x_gpio.c **** 
  216:../src/stm32f30x_gpio.c ****       /* Pull-up Pull down resistor configuration */
  217:../src/stm32f30x_gpio.c ****       GPIOx->PUPDR &= ~(GPIO_PUPDR_PUPDR0 << ((uint16_t)pinpos * 2));
- 284              		.loc 1 217 0
- 285 01f6 7B68     		ldr	r3, [r7, #4]
- 286 01f8 DA68     		ldr	r2, [r3, #12]
- 287 01fa 7B69     		ldr	r3, [r7, #20]
- 288 01fc 9BB2     		uxth	r3, r3
- 289 01fe 4FEA4303 		lsl	r3, r3, #1
- 290 0202 4FF00301 		mov	r1, #3
- 291 0206 01FA03F3 		lsl	r3, r1, r3
- 292 020a 6FEA0303 		mvn	r3, r3
- 293 020e 1A40     		ands	r2, r2, r3
- 294 0210 7B68     		ldr	r3, [r7, #4]
- 295 0212 DA60     		str	r2, [r3, #12]
+ 283              		.loc 1 217 0
+ 284 01f6 7B68     		ldr	r3, [r7, #4]
+ 285 01f8 DA68     		ldr	r2, [r3, #12]
+ 286 01fa 7B69     		ldr	r3, [r7, #20]
+ 287 01fc 9BB2     		uxth	r3, r3
+ 288 01fe 4FEA4303 		lsl	r3, r3, #1
+ 289 0202 4FF00301 		mov	r1, #3
+ 290 0206 01FA03F3 		lsl	r3, r1, r3
+ 291 020a 6FEA0303 		mvn	r3, r3
+ 292 020e 1A40     		ands	r2, r2, r3
+ 293 0210 7B68     		ldr	r3, [r7, #4]
+ 294 0212 DA60     		str	r2, [r3, #12]
  218:../src/stm32f30x_gpio.c ****       GPIOx->PUPDR |= (((uint32_t)GPIO_InitStruct->GPIO_PuPd) << (pinpos * 2));
- 296              		.loc 1 218 0
- 297 0214 7B68     		ldr	r3, [r7, #4]
- 298 0216 DA68     		ldr	r2, [r3, #12]
- 299 0218 3B68     		ldr	r3, [r7, #0]
- 300 021a DB79     		ldrb	r3, [r3, #7]	@ zero_extendqisi2
- 301 021c 1946     		mov	r1, r3
- 302 021e 7B69     		ldr	r3, [r7, #20]
- 303 0220 4FEA4303 		lsl	r3, r3, #1
- 304 0224 01FA03F3 		lsl	r3, r1, r3
- 305 0228 1A43     		orrs	r2, r2, r3
- 306 022a 7B68     		ldr	r3, [r7, #4]
- 307 022c DA60     		str	r2, [r3, #12]
- 308              	.L10:
+ 295              		.loc 1 218 0
+ 296 0214 7B68     		ldr	r3, [r7, #4]
+ 297 0216 DA68     		ldr	r2, [r3, #12]
+ 298 0218 3B68     		ldr	r3, [r7, #0]
+ 299 021a DB79     		ldrb	r3, [r3, #7]	@ zero_extendqisi2
+ 300 021c 1946     		mov	r1, r3
+ 301 021e 7B69     		ldr	r3, [r7, #20]
+ 302 0220 4FEA4303 		lsl	r3, r3, #1
+ 303 0224 01FA03F3 		lsl	r3, r1, r3
+ 304 0228 1A43     		orrs	r2, r2, r3
+ 305 022a 7B68     		ldr	r3, [r7, #4]
+ 306 022c DA60     		str	r2, [r3, #12]
+ 307              	.L10:
  186:../src/stm32f30x_gpio.c ****   for (pinpos = 0x00; pinpos < 0x10; pinpos++)
- 309              		.loc 1 186 0
- 310 022e 7B69     		ldr	r3, [r7, #20]
- 311 0230 03F10103 		add	r3, r3, #1
- 312 0234 7B61     		str	r3, [r7, #20]
- 313              	.L9:
+ 308              		.loc 1 186 0
+ 309 022e 7B69     		ldr	r3, [r7, #20]
+ 310 0230 03F10103 		add	r3, r3, #1
+ 311 0234 7B61     		str	r3, [r7, #20]
+ 312              	.L9:
  186:../src/stm32f30x_gpio.c ****   for (pinpos = 0x00; pinpos < 0x10; pinpos++)
- 314              		.loc 1 186 0 is_stmt 0 discriminator 1
- 315 0236 7B69     		ldr	r3, [r7, #20]
- 316 0238 0F2B     		cmp	r3, #15
- 317 023a 7FF66FAF 		bls	.L13
+ 313              		.loc 1 186 0 is_stmt 0 discriminator 1
+ 314 0236 7B69     		ldr	r3, [r7, #20]
+ 315 0238 0F2B     		cmp	r3, #15
+ 316 023a 7FF66FAF 		bls	.L13
  219:../src/stm32f30x_gpio.c ****     }
  220:../src/stm32f30x_gpio.c ****   }
  221:../src/stm32f30x_gpio.c **** }
- 318              		.loc 1 221 0 is_stmt 1
- 319 023e 07F11C07 		add	r7, r7, #28
- 320 0242 BD46     		mov	sp, r7
- 321 0244 80BC     		pop	{r7}
- 322 0246 7047     		bx	lr
- 323              		.cfi_endproc
- 324              	.LFE112:
- 326              		.align	2
- 327              		.global	GPIO_StructInit
- 328              		.thumb
- 329              		.thumb_func
- 331              	GPIO_StructInit:
- 332              	.LFB113:
+ 317              		.loc 1 221 0 is_stmt 1
+ 318 023e 07F11C07 		add	r7, r7, #28
+ 319 0242 BD46     		mov	sp, r7
+ 320 0244 80BC     		pop	{r7}
+ 321 0246 7047     		bx	lr
+ 322              		.cfi_endproc
+ 323              	.LFE112:
+ 325              		.align	2
+ 326              		.global	GPIO_StructInit
+ 327              		.thumb
+ 328              		.thumb_func
+ 330              	GPIO_StructInit:
+ 331              	.LFB113:
  222:../src/stm32f30x_gpio.c **** 
  223:../src/stm32f30x_gpio.c **** /**
  224:../src/stm32f30x_gpio.c ****   * @brief  Fills each GPIO_InitStruct member with its default value.
@@ -557,62 +556,62 @@
  228:../src/stm32f30x_gpio.c ****   */
  229:../src/stm32f30x_gpio.c **** void GPIO_StructInit(GPIO_InitTypeDef* GPIO_InitStruct)
  230:../src/stm32f30x_gpio.c **** {
- 333              		.loc 1 230 0
- 334              		.cfi_startproc
- 335              		@ args = 0, pretend = 0, frame = 8
- 336              		@ frame_needed = 1, uses_anonymous_args = 0
- 337              		@ link register save eliminated.
- 338 0248 80B4     		push	{r7}
- 339              	.LCFI6:
- 340              		.cfi_def_cfa_offset 4
- 341              		.cfi_offset 7, -4
- 342 024a 83B0     		sub	sp, sp, #12
- 343              	.LCFI7:
- 344              		.cfi_def_cfa_offset 16
- 345 024c 00AF     		add	r7, sp, #0
- 346              	.LCFI8:
- 347              		.cfi_def_cfa_register 7
- 348 024e 7860     		str	r0, [r7, #4]
+ 332              		.loc 1 230 0
+ 333              		.cfi_startproc
+ 334              		@ args = 0, pretend = 0, frame = 8
+ 335              		@ frame_needed = 1, uses_anonymous_args = 0
+ 336              		@ link register save eliminated.
+ 337 0248 80B4     		push	{r7}
+ 338              	.LCFI6:
+ 339              		.cfi_def_cfa_offset 4
+ 340              		.cfi_offset 7, -4
+ 341 024a 83B0     		sub	sp, sp, #12
+ 342              	.LCFI7:
+ 343              		.cfi_def_cfa_offset 16
+ 344 024c 00AF     		add	r7, sp, #0
+ 345              	.LCFI8:
+ 346              		.cfi_def_cfa_register 7
+ 347 024e 7860     		str	r0, [r7, #4]
  231:../src/stm32f30x_gpio.c ****   /* Reset GPIO init structure parameters values */
  232:../src/stm32f30x_gpio.c ****   GPIO_InitStruct->GPIO_Pin  = GPIO_Pin_All;
- 349              		.loc 1 232 0
- 350 0250 7B68     		ldr	r3, [r7, #4]
- 351 0252 4FF6FF72 		movw	r2, #65535
- 352 0256 1A60     		str	r2, [r3, #0]
+ 348              		.loc 1 232 0
+ 349 0250 7B68     		ldr	r3, [r7, #4]
+ 350 0252 4FF6FF72 		movw	r2, #65535
+ 351 0256 1A60     		str	r2, [r3, #0]
  233:../src/stm32f30x_gpio.c ****   GPIO_InitStruct->GPIO_Mode = GPIO_Mode_IN;
- 353              		.loc 1 233 0
- 354 0258 7B68     		ldr	r3, [r7, #4]
- 355 025a 4FF00002 		mov	r2, #0
- 356 025e 1A71     		strb	r2, [r3, #4]
+ 352              		.loc 1 233 0
+ 353 0258 7B68     		ldr	r3, [r7, #4]
+ 354 025a 4FF00002 		mov	r2, #0
+ 355 025e 1A71     		strb	r2, [r3, #4]
  234:../src/stm32f30x_gpio.c ****   GPIO_InitStruct->GPIO_Speed = GPIO_Speed_2MHz;
- 357              		.loc 1 234 0
- 358 0260 7B68     		ldr	r3, [r7, #4]
- 359 0262 4FF00202 		mov	r2, #2
- 360 0266 5A71     		strb	r2, [r3, #5]
+ 356              		.loc 1 234 0
+ 357 0260 7B68     		ldr	r3, [r7, #4]
+ 358 0262 4FF00202 		mov	r2, #2
+ 359 0266 5A71     		strb	r2, [r3, #5]
  235:../src/stm32f30x_gpio.c ****   GPIO_InitStruct->GPIO_OType = GPIO_OType_PP;
- 361              		.loc 1 235 0
- 362 0268 7B68     		ldr	r3, [r7, #4]
- 363 026a 4FF00002 		mov	r2, #0
- 364 026e 9A71     		strb	r2, [r3, #6]
+ 360              		.loc 1 235 0
+ 361 0268 7B68     		ldr	r3, [r7, #4]
+ 362 026a 4FF00002 		mov	r2, #0
+ 363 026e 9A71     		strb	r2, [r3, #6]
  236:../src/stm32f30x_gpio.c ****   GPIO_InitStruct->GPIO_PuPd = GPIO_PuPd_NOPULL;
- 365              		.loc 1 236 0
- 366 0270 7B68     		ldr	r3, [r7, #4]
- 367 0272 4FF00002 		mov	r2, #0
- 368 0276 DA71     		strb	r2, [r3, #7]
+ 364              		.loc 1 236 0
+ 365 0270 7B68     		ldr	r3, [r7, #4]
+ 366 0272 4FF00002 		mov	r2, #0
+ 367 0276 DA71     		strb	r2, [r3, #7]
  237:../src/stm32f30x_gpio.c **** }
- 369              		.loc 1 237 0
- 370 0278 07F10C07 		add	r7, r7, #12
- 371 027c BD46     		mov	sp, r7
- 372 027e 80BC     		pop	{r7}
- 373 0280 7047     		bx	lr
- 374              		.cfi_endproc
- 375              	.LFE113:
- 377 0282 00BF     		.align	2
- 378              		.global	GPIO_PinLockConfig
- 379              		.thumb
- 380              		.thumb_func
- 382              	GPIO_PinLockConfig:
- 383              	.LFB114:
+ 368              		.loc 1 237 0
+ 369 0278 07F10C07 		add	r7, r7, #12
+ 370 027c BD46     		mov	sp, r7
+ 371 027e 80BC     		pop	{r7}
+ 372 0280 7047     		bx	lr
+ 373              		.cfi_endproc
+ 374              	.LFE113:
+ 376 0282 00BF     		.align	2
+ 377              		.global	GPIO_PinLockConfig
+ 378              		.thumb
+ 379              		.thumb_func
+ 381              	GPIO_PinLockConfig:
+ 382              	.LFB114:
  238:../src/stm32f30x_gpio.c **** 
  239:../src/stm32f30x_gpio.c **** /**
  240:../src/stm32f30x_gpio.c ****   * @brief  Locks GPIO Pins configuration registers.
@@ -627,83 +626,83 @@
  249:../src/stm32f30x_gpio.c ****   */
  250:../src/stm32f30x_gpio.c **** void GPIO_PinLockConfig(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
  251:../src/stm32f30x_gpio.c **** {
- 384              		.loc 1 251 0
- 385              		.cfi_startproc
- 386              		@ args = 0, pretend = 0, frame = 16
- 387              		@ frame_needed = 1, uses_anonymous_args = 0
- 388              		@ link register save eliminated.
- 389 0284 80B4     		push	{r7}
- 390              	.LCFI9:
- 391              		.cfi_def_cfa_offset 4
- 392              		.cfi_offset 7, -4
- 393 0286 85B0     		sub	sp, sp, #20
- 394              	.LCFI10:
- 395              		.cfi_def_cfa_offset 24
- 396 0288 00AF     		add	r7, sp, #0
- 397              	.LCFI11:
- 398              		.cfi_def_cfa_register 7
- 399 028a 7860     		str	r0, [r7, #4]
- 400 028c 0B46     		mov	r3, r1
- 401 028e 7B80     		strh	r3, [r7, #2]	@ movhi
+ 383              		.loc 1 251 0
+ 384              		.cfi_startproc
+ 385              		@ args = 0, pretend = 0, frame = 16
+ 386              		@ frame_needed = 1, uses_anonymous_args = 0
+ 387              		@ link register save eliminated.
+ 388 0284 80B4     		push	{r7}
+ 389              	.LCFI9:
+ 390              		.cfi_def_cfa_offset 4
+ 391              		.cfi_offset 7, -4
+ 392 0286 85B0     		sub	sp, sp, #20
+ 393              	.LCFI10:
+ 394              		.cfi_def_cfa_offset 24
+ 395 0288 00AF     		add	r7, sp, #0
+ 396              	.LCFI11:
+ 397              		.cfi_def_cfa_register 7
+ 398 028a 7860     		str	r0, [r7, #4]
+ 399 028c 0B46     		mov	r3, r1
+ 400 028e 7B80     		strh	r3, [r7, #2]	@ movhi
  252:../src/stm32f30x_gpio.c ****   uint32_t tmp = 0x00010000;
- 402              		.loc 1 252 0
- 403 0290 4FF48033 		mov	r3, #65536
- 404 0294 FB60     		str	r3, [r7, #12]
+ 401              		.loc 1 252 0
+ 402 0290 4FF48033 		mov	r3, #65536
+ 403 0294 FB60     		str	r3, [r7, #12]
  253:../src/stm32f30x_gpio.c ****   
  254:../src/stm32f30x_gpio.c ****   /* Check the parameters */
  255:../src/stm32f30x_gpio.c ****   assert_param(IS_GPIO_LIST_PERIPH(GPIOx));
  256:../src/stm32f30x_gpio.c ****   assert_param(IS_GPIO_PIN(GPIO_Pin));
  257:../src/stm32f30x_gpio.c ****   
  258:../src/stm32f30x_gpio.c ****   tmp |= GPIO_Pin;
- 405              		.loc 1 258 0
- 406 0296 7B88     		ldrh	r3, [r7, #2]
- 407 0298 FA68     		ldr	r2, [r7, #12]
- 408 029a 1343     		orrs	r3, r3, r2
- 409 029c FB60     		str	r3, [r7, #12]
+ 404              		.loc 1 258 0
+ 405 0296 7B88     		ldrh	r3, [r7, #2]
+ 406 0298 FA68     		ldr	r2, [r7, #12]
+ 407 029a 1343     		orrs	r3, r3, r2
+ 408 029c FB60     		str	r3, [r7, #12]
  259:../src/stm32f30x_gpio.c ****   /* Set LCKK bit */
  260:../src/stm32f30x_gpio.c ****   GPIOx->LCKR = tmp;
- 410              		.loc 1 260 0
- 411 029e 7B68     		ldr	r3, [r7, #4]
- 412 02a0 FA68     		ldr	r2, [r7, #12]
- 413 02a2 DA61     		str	r2, [r3, #28]
+ 409              		.loc 1 260 0
+ 410 029e 7B68     		ldr	r3, [r7, #4]
+ 411 02a0 FA68     		ldr	r2, [r7, #12]
+ 412 02a2 DA61     		str	r2, [r3, #28]
  261:../src/stm32f30x_gpio.c ****   /* Reset LCKK bit */
  262:../src/stm32f30x_gpio.c ****   GPIOx->LCKR =  GPIO_Pin;
- 414              		.loc 1 262 0
- 415 02a4 7A88     		ldrh	r2, [r7, #2]
- 416 02a6 7B68     		ldr	r3, [r7, #4]
- 417 02a8 DA61     		str	r2, [r3, #28]
+ 413              		.loc 1 262 0
+ 414 02a4 7A88     		ldrh	r2, [r7, #2]
+ 415 02a6 7B68     		ldr	r3, [r7, #4]
+ 416 02a8 DA61     		str	r2, [r3, #28]
  263:../src/stm32f30x_gpio.c ****   /* Set LCKK bit */
  264:../src/stm32f30x_gpio.c ****   GPIOx->LCKR = tmp;
- 418              		.loc 1 264 0
- 419 02aa 7B68     		ldr	r3, [r7, #4]
- 420 02ac FA68     		ldr	r2, [r7, #12]
- 421 02ae DA61     		str	r2, [r3, #28]
+ 417              		.loc 1 264 0
+ 418 02aa 7B68     		ldr	r3, [r7, #4]
+ 419 02ac FA68     		ldr	r2, [r7, #12]
+ 420 02ae DA61     		str	r2, [r3, #28]
  265:../src/stm32f30x_gpio.c ****   /* Read LCKK bit */
  266:../src/stm32f30x_gpio.c ****   tmp = GPIOx->LCKR;
- 422              		.loc 1 266 0
- 423 02b0 7B68     		ldr	r3, [r7, #4]
- 424 02b2 DB69     		ldr	r3, [r3, #28]
- 425 02b4 FB60     		str	r3, [r7, #12]
+ 421              		.loc 1 266 0
+ 422 02b0 7B68     		ldr	r3, [r7, #4]
+ 423 02b2 DB69     		ldr	r3, [r3, #28]
+ 424 02b4 FB60     		str	r3, [r7, #12]
  267:../src/stm32f30x_gpio.c ****   /* Read LCKK bit */
  268:../src/stm32f30x_gpio.c ****   tmp = GPIOx->LCKR;
- 426              		.loc 1 268 0
- 427 02b6 7B68     		ldr	r3, [r7, #4]
- 428 02b8 DB69     		ldr	r3, [r3, #28]
- 429 02ba FB60     		str	r3, [r7, #12]
+ 425              		.loc 1 268 0
+ 426 02b6 7B68     		ldr	r3, [r7, #4]
+ 427 02b8 DB69     		ldr	r3, [r3, #28]
+ 428 02ba FB60     		str	r3, [r7, #12]
  269:../src/stm32f30x_gpio.c **** }
- 430              		.loc 1 269 0
- 431 02bc 07F11407 		add	r7, r7, #20
- 432 02c0 BD46     		mov	sp, r7
- 433 02c2 80BC     		pop	{r7}
- 434 02c4 7047     		bx	lr
- 435              		.cfi_endproc
- 436              	.LFE114:
- 438 02c6 00BF     		.align	2
- 439              		.global	GPIO_ReadInputDataBit
- 440              		.thumb
- 441              		.thumb_func
- 443              	GPIO_ReadInputDataBit:
- 444              	.LFB115:
+ 429              		.loc 1 269 0
+ 430 02bc 07F11407 		add	r7, r7, #20
+ 431 02c0 BD46     		mov	sp, r7
+ 432 02c2 80BC     		pop	{r7}
+ 433 02c4 7047     		bx	lr
+ 434              		.cfi_endproc
+ 435              	.LFE114:
+ 437 02c6 00BF     		.align	2
+ 438              		.global	GPIO_ReadInputDataBit
+ 439              		.thumb
+ 440              		.thumb_func
+ 442              	GPIO_ReadInputDataBit:
+ 443              	.LFB115:
  270:../src/stm32f30x_gpio.c **** 
  271:../src/stm32f30x_gpio.c **** /**
  272:../src/stm32f30x_gpio.c ****   * @}
@@ -732,77 +731,77 @@
  295:../src/stm32f30x_gpio.c ****   */
  296:../src/stm32f30x_gpio.c **** uint8_t GPIO_ReadInputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
  297:../src/stm32f30x_gpio.c **** {
- 445              		.loc 1 297 0
- 446              		.cfi_startproc
- 447              		@ args = 0, pretend = 0, frame = 16
- 448              		@ frame_needed = 1, uses_anonymous_args = 0
- 449              		@ link register save eliminated.
- 450 02c8 80B4     		push	{r7}
- 451              	.LCFI12:
- 452              		.cfi_def_cfa_offset 4
- 453              		.cfi_offset 7, -4
- 454 02ca 85B0     		sub	sp, sp, #20
- 455              	.LCFI13:
- 456              		.cfi_def_cfa_offset 24
- 457 02cc 00AF     		add	r7, sp, #0
- 458              	.LCFI14:
- 459              		.cfi_def_cfa_register 7
- 460 02ce 7860     		str	r0, [r7, #4]
- 461 02d0 0B46     		mov	r3, r1
- 462 02d2 7B80     		strh	r3, [r7, #2]	@ movhi
+ 444              		.loc 1 297 0
+ 445              		.cfi_startproc
+ 446              		@ args = 0, pretend = 0, frame = 16
+ 447              		@ frame_needed = 1, uses_anonymous_args = 0
+ 448              		@ link register save eliminated.
+ 449 02c8 80B4     		push	{r7}
+ 450              	.LCFI12:
+ 451              		.cfi_def_cfa_offset 4
+ 452              		.cfi_offset 7, -4
+ 453 02ca 85B0     		sub	sp, sp, #20
+ 454              	.LCFI13:
+ 455              		.cfi_def_cfa_offset 24
+ 456 02cc 00AF     		add	r7, sp, #0
+ 457              	.LCFI14:
+ 458              		.cfi_def_cfa_register 7
+ 459 02ce 7860     		str	r0, [r7, #4]
+ 460 02d0 0B46     		mov	r3, r1
+ 461 02d2 7B80     		strh	r3, [r7, #2]	@ movhi
  298:../src/stm32f30x_gpio.c ****   uint8_t bitstatus = 0x00;
- 463              		.loc 1 298 0
- 464 02d4 4FF00003 		mov	r3, #0
- 465 02d8 FB73     		strb	r3, [r7, #15]
+ 462              		.loc 1 298 0
+ 463 02d4 4FF00003 		mov	r3, #0
+ 464 02d8 FB73     		strb	r3, [r7, #15]
  299:../src/stm32f30x_gpio.c ****   
  300:../src/stm32f30x_gpio.c ****   /* Check the parameters */
  301:../src/stm32f30x_gpio.c ****   assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
  302:../src/stm32f30x_gpio.c ****   assert_param(IS_GET_GPIO_PIN(GPIO_Pin));
  303:../src/stm32f30x_gpio.c **** 
  304:../src/stm32f30x_gpio.c ****   if ((GPIOx->IDR & GPIO_Pin) != (uint32_t)Bit_RESET)
- 466              		.loc 1 304 0
- 467 02da 7B68     		ldr	r3, [r7, #4]
- 468 02dc 1B8A     		ldrh	r3, [r3, #16]	@ movhi
- 469 02de 9AB2     		uxth	r2, r3
- 470 02e0 7B88     		ldrh	r3, [r7, #2]	@ movhi
- 471 02e2 1340     		ands	r3, r3, r2
- 472 02e4 9BB2     		uxth	r3, r3
- 473 02e6 002B     		cmp	r3, #0
- 474 02e8 03D0     		beq	.L17
+ 465              		.loc 1 304 0
+ 466 02da 7B68     		ldr	r3, [r7, #4]
+ 467 02dc 1B8A     		ldrh	r3, [r3, #16]	@ movhi
+ 468 02de 9AB2     		uxth	r2, r3
+ 469 02e0 7B88     		ldrh	r3, [r7, #2]	@ movhi
+ 470 02e2 1340     		ands	r3, r3, r2
+ 471 02e4 9BB2     		uxth	r3, r3
+ 472 02e6 002B     		cmp	r3, #0
+ 473 02e8 03D0     		beq	.L17
  305:../src/stm32f30x_gpio.c ****   {
  306:../src/stm32f30x_gpio.c ****     bitstatus = (uint8_t)Bit_SET;
- 475              		.loc 1 306 0
- 476 02ea 4FF00103 		mov	r3, #1
- 477 02ee FB73     		strb	r3, [r7, #15]
- 478 02f0 02E0     		b	.L18
- 479              	.L17:
+ 474              		.loc 1 306 0
+ 475 02ea 4FF00103 		mov	r3, #1
+ 476 02ee FB73     		strb	r3, [r7, #15]
+ 477 02f0 02E0     		b	.L18
+ 478              	.L17:
  307:../src/stm32f30x_gpio.c ****   }
  308:../src/stm32f30x_gpio.c ****   else
  309:../src/stm32f30x_gpio.c ****   {
  310:../src/stm32f30x_gpio.c ****     bitstatus = (uint8_t)Bit_RESET;
- 480              		.loc 1 310 0
- 481 02f2 4FF00003 		mov	r3, #0
- 482 02f6 FB73     		strb	r3, [r7, #15]
- 483              	.L18:
+ 479              		.loc 1 310 0
+ 480 02f2 4FF00003 		mov	r3, #0
+ 481 02f6 FB73     		strb	r3, [r7, #15]
+ 482              	.L18:
  311:../src/stm32f30x_gpio.c ****   }
  312:../src/stm32f30x_gpio.c ****   return bitstatus;
- 484              		.loc 1 312 0
- 485 02f8 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 483              		.loc 1 312 0
+ 484 02f8 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
  313:../src/stm32f30x_gpio.c **** }
- 486              		.loc 1 313 0
- 487 02fa 1846     		mov	r0, r3
- 488 02fc 07F11407 		add	r7, r7, #20
- 489 0300 BD46     		mov	sp, r7
- 490 0302 80BC     		pop	{r7}
- 491 0304 7047     		bx	lr
- 492              		.cfi_endproc
- 493              	.LFE115:
- 495 0306 00BF     		.align	2
- 496              		.global	GPIO_ReadInputData
- 497              		.thumb
- 498              		.thumb_func
- 500              	GPIO_ReadInputData:
- 501              	.LFB116:
+ 485              		.loc 1 313 0
+ 486 02fa 1846     		mov	r0, r3
+ 487 02fc 07F11407 		add	r7, r7, #20
+ 488 0300 BD46     		mov	sp, r7
+ 489 0302 80BC     		pop	{r7}
+ 490 0304 7047     		bx	lr
+ 491              		.cfi_endproc
+ 492              	.LFE115:
+ 494 0306 00BF     		.align	2
+ 495              		.global	GPIO_ReadInputData
+ 496              		.thumb
+ 497              		.thumb_func
+ 499              	GPIO_ReadInputData:
+ 500              	.LFB116:
  314:../src/stm32f30x_gpio.c **** 
  315:../src/stm32f30x_gpio.c **** /**
  316:../src/stm32f30x_gpio.c ****   * @brief  Reads the specified input port pin.
@@ -811,45 +810,45 @@
  319:../src/stm32f30x_gpio.c ****   */
  320:../src/stm32f30x_gpio.c **** uint16_t GPIO_ReadInputData(GPIO_TypeDef* GPIOx)
  321:../src/stm32f30x_gpio.c **** {
- 502              		.loc 1 321 0
- 503              		.cfi_startproc
- 504              		@ args = 0, pretend = 0, frame = 8
- 505              		@ frame_needed = 1, uses_anonymous_args = 0
- 506              		@ link register save eliminated.
- 507 0308 80B4     		push	{r7}
- 508              	.LCFI15:
- 509              		.cfi_def_cfa_offset 4
- 510              		.cfi_offset 7, -4
- 511 030a 83B0     		sub	sp, sp, #12
- 512              	.LCFI16:
- 513              		.cfi_def_cfa_offset 16
- 514 030c 00AF     		add	r7, sp, #0
- 515              	.LCFI17:
- 516              		.cfi_def_cfa_register 7
- 517 030e 7860     		str	r0, [r7, #4]
+ 501              		.loc 1 321 0
+ 502              		.cfi_startproc
+ 503              		@ args = 0, pretend = 0, frame = 8
+ 504              		@ frame_needed = 1, uses_anonymous_args = 0
+ 505              		@ link register save eliminated.
+ 506 0308 80B4     		push	{r7}
+ 507              	.LCFI15:
+ 508              		.cfi_def_cfa_offset 4
+ 509              		.cfi_offset 7, -4
+ 510 030a 83B0     		sub	sp, sp, #12
+ 511              	.LCFI16:
+ 512              		.cfi_def_cfa_offset 16
+ 513 030c 00AF     		add	r7, sp, #0
+ 514              	.LCFI17:
+ 515              		.cfi_def_cfa_register 7
+ 516 030e 7860     		str	r0, [r7, #4]
  322:../src/stm32f30x_gpio.c ****   /* Check the parameters */
  323:../src/stm32f30x_gpio.c ****   assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
  324:../src/stm32f30x_gpio.c **** 
  325:../src/stm32f30x_gpio.c ****   return ((uint16_t)GPIOx->IDR);
- 518              		.loc 1 325 0
- 519 0310 7B68     		ldr	r3, [r7, #4]
- 520 0312 1B8A     		ldrh	r3, [r3, #16]	@ movhi
- 521 0314 9BB2     		uxth	r3, r3
+ 517              		.loc 1 325 0
+ 518 0310 7B68     		ldr	r3, [r7, #4]
+ 519 0312 1B8A     		ldrh	r3, [r3, #16]	@ movhi
+ 520 0314 9BB2     		uxth	r3, r3
  326:../src/stm32f30x_gpio.c **** }
- 522              		.loc 1 326 0
- 523 0316 1846     		mov	r0, r3
- 524 0318 07F10C07 		add	r7, r7, #12
- 525 031c BD46     		mov	sp, r7
- 526 031e 80BC     		pop	{r7}
- 527 0320 7047     		bx	lr
- 528              		.cfi_endproc
- 529              	.LFE116:
- 531 0322 00BF     		.align	2
- 532              		.global	GPIO_ReadOutputDataBit
- 533              		.thumb
- 534              		.thumb_func
- 536              	GPIO_ReadOutputDataBit:
- 537              	.LFB117:
+ 521              		.loc 1 326 0
+ 522 0316 1846     		mov	r0, r3
+ 523 0318 07F10C07 		add	r7, r7, #12
+ 524 031c BD46     		mov	sp, r7
+ 525 031e 80BC     		pop	{r7}
+ 526 0320 7047     		bx	lr
+ 527              		.cfi_endproc
+ 528              	.LFE116:
+ 530 0322 00BF     		.align	2
+ 531              		.global	GPIO_ReadOutputDataBit
+ 532              		.thumb
+ 533              		.thumb_func
+ 535              	GPIO_ReadOutputDataBit:
+ 536              	.LFB117:
  327:../src/stm32f30x_gpio.c **** 
  328:../src/stm32f30x_gpio.c **** /**
  329:../src/stm32f30x_gpio.c ****   * @brief  Reads the specified output data port bit.
@@ -862,77 +861,77 @@
  336:../src/stm32f30x_gpio.c ****   */
  337:../src/stm32f30x_gpio.c **** uint8_t GPIO_ReadOutputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
  338:../src/stm32f30x_gpio.c **** {
- 538              		.loc 1 338 0
- 539              		.cfi_startproc
- 540              		@ args = 0, pretend = 0, frame = 16
- 541              		@ frame_needed = 1, uses_anonymous_args = 0
- 542              		@ link register save eliminated.
- 543 0324 80B4     		push	{r7}
- 544              	.LCFI18:
- 545              		.cfi_def_cfa_offset 4
- 546              		.cfi_offset 7, -4
- 547 0326 85B0     		sub	sp, sp, #20
- 548              	.LCFI19:
- 549              		.cfi_def_cfa_offset 24
- 550 0328 00AF     		add	r7, sp, #0
- 551              	.LCFI20:
- 552              		.cfi_def_cfa_register 7
- 553 032a 7860     		str	r0, [r7, #4]
- 554 032c 0B46     		mov	r3, r1
- 555 032e 7B80     		strh	r3, [r7, #2]	@ movhi
+ 537              		.loc 1 338 0
+ 538              		.cfi_startproc
+ 539              		@ args = 0, pretend = 0, frame = 16
+ 540              		@ frame_needed = 1, uses_anonymous_args = 0
+ 541              		@ link register save eliminated.
+ 542 0324 80B4     		push	{r7}
+ 543              	.LCFI18:
+ 544              		.cfi_def_cfa_offset 4
+ 545              		.cfi_offset 7, -4
+ 546 0326 85B0     		sub	sp, sp, #20
+ 547              	.LCFI19:
+ 548              		.cfi_def_cfa_offset 24
+ 549 0328 00AF     		add	r7, sp, #0
+ 550              	.LCFI20:
+ 551              		.cfi_def_cfa_register 7
+ 552 032a 7860     		str	r0, [r7, #4]
+ 553 032c 0B46     		mov	r3, r1
+ 554 032e 7B80     		strh	r3, [r7, #2]	@ movhi
  339:../src/stm32f30x_gpio.c ****   uint8_t bitstatus = 0x00;
- 556              		.loc 1 339 0
- 557 0330 4FF00003 		mov	r3, #0
- 558 0334 FB73     		strb	r3, [r7, #15]
+ 555              		.loc 1 339 0
+ 556 0330 4FF00003 		mov	r3, #0
+ 557 0334 FB73     		strb	r3, [r7, #15]
  340:../src/stm32f30x_gpio.c **** 
  341:../src/stm32f30x_gpio.c ****   /* Check the parameters */
  342:../src/stm32f30x_gpio.c ****   assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
  343:../src/stm32f30x_gpio.c ****   assert_param(IS_GET_GPIO_PIN(GPIO_Pin));
  344:../src/stm32f30x_gpio.c ****   
  345:../src/stm32f30x_gpio.c ****   if ((GPIOx->ODR & GPIO_Pin) != (uint32_t)Bit_RESET)
- 559              		.loc 1 345 0
- 560 0336 7B68     		ldr	r3, [r7, #4]
- 561 0338 9B8A     		ldrh	r3, [r3, #20]	@ movhi
- 562 033a 9AB2     		uxth	r2, r3
- 563 033c 7B88     		ldrh	r3, [r7, #2]	@ movhi
- 564 033e 1340     		ands	r3, r3, r2
- 565 0340 9BB2     		uxth	r3, r3
- 566 0342 002B     		cmp	r3, #0
- 567 0344 03D0     		beq	.L23
+ 558              		.loc 1 345 0
+ 559 0336 7B68     		ldr	r3, [r7, #4]
+ 560 0338 9B8A     		ldrh	r3, [r3, #20]	@ movhi
+ 561 033a 9AB2     		uxth	r2, r3
+ 562 033c 7B88     		ldrh	r3, [r7, #2]	@ movhi
+ 563 033e 1340     		ands	r3, r3, r2
+ 564 0340 9BB2     		uxth	r3, r3
+ 565 0342 002B     		cmp	r3, #0
+ 566 0344 03D0     		beq	.L23
  346:../src/stm32f30x_gpio.c ****   {
  347:../src/stm32f30x_gpio.c ****     bitstatus = (uint8_t)Bit_SET;
- 568              		.loc 1 347 0
- 569 0346 4FF00103 		mov	r3, #1
- 570 034a FB73     		strb	r3, [r7, #15]
- 571 034c 02E0     		b	.L24
- 572              	.L23:
+ 567              		.loc 1 347 0
+ 568 0346 4FF00103 		mov	r3, #1
+ 569 034a FB73     		strb	r3, [r7, #15]
+ 570 034c 02E0     		b	.L24
+ 571              	.L23:
  348:../src/stm32f30x_gpio.c ****   }
  349:../src/stm32f30x_gpio.c ****   else
  350:../src/stm32f30x_gpio.c ****   {
  351:../src/stm32f30x_gpio.c ****     bitstatus = (uint8_t)Bit_RESET;
- 573              		.loc 1 351 0
- 574 034e 4FF00003 		mov	r3, #0
- 575 0352 FB73     		strb	r3, [r7, #15]
- 576              	.L24:
+ 572              		.loc 1 351 0
+ 573 034e 4FF00003 		mov	r3, #0
+ 574 0352 FB73     		strb	r3, [r7, #15]
+ 575              	.L24:
  352:../src/stm32f30x_gpio.c ****   }
  353:../src/stm32f30x_gpio.c ****   return bitstatus;
- 577              		.loc 1 353 0
- 578 0354 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 576              		.loc 1 353 0
+ 577 0354 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
  354:../src/stm32f30x_gpio.c **** }
- 579              		.loc 1 354 0
- 580 0356 1846     		mov	r0, r3
- 581 0358 07F11407 		add	r7, r7, #20
- 582 035c BD46     		mov	sp, r7
- 583 035e 80BC     		pop	{r7}
- 584 0360 7047     		bx	lr
- 585              		.cfi_endproc
- 586              	.LFE117:
- 588 0362 00BF     		.align	2
- 589              		.global	GPIO_ReadOutputData
- 590              		.thumb
- 591              		.thumb_func
- 593              	GPIO_ReadOutputData:
- 594              	.LFB118:
+ 578              		.loc 1 354 0
+ 579 0356 1846     		mov	r0, r3
+ 580 0358 07F11407 		add	r7, r7, #20
+ 581 035c BD46     		mov	sp, r7
+ 582 035e 80BC     		pop	{r7}
+ 583 0360 7047     		bx	lr
+ 584              		.cfi_endproc
+ 585              	.LFE117:
+ 587 0362 00BF     		.align	2
+ 588              		.global	GPIO_ReadOutputData
+ 589              		.thumb
+ 590              		.thumb_func
+ 592              	GPIO_ReadOutputData:
+ 593              	.LFB118:
  355:../src/stm32f30x_gpio.c **** 
  356:../src/stm32f30x_gpio.c **** /**
  357:../src/stm32f30x_gpio.c ****   * @brief  Reads the specified GPIO output data port.
@@ -941,45 +940,45 @@
  360:../src/stm32f30x_gpio.c ****   */
  361:../src/stm32f30x_gpio.c **** uint16_t GPIO_ReadOutputData(GPIO_TypeDef* GPIOx)
  362:../src/stm32f30x_gpio.c **** {
- 595              		.loc 1 362 0
- 596              		.cfi_startproc
- 597              		@ args = 0, pretend = 0, frame = 8
- 598              		@ frame_needed = 1, uses_anonymous_args = 0
- 599              		@ link register save eliminated.
- 600 0364 80B4     		push	{r7}
- 601              	.LCFI21:
- 602              		.cfi_def_cfa_offset 4
- 603              		.cfi_offset 7, -4
- 604 0366 83B0     		sub	sp, sp, #12
- 605              	.LCFI22:
- 606              		.cfi_def_cfa_offset 16
- 607 0368 00AF     		add	r7, sp, #0
- 608              	.LCFI23:
- 609              		.cfi_def_cfa_register 7
- 610 036a 7860     		str	r0, [r7, #4]
+ 594              		.loc 1 362 0
+ 595              		.cfi_startproc
+ 596              		@ args = 0, pretend = 0, frame = 8
+ 597              		@ frame_needed = 1, uses_anonymous_args = 0
+ 598              		@ link register save eliminated.
+ 599 0364 80B4     		push	{r7}
+ 600              	.LCFI21:
+ 601              		.cfi_def_cfa_offset 4
+ 602              		.cfi_offset 7, -4
+ 603 0366 83B0     		sub	sp, sp, #12
+ 604              	.LCFI22:
+ 605              		.cfi_def_cfa_offset 16
+ 606 0368 00AF     		add	r7, sp, #0
+ 607              	.LCFI23:
+ 608              		.cfi_def_cfa_register 7
+ 609 036a 7860     		str	r0, [r7, #4]
  363:../src/stm32f30x_gpio.c ****   /* Check the parameters */
  364:../src/stm32f30x_gpio.c ****   assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
  365:../src/stm32f30x_gpio.c ****   
  366:../src/stm32f30x_gpio.c ****   return ((uint16_t)GPIOx->ODR);
- 611              		.loc 1 366 0
- 612 036c 7B68     		ldr	r3, [r7, #4]
- 613 036e 9B8A     		ldrh	r3, [r3, #20]	@ movhi
- 614 0370 9BB2     		uxth	r3, r3
+ 610              		.loc 1 366 0
+ 611 036c 7B68     		ldr	r3, [r7, #4]
+ 612 036e 9B8A     		ldrh	r3, [r3, #20]	@ movhi
+ 613 0370 9BB2     		uxth	r3, r3
  367:../src/stm32f30x_gpio.c **** }
- 615              		.loc 1 367 0
- 616 0372 1846     		mov	r0, r3
- 617 0374 07F10C07 		add	r7, r7, #12
- 618 0378 BD46     		mov	sp, r7
- 619 037a 80BC     		pop	{r7}
- 620 037c 7047     		bx	lr
- 621              		.cfi_endproc
- 622              	.LFE118:
- 624 037e 00BF     		.align	2
- 625              		.global	GPIO_SetBits
- 626              		.thumb
- 627              		.thumb_func
- 629              	GPIO_SetBits:
- 630              	.LFB119:
+ 614              		.loc 1 367 0
+ 615 0372 1846     		mov	r0, r3
+ 616 0374 07F10C07 		add	r7, r7, #12
+ 617 0378 BD46     		mov	sp, r7
+ 618 037a 80BC     		pop	{r7}
+ 619 037c 7047     		bx	lr
+ 620              		.cfi_endproc
+ 621              	.LFE118:
+ 623 037e 00BF     		.align	2
+ 624              		.global	GPIO_SetBits
+ 625              		.thumb
+ 626              		.thumb_func
+ 628              	GPIO_SetBits:
+ 629              	.LFB119:
  368:../src/stm32f30x_gpio.c **** 
  369:../src/stm32f30x_gpio.c **** /**
  370:../src/stm32f30x_gpio.c ****   * @brief  Sets the selected data port bits.
@@ -992,47 +991,47 @@
  377:../src/stm32f30x_gpio.c ****   */
  378:../src/stm32f30x_gpio.c **** void GPIO_SetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
  379:../src/stm32f30x_gpio.c **** {
- 631              		.loc 1 379 0
- 632              		.cfi_startproc
- 633              		@ args = 0, pretend = 0, frame = 8
- 634              		@ frame_needed = 1, uses_anonymous_args = 0
- 635              		@ link register save eliminated.
- 636 0380 80B4     		push	{r7}
- 637              	.LCFI24:
- 638              		.cfi_def_cfa_offset 4
- 639              		.cfi_offset 7, -4
- 640 0382 83B0     		sub	sp, sp, #12
- 641              	.LCFI25:
- 642              		.cfi_def_cfa_offset 16
- 643 0384 00AF     		add	r7, sp, #0
- 644              	.LCFI26:
- 645              		.cfi_def_cfa_register 7
- 646 0386 7860     		str	r0, [r7, #4]
- 647 0388 0B46     		mov	r3, r1
- 648 038a 7B80     		strh	r3, [r7, #2]	@ movhi
+ 630              		.loc 1 379 0
+ 631              		.cfi_startproc
+ 632              		@ args = 0, pretend = 0, frame = 8
+ 633              		@ frame_needed = 1, uses_anonymous_args = 0
+ 634              		@ link register save eliminated.
+ 635 0380 80B4     		push	{r7}
+ 636              	.LCFI24:
+ 637              		.cfi_def_cfa_offset 4
+ 638              		.cfi_offset 7, -4
+ 639 0382 83B0     		sub	sp, sp, #12
+ 640              	.LCFI25:
+ 641              		.cfi_def_cfa_offset 16
+ 642 0384 00AF     		add	r7, sp, #0
+ 643              	.LCFI26:
+ 644              		.cfi_def_cfa_register 7
+ 645 0386 7860     		str	r0, [r7, #4]
+ 646 0388 0B46     		mov	r3, r1
+ 647 038a 7B80     		strh	r3, [r7, #2]	@ movhi
  380:../src/stm32f30x_gpio.c ****   /* Check the parameters */
  381:../src/stm32f30x_gpio.c ****   assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
  382:../src/stm32f30x_gpio.c ****   assert_param(IS_GPIO_PIN(GPIO_Pin));
  383:../src/stm32f30x_gpio.c ****   
  384:../src/stm32f30x_gpio.c ****   GPIOx->BSRR = GPIO_Pin;
- 649              		.loc 1 384 0
- 650 038c 7A88     		ldrh	r2, [r7, #2]
- 651 038e 7B68     		ldr	r3, [r7, #4]
- 652 0390 9A61     		str	r2, [r3, #24]
+ 648              		.loc 1 384 0
+ 649 038c 7A88     		ldrh	r2, [r7, #2]
+ 650 038e 7B68     		ldr	r3, [r7, #4]
+ 651 0390 9A61     		str	r2, [r3, #24]
  385:../src/stm32f30x_gpio.c **** }
- 653              		.loc 1 385 0
- 654 0392 07F10C07 		add	r7, r7, #12
- 655 0396 BD46     		mov	sp, r7
- 656 0398 80BC     		pop	{r7}
- 657 039a 7047     		bx	lr
- 658              		.cfi_endproc
- 659              	.LFE119:
- 661              		.align	2
- 662              		.global	GPIO_ResetBits
- 663              		.thumb
- 664              		.thumb_func
- 666              	GPIO_ResetBits:
- 667              	.LFB120:
+ 652              		.loc 1 385 0
+ 653 0392 07F10C07 		add	r7, r7, #12
+ 654 0396 BD46     		mov	sp, r7
+ 655 0398 80BC     		pop	{r7}
+ 656 039a 7047     		bx	lr
+ 657              		.cfi_endproc
+ 658              	.LFE119:
+ 660              		.align	2
+ 661              		.global	GPIO_ResetBits
+ 662              		.thumb
+ 663              		.thumb_func
+ 665              	GPIO_ResetBits:
+ 666              	.LFB120:
  386:../src/stm32f30x_gpio.c **** 
  387:../src/stm32f30x_gpio.c **** /**
  388:../src/stm32f30x_gpio.c ****   * @brief  Clears the selected data port bits.
@@ -1045,47 +1044,47 @@
  395:../src/stm32f30x_gpio.c ****   */
  396:../src/stm32f30x_gpio.c **** void GPIO_ResetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
  397:../src/stm32f30x_gpio.c **** {
- 668              		.loc 1 397 0
- 669              		.cfi_startproc
- 670              		@ args = 0, pretend = 0, frame = 8
- 671              		@ frame_needed = 1, uses_anonymous_args = 0
- 672              		@ link register save eliminated.
- 673 039c 80B4     		push	{r7}
- 674              	.LCFI27:
- 675              		.cfi_def_cfa_offset 4
- 676              		.cfi_offset 7, -4
- 677 039e 83B0     		sub	sp, sp, #12
- 678              	.LCFI28:
- 679              		.cfi_def_cfa_offset 16
- 680 03a0 00AF     		add	r7, sp, #0
- 681              	.LCFI29:
- 682              		.cfi_def_cfa_register 7
- 683 03a2 7860     		str	r0, [r7, #4]
- 684 03a4 0B46     		mov	r3, r1
- 685 03a6 7B80     		strh	r3, [r7, #2]	@ movhi
+ 667              		.loc 1 397 0
+ 668              		.cfi_startproc
+ 669              		@ args = 0, pretend = 0, frame = 8
+ 670              		@ frame_needed = 1, uses_anonymous_args = 0
+ 671              		@ link register save eliminated.
+ 672 039c 80B4     		push	{r7}
+ 673              	.LCFI27:
+ 674              		.cfi_def_cfa_offset 4
+ 675              		.cfi_offset 7, -4
+ 676 039e 83B0     		sub	sp, sp, #12
+ 677              	.LCFI28:
+ 678              		.cfi_def_cfa_offset 16
+ 679 03a0 00AF     		add	r7, sp, #0
+ 680              	.LCFI29:
+ 681              		.cfi_def_cfa_register 7
+ 682 03a2 7860     		str	r0, [r7, #4]
+ 683 03a4 0B46     		mov	r3, r1
+ 684 03a6 7B80     		strh	r3, [r7, #2]	@ movhi
  398:../src/stm32f30x_gpio.c ****   /* Check the parameters */
  399:../src/stm32f30x_gpio.c ****   assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
  400:../src/stm32f30x_gpio.c ****   assert_param(IS_GPIO_PIN(GPIO_Pin));
  401:../src/stm32f30x_gpio.c ****   
  402:../src/stm32f30x_gpio.c ****   GPIOx->BRR = GPIO_Pin;
- 686              		.loc 1 402 0
- 687 03a8 7B68     		ldr	r3, [r7, #4]
- 688 03aa 7A88     		ldrh	r2, [r7, #2]	@ movhi
- 689 03ac 1A85     		strh	r2, [r3, #40]	@ movhi
+ 685              		.loc 1 402 0
+ 686 03a8 7B68     		ldr	r3, [r7, #4]
+ 687 03aa 7A88     		ldrh	r2, [r7, #2]	@ movhi
+ 688 03ac 1A85     		strh	r2, [r3, #40]	@ movhi
  403:../src/stm32f30x_gpio.c **** }
- 690              		.loc 1 403 0
- 691 03ae 07F10C07 		add	r7, r7, #12
- 692 03b2 BD46     		mov	sp, r7
- 693 03b4 80BC     		pop	{r7}
- 694 03b6 7047     		bx	lr
- 695              		.cfi_endproc
- 696              	.LFE120:
- 698              		.align	2
- 699              		.global	GPIO_WriteBit
- 700              		.thumb
- 701              		.thumb_func
- 703              	GPIO_WriteBit:
- 704              	.LFB121:
+ 689              		.loc 1 403 0
+ 690 03ae 07F10C07 		add	r7, r7, #12
+ 691 03b2 BD46     		mov	sp, r7
+ 692 03b4 80BC     		pop	{r7}
+ 693 03b6 7047     		bx	lr
+ 694              		.cfi_endproc
+ 695              	.LFE120:
+ 697              		.align	2
+ 698              		.global	GPIO_WriteBit
+ 699              		.thumb
+ 700              		.thumb_func
+ 702              	GPIO_WriteBit:
+ 703              	.LFB121:
  404:../src/stm32f30x_gpio.c **** 
  405:../src/stm32f30x_gpio.c **** /**
  406:../src/stm32f30x_gpio.c ****   * @brief  Sets or clears the selected data port bit.
@@ -1102,68 +1101,68 @@
  417:../src/stm32f30x_gpio.c ****   */
  418:../src/stm32f30x_gpio.c **** void GPIO_WriteBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, BitAction BitVal)
  419:../src/stm32f30x_gpio.c **** {
- 705              		.loc 1 419 0
- 706              		.cfi_startproc
- 707              		@ args = 0, pretend = 0, frame = 8
- 708              		@ frame_needed = 1, uses_anonymous_args = 0
- 709              		@ link register save eliminated.
- 710 03b8 80B4     		push	{r7}
- 711              	.LCFI30:
- 712              		.cfi_def_cfa_offset 4
- 713              		.cfi_offset 7, -4
- 714 03ba 83B0     		sub	sp, sp, #12
- 715              	.LCFI31:
- 716              		.cfi_def_cfa_offset 16
- 717 03bc 00AF     		add	r7, sp, #0
- 718              	.LCFI32:
- 719              		.cfi_def_cfa_register 7
- 720 03be 7860     		str	r0, [r7, #4]
- 721 03c0 1346     		mov	r3, r2
- 722 03c2 0A46     		mov	r2, r1	@ movhi
- 723 03c4 7A80     		strh	r2, [r7, #2]	@ movhi
- 724 03c6 7B70     		strb	r3, [r7, #1]
+ 704              		.loc 1 419 0
+ 705              		.cfi_startproc
+ 706              		@ args = 0, pretend = 0, frame = 8
+ 707              		@ frame_needed = 1, uses_anonymous_args = 0
+ 708              		@ link register save eliminated.
+ 709 03b8 80B4     		push	{r7}
+ 710              	.LCFI30:
+ 711              		.cfi_def_cfa_offset 4
+ 712              		.cfi_offset 7, -4
+ 713 03ba 83B0     		sub	sp, sp, #12
+ 714              	.LCFI31:
+ 715              		.cfi_def_cfa_offset 16
+ 716 03bc 00AF     		add	r7, sp, #0
+ 717              	.LCFI32:
+ 718              		.cfi_def_cfa_register 7
+ 719 03be 7860     		str	r0, [r7, #4]
+ 720 03c0 1346     		mov	r3, r2
+ 721 03c2 0A46     		mov	r2, r1	@ movhi
+ 722 03c4 7A80     		strh	r2, [r7, #2]	@ movhi
+ 723 03c6 7B70     		strb	r3, [r7, #1]
  420:../src/stm32f30x_gpio.c ****   /* Check the parameters */
  421:../src/stm32f30x_gpio.c ****   assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
  422:../src/stm32f30x_gpio.c ****   assert_param(IS_GET_GPIO_PIN(GPIO_Pin));
  423:../src/stm32f30x_gpio.c ****   assert_param(IS_GPIO_BIT_ACTION(BitVal));
  424:../src/stm32f30x_gpio.c ****   
  425:../src/stm32f30x_gpio.c ****   if (BitVal != Bit_RESET)
- 725              		.loc 1 425 0
- 726 03c8 7B78     		ldrb	r3, [r7, #1]	@ zero_extendqisi2
- 727 03ca 002B     		cmp	r3, #0
- 728 03cc 03D0     		beq	.L31
+ 724              		.loc 1 425 0
+ 725 03c8 7B78     		ldrb	r3, [r7, #1]	@ zero_extendqisi2
+ 726 03ca 002B     		cmp	r3, #0
+ 727 03cc 03D0     		beq	.L31
  426:../src/stm32f30x_gpio.c ****   {
  427:../src/stm32f30x_gpio.c ****     GPIOx->BSRR = GPIO_Pin;
- 729              		.loc 1 427 0
- 730 03ce 7A88     		ldrh	r2, [r7, #2]
- 731 03d0 7B68     		ldr	r3, [r7, #4]
- 732 03d2 9A61     		str	r2, [r3, #24]
- 733 03d4 02E0     		b	.L30
- 734              	.L31:
+ 728              		.loc 1 427 0
+ 729 03ce 7A88     		ldrh	r2, [r7, #2]
+ 730 03d0 7B68     		ldr	r3, [r7, #4]
+ 731 03d2 9A61     		str	r2, [r3, #24]
+ 732 03d4 02E0     		b	.L30
+ 733              	.L31:
  428:../src/stm32f30x_gpio.c ****   }
  429:../src/stm32f30x_gpio.c ****   else
  430:../src/stm32f30x_gpio.c ****   {
  431:../src/stm32f30x_gpio.c ****     GPIOx->BRR = GPIO_Pin ;
- 735              		.loc 1 431 0
- 736 03d6 7B68     		ldr	r3, [r7, #4]
- 737 03d8 7A88     		ldrh	r2, [r7, #2]	@ movhi
- 738 03da 1A85     		strh	r2, [r3, #40]	@ movhi
- 739              	.L30:
+ 734              		.loc 1 431 0
+ 735 03d6 7B68     		ldr	r3, [r7, #4]
+ 736 03d8 7A88     		ldrh	r2, [r7, #2]	@ movhi
+ 737 03da 1A85     		strh	r2, [r3, #40]	@ movhi
+ 738              	.L30:
  432:../src/stm32f30x_gpio.c ****   }
  433:../src/stm32f30x_gpio.c **** }
- 740              		.loc 1 433 0
- 741 03dc 07F10C07 		add	r7, r7, #12
- 742 03e0 BD46     		mov	sp, r7
- 743 03e2 80BC     		pop	{r7}
- 744 03e4 7047     		bx	lr
- 745              		.cfi_endproc
- 746              	.LFE121:
- 748 03e6 00BF     		.align	2
- 749              		.global	GPIO_Write
- 750              		.thumb
- 751              		.thumb_func
- 753              	GPIO_Write:
- 754              	.LFB122:
+ 739              		.loc 1 433 0
+ 740 03dc 07F10C07 		add	r7, r7, #12
+ 741 03e0 BD46     		mov	sp, r7
+ 742 03e2 80BC     		pop	{r7}
+ 743 03e4 7047     		bx	lr
+ 744              		.cfi_endproc
+ 745              	.LFE121:
+ 747 03e6 00BF     		.align	2
+ 748              		.global	GPIO_Write
+ 749              		.thumb
+ 750              		.thumb_func
+ 752              	GPIO_Write:
+ 753              	.LFB122:
  434:../src/stm32f30x_gpio.c **** 
  435:../src/stm32f30x_gpio.c **** /**
  436:../src/stm32f30x_gpio.c ****   * @brief  Writes data to the specified GPIO data port.
@@ -1174,46 +1173,46 @@
  441:../src/stm32f30x_gpio.c ****   */
  442:../src/stm32f30x_gpio.c **** void GPIO_Write(GPIO_TypeDef* GPIOx, uint16_t PortVal)
  443:../src/stm32f30x_gpio.c **** {
- 755              		.loc 1 443 0
- 756              		.cfi_startproc
- 757              		@ args = 0, pretend = 0, frame = 8
- 758              		@ frame_needed = 1, uses_anonymous_args = 0
- 759              		@ link register save eliminated.
- 760 03e8 80B4     		push	{r7}
- 761              	.LCFI33:
- 762              		.cfi_def_cfa_offset 4
- 763              		.cfi_offset 7, -4
- 764 03ea 83B0     		sub	sp, sp, #12
- 765              	.LCFI34:
- 766              		.cfi_def_cfa_offset 16
- 767 03ec 00AF     		add	r7, sp, #0
- 768              	.LCFI35:
- 769              		.cfi_def_cfa_register 7
- 770 03ee 7860     		str	r0, [r7, #4]
- 771 03f0 0B46     		mov	r3, r1
- 772 03f2 7B80     		strh	r3, [r7, #2]	@ movhi
+ 754              		.loc 1 443 0
+ 755              		.cfi_startproc
+ 756              		@ args = 0, pretend = 0, frame = 8
+ 757              		@ frame_needed = 1, uses_anonymous_args = 0
+ 758              		@ link register save eliminated.
+ 759 03e8 80B4     		push	{r7}
+ 760              	.LCFI33:
+ 761              		.cfi_def_cfa_offset 4
+ 762              		.cfi_offset 7, -4
+ 763 03ea 83B0     		sub	sp, sp, #12
+ 764              	.LCFI34:
+ 765              		.cfi_def_cfa_offset 16
+ 766 03ec 00AF     		add	r7, sp, #0
+ 767              	.LCFI35:
+ 768              		.cfi_def_cfa_register 7
+ 769 03ee 7860     		str	r0, [r7, #4]
+ 770 03f0 0B46     		mov	r3, r1
+ 771 03f2 7B80     		strh	r3, [r7, #2]	@ movhi
  444:../src/stm32f30x_gpio.c ****   /* Check the parameters */
  445:../src/stm32f30x_gpio.c ****   assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
  446:../src/stm32f30x_gpio.c ****   
  447:../src/stm32f30x_gpio.c ****   GPIOx->ODR = PortVal;
- 773              		.loc 1 447 0
- 774 03f4 7B68     		ldr	r3, [r7, #4]
- 775 03f6 7A88     		ldrh	r2, [r7, #2]	@ movhi
- 776 03f8 9A82     		strh	r2, [r3, #20]	@ movhi
+ 772              		.loc 1 447 0
+ 773 03f4 7B68     		ldr	r3, [r7, #4]
+ 774 03f6 7A88     		ldrh	r2, [r7, #2]	@ movhi
+ 775 03f8 9A82     		strh	r2, [r3, #20]	@ movhi
  448:../src/stm32f30x_gpio.c **** }
- 777              		.loc 1 448 0
- 778 03fa 07F10C07 		add	r7, r7, #12
- 779 03fe BD46     		mov	sp, r7
- 780 0400 80BC     		pop	{r7}
- 781 0402 7047     		bx	lr
- 782              		.cfi_endproc
- 783              	.LFE122:
- 785              		.align	2
- 786              		.global	GPIO_PinAFConfig
- 787              		.thumb
- 788              		.thumb_func
- 790              	GPIO_PinAFConfig:
- 791              	.LFB123:
+ 776              		.loc 1 448 0
+ 777 03fa 07F10C07 		add	r7, r7, #12
+ 778 03fe BD46     		mov	sp, r7
+ 779 0400 80BC     		pop	{r7}
+ 780 0402 7047     		bx	lr
+ 781              		.cfi_endproc
+ 782              	.LFE122:
+ 784              		.align	2
+ 785              		.global	GPIO_PinAFConfig
+ 786              		.thumb
+ 787              		.thumb_func
+ 789              	GPIO_PinAFConfig:
+ 790              	.LFB123:
  449:../src/stm32f30x_gpio.c **** 
  450:../src/stm32f30x_gpio.c **** /**
  451:../src/stm32f30x_gpio.c ****   * @}
@@ -1265,34 +1264,34 @@
  497:../src/stm32f30x_gpio.c ****   */
  498:../src/stm32f30x_gpio.c **** void GPIO_PinAFConfig(GPIO_TypeDef* GPIOx, uint16_t GPIO_PinSource, uint8_t GPIO_AF)
  499:../src/stm32f30x_gpio.c **** {
- 792              		.loc 1 499 0
- 793              		.cfi_startproc
- 794              		@ args = 0, pretend = 0, frame = 16
- 795              		@ frame_needed = 1, uses_anonymous_args = 0
- 796              		@ link register save eliminated.
- 797 0404 80B4     		push	{r7}
- 798              	.LCFI36:
- 799              		.cfi_def_cfa_offset 4
- 800              		.cfi_offset 7, -4
- 801 0406 85B0     		sub	sp, sp, #20
- 802              	.LCFI37:
- 803              		.cfi_def_cfa_offset 24
- 804 0408 00AF     		add	r7, sp, #0
- 805              	.LCFI38:
- 806              		.cfi_def_cfa_register 7
- 807 040a 7860     		str	r0, [r7, #4]
- 808 040c 1346     		mov	r3, r2
- 809 040e 0A46     		mov	r2, r1	@ movhi
- 810 0410 7A80     		strh	r2, [r7, #2]	@ movhi
- 811 0412 7B70     		strb	r3, [r7, #1]
+ 791              		.loc 1 499 0
+ 792              		.cfi_startproc
+ 793              		@ args = 0, pretend = 0, frame = 16
+ 794              		@ frame_needed = 1, uses_anonymous_args = 0
+ 795              		@ link register save eliminated.
+ 796 0404 80B4     		push	{r7}
+ 797              	.LCFI36:
+ 798              		.cfi_def_cfa_offset 4
+ 799              		.cfi_offset 7, -4
+ 800 0406 85B0     		sub	sp, sp, #20
+ 801              	.LCFI37:
+ 802              		.cfi_def_cfa_offset 24
+ 803 0408 00AF     		add	r7, sp, #0
+ 804              	.LCFI38:
+ 805              		.cfi_def_cfa_register 7
+ 806 040a 7860     		str	r0, [r7, #4]
+ 807 040c 1346     		mov	r3, r2
+ 808 040e 0A46     		mov	r2, r1	@ movhi
+ 809 0410 7A80     		strh	r2, [r7, #2]	@ movhi
+ 810 0412 7B70     		strb	r3, [r7, #1]
  500:../src/stm32f30x_gpio.c ****   uint32_t temp = 0x00;
- 812              		.loc 1 500 0
- 813 0414 4FF00003 		mov	r3, #0
- 814 0418 FB60     		str	r3, [r7, #12]
+ 811              		.loc 1 500 0
+ 812 0414 4FF00003 		mov	r3, #0
+ 813 0418 FB60     		str	r3, [r7, #12]
  501:../src/stm32f30x_gpio.c ****   uint32_t temp_2 = 0x00;
- 815              		.loc 1 501 0
- 816 041a 4FF00003 		mov	r3, #0
- 817 041e BB60     		str	r3, [r7, #8]
+ 814              		.loc 1 501 0
+ 815 041a 4FF00003 		mov	r3, #0
+ 816 041e BB60     		str	r3, [r7, #8]
  502:../src/stm32f30x_gpio.c ****   
  503:../src/stm32f30x_gpio.c ****   /* Check the parameters */
  504:../src/stm32f30x_gpio.c ****   assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
@@ -1300,89 +1299,89 @@
  506:../src/stm32f30x_gpio.c ****   assert_param(IS_GPIO_AF(GPIO_AF));
  507:../src/stm32f30x_gpio.c ****   
  508:../src/stm32f30x_gpio.c ****   temp = ((uint32_t)(GPIO_AF) << ((uint32_t)((uint32_t)GPIO_PinSource & (uint32_t)0x07) * 4));
- 818              		.loc 1 508 0
- 819 0420 7A78     		ldrb	r2, [r7, #1]	@ zero_extendqisi2
- 820 0422 7B88     		ldrh	r3, [r7, #2]
- 821 0424 03F00703 		and	r3, r3, #7
- 822 0428 4FEA8303 		lsl	r3, r3, #2
- 823 042c 02FA03F3 		lsl	r3, r2, r3
- 824 0430 FB60     		str	r3, [r7, #12]
+ 817              		.loc 1 508 0
+ 818 0420 7A78     		ldrb	r2, [r7, #1]	@ zero_extendqisi2
+ 819 0422 7B88     		ldrh	r3, [r7, #2]
+ 820 0424 03F00703 		and	r3, r3, #7
+ 821 0428 4FEA8303 		lsl	r3, r3, #2
+ 822 042c 02FA03F3 		lsl	r3, r2, r3
+ 823 0430 FB60     		str	r3, [r7, #12]
  509:../src/stm32f30x_gpio.c ****   GPIOx->AFR[GPIO_PinSource >> 0x03] &= ~((uint32_t)0xF << ((uint32_t)((uint32_t)GPIO_PinSource & (
- 825              		.loc 1 509 0
- 826 0432 7B88     		ldrh	r3, [r7, #2]
- 827 0434 4FEAD303 		lsr	r3, r3, #3
- 828 0438 9BB2     		uxth	r3, r3
- 829 043a 1A46     		mov	r2, r3
- 830 043c 7B88     		ldrh	r3, [r7, #2]
- 831 043e 4FEAD303 		lsr	r3, r3, #3
- 832 0442 9BB2     		uxth	r3, r3
- 833 0444 1946     		mov	r1, r3
- 834 0446 7B68     		ldr	r3, [r7, #4]
- 835 0448 01F10801 		add	r1, r1, #8
- 836 044c 53F82110 		ldr	r1, [r3, r1, lsl #2]
- 837 0450 7B88     		ldrh	r3, [r7, #2]
- 838 0452 03F00703 		and	r3, r3, #7
- 839 0456 4FEA8303 		lsl	r3, r3, #2
- 840 045a 4FF00F00 		mov	r0, #15
- 841 045e 00FA03F3 		lsl	r3, r0, r3
- 842 0462 6FEA0303 		mvn	r3, r3
- 843 0466 1940     		ands	r1, r1, r3
- 844 0468 7B68     		ldr	r3, [r7, #4]
- 845 046a 02F10802 		add	r2, r2, #8
- 846 046e 43F82210 		str	r1, [r3, r2, lsl #2]
+ 824              		.loc 1 509 0
+ 825 0432 7B88     		ldrh	r3, [r7, #2]
+ 826 0434 4FEAD303 		lsr	r3, r3, #3
+ 827 0438 9BB2     		uxth	r3, r3
+ 828 043a 1A46     		mov	r2, r3
+ 829 043c 7B88     		ldrh	r3, [r7, #2]
+ 830 043e 4FEAD303 		lsr	r3, r3, #3
+ 831 0442 9BB2     		uxth	r3, r3
+ 832 0444 1946     		mov	r1, r3
+ 833 0446 7B68     		ldr	r3, [r7, #4]
+ 834 0448 01F10801 		add	r1, r1, #8
+ 835 044c 53F82110 		ldr	r1, [r3, r1, lsl #2]
+ 836 0450 7B88     		ldrh	r3, [r7, #2]
+ 837 0452 03F00703 		and	r3, r3, #7
+ 838 0456 4FEA8303 		lsl	r3, r3, #2
+ 839 045a 4FF00F00 		mov	r0, #15
+ 840 045e 00FA03F3 		lsl	r3, r0, r3
+ 841 0462 6FEA0303 		mvn	r3, r3
+ 842 0466 1940     		ands	r1, r1, r3
+ 843 0468 7B68     		ldr	r3, [r7, #4]
+ 844 046a 02F10802 		add	r2, r2, #8
+ 845 046e 43F82210 		str	r1, [r3, r2, lsl #2]
  510:../src/stm32f30x_gpio.c ****   temp_2 = GPIOx->AFR[GPIO_PinSource >> 0x03] | temp;
- 847              		.loc 1 510 0
- 848 0472 7B88     		ldrh	r3, [r7, #2]
- 849 0474 4FEAD303 		lsr	r3, r3, #3
- 850 0478 9BB2     		uxth	r3, r3
- 851 047a 1A46     		mov	r2, r3
- 852 047c 7B68     		ldr	r3, [r7, #4]
- 853 047e 02F10802 		add	r2, r2, #8
- 854 0482 53F82220 		ldr	r2, [r3, r2, lsl #2]
- 855 0486 FB68     		ldr	r3, [r7, #12]
- 856 0488 1343     		orrs	r3, r3, r2
- 857 048a BB60     		str	r3, [r7, #8]
+ 846              		.loc 1 510 0
+ 847 0472 7B88     		ldrh	r3, [r7, #2]
+ 848 0474 4FEAD303 		lsr	r3, r3, #3
+ 849 0478 9BB2     		uxth	r3, r3
+ 850 047a 1A46     		mov	r2, r3
+ 851 047c 7B68     		ldr	r3, [r7, #4]
+ 852 047e 02F10802 		add	r2, r2, #8
+ 853 0482 53F82220 		ldr	r2, [r3, r2, lsl #2]
+ 854 0486 FB68     		ldr	r3, [r7, #12]
+ 855 0488 1343     		orrs	r3, r3, r2
+ 856 048a BB60     		str	r3, [r7, #8]
  511:../src/stm32f30x_gpio.c ****   GPIOx->AFR[GPIO_PinSource >> 0x03] = temp_2;
- 858              		.loc 1 511 0
- 859 048c 7B88     		ldrh	r3, [r7, #2]
- 860 048e 4FEAD303 		lsr	r3, r3, #3
- 861 0492 9BB2     		uxth	r3, r3
- 862 0494 1A46     		mov	r2, r3
- 863 0496 7B68     		ldr	r3, [r7, #4]
- 864 0498 02F10802 		add	r2, r2, #8
- 865 049c B968     		ldr	r1, [r7, #8]
- 866 049e 43F82210 		str	r1, [r3, r2, lsl #2]
+ 857              		.loc 1 511 0
+ 858 048c 7B88     		ldrh	r3, [r7, #2]
+ 859 048e 4FEAD303 		lsr	r3, r3, #3
+ 860 0492 9BB2     		uxth	r3, r3
+ 861 0494 1A46     		mov	r2, r3
+ 862 0496 7B68     		ldr	r3, [r7, #4]
+ 863 0498 02F10802 		add	r2, r2, #8
+ 864 049c B968     		ldr	r1, [r7, #8]
+ 865 049e 43F82210 		str	r1, [r3, r2, lsl #2]
  512:../src/stm32f30x_gpio.c **** }
- 867              		.loc 1 512 0
- 868 04a2 07F11407 		add	r7, r7, #20
- 869 04a6 BD46     		mov	sp, r7
- 870 04a8 80BC     		pop	{r7}
- 871 04aa 7047     		bx	lr
- 872              		.cfi_endproc
- 873              	.LFE123:
- 875              	.Letext0:
- 876              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
- 877              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
- 878              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_gpio.h"
- 879              		.file 5 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
+ 866              		.loc 1 512 0
+ 867 04a2 07F11407 		add	r7, r7, #20
+ 868 04a6 BD46     		mov	sp, r7
+ 869 04a8 80BC     		pop	{r7}
+ 870 04aa 7047     		bx	lr
+ 871              		.cfi_endproc
+ 872              	.LFE123:
+ 874              	.Letext0:
+ 875              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
+ 876              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
+ 877              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_gpio.h"
+ 878              		.file 5 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32f30x_gpio.c
-     /tmp/ccsmULQg.s:20     .text:00000000 $t
-     /tmp/ccsmULQg.s:25     .text:00000000 GPIO_DeInit
-     /tmp/ccsmULQg.s:149    .text:000000f8 GPIO_Init
-     /tmp/ccsmULQg.s:331    .text:00000248 GPIO_StructInit
-     /tmp/ccsmULQg.s:382    .text:00000284 GPIO_PinLockConfig
-     /tmp/ccsmULQg.s:443    .text:000002c8 GPIO_ReadInputDataBit
-     /tmp/ccsmULQg.s:500    .text:00000308 GPIO_ReadInputData
-     /tmp/ccsmULQg.s:536    .text:00000324 GPIO_ReadOutputDataBit
-     /tmp/ccsmULQg.s:593    .text:00000364 GPIO_ReadOutputData
-     /tmp/ccsmULQg.s:629    .text:00000380 GPIO_SetBits
-     /tmp/ccsmULQg.s:666    .text:0000039c GPIO_ResetBits
-     /tmp/ccsmULQg.s:703    .text:000003b8 GPIO_WriteBit
-     /tmp/ccsmULQg.s:753    .text:000003e8 GPIO_Write
-     /tmp/ccsmULQg.s:790    .text:00000404 GPIO_PinAFConfig
+     /tmp/ccqNiYH1.s:19     .text:00000000 $t
+     /tmp/ccqNiYH1.s:24     .text:00000000 GPIO_DeInit
+     /tmp/ccqNiYH1.s:148    .text:000000f8 GPIO_Init
+     /tmp/ccqNiYH1.s:330    .text:00000248 GPIO_StructInit
+     /tmp/ccqNiYH1.s:381    .text:00000284 GPIO_PinLockConfig
+     /tmp/ccqNiYH1.s:442    .text:000002c8 GPIO_ReadInputDataBit
+     /tmp/ccqNiYH1.s:499    .text:00000308 GPIO_ReadInputData
+     /tmp/ccqNiYH1.s:535    .text:00000324 GPIO_ReadOutputDataBit
+     /tmp/ccqNiYH1.s:592    .text:00000364 GPIO_ReadOutputData
+     /tmp/ccqNiYH1.s:628    .text:00000380 GPIO_SetBits
+     /tmp/ccqNiYH1.s:665    .text:0000039c GPIO_ResetBits
+     /tmp/ccqNiYH1.s:702    .text:000003b8 GPIO_WriteBit
+     /tmp/ccqNiYH1.s:752    .text:000003e8 GPIO_Write
+     /tmp/ccqNiYH1.s:789    .text:00000404 GPIO_PinAFConfig
                      .debug_frame:00000010 $d
-                           .group:00000000 wm4.1.743cd71370ebc432b539c5dba7924ecc
+                           .group:00000000 wm4.1.323dce8664331a0daf4a2675e107c70c
                            .group:00000000 wm4.stm32f30x.h.56.6f19c65e98e3319a61449cb2b2455af5
                            .group:00000000 wm4.core_cm4.h.32.1434cd257ff5806b1b03cd32ab0641e9
                            .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05

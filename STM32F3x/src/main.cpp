@@ -147,10 +147,10 @@ int main(void)
 
 	// Ping Sensor Init:
 
-//	ping_pin_init();
-//	timer2_timebase_init();
+	ping_pin_init();
+	timer2_timebase_init();
 
-//	imu_update_ISR_init();
+	imu_update_ISR_init();
 
 	comp_init();
 
@@ -158,10 +158,40 @@ int main(void)
 	float mtr_out = 0;
 	char *mode;
 
+	float drive_cmd = 0.0f;
+	int err = 0.0f;
+	int last_err = 0.0f;
+	float diff_err;
+	float rt = 0.0f;
+	float d_front = 1.0f;
+
+	float left, right;
 //	right_enc.m = MODE_POSITION;
 
 	while(true)
 	{
+		d_front = ((float)count*(float)0.5*(float)K_ULTRASONIC);
+		if(d_front < 0.42)
+		{
+			rt = 0.6;
+		}
+		else
+		{
+			rt = 0.0f;
+		}
+		err = (int)adcData[1] - 2200;
+		diff_err = (float)(err-last_err);
+		drive_cmd = 0.5*(((float)(err)/(float)2500) + ((float)diff_err/(float)1100));
+		if(drive_cmd > 0.5)
+		{
+			drive_cmd = 0.5f;
+		}
+		if(drive_cmd < -0.5)
+		{
+			drive_cmd = -0.5f;
+		}
+
+		printf("%f %d\n\r", drive_cmd, adcData[1]);
 //		pwm2_output(0.5f);						// Fixed 1 kHz, 50% duty output on PWM output #2
 
 		// Debug Statements:
@@ -176,10 +206,32 @@ int main(void)
 //		mode = (right_enc.m == MODE_OPENLOOP) ? (char *)"Open" : ((right_enc.m == MODE_POSITION) ? (char *)"Position" : (char *)"Velocity");
 //		GPIO_WriteBit(GPIOE, GPIO_Pin_2, Bit_RESET);
 //		GPIO_WriteBit(GPIOE, GPIO_Pin_3, Bit_RESET);
-		mtr_out = 0.6;//(float)adcData[0]/(float)4096;
-		pwm1_output(0.75);//mtr_out);
-		pwm2_output(0.25);//1-mtr_out);
-		printf("COMP7 %d\n\r", (int)COMP_GetOutputLevel(COMP_Selection_COMP7));
+		mtr_out = 0.8;//(float)adcData[0]/(float)4096;
+		left = (1-mtr_out) - drive_cmd - rt;
+		right = mtr_out - drive_cmd - rt;
+
+		if(left>1.0)
+		{
+			left=1.0;
+		}
+		else if(left<-1.0)
+		{
+			left=-1.0;
+		}
+
+		if(right>1.0)
+		{
+			right=1.0;
+		}
+		else if(right<-1.0)
+		{
+			right=-1.0;
+		}
+
+		pwm1_output(left);//mtr_out);
+		pwm2_output(right);//1-mtr_out);
+		last_err = err;
+//		printf("COMP7 %d\n\r", (int)COMP_GetOutputLevel(COMP_Selection_COMP7));
 //		printf("Left: %d | Right: %d\n\r", left_enc.position, right_enc.position);//, mode);
 //		printf("%3.3f Counter: %d\n\r", ((float)count*(float)0.5*(float)K_ULTRASONIC), TIM_GetCounter(TIM2));
 
@@ -194,7 +246,7 @@ int main(void)
 		new_data = 0;
 
 		*/
-		/*
+/*
 		printf("ADC1: ");
 		while(new_data==0);
 		for(iter=0;iter<2;++iter)
@@ -202,7 +254,7 @@ int main(void)
 			printf("%4d ", adcData[iter]);
 		}
 
-		pwm1_output((float)adcData[0]/(float)4096);
+//		pwm1_output((float)adcData[0]/(float)4096);
 
 		printf("ADC2: ");
 		while(adc2_new_data==0);
@@ -210,7 +262,7 @@ int main(void)
 		{
 			printf("%4d ", adc2_data[iter]);
 		}
-		*/
+	*/
 //		printf("AWD1: %d, AWD2: %d, ADC: %d", adc3_awd1, adc3_awd2, ADC_GetConversionValue(ADC3));
 //		adc3_awd1 = 0;
 //		adc3_awd2 = 0;
@@ -302,21 +354,21 @@ void brake_pins_init(void)
 }
 /*
  * PB0: OUTPUT
- * PB1: INPUT
+ * PC1: INPUT
  */
 void ping_pin_init(void)
 {
 
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB | RCC_AHBPeriph_GPIOC, ENABLE);
 
 	GPIO_InitTypeDef g;
 	g.GPIO_Mode = GPIO_Mode_IN;
 	g.GPIO_OType = GPIO_OType_OD;
-	g.GPIO_Pin = GPIO_Pin_1;
+	g.GPIO_Pin = GPIO_Pin_5;
 	g.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	g.GPIO_Speed = GPIO_Speed_Level_1;
 
-	GPIO_Init(GPIOB, &g);
+	GPIO_Init(GPIOC, &g);
 
 	g.GPIO_Mode = GPIO_Mode_OUT;
 	g.GPIO_OType = GPIO_OType_PP;
@@ -326,28 +378,8 @@ void ping_pin_init(void)
 
 	GPIO_Init(GPIOB, &g);
 
-//	EXTI_InitTypeDef e;
-
-//	e.EXTI_Line = EXTI_Line1;
-//	e.EXTI_LineCmd = ENABLE;
-//	e.EXTI_Mode = EXTI_Mode_Interrupt;
-//	e.EXTI_Trigger = EXTI_Trigger_Rising_Falling; //EXTI_Trigger_Rising;
-
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
-	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOB, EXTI_PinSource1);
-
-//	EXTI_Init(&e);
-
-	/*
-	NVIC_InitTypeDef nv;
-
-	nv.NVIC_IRQChannel = EXTI1_IRQn;
-	nv.NVIC_IRQChannelCmd = ENABLE;
-	nv.NVIC_IRQChannelPreemptionPriority = 0;
-	nv.NVIC_IRQChannelSubPriority = 0;
-
-	NVIC_Init(&nv);
-	*/
+	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOC, EXTI_PinSource5);
 
 }
 

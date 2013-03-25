@@ -1,54 +1,53 @@
    1              		.syntax unified
    2              		.cpu cortex-m4
    3              		.eabi_attribute 27, 3
-   4              		.eabi_attribute 28, 1
-   5              		.fpu fpv4-sp-d16
-   6              		.eabi_attribute 20, 1
-   7              		.eabi_attribute 21, 1
-   8              		.eabi_attribute 23, 3
-   9              		.eabi_attribute 24, 1
-  10              		.eabi_attribute 25, 1
-  11              		.eabi_attribute 26, 1
-  12              		.eabi_attribute 30, 6
-  13              		.eabi_attribute 34, 1
-  14              		.eabi_attribute 18, 4
-  15              		.thumb
-  16              		.file	"system_stm32f30x.c"
-  17              		.text
-  18              	.Ltext0:
-  19              		.cfi_sections	.debug_frame
-  20              		.global	SystemCoreClock
-  21              		.data
-  22              		.align	2
-  25              	SystemCoreClock:
-  26 0000 00A24A04 		.word	72000000
-  27              		.global	AHBPrescTable
-  28              		.align	2
-  31              	AHBPrescTable:
-  32 0004 00       		.byte	0
-  33 0005 00       		.byte	0
-  34 0006 00       		.byte	0
-  35 0007 00       		.byte	0
-  36 0008 00       		.byte	0
-  37 0009 00       		.byte	0
-  38 000a 00       		.byte	0
-  39 000b 00       		.byte	0
-  40 000c 01       		.byte	1
-  41 000d 02       		.byte	2
-  42 000e 03       		.byte	3
-  43 000f 04       		.byte	4
-  44 0010 06       		.byte	6
-  45 0011 07       		.byte	7
-  46 0012 08       		.byte	8
-  47 0013 09       		.byte	9
-  48              		.text
-  49              		.align	2
-  50              		.global	SystemInit
-  51              		.thumb
-  52              		.thumb_func
-  54              	SystemInit:
-  55              	.LFB111:
-  56              		.file 1 "../src/system_stm32f30x.c"
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"system_stm32f30x.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.global	SystemCoreClock
+  20              		.data
+  21              		.align	2
+  24              	SystemCoreClock:
+  25 0000 00A24A04 		.word	72000000
+  26              		.global	AHBPrescTable
+  27              		.align	2
+  30              	AHBPrescTable:
+  31 0004 00       		.byte	0
+  32 0005 00       		.byte	0
+  33 0006 00       		.byte	0
+  34 0007 00       		.byte	0
+  35 0008 00       		.byte	0
+  36 0009 00       		.byte	0
+  37 000a 00       		.byte	0
+  38 000b 00       		.byte	0
+  39 000c 01       		.byte	1
+  40 000d 02       		.byte	2
+  41 000e 03       		.byte	3
+  42 000f 04       		.byte	4
+  43 0010 06       		.byte	6
+  44 0011 07       		.byte	7
+  45 0012 08       		.byte	8
+  46 0013 09       		.byte	9
+  47              		.text
+  48              		.align	2
+  49              		.global	SystemInit
+  50              		.thumb
+  51              		.thumb_func
+  53              	SystemInit:
+  54              	.LFB111:
+  55              		.file 1 "../src/system_stm32f30x.c"
    1:../src/system_stm32f30x.c **** /**
    2:../src/system_stm32f30x.c ****   ******************************************************************************
    3:../src/system_stm32f30x.c ****   * @file    system_stm32f30x.c
@@ -219,149 +218,149 @@
  168:../src/system_stm32f30x.c ****   */
  169:../src/system_stm32f30x.c **** void SystemInit(void)
  170:../src/system_stm32f30x.c **** {
-  57              		.loc 1 170 0
-  58              		.cfi_startproc
-  59              		@ args = 0, pretend = 0, frame = 0
-  60              		@ frame_needed = 1, uses_anonymous_args = 0
-  61 0000 80B5     		push	{r7, lr}
-  62              	.LCFI0:
-  63              		.cfi_def_cfa_offset 8
-  64              		.cfi_offset 7, -8
-  65              		.cfi_offset 14, -4
-  66 0002 00AF     		add	r7, sp, #0
-  67              	.LCFI1:
-  68              		.cfi_def_cfa_register 7
+  56              		.loc 1 170 0
+  57              		.cfi_startproc
+  58              		@ args = 0, pretend = 0, frame = 0
+  59              		@ frame_needed = 1, uses_anonymous_args = 0
+  60 0000 80B5     		push	{r7, lr}
+  61              	.LCFI0:
+  62              		.cfi_def_cfa_offset 8
+  63              		.cfi_offset 7, -8
+  64              		.cfi_offset 14, -4
+  65 0002 00AF     		add	r7, sp, #0
+  66              	.LCFI1:
+  67              		.cfi_def_cfa_register 7
  171:../src/system_stm32f30x.c ****   /* FPU settings ------------------------------------------------------------*/
  172:../src/system_stm32f30x.c ****   #if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
  173:../src/system_stm32f30x.c ****     SCB->CPACR |= ((3UL << 10*2)|(3UL << 11*2));  /* set CP10 and CP11 Full Access */
-  69              		.loc 1 173 0
-  70 0004 4FF46D43 		mov	r3, #60672
-  71 0008 CEF20003 		movt	r3, 57344
-  72 000c 4FF46D42 		mov	r2, #60672
-  73 0010 CEF20002 		movt	r2, 57344
-  74 0014 D2F88820 		ldr	r2, [r2, #136]
-  75 0018 42F47002 		orr	r2, r2, #15728640
-  76 001c C3F88820 		str	r2, [r3, #136]
+  68              		.loc 1 173 0
+  69 0004 4FF46D43 		mov	r3, #60672
+  70 0008 CEF20003 		movt	r3, 57344
+  71 000c 4FF46D42 		mov	r2, #60672
+  72 0010 CEF20002 		movt	r2, 57344
+  73 0014 D2F88820 		ldr	r2, [r2, #136]
+  74 0018 42F47002 		orr	r2, r2, #15728640
+  75 001c C3F88820 		str	r2, [r3, #136]
  174:../src/system_stm32f30x.c ****   #endif
  175:../src/system_stm32f30x.c **** 
  176:../src/system_stm32f30x.c ****   /* Reset the RCC clock configuration to the default reset state ------------*/
  177:../src/system_stm32f30x.c ****   /* Set HSION bit */
  178:../src/system_stm32f30x.c ****   RCC->CR |= (uint32_t)0x00000001;
-  77              		.loc 1 178 0
-  78 0020 4FF48053 		mov	r3, #4096
-  79 0024 C4F20203 		movt	r3, 16386
-  80 0028 4FF48052 		mov	r2, #4096
-  81 002c C4F20202 		movt	r2, 16386
-  82 0030 1268     		ldr	r2, [r2, #0]
-  83 0032 42F00102 		orr	r2, r2, #1
-  84 0036 1A60     		str	r2, [r3, #0]
+  76              		.loc 1 178 0
+  77 0020 4FF48053 		mov	r3, #4096
+  78 0024 C4F20203 		movt	r3, 16386
+  79 0028 4FF48052 		mov	r2, #4096
+  80 002c C4F20202 		movt	r2, 16386
+  81 0030 1268     		ldr	r2, [r2, #0]
+  82 0032 42F00102 		orr	r2, r2, #1
+  83 0036 1A60     		str	r2, [r3, #0]
  179:../src/system_stm32f30x.c **** 
  180:../src/system_stm32f30x.c ****   /* Reset CFGR register */
  181:../src/system_stm32f30x.c ****   RCC->CFGR &= 0xF87FC00C;
-  85              		.loc 1 181 0
-  86 0038 4FF48052 		mov	r2, #4096
-  87 003c C4F20202 		movt	r2, 16386
-  88 0040 4FF48053 		mov	r3, #4096
-  89 0044 C4F20203 		movt	r3, 16386
-  90 0048 5968     		ldr	r1, [r3, #4]
-  91 004a 4CF20C03 		movw	r3, #49164
-  92 004e CFF67F03 		movt	r3, 63615
-  93 0052 0B40     		ands	r3, r3, r1
-  94 0054 5360     		str	r3, [r2, #4]
+  84              		.loc 1 181 0
+  85 0038 4FF48052 		mov	r2, #4096
+  86 003c C4F20202 		movt	r2, 16386
+  87 0040 4FF48053 		mov	r3, #4096
+  88 0044 C4F20203 		movt	r3, 16386
+  89 0048 5968     		ldr	r1, [r3, #4]
+  90 004a 4CF20C03 		movw	r3, #49164
+  91 004e CFF67F03 		movt	r3, 63615
+  92 0052 0B40     		ands	r3, r3, r1
+  93 0054 5360     		str	r3, [r2, #4]
  182:../src/system_stm32f30x.c **** 
  183:../src/system_stm32f30x.c ****   /* Reset HSEON, CSSON and PLLON bits */
  184:../src/system_stm32f30x.c ****   RCC->CR &= (uint32_t)0xFEF6FFFF;
-  95              		.loc 1 184 0
-  96 0056 4FF48053 		mov	r3, #4096
-  97 005a C4F20203 		movt	r3, 16386
-  98 005e 4FF48052 		mov	r2, #4096
-  99 0062 C4F20202 		movt	r2, 16386
- 100 0066 1268     		ldr	r2, [r2, #0]
- 101 0068 22F08472 		bic	r2, r2, #17301504
- 102 006c 22F48032 		bic	r2, r2, #65536
- 103 0070 1A60     		str	r2, [r3, #0]
+  94              		.loc 1 184 0
+  95 0056 4FF48053 		mov	r3, #4096
+  96 005a C4F20203 		movt	r3, 16386
+  97 005e 4FF48052 		mov	r2, #4096
+  98 0062 C4F20202 		movt	r2, 16386
+  99 0066 1268     		ldr	r2, [r2, #0]
+ 100 0068 22F08472 		bic	r2, r2, #17301504
+ 101 006c 22F48032 		bic	r2, r2, #65536
+ 102 0070 1A60     		str	r2, [r3, #0]
  185:../src/system_stm32f30x.c **** 
  186:../src/system_stm32f30x.c ****   /* Reset HSEBYP bit */
  187:../src/system_stm32f30x.c ****   RCC->CR &= (uint32_t)0xFFFBFFFF;
- 104              		.loc 1 187 0
- 105 0072 4FF48053 		mov	r3, #4096
- 106 0076 C4F20203 		movt	r3, 16386
- 107 007a 4FF48052 		mov	r2, #4096
- 108 007e C4F20202 		movt	r2, 16386
- 109 0082 1268     		ldr	r2, [r2, #0]
- 110 0084 22F48022 		bic	r2, r2, #262144
- 111 0088 1A60     		str	r2, [r3, #0]
+ 103              		.loc 1 187 0
+ 104 0072 4FF48053 		mov	r3, #4096
+ 105 0076 C4F20203 		movt	r3, 16386
+ 106 007a 4FF48052 		mov	r2, #4096
+ 107 007e C4F20202 		movt	r2, 16386
+ 108 0082 1268     		ldr	r2, [r2, #0]
+ 109 0084 22F48022 		bic	r2, r2, #262144
+ 110 0088 1A60     		str	r2, [r3, #0]
  188:../src/system_stm32f30x.c **** 
  189:../src/system_stm32f30x.c ****   /* Reset PLLSRC, PLLXTPRE, PLLMUL and USBPRE bits */
  190:../src/system_stm32f30x.c ****   RCC->CFGR &= (uint32_t)0xFF80FFFF;
- 112              		.loc 1 190 0
- 113 008a 4FF48053 		mov	r3, #4096
- 114 008e C4F20203 		movt	r3, 16386
- 115 0092 4FF48052 		mov	r2, #4096
- 116 0096 C4F20202 		movt	r2, 16386
- 117 009a 5268     		ldr	r2, [r2, #4]
- 118 009c 22F4FE02 		bic	r2, r2, #8323072
- 119 00a0 5A60     		str	r2, [r3, #4]
+ 111              		.loc 1 190 0
+ 112 008a 4FF48053 		mov	r3, #4096
+ 113 008e C4F20203 		movt	r3, 16386
+ 114 0092 4FF48052 		mov	r2, #4096
+ 115 0096 C4F20202 		movt	r2, 16386
+ 116 009a 5268     		ldr	r2, [r2, #4]
+ 117 009c 22F4FE02 		bic	r2, r2, #8323072
+ 118 00a0 5A60     		str	r2, [r3, #4]
  191:../src/system_stm32f30x.c **** 
  192:../src/system_stm32f30x.c ****   /* Reset PREDIV1[3:0] bits */
  193:../src/system_stm32f30x.c ****   RCC->CFGR2 &= (uint32_t)0xFFFFFFF0;
- 120              		.loc 1 193 0
- 121 00a2 4FF48053 		mov	r3, #4096
- 122 00a6 C4F20203 		movt	r3, 16386
- 123 00aa 4FF48052 		mov	r2, #4096
- 124 00ae C4F20202 		movt	r2, 16386
- 125 00b2 D26A     		ldr	r2, [r2, #44]
- 126 00b4 22F00F02 		bic	r2, r2, #15
- 127 00b8 DA62     		str	r2, [r3, #44]
+ 119              		.loc 1 193 0
+ 120 00a2 4FF48053 		mov	r3, #4096
+ 121 00a6 C4F20203 		movt	r3, 16386
+ 122 00aa 4FF48052 		mov	r2, #4096
+ 123 00ae C4F20202 		movt	r2, 16386
+ 124 00b2 D26A     		ldr	r2, [r2, #44]
+ 125 00b4 22F00F02 		bic	r2, r2, #15
+ 126 00b8 DA62     		str	r2, [r3, #44]
  194:../src/system_stm32f30x.c **** 
  195:../src/system_stm32f30x.c ****   /* Reset USARTSW[1:0], I2CSW and TIMs bits */
  196:../src/system_stm32f30x.c ****   RCC->CFGR3 &= (uint32_t)0xFF00FCCC;
- 128              		.loc 1 196 0
- 129 00ba 4FF48052 		mov	r2, #4096
- 130 00be C4F20202 		movt	r2, 16386
- 131 00c2 4FF48053 		mov	r3, #4096
- 132 00c6 C4F20203 		movt	r3, 16386
- 133 00ca 196B     		ldr	r1, [r3, #48]
- 134 00cc 4FF6CC43 		movw	r3, #64716
- 135 00d0 CFF60073 		movt	r3, 65280
- 136 00d4 0B40     		ands	r3, r3, r1
- 137 00d6 1363     		str	r3, [r2, #48]
+ 127              		.loc 1 196 0
+ 128 00ba 4FF48052 		mov	r2, #4096
+ 129 00be C4F20202 		movt	r2, 16386
+ 130 00c2 4FF48053 		mov	r3, #4096
+ 131 00c6 C4F20203 		movt	r3, 16386
+ 132 00ca 196B     		ldr	r1, [r3, #48]
+ 133 00cc 4FF6CC43 		movw	r3, #64716
+ 134 00d0 CFF60073 		movt	r3, 65280
+ 135 00d4 0B40     		ands	r3, r3, r1
+ 136 00d6 1363     		str	r3, [r2, #48]
  197:../src/system_stm32f30x.c ****   
  198:../src/system_stm32f30x.c ****   /* Disable all interrupts */
  199:../src/system_stm32f30x.c ****   RCC->CIR = 0x00000000;
- 138              		.loc 1 199 0
- 139 00d8 4FF48053 		mov	r3, #4096
- 140 00dc C4F20203 		movt	r3, 16386
- 141 00e0 4FF00002 		mov	r2, #0
- 142 00e4 9A60     		str	r2, [r3, #8]
+ 137              		.loc 1 199 0
+ 138 00d8 4FF48053 		mov	r3, #4096
+ 139 00dc C4F20203 		movt	r3, 16386
+ 140 00e0 4FF00002 		mov	r2, #0
+ 141 00e4 9A60     		str	r2, [r3, #8]
  200:../src/system_stm32f30x.c **** 
  201:../src/system_stm32f30x.c ****   /* Configure the System clock source, PLL Multiplier and Divider factors, 
  202:../src/system_stm32f30x.c ****      AHB/APBx prescalers and Flash settings ----------------------------------*/
  203:../src/system_stm32f30x.c ****   SetSysClock();
- 143              		.loc 1 203 0
- 144 00e6 00F0A7F8 		bl	SetSysClock
+ 142              		.loc 1 203 0
+ 143 00e6 00F0A7F8 		bl	SetSysClock
  204:../src/system_stm32f30x.c ****   
  205:../src/system_stm32f30x.c **** #ifdef VECT_TAB_SRAM
  206:../src/system_stm32f30x.c ****   SCB->VTOR = SRAM_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal SRAM. */
  207:../src/system_stm32f30x.c **** #else
  208:../src/system_stm32f30x.c ****   SCB->VTOR = FLASH_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal FLASH. */
- 145              		.loc 1 208 0
- 146 00ea 4FF46D43 		mov	r3, #60672
- 147 00ee CEF20003 		movt	r3, 57344
- 148 00f2 4FF00062 		mov	r2, #134217728
- 149 00f6 9A60     		str	r2, [r3, #8]
+ 144              		.loc 1 208 0
+ 145 00ea 4FF46D43 		mov	r3, #60672
+ 146 00ee CEF20003 		movt	r3, 57344
+ 147 00f2 4FF00062 		mov	r2, #134217728
+ 148 00f6 9A60     		str	r2, [r3, #8]
  209:../src/system_stm32f30x.c **** #endif  
  210:../src/system_stm32f30x.c **** }
- 150              		.loc 1 210 0
- 151 00f8 80BD     		pop	{r7, pc}
- 152              		.cfi_endproc
- 153              	.LFE111:
- 155 00fa 00BF     		.align	2
- 156              		.global	SystemCoreClockUpdate
- 157              		.thumb
- 158              		.thumb_func
- 160              	SystemCoreClockUpdate:
- 161              	.LFB112:
+ 149              		.loc 1 210 0
+ 150 00f8 80BD     		pop	{r7, pc}
+ 151              		.cfi_endproc
+ 152              	.LFE111:
+ 154 00fa 00BF     		.align	2
+ 155              		.global	SystemCoreClockUpdate
+ 156              		.thumb
+ 157              		.thumb_func
+ 159              	SystemCoreClockUpdate:
+ 160              	.LFB112:
  211:../src/system_stm32f30x.c **** 
  212:../src/system_stm32f30x.c **** /**
  213:../src/system_stm32f30x.c ****    * @brief  Update SystemCoreClock variable according to Clock Register Values.
@@ -401,115 +400,115 @@
  247:../src/system_stm32f30x.c ****   */
  248:../src/system_stm32f30x.c **** void SystemCoreClockUpdate (void)
  249:../src/system_stm32f30x.c **** {
- 162              		.loc 1 249 0
- 163              		.cfi_startproc
- 164              		@ args = 0, pretend = 0, frame = 16
- 165              		@ frame_needed = 1, uses_anonymous_args = 0
- 166              		@ link register save eliminated.
- 167 00fc 80B4     		push	{r7}
- 168              	.LCFI2:
- 169              		.cfi_def_cfa_offset 4
- 170              		.cfi_offset 7, -4
- 171 00fe 85B0     		sub	sp, sp, #20
- 172              	.LCFI3:
- 173              		.cfi_def_cfa_offset 24
- 174 0100 00AF     		add	r7, sp, #0
- 175              	.LCFI4:
- 176              		.cfi_def_cfa_register 7
+ 161              		.loc 1 249 0
+ 162              		.cfi_startproc
+ 163              		@ args = 0, pretend = 0, frame = 16
+ 164              		@ frame_needed = 1, uses_anonymous_args = 0
+ 165              		@ link register save eliminated.
+ 166 00fc 80B4     		push	{r7}
+ 167              	.LCFI2:
+ 168              		.cfi_def_cfa_offset 4
+ 169              		.cfi_offset 7, -4
+ 170 00fe 85B0     		sub	sp, sp, #20
+ 171              	.LCFI3:
+ 172              		.cfi_def_cfa_offset 24
+ 173 0100 00AF     		add	r7, sp, #0
+ 174              	.LCFI4:
+ 175              		.cfi_def_cfa_register 7
  250:../src/system_stm32f30x.c ****   uint32_t tmp = 0, pllmull = 0, pllsource = 0, prediv1factor = 0;
- 177              		.loc 1 250 0
- 178 0102 4FF00003 		mov	r3, #0
- 179 0106 FB60     		str	r3, [r7, #12]
- 180 0108 4FF00003 		mov	r3, #0
- 181 010c BB60     		str	r3, [r7, #8]
- 182 010e 4FF00003 		mov	r3, #0
- 183 0112 7B60     		str	r3, [r7, #4]
- 184 0114 4FF00003 		mov	r3, #0
- 185 0118 3B60     		str	r3, [r7, #0]
+ 176              		.loc 1 250 0
+ 177 0102 4FF00003 		mov	r3, #0
+ 178 0106 FB60     		str	r3, [r7, #12]
+ 179 0108 4FF00003 		mov	r3, #0
+ 180 010c BB60     		str	r3, [r7, #8]
+ 181 010e 4FF00003 		mov	r3, #0
+ 182 0112 7B60     		str	r3, [r7, #4]
+ 183 0114 4FF00003 		mov	r3, #0
+ 184 0118 3B60     		str	r3, [r7, #0]
  251:../src/system_stm32f30x.c **** 
  252:../src/system_stm32f30x.c ****   /* Get SYSCLK source -------------------------------------------------------*/
  253:../src/system_stm32f30x.c ****   tmp = RCC->CFGR & RCC_CFGR_SWS;
- 186              		.loc 1 253 0
- 187 011a 4FF48053 		mov	r3, #4096
- 188 011e C4F20203 		movt	r3, 16386
- 189 0122 5B68     		ldr	r3, [r3, #4]
- 190 0124 03F00C03 		and	r3, r3, #12
- 191 0128 FB60     		str	r3, [r7, #12]
+ 185              		.loc 1 253 0
+ 186 011a 4FF48053 		mov	r3, #4096
+ 187 011e C4F20203 		movt	r3, 16386
+ 188 0122 5B68     		ldr	r3, [r3, #4]
+ 189 0124 03F00C03 		and	r3, r3, #12
+ 190 0128 FB60     		str	r3, [r7, #12]
  254:../src/system_stm32f30x.c ****   
  255:../src/system_stm32f30x.c ****   switch (tmp)
- 192              		.loc 1 255 0
- 193 012a FB68     		ldr	r3, [r7, #12]
- 194 012c 042B     		cmp	r3, #4
- 195 012e 0DD0     		beq	.L5
- 196 0130 082B     		cmp	r3, #8
- 197 0132 15D0     		beq	.L6
- 198 0134 002B     		cmp	r3, #0
- 199 0136 53D1     		bne	.L10
- 200              	.L4:
+ 191              		.loc 1 255 0
+ 192 012a FB68     		ldr	r3, [r7, #12]
+ 193 012c 042B     		cmp	r3, #4
+ 194 012e 0DD0     		beq	.L5
+ 195 0130 082B     		cmp	r3, #8
+ 196 0132 15D0     		beq	.L6
+ 197 0134 002B     		cmp	r3, #0
+ 198 0136 53D1     		bne	.L10
+ 199              	.L4:
  256:../src/system_stm32f30x.c ****   {
  257:../src/system_stm32f30x.c ****     case 0x00:  /* HSI used as system clock */
  258:../src/system_stm32f30x.c ****       SystemCoreClock = HSI_VALUE;
- 201              		.loc 1 258 0
- 202 0138 40F20003 		movw	r3, #:lower16:SystemCoreClock
- 203 013c C0F20003 		movt	r3, #:upper16:SystemCoreClock
- 204 0140 4FF49052 		mov	r2, #4608
- 205 0144 C0F27A02 		movt	r2, 122
- 206 0148 1A60     		str	r2, [r3, #0]
+ 200              		.loc 1 258 0
+ 201 0138 40F20003 		movw	r3, #:lower16:SystemCoreClock
+ 202 013c C0F20003 		movt	r3, #:upper16:SystemCoreClock
+ 203 0140 4FF49052 		mov	r2, #4608
+ 204 0144 C0F27A02 		movt	r2, 122
+ 205 0148 1A60     		str	r2, [r3, #0]
  259:../src/system_stm32f30x.c ****       break;
- 207              		.loc 1 259 0
- 208 014a 53E0     		b	.L7
- 209              	.L5:
+ 206              		.loc 1 259 0
+ 207 014a 53E0     		b	.L7
+ 208              	.L5:
  260:../src/system_stm32f30x.c ****     case 0x04:  /* HSE used as system clock */
  261:../src/system_stm32f30x.c ****       SystemCoreClock = HSE_VALUE;
- 210              		.loc 1 261 0
- 211 014c 40F20003 		movw	r3, #:lower16:SystemCoreClock
- 212 0150 C0F20003 		movt	r3, #:upper16:SystemCoreClock
- 213 0154 4FF49052 		mov	r2, #4608
- 214 0158 C0F27A02 		movt	r2, 122
- 215 015c 1A60     		str	r2, [r3, #0]
+ 209              		.loc 1 261 0
+ 210 014c 40F20003 		movw	r3, #:lower16:SystemCoreClock
+ 211 0150 C0F20003 		movt	r3, #:upper16:SystemCoreClock
+ 212 0154 4FF49052 		mov	r2, #4608
+ 213 0158 C0F27A02 		movt	r2, 122
+ 214 015c 1A60     		str	r2, [r3, #0]
  262:../src/system_stm32f30x.c ****       break;
- 216              		.loc 1 262 0
- 217 015e 49E0     		b	.L7
- 218              	.L6:
+ 215              		.loc 1 262 0
+ 216 015e 49E0     		b	.L7
+ 217              	.L6:
  263:../src/system_stm32f30x.c ****     case 0x08:  /* PLL used as system clock */
  264:../src/system_stm32f30x.c ****       /* Get PLL clock source and multiplication factor ----------------------*/
  265:../src/system_stm32f30x.c ****       pllmull = RCC->CFGR & RCC_CFGR_PLLMULL;
- 219              		.loc 1 265 0
- 220 0160 4FF48053 		mov	r3, #4096
- 221 0164 C4F20203 		movt	r3, 16386
- 222 0168 5B68     		ldr	r3, [r3, #4]
- 223 016a 03F47013 		and	r3, r3, #3932160
- 224 016e BB60     		str	r3, [r7, #8]
+ 218              		.loc 1 265 0
+ 219 0160 4FF48053 		mov	r3, #4096
+ 220 0164 C4F20203 		movt	r3, 16386
+ 221 0168 5B68     		ldr	r3, [r3, #4]
+ 222 016a 03F47013 		and	r3, r3, #3932160
+ 223 016e BB60     		str	r3, [r7, #8]
  266:../src/system_stm32f30x.c ****       pllsource = RCC->CFGR & RCC_CFGR_PLLSRC;
- 225              		.loc 1 266 0
- 226 0170 4FF48053 		mov	r3, #4096
- 227 0174 C4F20203 		movt	r3, 16386
- 228 0178 5B68     		ldr	r3, [r3, #4]
- 229 017a 03F48033 		and	r3, r3, #65536
- 230 017e 7B60     		str	r3, [r7, #4]
+ 224              		.loc 1 266 0
+ 225 0170 4FF48053 		mov	r3, #4096
+ 226 0174 C4F20203 		movt	r3, 16386
+ 227 0178 5B68     		ldr	r3, [r3, #4]
+ 228 017a 03F48033 		and	r3, r3, #65536
+ 229 017e 7B60     		str	r3, [r7, #4]
  267:../src/system_stm32f30x.c ****       pllmull = ( pllmull >> 18) + 2;
- 231              		.loc 1 267 0
- 232 0180 BB68     		ldr	r3, [r7, #8]
- 233 0182 4FEA9343 		lsr	r3, r3, #18
- 234 0186 03F10203 		add	r3, r3, #2
- 235 018a BB60     		str	r3, [r7, #8]
+ 230              		.loc 1 267 0
+ 231 0180 BB68     		ldr	r3, [r7, #8]
+ 232 0182 4FEA9343 		lsr	r3, r3, #18
+ 233 0186 03F10203 		add	r3, r3, #2
+ 234 018a BB60     		str	r3, [r7, #8]
  268:../src/system_stm32f30x.c ****       
  269:../src/system_stm32f30x.c ****       if (pllsource == 0x00)
- 236              		.loc 1 269 0
- 237 018c 7B68     		ldr	r3, [r7, #4]
- 238 018e 002B     		cmp	r3, #0
- 239 0190 0CD1     		bne	.L8
+ 235              		.loc 1 269 0
+ 236 018c 7B68     		ldr	r3, [r7, #4]
+ 237 018e 002B     		cmp	r3, #0
+ 238 0190 0CD1     		bne	.L8
  270:../src/system_stm32f30x.c ****       {
  271:../src/system_stm32f30x.c ****         /* HSI oscillator clock divided by 2 selected as PLL clock entry */
  272:../src/system_stm32f30x.c ****         SystemCoreClock = (HSI_VALUE >> 1) * pllmull;
- 240              		.loc 1 272 0
- 241 0192 BA68     		ldr	r2, [r7, #8]
- 242 0194 4FF41063 		mov	r3, #2304
- 243 0198 C0F23D03 		movt	r3, 61
- 244 019c 03FB02F2 		mul	r2, r3, r2
- 245 01a0 40F20003 		movw	r3, #:lower16:SystemCoreClock
- 246 01a4 C0F20003 		movt	r3, #:upper16:SystemCoreClock
- 247 01a8 1A60     		str	r2, [r3, #0]
+ 239              		.loc 1 272 0
+ 240 0192 BA68     		ldr	r2, [r7, #8]
+ 241 0194 4FF41063 		mov	r3, #2304
+ 242 0198 C0F23D03 		movt	r3, 61
+ 243 019c 03FB02F2 		mul	r2, r3, r2
+ 244 01a0 40F20003 		movw	r3, #:lower16:SystemCoreClock
+ 245 01a4 C0F20003 		movt	r3, #:upper16:SystemCoreClock
+ 246 01a8 1A60     		str	r2, [r3, #0]
  273:../src/system_stm32f30x.c ****       }
  274:../src/system_stm32f30x.c ****       else
  275:../src/system_stm32f30x.c ****       {
@@ -518,82 +517,82 @@
  278:../src/system_stm32f30x.c ****         SystemCoreClock = (HSE_VALUE / prediv1factor) * pllmull; 
  279:../src/system_stm32f30x.c ****       }      
  280:../src/system_stm32f30x.c ****       break;
- 248              		.loc 1 280 0
- 249 01aa 23E0     		b	.L7
- 250              	.L8:
+ 247              		.loc 1 280 0
+ 248 01aa 23E0     		b	.L7
+ 249              	.L8:
  276:../src/system_stm32f30x.c ****         prediv1factor = (RCC->CFGR2 & RCC_CFGR2_PREDIV1) + 1;
- 251              		.loc 1 276 0
- 252 01ac 4FF48053 		mov	r3, #4096
- 253 01b0 C4F20203 		movt	r3, 16386
- 254 01b4 DB6A     		ldr	r3, [r3, #44]
- 255 01b6 03F00F03 		and	r3, r3, #15
- 256 01ba 03F10103 		add	r3, r3, #1
- 257 01be 3B60     		str	r3, [r7, #0]
+ 250              		.loc 1 276 0
+ 251 01ac 4FF48053 		mov	r3, #4096
+ 252 01b0 C4F20203 		movt	r3, 16386
+ 253 01b4 DB6A     		ldr	r3, [r3, #44]
+ 254 01b6 03F00F03 		and	r3, r3, #15
+ 255 01ba 03F10103 		add	r3, r3, #1
+ 256 01be 3B60     		str	r3, [r7, #0]
  278:../src/system_stm32f30x.c ****         SystemCoreClock = (HSE_VALUE / prediv1factor) * pllmull; 
- 258              		.loc 1 278 0
- 259 01c0 4FF49053 		mov	r3, #4608
- 260 01c4 C0F27A03 		movt	r3, 122
- 261 01c8 3A68     		ldr	r2, [r7, #0]
- 262 01ca B3FBF2F3 		udiv	r3, r3, r2
- 263 01ce BA68     		ldr	r2, [r7, #8]
- 264 01d0 02FB03F2 		mul	r2, r2, r3
- 265 01d4 40F20003 		movw	r3, #:lower16:SystemCoreClock
- 266 01d8 C0F20003 		movt	r3, #:upper16:SystemCoreClock
- 267 01dc 1A60     		str	r2, [r3, #0]
- 268              		.loc 1 280 0
- 269 01de 09E0     		b	.L7
- 270              	.L10:
+ 257              		.loc 1 278 0
+ 258 01c0 4FF49053 		mov	r3, #4608
+ 259 01c4 C0F27A03 		movt	r3, 122
+ 260 01c8 3A68     		ldr	r2, [r7, #0]
+ 261 01ca B3FBF2F3 		udiv	r3, r3, r2
+ 262 01ce BA68     		ldr	r2, [r7, #8]
+ 263 01d0 02FB03F2 		mul	r2, r2, r3
+ 264 01d4 40F20003 		movw	r3, #:lower16:SystemCoreClock
+ 265 01d8 C0F20003 		movt	r3, #:upper16:SystemCoreClock
+ 266 01dc 1A60     		str	r2, [r3, #0]
+ 267              		.loc 1 280 0
+ 268 01de 09E0     		b	.L7
+ 269              	.L10:
  281:../src/system_stm32f30x.c ****     default: /* HSI used as system clock */
  282:../src/system_stm32f30x.c ****       SystemCoreClock = HSI_VALUE;
- 271              		.loc 1 282 0
- 272 01e0 40F20003 		movw	r3, #:lower16:SystemCoreClock
- 273 01e4 C0F20003 		movt	r3, #:upper16:SystemCoreClock
- 274 01e8 4FF49052 		mov	r2, #4608
- 275 01ec C0F27A02 		movt	r2, 122
- 276 01f0 1A60     		str	r2, [r3, #0]
+ 270              		.loc 1 282 0
+ 271 01e0 40F20003 		movw	r3, #:lower16:SystemCoreClock
+ 272 01e4 C0F20003 		movt	r3, #:upper16:SystemCoreClock
+ 273 01e8 4FF49052 		mov	r2, #4608
+ 274 01ec C0F27A02 		movt	r2, 122
+ 275 01f0 1A60     		str	r2, [r3, #0]
  283:../src/system_stm32f30x.c ****       break;
- 277              		.loc 1 283 0
- 278 01f2 00BF     		nop
- 279              	.L7:
+ 276              		.loc 1 283 0
+ 277 01f2 00BF     		nop
+ 278              	.L7:
  284:../src/system_stm32f30x.c ****   }
  285:../src/system_stm32f30x.c ****   /* Compute HCLK clock frequency ----------------*/
  286:../src/system_stm32f30x.c ****   /* Get HCLK prescaler */
  287:../src/system_stm32f30x.c ****   tmp = AHBPrescTable[((RCC->CFGR & RCC_CFGR_HPRE) >> 4)];
- 280              		.loc 1 287 0
- 281 01f4 4FF48053 		mov	r3, #4096
- 282 01f8 C4F20203 		movt	r3, 16386
- 283 01fc 5B68     		ldr	r3, [r3, #4]
- 284 01fe 03F0F003 		and	r3, r3, #240
- 285 0202 4FEA1312 		lsr	r2, r3, #4
- 286 0206 40F20003 		movw	r3, #:lower16:AHBPrescTable
- 287 020a C0F20003 		movt	r3, #:upper16:AHBPrescTable
- 288 020e 9B5C     		ldrb	r3, [r3, r2]
- 289 0210 DBB2     		uxtb	r3, r3
- 290 0212 FB60     		str	r3, [r7, #12]
+ 279              		.loc 1 287 0
+ 280 01f4 4FF48053 		mov	r3, #4096
+ 281 01f8 C4F20203 		movt	r3, 16386
+ 282 01fc 5B68     		ldr	r3, [r3, #4]
+ 283 01fe 03F0F003 		and	r3, r3, #240
+ 284 0202 4FEA1312 		lsr	r2, r3, #4
+ 285 0206 40F20003 		movw	r3, #:lower16:AHBPrescTable
+ 286 020a C0F20003 		movt	r3, #:upper16:AHBPrescTable
+ 287 020e 9B5C     		ldrb	r3, [r3, r2]
+ 288 0210 DBB2     		uxtb	r3, r3
+ 289 0212 FB60     		str	r3, [r7, #12]
  288:../src/system_stm32f30x.c ****   /* HCLK clock frequency */
  289:../src/system_stm32f30x.c ****   SystemCoreClock >>= tmp;  
- 291              		.loc 1 289 0
- 292 0214 40F20003 		movw	r3, #:lower16:SystemCoreClock
- 293 0218 C0F20003 		movt	r3, #:upper16:SystemCoreClock
- 294 021c 1A68     		ldr	r2, [r3, #0]
- 295 021e FB68     		ldr	r3, [r7, #12]
- 296 0220 22FA03F2 		lsr	r2, r2, r3
- 297 0224 40F20003 		movw	r3, #:lower16:SystemCoreClock
- 298 0228 C0F20003 		movt	r3, #:upper16:SystemCoreClock
- 299 022c 1A60     		str	r2, [r3, #0]
+ 290              		.loc 1 289 0
+ 291 0214 40F20003 		movw	r3, #:lower16:SystemCoreClock
+ 292 0218 C0F20003 		movt	r3, #:upper16:SystemCoreClock
+ 293 021c 1A68     		ldr	r2, [r3, #0]
+ 294 021e FB68     		ldr	r3, [r7, #12]
+ 295 0220 22FA03F2 		lsr	r2, r2, r3
+ 296 0224 40F20003 		movw	r3, #:lower16:SystemCoreClock
+ 297 0228 C0F20003 		movt	r3, #:upper16:SystemCoreClock
+ 298 022c 1A60     		str	r2, [r3, #0]
  290:../src/system_stm32f30x.c **** }
- 300              		.loc 1 290 0
- 301 022e 07F11407 		add	r7, r7, #20
- 302 0232 BD46     		mov	sp, r7
- 303 0234 80BC     		pop	{r7}
- 304 0236 7047     		bx	lr
- 305              		.cfi_endproc
- 306              	.LFE112:
- 308              		.align	2
- 309              		.thumb
- 310              		.thumb_func
- 312              	SetSysClock:
- 313              	.LFB113:
+ 299              		.loc 1 290 0
+ 300 022e 07F11407 		add	r7, r7, #20
+ 301 0232 BD46     		mov	sp, r7
+ 302 0234 80BC     		pop	{r7}
+ 303 0236 7047     		bx	lr
+ 304              		.cfi_endproc
+ 305              	.LFE112:
+ 307              		.align	2
+ 308              		.thumb
+ 309              		.thumb_func
+ 311              	SetSysClock:
+ 312              	.LFB113:
  291:../src/system_stm32f30x.c **** 
  292:../src/system_stm32f30x.c **** /**
  293:../src/system_stm32f30x.c ****   * @brief  Configures the System clock source, PLL Multiplier and Divider factors,
@@ -605,27 +604,27 @@
  299:../src/system_stm32f30x.c ****   */
  300:../src/system_stm32f30x.c **** static void SetSysClock(void)
  301:../src/system_stm32f30x.c **** {
- 314              		.loc 1 301 0
- 315              		.cfi_startproc
- 316              		@ args = 0, pretend = 0, frame = 8
- 317              		@ frame_needed = 1, uses_anonymous_args = 0
- 318              		@ link register save eliminated.
- 319 0238 80B4     		push	{r7}
- 320              	.LCFI5:
- 321              		.cfi_def_cfa_offset 4
- 322              		.cfi_offset 7, -4
- 323 023a 83B0     		sub	sp, sp, #12
- 324              	.LCFI6:
- 325              		.cfi_def_cfa_offset 16
- 326 023c 00AF     		add	r7, sp, #0
- 327              	.LCFI7:
- 328              		.cfi_def_cfa_register 7
+ 313              		.loc 1 301 0
+ 314              		.cfi_startproc
+ 315              		@ args = 0, pretend = 0, frame = 8
+ 316              		@ frame_needed = 1, uses_anonymous_args = 0
+ 317              		@ link register save eliminated.
+ 318 0238 80B4     		push	{r7}
+ 319              	.LCFI5:
+ 320              		.cfi_def_cfa_offset 4
+ 321              		.cfi_offset 7, -4
+ 322 023a 83B0     		sub	sp, sp, #12
+ 323              	.LCFI6:
+ 324              		.cfi_def_cfa_offset 16
+ 325 023c 00AF     		add	r7, sp, #0
+ 326              	.LCFI7:
+ 327              		.cfi_def_cfa_register 7
  302:../src/system_stm32f30x.c ****   __IO uint32_t StartUpCounter = 0, HSEStatus = 0;
- 329              		.loc 1 302 0
- 330 023e 4FF00003 		mov	r3, #0
- 331 0242 7B60     		str	r3, [r7, #4]
- 332 0244 4FF00003 		mov	r3, #0
- 333 0248 3B60     		str	r3, [r7, #0]
+ 328              		.loc 1 302 0
+ 329 023e 4FF00003 		mov	r3, #0
+ 330 0242 7B60     		str	r3, [r7, #4]
+ 331 0244 4FF00003 		mov	r3, #0
+ 332 0248 3B60     		str	r3, [r7, #0]
  303:../src/system_stm32f30x.c **** 
  304:../src/system_stm32f30x.c **** /******************************************************************************/
  305:../src/system_stm32f30x.c **** /*            PLL (clocked by HSE) used as System clock source                */
@@ -634,190 +633,190 @@
  308:../src/system_stm32f30x.c ****   /* SYSCLK, HCLK, PCLK2 and PCLK1 configuration -----------*/
  309:../src/system_stm32f30x.c ****   /* Enable HSE */
  310:../src/system_stm32f30x.c ****   RCC->CR |= ((uint32_t)RCC_CR_HSEON);
- 334              		.loc 1 310 0
- 335 024a 4FF48053 		mov	r3, #4096
- 336 024e C4F20203 		movt	r3, 16386
- 337 0252 4FF48052 		mov	r2, #4096
- 338 0256 C4F20202 		movt	r2, 16386
- 339 025a 1268     		ldr	r2, [r2, #0]
- 340 025c 42F48032 		orr	r2, r2, #65536
- 341 0260 1A60     		str	r2, [r3, #0]
- 342              	.L13:
+ 333              		.loc 1 310 0
+ 334 024a 4FF48053 		mov	r3, #4096
+ 335 024e C4F20203 		movt	r3, 16386
+ 336 0252 4FF48052 		mov	r2, #4096
+ 337 0256 C4F20202 		movt	r2, 16386
+ 338 025a 1268     		ldr	r2, [r2, #0]
+ 339 025c 42F48032 		orr	r2, r2, #65536
+ 340 0260 1A60     		str	r2, [r3, #0]
+ 341              	.L13:
  311:../src/system_stm32f30x.c ****  
  312:../src/system_stm32f30x.c ****   /* Wait till HSE is ready and if Time out is reached exit */
  313:../src/system_stm32f30x.c ****   do
  314:../src/system_stm32f30x.c ****   {
  315:../src/system_stm32f30x.c ****     HSEStatus = RCC->CR & RCC_CR_HSERDY;
- 343              		.loc 1 315 0 discriminator 1
- 344 0262 4FF48053 		mov	r3, #4096
- 345 0266 C4F20203 		movt	r3, 16386
- 346 026a 1B68     		ldr	r3, [r3, #0]
- 347 026c 03F40033 		and	r3, r3, #131072
- 348 0270 3B60     		str	r3, [r7, #0]
+ 342              		.loc 1 315 0 discriminator 1
+ 343 0262 4FF48053 		mov	r3, #4096
+ 344 0266 C4F20203 		movt	r3, 16386
+ 345 026a 1B68     		ldr	r3, [r3, #0]
+ 346 026c 03F40033 		and	r3, r3, #131072
+ 347 0270 3B60     		str	r3, [r7, #0]
  316:../src/system_stm32f30x.c ****     StartUpCounter++;
- 349              		.loc 1 316 0 discriminator 1
- 350 0272 7B68     		ldr	r3, [r7, #4]
- 351 0274 03F10103 		add	r3, r3, #1
- 352 0278 7B60     		str	r3, [r7, #4]
+ 348              		.loc 1 316 0 discriminator 1
+ 349 0272 7B68     		ldr	r3, [r7, #4]
+ 350 0274 03F10103 		add	r3, r3, #1
+ 351 0278 7B60     		str	r3, [r7, #4]
  317:../src/system_stm32f30x.c ****   } while((HSEStatus == 0) && (StartUpCounter != HSE_STARTUP_TIMEOUT));
- 353              		.loc 1 317 0 discriminator 1
- 354 027a 3B68     		ldr	r3, [r7, #0]
- 355 027c 002B     		cmp	r3, #0
- 356 027e 03D1     		bne	.L12
- 357 0280 7B68     		ldr	r3, [r7, #4]
- 358 0282 B3F5A06F 		cmp	r3, #1280
- 359 0286 ECD1     		bne	.L13
- 360              	.L12:
+ 352              		.loc 1 317 0 discriminator 1
+ 353 027a 3B68     		ldr	r3, [r7, #0]
+ 354 027c 002B     		cmp	r3, #0
+ 355 027e 03D1     		bne	.L12
+ 356 0280 7B68     		ldr	r3, [r7, #4]
+ 357 0282 B3F5A06F 		cmp	r3, #1280
+ 358 0286 ECD1     		bne	.L13
+ 359              	.L12:
  318:../src/system_stm32f30x.c **** 
  319:../src/system_stm32f30x.c ****   if ((RCC->CR & RCC_CR_HSERDY) != RESET)
- 361              		.loc 1 319 0
- 362 0288 4FF48053 		mov	r3, #4096
- 363 028c C4F20203 		movt	r3, 16386
- 364 0290 1B68     		ldr	r3, [r3, #0]
- 365 0292 03F40033 		and	r3, r3, #131072
- 366 0296 002B     		cmp	r3, #0
- 367 0298 03D0     		beq	.L14
+ 360              		.loc 1 319 0
+ 361 0288 4FF48053 		mov	r3, #4096
+ 362 028c C4F20203 		movt	r3, 16386
+ 363 0290 1B68     		ldr	r3, [r3, #0]
+ 364 0292 03F40033 		and	r3, r3, #131072
+ 365 0296 002B     		cmp	r3, #0
+ 366 0298 03D0     		beq	.L14
  320:../src/system_stm32f30x.c ****   {
  321:../src/system_stm32f30x.c ****     HSEStatus = (uint32_t)0x01;
- 368              		.loc 1 321 0
- 369 029a 4FF00103 		mov	r3, #1
- 370 029e 3B60     		str	r3, [r7, #0]
- 371 02a0 02E0     		b	.L15
- 372              	.L14:
+ 367              		.loc 1 321 0
+ 368 029a 4FF00103 		mov	r3, #1
+ 369 029e 3B60     		str	r3, [r7, #0]
+ 370 02a0 02E0     		b	.L15
+ 371              	.L14:
  322:../src/system_stm32f30x.c ****   }
  323:../src/system_stm32f30x.c ****   else
  324:../src/system_stm32f30x.c ****   {
  325:../src/system_stm32f30x.c ****     HSEStatus = (uint32_t)0x00;
- 373              		.loc 1 325 0
- 374 02a2 4FF00003 		mov	r3, #0
- 375 02a6 3B60     		str	r3, [r7, #0]
- 376              	.L15:
+ 372              		.loc 1 325 0
+ 373 02a2 4FF00003 		mov	r3, #0
+ 374 02a6 3B60     		str	r3, [r7, #0]
+ 375              	.L15:
  326:../src/system_stm32f30x.c ****   }
  327:../src/system_stm32f30x.c **** 
  328:../src/system_stm32f30x.c ****   if (HSEStatus == (uint32_t)0x01)
- 377              		.loc 1 328 0
- 378 02a8 3B68     		ldr	r3, [r7, #0]
- 379 02aa 012B     		cmp	r3, #1
- 380 02ac 76D1     		bne	.L11
+ 376              		.loc 1 328 0
+ 377 02a8 3B68     		ldr	r3, [r7, #0]
+ 378 02aa 012B     		cmp	r3, #1
+ 379 02ac 76D1     		bne	.L11
  329:../src/system_stm32f30x.c ****   {
  330:../src/system_stm32f30x.c ****     /* Enable Prefetch Buffer and set Flash Latency */
  331:../src/system_stm32f30x.c ****     FLASH->ACR = FLASH_ACR_PRFTBE | (uint32_t)FLASH_ACR_LATENCY_1;
- 381              		.loc 1 331 0
- 382 02ae 4FF40053 		mov	r3, #8192
- 383 02b2 C4F20203 		movt	r3, 16386
- 384 02b6 4FF01202 		mov	r2, #18
- 385 02ba 1A60     		str	r2, [r3, #0]
+ 380              		.loc 1 331 0
+ 381 02ae 4FF40053 		mov	r3, #8192
+ 382 02b2 C4F20203 		movt	r3, 16386
+ 383 02b6 4FF01202 		mov	r2, #18
+ 384 02ba 1A60     		str	r2, [r3, #0]
  332:../src/system_stm32f30x.c ****  
  333:../src/system_stm32f30x.c ****      /* HCLK = SYSCLK / 1 */
  334:../src/system_stm32f30x.c ****      RCC->CFGR |= (uint32_t)RCC_CFGR_HPRE_DIV1;
- 386              		.loc 1 334 0
- 387 02bc 4FF48053 		mov	r3, #4096
- 388 02c0 C4F20203 		movt	r3, 16386
- 389 02c4 4FF48052 		mov	r2, #4096
- 390 02c8 C4F20202 		movt	r2, 16386
- 391 02cc 5268     		ldr	r2, [r2, #4]
- 392 02ce 5A60     		str	r2, [r3, #4]
+ 385              		.loc 1 334 0
+ 386 02bc 4FF48053 		mov	r3, #4096
+ 387 02c0 C4F20203 		movt	r3, 16386
+ 388 02c4 4FF48052 		mov	r2, #4096
+ 389 02c8 C4F20202 		movt	r2, 16386
+ 390 02cc 5268     		ldr	r2, [r2, #4]
+ 391 02ce 5A60     		str	r2, [r3, #4]
  335:../src/system_stm32f30x.c ****        
  336:../src/system_stm32f30x.c ****      /* PCLK2 = HCLK / 1 */
  337:../src/system_stm32f30x.c ****      RCC->CFGR |= (uint32_t)RCC_CFGR_PPRE2_DIV1;
- 393              		.loc 1 337 0
- 394 02d0 4FF48053 		mov	r3, #4096
- 395 02d4 C4F20203 		movt	r3, 16386
- 396 02d8 4FF48052 		mov	r2, #4096
- 397 02dc C4F20202 		movt	r2, 16386
- 398 02e0 5268     		ldr	r2, [r2, #4]
- 399 02e2 5A60     		str	r2, [r3, #4]
+ 392              		.loc 1 337 0
+ 393 02d0 4FF48053 		mov	r3, #4096
+ 394 02d4 C4F20203 		movt	r3, 16386
+ 395 02d8 4FF48052 		mov	r2, #4096
+ 396 02dc C4F20202 		movt	r2, 16386
+ 397 02e0 5268     		ldr	r2, [r2, #4]
+ 398 02e2 5A60     		str	r2, [r3, #4]
  338:../src/system_stm32f30x.c ****      
  339:../src/system_stm32f30x.c ****      /* PCLK1 = HCLK / 2 */
  340:../src/system_stm32f30x.c ****      RCC->CFGR |= (uint32_t)RCC_CFGR_PPRE1_DIV2;
- 400              		.loc 1 340 0
- 401 02e4 4FF48053 		mov	r3, #4096
- 402 02e8 C4F20203 		movt	r3, 16386
- 403 02ec 4FF48052 		mov	r2, #4096
- 404 02f0 C4F20202 		movt	r2, 16386
- 405 02f4 5268     		ldr	r2, [r2, #4]
- 406 02f6 42F48062 		orr	r2, r2, #1024
- 407 02fa 5A60     		str	r2, [r3, #4]
+ 399              		.loc 1 340 0
+ 400 02e4 4FF48053 		mov	r3, #4096
+ 401 02e8 C4F20203 		movt	r3, 16386
+ 402 02ec 4FF48052 		mov	r2, #4096
+ 403 02f0 C4F20202 		movt	r2, 16386
+ 404 02f4 5268     		ldr	r2, [r2, #4]
+ 405 02f6 42F48062 		orr	r2, r2, #1024
+ 406 02fa 5A60     		str	r2, [r3, #4]
  341:../src/system_stm32f30x.c **** 
  342:../src/system_stm32f30x.c ****     /* PLL configuration */
  343:../src/system_stm32f30x.c ****     RCC->CFGR &= (uint32_t)((uint32_t)~(RCC_CFGR_PLLSRC | RCC_CFGR_PLLXTPRE | RCC_CFGR_PLLMULL));
- 408              		.loc 1 343 0
- 409 02fc 4FF48053 		mov	r3, #4096
- 410 0300 C4F20203 		movt	r3, 16386
- 411 0304 4FF48052 		mov	r2, #4096
- 412 0308 C4F20202 		movt	r2, 16386
- 413 030c 5268     		ldr	r2, [r2, #4]
- 414 030e 22F47C12 		bic	r2, r2, #4128768
- 415 0312 5A60     		str	r2, [r3, #4]
+ 407              		.loc 1 343 0
+ 408 02fc 4FF48053 		mov	r3, #4096
+ 409 0300 C4F20203 		movt	r3, 16386
+ 410 0304 4FF48052 		mov	r2, #4096
+ 411 0308 C4F20202 		movt	r2, 16386
+ 412 030c 5268     		ldr	r2, [r2, #4]
+ 413 030e 22F47C12 		bic	r2, r2, #4128768
+ 414 0312 5A60     		str	r2, [r3, #4]
  344:../src/system_stm32f30x.c ****     RCC->CFGR |= (uint32_t)(RCC_CFGR_PLLSRC_PREDIV1 | RCC_CFGR_PLLXTPRE_PREDIV1 | RCC_CFGR_PLLMULL9
- 416              		.loc 1 344 0
- 417 0314 4FF48053 		mov	r3, #4096
- 418 0318 C4F20203 		movt	r3, 16386
- 419 031c 4FF48052 		mov	r2, #4096
- 420 0320 C4F20202 		movt	r2, 16386
- 421 0324 5268     		ldr	r2, [r2, #4]
- 422 0326 42F4E812 		orr	r2, r2, #1900544
- 423 032a 5A60     		str	r2, [r3, #4]
+ 415              		.loc 1 344 0
+ 416 0314 4FF48053 		mov	r3, #4096
+ 417 0318 C4F20203 		movt	r3, 16386
+ 418 031c 4FF48052 		mov	r2, #4096
+ 419 0320 C4F20202 		movt	r2, 16386
+ 420 0324 5268     		ldr	r2, [r2, #4]
+ 421 0326 42F4E812 		orr	r2, r2, #1900544
+ 422 032a 5A60     		str	r2, [r3, #4]
  345:../src/system_stm32f30x.c **** 
  346:../src/system_stm32f30x.c ****     /* Enable PLL */
  347:../src/system_stm32f30x.c ****     RCC->CR |= RCC_CR_PLLON;
- 424              		.loc 1 347 0
- 425 032c 4FF48053 		mov	r3, #4096
- 426 0330 C4F20203 		movt	r3, 16386
- 427 0334 4FF48052 		mov	r2, #4096
- 428 0338 C4F20202 		movt	r2, 16386
- 429 033c 1268     		ldr	r2, [r2, #0]
- 430 033e 42F08072 		orr	r2, r2, #16777216
- 431 0342 1A60     		str	r2, [r3, #0]
+ 423              		.loc 1 347 0
+ 424 032c 4FF48053 		mov	r3, #4096
+ 425 0330 C4F20203 		movt	r3, 16386
+ 426 0334 4FF48052 		mov	r2, #4096
+ 427 0338 C4F20202 		movt	r2, 16386
+ 428 033c 1268     		ldr	r2, [r2, #0]
+ 429 033e 42F08072 		orr	r2, r2, #16777216
+ 430 0342 1A60     		str	r2, [r3, #0]
  348:../src/system_stm32f30x.c **** 
  349:../src/system_stm32f30x.c ****     /* Wait till PLL is ready */
  350:../src/system_stm32f30x.c ****     while((RCC->CR & RCC_CR_PLLRDY) == 0)
- 432              		.loc 1 350 0
- 433 0344 00BF     		nop
- 434              	.L17:
- 435              		.loc 1 350 0 is_stmt 0 discriminator 1
- 436 0346 4FF48053 		mov	r3, #4096
- 437 034a C4F20203 		movt	r3, 16386
- 438 034e 1B68     		ldr	r3, [r3, #0]
- 439 0350 03F00073 		and	r3, r3, #33554432
- 440 0354 002B     		cmp	r3, #0
- 441 0356 F6D0     		beq	.L17
+ 431              		.loc 1 350 0
+ 432 0344 00BF     		nop
+ 433              	.L17:
+ 434              		.loc 1 350 0 is_stmt 0 discriminator 1
+ 435 0346 4FF48053 		mov	r3, #4096
+ 436 034a C4F20203 		movt	r3, 16386
+ 437 034e 1B68     		ldr	r3, [r3, #0]
+ 438 0350 03F00073 		and	r3, r3, #33554432
+ 439 0354 002B     		cmp	r3, #0
+ 440 0356 F6D0     		beq	.L17
  351:../src/system_stm32f30x.c ****     {
  352:../src/system_stm32f30x.c ****     }
  353:../src/system_stm32f30x.c ****     
  354:../src/system_stm32f30x.c ****     /* Select PLL as system clock source */
  355:../src/system_stm32f30x.c ****     RCC->CFGR &= (uint32_t)((uint32_t)~(RCC_CFGR_SW));
- 442              		.loc 1 355 0 is_stmt 1
- 443 0358 4FF48053 		mov	r3, #4096
- 444 035c C4F20203 		movt	r3, 16386
- 445 0360 4FF48052 		mov	r2, #4096
- 446 0364 C4F20202 		movt	r2, 16386
- 447 0368 5268     		ldr	r2, [r2, #4]
- 448 036a 22F00302 		bic	r2, r2, #3
- 449 036e 5A60     		str	r2, [r3, #4]
+ 441              		.loc 1 355 0 is_stmt 1
+ 442 0358 4FF48053 		mov	r3, #4096
+ 443 035c C4F20203 		movt	r3, 16386
+ 444 0360 4FF48052 		mov	r2, #4096
+ 445 0364 C4F20202 		movt	r2, 16386
+ 446 0368 5268     		ldr	r2, [r2, #4]
+ 447 036a 22F00302 		bic	r2, r2, #3
+ 448 036e 5A60     		str	r2, [r3, #4]
  356:../src/system_stm32f30x.c ****     RCC->CFGR |= (uint32_t)RCC_CFGR_SW_PLL;
- 450              		.loc 1 356 0
- 451 0370 4FF48053 		mov	r3, #4096
- 452 0374 C4F20203 		movt	r3, 16386
- 453 0378 4FF48052 		mov	r2, #4096
- 454 037c C4F20202 		movt	r2, 16386
- 455 0380 5268     		ldr	r2, [r2, #4]
- 456 0382 42F00202 		orr	r2, r2, #2
- 457 0386 5A60     		str	r2, [r3, #4]
+ 449              		.loc 1 356 0
+ 450 0370 4FF48053 		mov	r3, #4096
+ 451 0374 C4F20203 		movt	r3, 16386
+ 452 0378 4FF48052 		mov	r2, #4096
+ 453 037c C4F20202 		movt	r2, 16386
+ 454 0380 5268     		ldr	r2, [r2, #4]
+ 455 0382 42F00202 		orr	r2, r2, #2
+ 456 0386 5A60     		str	r2, [r3, #4]
  357:../src/system_stm32f30x.c **** 
  358:../src/system_stm32f30x.c ****     /* Wait till PLL is used as system clock source */
  359:../src/system_stm32f30x.c ****     while ((RCC->CFGR & (uint32_t)RCC_CFGR_SWS) != (uint32_t)RCC_CFGR_SWS_PLL)
- 458              		.loc 1 359 0
- 459 0388 00BF     		nop
- 460              	.L18:
- 461              		.loc 1 359 0 is_stmt 0 discriminator 1
- 462 038a 4FF48053 		mov	r3, #4096
- 463 038e C4F20203 		movt	r3, 16386
- 464 0392 5B68     		ldr	r3, [r3, #4]
- 465 0394 03F00C03 		and	r3, r3, #12
- 466 0398 082B     		cmp	r3, #8
- 467 039a F6D1     		bne	.L18
- 468              	.L11:
+ 457              		.loc 1 359 0
+ 458 0388 00BF     		nop
+ 459              	.L18:
+ 460              		.loc 1 359 0 is_stmt 0 discriminator 1
+ 461 038a 4FF48053 		mov	r3, #4096
+ 462 038e C4F20203 		movt	r3, 16386
+ 463 0392 5B68     		ldr	r3, [r3, #4]
+ 464 0394 03F00C03 		and	r3, r3, #12
+ 465 0398 082B     		cmp	r3, #8
+ 466 039a F6D1     		bne	.L18
+ 467              	.L11:
  360:../src/system_stm32f30x.c ****     {
  361:../src/system_stm32f30x.c ****     }
  362:../src/system_stm32f30x.c ****   }
@@ -826,28 +825,28 @@
  365:../src/system_stm32f30x.c ****          configuration. User can add here some code to deal with this error */
  366:../src/system_stm32f30x.c ****   }
  367:../src/system_stm32f30x.c **** }
- 469              		.loc 1 367 0 is_stmt 1
- 470 039c 07F10C07 		add	r7, r7, #12
- 471 03a0 BD46     		mov	sp, r7
- 472 03a2 80BC     		pop	{r7}
- 473 03a4 7047     		bx	lr
- 474              		.cfi_endproc
- 475              	.LFE113:
- 477              	.Letext0:
- 478              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
- 479              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
- 480              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
+ 468              		.loc 1 367 0 is_stmt 1
+ 469 039c 07F10C07 		add	r7, r7, #12
+ 470 03a0 BD46     		mov	sp, r7
+ 471 03a2 80BC     		pop	{r7}
+ 472 03a4 7047     		bx	lr
+ 473              		.cfi_endproc
+ 474              	.LFE113:
+ 476              	.Letext0:
+ 477              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
+ 478              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
+ 479              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 system_stm32f30x.c
-     /tmp/ccAb22wH.s:25     .data:00000000 SystemCoreClock
-     /tmp/ccAb22wH.s:22     .data:00000000 $d
-     /tmp/ccAb22wH.s:31     .data:00000004 AHBPrescTable
-     /tmp/ccAb22wH.s:49     .text:00000000 $t
-     /tmp/ccAb22wH.s:54     .text:00000000 SystemInit
-     /tmp/ccAb22wH.s:312    .text:00000238 SetSysClock
-     /tmp/ccAb22wH.s:160    .text:000000fc SystemCoreClockUpdate
+     /tmp/ccNxxSvj.s:24     .data:00000000 SystemCoreClock
+     /tmp/ccNxxSvj.s:21     .data:00000000 $d
+     /tmp/ccNxxSvj.s:30     .data:00000004 AHBPrescTable
+     /tmp/ccNxxSvj.s:48     .text:00000000 $t
+     /tmp/ccNxxSvj.s:53     .text:00000000 SystemInit
+     /tmp/ccNxxSvj.s:311    .text:00000238 SetSysClock
+     /tmp/ccNxxSvj.s:159    .text:000000fc SystemCoreClockUpdate
                      .debug_frame:00000010 $d
-                           .group:00000000 wm4.1.743cd71370ebc432b539c5dba7924ecc
+                           .group:00000000 wm4.1.323dce8664331a0daf4a2675e107c70c
                            .group:00000000 wm4.stm32f30x.h.56.6f19c65e98e3319a61449cb2b2455af5
                            .group:00000000 wm4.core_cm4.h.32.1434cd257ff5806b1b03cd32ab0641e9
                            .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05

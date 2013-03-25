@@ -1,29 +1,28 @@
    1              		.syntax unified
    2              		.cpu cortex-m4
    3              		.eabi_attribute 27, 3
-   4              		.eabi_attribute 28, 1
-   5              		.fpu fpv4-sp-d16
-   6              		.eabi_attribute 20, 1
-   7              		.eabi_attribute 21, 1
-   8              		.eabi_attribute 23, 3
-   9              		.eabi_attribute 24, 1
-  10              		.eabi_attribute 25, 1
-  11              		.eabi_attribute 26, 1
-  12              		.eabi_attribute 30, 6
-  13              		.eabi_attribute 34, 1
-  14              		.eabi_attribute 18, 4
-  15              		.thumb
-  16              		.file	"debug.cpp"
-  17              		.text
-  18              	.Ltext0:
-  19              		.cfi_sections	.debug_frame
-  20              		.align	2
-  21              		.global	_Z10blink_ledsv
-  22              		.thumb
-  23              		.thumb_func
-  25              	_Z10blink_ledsv:
-  26              	.LFB111:
-  27              		.file 1 "../src/debug.cpp"
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"debug.cpp"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.align	2
+  20              		.global	_Z10blink_ledsv
+  21              		.thumb
+  22              		.thumb_func
+  24              	_Z10blink_ledsv:
+  25              	.LFB111:
+  26              		.file 1 "../src/debug.cpp"
    1:../src/debug.cpp **** /*
    2:../src/debug.cpp ****  * debug.cpp
    3:../src/debug.cpp ****  *
@@ -35,104 +34,104 @@
    9:../src/debug.cpp **** 
   10:../src/debug.cpp **** void blink_leds(void)
   11:../src/debug.cpp **** {
-  28              		.loc 1 11 0
-  29              		.cfi_startproc
-  30              		@ args = 0, pretend = 0, frame = 8
-  31              		@ frame_needed = 1, uses_anonymous_args = 0
-  32 0000 80B5     		push	{r7, lr}
-  33              	.LCFI0:
-  34              		.cfi_def_cfa_offset 8
-  35              		.cfi_offset 7, -8
-  36              		.cfi_offset 14, -4
-  37 0002 82B0     		sub	sp, sp, #8
-  38              	.LCFI1:
-  39              		.cfi_def_cfa_offset 16
-  40 0004 00AF     		add	r7, sp, #0
-  41              	.LCFI2:
-  42              		.cfi_def_cfa_register 7
-  43              	.LBB2:
+  27              		.loc 1 11 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 8
+  30              		@ frame_needed = 1, uses_anonymous_args = 0
+  31 0000 80B5     		push	{r7, lr}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 7, -8
+  35              		.cfi_offset 14, -4
+  36 0002 82B0     		sub	sp, sp, #8
+  37              	.LCFI1:
+  38              		.cfi_def_cfa_offset 16
+  39 0004 00AF     		add	r7, sp, #0
+  40              	.LCFI2:
+  41              		.cfi_def_cfa_register 7
+  42              	.LBB2:
   12:../src/debug.cpp **** 	int foo = 0;
-  44              		.loc 1 12 0
-  45 0006 4FF00003 		mov	r3, #0
-  46 000a 7B60     		str	r3, [r7, #4]
+  43              		.loc 1 12 0
+  44 0006 4FF00003 		mov	r3, #0
+  45 000a 7B60     		str	r3, [r7, #4]
   13:../src/debug.cpp **** 	for(foo = 0; foo < 160000; ++foo){
-  47              		.loc 1 13 0
-  48 000c 4FF00003 		mov	r3, #0
-  49 0010 7B60     		str	r3, [r7, #4]
-  50 0012 0DE0     		b	.L2
-  51              	.L3:
+  46              		.loc 1 13 0
+  47 000c 4FF00003 		mov	r3, #0
+  48 0010 7B60     		str	r3, [r7, #4]
+  49 0012 0DE0     		b	.L2
+  50              	.L3:
   14:../src/debug.cpp **** 		GPIO_WriteBit(GPIOE, GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_15, Bit_SET);
-  52              		.loc 1 14 0 discriminator 2
-  53 0014 4FF48050 		mov	r0, #4096
-  54 0018 C4F60000 		movt	r0, 18432
-  55 001c 4FF40341 		mov	r1, #33536
-  56 0020 4FF00102 		mov	r2, #1
-  57 0024 FFF7FEFF 		bl	GPIO_WriteBit
+  51              		.loc 1 14 0 discriminator 2
+  52 0014 4FF48050 		mov	r0, #4096
+  53 0018 C4F60000 		movt	r0, 18432
+  54 001c 4FF40341 		mov	r1, #33536
+  55 0020 4FF00102 		mov	r2, #1
+  56 0024 FFF7FEFF 		bl	GPIO_WriteBit
   13:../src/debug.cpp **** 	for(foo = 0; foo < 160000; ++foo){
-  58              		.loc 1 13 0 discriminator 2
-  59 0028 7B68     		ldr	r3, [r7, #4]
-  60 002a 03F10103 		add	r3, r3, #1
-  61 002e 7B60     		str	r3, [r7, #4]
-  62              	.L2:
+  57              		.loc 1 13 0 discriminator 2
+  58 0028 7B68     		ldr	r3, [r7, #4]
+  59 002a 03F10103 		add	r3, r3, #1
+  60 002e 7B60     		str	r3, [r7, #4]
+  61              	.L2:
   13:../src/debug.cpp **** 	for(foo = 0; foo < 160000; ++foo){
-  63              		.loc 1 13 0 is_stmt 0 discriminator 1
-  64 0030 7A68     		ldr	r2, [r7, #4]
-  65 0032 47F2FF03 		movw	r3, #28927
-  66 0036 C0F20203 		movt	r3, 2
-  67 003a 9A42     		cmp	r2, r3
-  68 003c CCBF     		ite	gt
-  69 003e 0023     		movgt	r3, #0
-  70 0040 0123     		movle	r3, #1
-  71 0042 DBB2     		uxtb	r3, r3
-  72 0044 002B     		cmp	r3, #0
-  73 0046 E5D1     		bne	.L3
+  62              		.loc 1 13 0 is_stmt 0 discriminator 1
+  63 0030 7A68     		ldr	r2, [r7, #4]
+  64 0032 47F2FF03 		movw	r3, #28927
+  65 0036 C0F20203 		movt	r3, 2
+  66 003a 9A42     		cmp	r2, r3
+  67 003c CCBF     		ite	gt
+  68 003e 0023     		movgt	r3, #0
+  69 0040 0123     		movle	r3, #1
+  70 0042 DBB2     		uxtb	r3, r3
+  71 0044 002B     		cmp	r3, #0
+  72 0046 E5D1     		bne	.L3
   15:../src/debug.cpp **** 	}
   16:../src/debug.cpp **** 	for(foo = 0; foo < 160000; ++foo){
-  74              		.loc 1 16 0 is_stmt 1
-  75 0048 4FF00003 		mov	r3, #0
-  76 004c 7B60     		str	r3, [r7, #4]
-  77 004e 0DE0     		b	.L4
-  78              	.L5:
+  73              		.loc 1 16 0 is_stmt 1
+  74 0048 4FF00003 		mov	r3, #0
+  75 004c 7B60     		str	r3, [r7, #4]
+  76 004e 0DE0     		b	.L4
+  77              	.L5:
   17:../src/debug.cpp **** 		GPIO_WriteBit(GPIOE, GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_15, Bit_RESET);
-  79              		.loc 1 17 0 discriminator 2
-  80 0050 4FF48050 		mov	r0, #4096
-  81 0054 C4F60000 		movt	r0, 18432
-  82 0058 4FF40341 		mov	r1, #33536
-  83 005c 4FF00002 		mov	r2, #0
-  84 0060 FFF7FEFF 		bl	GPIO_WriteBit
+  78              		.loc 1 17 0 discriminator 2
+  79 0050 4FF48050 		mov	r0, #4096
+  80 0054 C4F60000 		movt	r0, 18432
+  81 0058 4FF40341 		mov	r1, #33536
+  82 005c 4FF00002 		mov	r2, #0
+  83 0060 FFF7FEFF 		bl	GPIO_WriteBit
   16:../src/debug.cpp **** 	for(foo = 0; foo < 160000; ++foo){
-  85              		.loc 1 16 0 discriminator 2
-  86 0064 7B68     		ldr	r3, [r7, #4]
-  87 0066 03F10103 		add	r3, r3, #1
-  88 006a 7B60     		str	r3, [r7, #4]
-  89              	.L4:
+  84              		.loc 1 16 0 discriminator 2
+  85 0064 7B68     		ldr	r3, [r7, #4]
+  86 0066 03F10103 		add	r3, r3, #1
+  87 006a 7B60     		str	r3, [r7, #4]
+  88              	.L4:
   16:../src/debug.cpp **** 	for(foo = 0; foo < 160000; ++foo){
-  90              		.loc 1 16 0 is_stmt 0 discriminator 1
-  91 006c 7A68     		ldr	r2, [r7, #4]
-  92 006e 47F2FF03 		movw	r3, #28927
-  93 0072 C0F20203 		movt	r3, 2
-  94 0076 9A42     		cmp	r2, r3
-  95 0078 CCBF     		ite	gt
-  96 007a 0023     		movgt	r3, #0
-  97 007c 0123     		movle	r3, #1
-  98 007e DBB2     		uxtb	r3, r3
-  99 0080 002B     		cmp	r3, #0
- 100 0082 E5D1     		bne	.L5
- 101              	.LBE2:
+  89              		.loc 1 16 0 is_stmt 0 discriminator 1
+  90 006c 7A68     		ldr	r2, [r7, #4]
+  91 006e 47F2FF03 		movw	r3, #28927
+  92 0072 C0F20203 		movt	r3, 2
+  93 0076 9A42     		cmp	r2, r3
+  94 0078 CCBF     		ite	gt
+  95 007a 0023     		movgt	r3, #0
+  96 007c 0123     		movle	r3, #1
+  97 007e DBB2     		uxtb	r3, r3
+  98 0080 002B     		cmp	r3, #0
+  99 0082 E5D1     		bne	.L5
+ 100              	.LBE2:
   18:../src/debug.cpp **** 	}
   19:../src/debug.cpp **** }
- 102              		.loc 1 19 0 is_stmt 1
- 103 0084 07F10807 		add	r7, r7, #8
- 104 0088 BD46     		mov	sp, r7
- 105 008a 80BD     		pop	{r7, pc}
- 106              		.cfi_endproc
- 107              	.LFE111:
- 109              		.align	2
- 110              		.global	_Z10UART1_initv
- 111              		.thumb
- 112              		.thumb_func
- 114              	_Z10UART1_initv:
- 115              	.LFB112:
+ 101              		.loc 1 19 0 is_stmt 1
+ 102 0084 07F10807 		add	r7, r7, #8
+ 103 0088 BD46     		mov	sp, r7
+ 104 008a 80BD     		pop	{r7, pc}
+ 105              		.cfi_endproc
+ 106              	.LFE111:
+ 108              		.align	2
+ 109              		.global	_Z10UART1_initv
+ 110              		.thumb
+ 111              		.thumb_func
+ 113              	_Z10UART1_initv:
+ 114              	.LFB112:
   20:../src/debug.cpp **** 
   21:../src/debug.cpp **** /* Initializes the primary debug UART port, at main Baud Rate of 115200 bps, 8n1 parity
   22:../src/debug.cpp ****  * @Args: None
@@ -141,22 +140,22 @@
   25:../src/debug.cpp **** 
   26:../src/debug.cpp **** void UART1_init(void)
   27:../src/debug.cpp **** {
- 116              		.loc 1 27 0
- 117              		.cfi_startproc
- 118              		@ args = 0, pretend = 0, frame = 32
- 119              		@ frame_needed = 1, uses_anonymous_args = 0
- 120 008c 80B5     		push	{r7, lr}
- 121              	.LCFI3:
- 122              		.cfi_def_cfa_offset 8
- 123              		.cfi_offset 7, -8
- 124              		.cfi_offset 14, -4
- 125 008e 88B0     		sub	sp, sp, #32
- 126              	.LCFI4:
- 127              		.cfi_def_cfa_offset 40
- 128 0090 00AF     		add	r7, sp, #0
- 129              	.LCFI5:
- 130              		.cfi_def_cfa_register 7
- 131              	.LBB3:
+ 115              		.loc 1 27 0
+ 116              		.cfi_startproc
+ 117              		@ args = 0, pretend = 0, frame = 32
+ 118              		@ frame_needed = 1, uses_anonymous_args = 0
+ 119 008c 80B5     		push	{r7, lr}
+ 120              	.LCFI3:
+ 121              		.cfi_def_cfa_offset 8
+ 122              		.cfi_offset 7, -8
+ 123              		.cfi_offset 14, -4
+ 124 008e 88B0     		sub	sp, sp, #32
+ 125              	.LCFI4:
+ 126              		.cfi_def_cfa_offset 40
+ 127 0090 00AF     		add	r7, sp, #0
+ 128              	.LCFI5:
+ 129              		.cfi_def_cfa_register 7
+ 130              	.LBB3:
   28:../src/debug.cpp **** 	// USART1 Init:
   29:../src/debug.cpp **** 
   30:../src/debug.cpp **** 	GPIO_InitTypeDef a;
@@ -164,149 +163,149 @@
   32:../src/debug.cpp **** 	USART_InitTypeDef u1;
   33:../src/debug.cpp **** 
   34:../src/debug.cpp **** 	u1.USART_BaudRate = 115200;
- 132              		.loc 1 34 0
- 133 0092 4FF4E133 		mov	r3, #115200
- 134 0096 3B60     		str	r3, [r7, #0]
+ 131              		.loc 1 34 0
+ 132 0092 4FF4E133 		mov	r3, #115200
+ 133 0096 3B60     		str	r3, [r7, #0]
   35:../src/debug.cpp **** 	u1.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
- 135              		.loc 1 35 0
- 136 0098 4FF00003 		mov	r3, #0
- 137 009c 7B61     		str	r3, [r7, #20]
+ 134              		.loc 1 35 0
+ 135 0098 4FF00003 		mov	r3, #0
+ 136 009c 7B61     		str	r3, [r7, #20]
   36:../src/debug.cpp **** 	u1.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
- 138              		.loc 1 36 0
- 139 009e 4FF00C03 		mov	r3, #12
- 140 00a2 3B61     		str	r3, [r7, #16]
+ 137              		.loc 1 36 0
+ 138 009e 4FF00C03 		mov	r3, #12
+ 139 00a2 3B61     		str	r3, [r7, #16]
   37:../src/debug.cpp **** 	u1.USART_Parity = USART_Parity_No;
- 141              		.loc 1 37 0
- 142 00a4 4FF00003 		mov	r3, #0
- 143 00a8 FB60     		str	r3, [r7, #12]
+ 140              		.loc 1 37 0
+ 141 00a4 4FF00003 		mov	r3, #0
+ 142 00a8 FB60     		str	r3, [r7, #12]
   38:../src/debug.cpp **** 	u1.USART_StopBits = USART_StopBits_1;
- 144              		.loc 1 38 0
- 145 00aa 4FF00003 		mov	r3, #0
- 146 00ae BB60     		str	r3, [r7, #8]
+ 143              		.loc 1 38 0
+ 144 00aa 4FF00003 		mov	r3, #0
+ 145 00ae BB60     		str	r3, [r7, #8]
   39:../src/debug.cpp **** 	u1.USART_WordLength = USART_WordLength_8b;
- 147              		.loc 1 39 0
- 148 00b0 4FF00003 		mov	r3, #0
- 149 00b4 7B60     		str	r3, [r7, #4]
+ 146              		.loc 1 39 0
+ 147 00b0 4FF00003 		mov	r3, #0
+ 148 00b4 7B60     		str	r3, [r7, #4]
   40:../src/debug.cpp **** 
   41:../src/debug.cpp **** 	a.GPIO_Pin = GPIO_Pin_9 | GPIO_Pin_10;
- 150              		.loc 1 41 0
- 151 00b6 4FF4C063 		mov	r3, #1536
- 152 00ba BB61     		str	r3, [r7, #24]
+ 149              		.loc 1 41 0
+ 150 00b6 4FF4C063 		mov	r3, #1536
+ 151 00ba BB61     		str	r3, [r7, #24]
   42:../src/debug.cpp **** 	a.GPIO_Mode = GPIO_Mode_AF;
- 153              		.loc 1 42 0
- 154 00bc 4FF00203 		mov	r3, #2
- 155 00c0 3B77     		strb	r3, [r7, #28]
+ 152              		.loc 1 42 0
+ 153 00bc 4FF00203 		mov	r3, #2
+ 154 00c0 3B77     		strb	r3, [r7, #28]
   43:../src/debug.cpp **** 	a.GPIO_OType = GPIO_OType_PP;
- 156              		.loc 1 43 0
- 157 00c2 4FF00003 		mov	r3, #0
- 158 00c6 BB77     		strb	r3, [r7, #30]
+ 155              		.loc 1 43 0
+ 156 00c2 4FF00003 		mov	r3, #0
+ 157 00c6 BB77     		strb	r3, [r7, #30]
   44:../src/debug.cpp **** 	a.GPIO_Speed = GPIO_Speed_50MHz;
- 159              		.loc 1 44 0
- 160 00c8 4FF00303 		mov	r3, #3
- 161 00cc 7B77     		strb	r3, [r7, #29]
+ 158              		.loc 1 44 0
+ 159 00c8 4FF00303 		mov	r3, #3
+ 160 00cc 7B77     		strb	r3, [r7, #29]
   45:../src/debug.cpp **** 	a.GPIO_PuPd = GPIO_PuPd_NOPULL;
- 162              		.loc 1 45 0
- 163 00ce 4FF00003 		mov	r3, #0
- 164 00d2 FB77     		strb	r3, [r7, #31]
+ 161              		.loc 1 45 0
+ 162 00ce 4FF00003 		mov	r3, #0
+ 163 00d2 FB77     		strb	r3, [r7, #31]
   46:../src/debug.cpp **** 
   47:../src/debug.cpp **** 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
- 165              		.loc 1 47 0
- 166 00d4 4FF48040 		mov	r0, #16384
- 167 00d8 4FF00101 		mov	r1, #1
- 168 00dc FFF7FEFF 		bl	RCC_APB2PeriphClockCmd
+ 164              		.loc 1 47 0
+ 165 00d4 4FF48040 		mov	r0, #16384
+ 166 00d8 4FF00101 		mov	r1, #1
+ 167 00dc FFF7FEFF 		bl	RCC_APB2PeriphClockCmd
   48:../src/debug.cpp **** 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
- 169              		.loc 1 48 0
- 170 00e0 4FF40030 		mov	r0, #131072
- 171 00e4 4FF00101 		mov	r1, #1
- 172 00e8 FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
+ 168              		.loc 1 48 0
+ 169 00e0 4FF40030 		mov	r0, #131072
+ 170 00e4 4FF00101 		mov	r1, #1
+ 171 00e8 FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
   49:../src/debug.cpp **** 
   50:../src/debug.cpp **** 	GPIO_PinAFConfig(GPIOA, GPIO_PinSource9, GPIO_AF_7);
- 173              		.loc 1 50 0
- 174 00ec 4FF09040 		mov	r0, #1207959552
- 175 00f0 4FF00901 		mov	r1, #9
- 176 00f4 4FF00702 		mov	r2, #7
- 177 00f8 FFF7FEFF 		bl	GPIO_PinAFConfig
+ 172              		.loc 1 50 0
+ 173 00ec 4FF09040 		mov	r0, #1207959552
+ 174 00f0 4FF00901 		mov	r1, #9
+ 175 00f4 4FF00702 		mov	r2, #7
+ 176 00f8 FFF7FEFF 		bl	GPIO_PinAFConfig
   51:../src/debug.cpp **** 	GPIO_PinAFConfig(GPIOA, GPIO_PinSource10, GPIO_AF_7);
- 178              		.loc 1 51 0
- 179 00fc 4FF09040 		mov	r0, #1207959552
- 180 0100 4FF00A01 		mov	r1, #10
- 181 0104 4FF00702 		mov	r2, #7
- 182 0108 FFF7FEFF 		bl	GPIO_PinAFConfig
+ 177              		.loc 1 51 0
+ 178 00fc 4FF09040 		mov	r0, #1207959552
+ 179 0100 4FF00A01 		mov	r1, #10
+ 180 0104 4FF00702 		mov	r2, #7
+ 181 0108 FFF7FEFF 		bl	GPIO_PinAFConfig
   52:../src/debug.cpp **** 
   53:../src/debug.cpp **** 	GPIO_Init(GPIOA, &a);
- 183              		.loc 1 53 0
- 184 010c 07F11803 		add	r3, r7, #24
- 185 0110 4FF09040 		mov	r0, #1207959552
- 186 0114 1946     		mov	r1, r3
- 187 0116 FFF7FEFF 		bl	GPIO_Init
+ 182              		.loc 1 53 0
+ 183 010c 07F11803 		add	r3, r7, #24
+ 184 0110 4FF09040 		mov	r0, #1207959552
+ 185 0114 1946     		mov	r1, r3
+ 186 0116 FFF7FEFF 		bl	GPIO_Init
   54:../src/debug.cpp **** 
   55:../src/debug.cpp **** 	USART_Init(USART1, &u1);
- 188              		.loc 1 55 0
- 189 011a 3B46     		mov	r3, r7
- 190 011c 4FF46050 		mov	r0, #14336
- 191 0120 C4F20100 		movt	r0, 16385
- 192 0124 1946     		mov	r1, r3
- 193 0126 FFF7FEFF 		bl	USART_Init
+ 187              		.loc 1 55 0
+ 188 011a 3B46     		mov	r3, r7
+ 189 011c 4FF46050 		mov	r0, #14336
+ 190 0120 C4F20100 		movt	r0, 16385
+ 191 0124 1946     		mov	r1, r3
+ 192 0126 FFF7FEFF 		bl	USART_Init
   56:../src/debug.cpp **** 	USART_Cmd(USART1, ENABLE);
- 194              		.loc 1 56 0
- 195 012a 4FF46050 		mov	r0, #14336
- 196 012e C4F20100 		movt	r0, 16385
- 197 0132 4FF00101 		mov	r1, #1
- 198 0136 FFF7FEFF 		bl	USART_Cmd
+ 193              		.loc 1 56 0
+ 194 012a 4FF46050 		mov	r0, #14336
+ 195 012e C4F20100 		movt	r0, 16385
+ 196 0132 4FF00101 		mov	r1, #1
+ 197 0136 FFF7FEFF 		bl	USART_Cmd
   57:../src/debug.cpp **** 
   58:../src/debug.cpp **** 	/* Wait until Receive enable acknowledge flag is set */
   59:../src/debug.cpp **** 	while(USART_GetFlagStatus(USART1, USART_FLAG_REACK) == RESET)
- 199              		.loc 1 59 0
- 200 013a 00BF     		nop
- 201              	.L7:
- 202              		.loc 1 59 0 is_stmt 0 discriminator 1
- 203 013c 4FF46050 		mov	r0, #14336
- 204 0140 C4F20100 		movt	r0, 16385
- 205 0144 4FF48001 		mov	r1, #4194304
- 206 0148 FFF7FEFF 		bl	USART_GetFlagStatus
- 207 014c 0346     		mov	r3, r0
- 208 014e 002B     		cmp	r3, #0
- 209 0150 14BF     		ite	ne
- 210 0152 0023     		movne	r3, #0
- 211 0154 0123     		moveq	r3, #1
- 212 0156 DBB2     		uxtb	r3, r3
- 213 0158 002B     		cmp	r3, #0
- 214 015a EFD1     		bne	.L7
+ 198              		.loc 1 59 0
+ 199 013a 00BF     		nop
+ 200              	.L7:
+ 201              		.loc 1 59 0 is_stmt 0 discriminator 1
+ 202 013c 4FF46050 		mov	r0, #14336
+ 203 0140 C4F20100 		movt	r0, 16385
+ 204 0144 4FF48001 		mov	r1, #4194304
+ 205 0148 FFF7FEFF 		bl	USART_GetFlagStatus
+ 206 014c 0346     		mov	r3, r0
+ 207 014e 002B     		cmp	r3, #0
+ 208 0150 14BF     		ite	ne
+ 209 0152 0023     		movne	r3, #0
+ 210 0154 0123     		moveq	r3, #1
+ 211 0156 DBB2     		uxtb	r3, r3
+ 212 0158 002B     		cmp	r3, #0
+ 213 015a EFD1     		bne	.L7
   60:../src/debug.cpp **** 	{}
   61:../src/debug.cpp **** 
   62:../src/debug.cpp **** 	/* Wait until Transmit enable acknowledge flag is set */
   63:../src/debug.cpp **** 	while(USART_GetFlagStatus(USART1, USART_FLAG_TEACK) == RESET)
- 215              		.loc 1 63 0 is_stmt 1
- 216 015c 00BF     		nop
- 217              	.L8:
- 218              		.loc 1 63 0 is_stmt 0 discriminator 1
- 219 015e 4FF46050 		mov	r0, #14336
- 220 0162 C4F20100 		movt	r0, 16385
- 221 0166 4FF40011 		mov	r1, #2097152
- 222 016a FFF7FEFF 		bl	USART_GetFlagStatus
- 223 016e 0346     		mov	r3, r0
- 224 0170 002B     		cmp	r3, #0
- 225 0172 14BF     		ite	ne
- 226 0174 0023     		movne	r3, #0
- 227 0176 0123     		moveq	r3, #1
- 228 0178 DBB2     		uxtb	r3, r3
- 229 017a 002B     		cmp	r3, #0
- 230 017c EFD1     		bne	.L8
- 231              	.LBE3:
+ 214              		.loc 1 63 0 is_stmt 1
+ 215 015c 00BF     		nop
+ 216              	.L8:
+ 217              		.loc 1 63 0 is_stmt 0 discriminator 1
+ 218 015e 4FF46050 		mov	r0, #14336
+ 219 0162 C4F20100 		movt	r0, 16385
+ 220 0166 4FF40011 		mov	r1, #2097152
+ 221 016a FFF7FEFF 		bl	USART_GetFlagStatus
+ 222 016e 0346     		mov	r3, r0
+ 223 0170 002B     		cmp	r3, #0
+ 224 0172 14BF     		ite	ne
+ 225 0174 0023     		movne	r3, #0
+ 226 0176 0123     		moveq	r3, #1
+ 227 0178 DBB2     		uxtb	r3, r3
+ 228 017a 002B     		cmp	r3, #0
+ 229 017c EFD1     		bne	.L8
+ 230              	.LBE3:
   64:../src/debug.cpp **** 	{}
   65:../src/debug.cpp **** }
- 232              		.loc 1 65 0 is_stmt 1
- 233 017e 07F12007 		add	r7, r7, #32
- 234 0182 BD46     		mov	sp, r7
- 235 0184 80BD     		pop	{r7, pc}
- 236              		.cfi_endproc
- 237              	.LFE112:
- 239 0186 00BF     		.align	2
- 240              		.global	_Z19LED_MATRIX_ISR_initv
- 241              		.thumb
- 242              		.thumb_func
- 244              	_Z19LED_MATRIX_ISR_initv:
- 245              	.LFB113:
+ 231              		.loc 1 65 0 is_stmt 1
+ 232 017e 07F12007 		add	r7, r7, #32
+ 233 0182 BD46     		mov	sp, r7
+ 234 0184 80BD     		pop	{r7, pc}
+ 235              		.cfi_endproc
+ 236              	.LFE112:
+ 238 0186 00BF     		.align	2
+ 239              		.global	_Z19LED_MATRIX_ISR_initv
+ 240              		.thumb
+ 241              		.thumb_func
+ 243              	_Z19LED_MATRIX_ISR_initv:
+ 244              	.LFB113:
   66:../src/debug.cpp **** 
   67:../src/debug.cpp **** /* Initializes the ISR that controls the LED circle on the board to provide visual feedback to the 
   68:../src/debug.cpp ****  * along with some eye candy
@@ -315,92 +314,92 @@
   71:../src/debug.cpp **** 
   72:../src/debug.cpp **** void LED_MATRIX_ISR_init(void)
   73:../src/debug.cpp **** {
- 246              		.loc 1 73 0
- 247              		.cfi_startproc
- 248              		@ args = 0, pretend = 0, frame = 24
- 249              		@ frame_needed = 1, uses_anonymous_args = 0
- 250 0188 80B5     		push	{r7, lr}
- 251              	.LCFI6:
- 252              		.cfi_def_cfa_offset 8
- 253              		.cfi_offset 7, -8
- 254              		.cfi_offset 14, -4
- 255 018a 86B0     		sub	sp, sp, #24
- 256              	.LCFI7:
- 257              		.cfi_def_cfa_offset 32
- 258 018c 00AF     		add	r7, sp, #0
- 259              	.LCFI8:
- 260              		.cfi_def_cfa_register 7
- 261              	.LBB4:
+ 245              		.loc 1 73 0
+ 246              		.cfi_startproc
+ 247              		@ args = 0, pretend = 0, frame = 24
+ 248              		@ frame_needed = 1, uses_anonymous_args = 0
+ 249 0188 80B5     		push	{r7, lr}
+ 250              	.LCFI6:
+ 251              		.cfi_def_cfa_offset 8
+ 252              		.cfi_offset 7, -8
+ 253              		.cfi_offset 14, -4
+ 254 018a 86B0     		sub	sp, sp, #24
+ 255              	.LCFI7:
+ 256              		.cfi_def_cfa_offset 32
+ 257 018c 00AF     		add	r7, sp, #0
+ 258              	.LCFI8:
+ 259              		.cfi_def_cfa_register 7
+ 260              	.LBB4:
   74:../src/debug.cpp **** 	// GPIO Init:
   75:../src/debug.cpp **** 
   76:../src/debug.cpp **** 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOE, ENABLE);
- 262              		.loc 1 76 0
- 263 018e 4FF40010 		mov	r0, #2097152
- 264 0192 4FF00101 		mov	r1, #1
- 265 0196 FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
+ 261              		.loc 1 76 0
+ 262 018e 4FF40010 		mov	r0, #2097152
+ 263 0192 4FF00101 		mov	r1, #1
+ 264 0196 FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
   77:../src/debug.cpp **** 
   78:../src/debug.cpp **** 	GPIO_InitTypeDef a;
   79:../src/debug.cpp **** 
   80:../src/debug.cpp **** 	a.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13 | GPI
- 266              		.loc 1 80 0
- 267 019a 4FF47F43 		mov	r3, #65280
- 268 019e 3B61     		str	r3, [r7, #16]
+ 265              		.loc 1 80 0
+ 266 019a 4FF47F43 		mov	r3, #65280
+ 267 019e 3B61     		str	r3, [r7, #16]
   81:../src/debug.cpp **** 	a.GPIO_Mode = GPIO_Mode_OUT;
- 269              		.loc 1 81 0
- 270 01a0 4FF00103 		mov	r3, #1
- 271 01a4 3B75     		strb	r3, [r7, #20]
+ 268              		.loc 1 81 0
+ 269 01a0 4FF00103 		mov	r3, #1
+ 270 01a4 3B75     		strb	r3, [r7, #20]
   82:../src/debug.cpp **** 	a.GPIO_PuPd = GPIO_PuPd_NOPULL;
- 272              		.loc 1 82 0
- 273 01a6 4FF00003 		mov	r3, #0
- 274 01aa FB75     		strb	r3, [r7, #23]
+ 271              		.loc 1 82 0
+ 272 01a6 4FF00003 		mov	r3, #0
+ 273 01aa FB75     		strb	r3, [r7, #23]
   83:../src/debug.cpp **** 	a.GPIO_OType = GPIO_OType_PP;
- 275              		.loc 1 83 0
- 276 01ac 4FF00003 		mov	r3, #0
- 277 01b0 BB75     		strb	r3, [r7, #22]
+ 274              		.loc 1 83 0
+ 275 01ac 4FF00003 		mov	r3, #0
+ 276 01b0 BB75     		strb	r3, [r7, #22]
   84:../src/debug.cpp **** 	a.GPIO_Speed = GPIO_Speed_Level_2;
- 278              		.loc 1 84 0
- 279 01b2 4FF00203 		mov	r3, #2
- 280 01b6 7B75     		strb	r3, [r7, #21]
+ 277              		.loc 1 84 0
+ 278 01b2 4FF00203 		mov	r3, #2
+ 279 01b6 7B75     		strb	r3, [r7, #21]
   85:../src/debug.cpp **** 
   86:../src/debug.cpp **** 	GPIO_Init(GPIOE, &a);
- 281              		.loc 1 86 0
- 282 01b8 07F11003 		add	r3, r7, #16
- 283 01bc 4FF48050 		mov	r0, #4096
- 284 01c0 C4F60000 		movt	r0, 18432
- 285 01c4 1946     		mov	r1, r3
- 286 01c6 FFF7FEFF 		bl	GPIO_Init
+ 280              		.loc 1 86 0
+ 281 01b8 07F11003 		add	r3, r7, #16
+ 282 01bc 4FF48050 		mov	r0, #4096
+ 283 01c0 C4F60000 		movt	r0, 18432
+ 284 01c4 1946     		mov	r1, r3
+ 285 01c6 FFF7FEFF 		bl	GPIO_Init
   87:../src/debug.cpp **** 
   88:../src/debug.cpp **** 	NVIC_InitTypeDef nv;
   89:../src/debug.cpp **** 	TIM_TimeBaseInitTypeDef TIM6_init;
   90:../src/debug.cpp **** 
   91:../src/debug.cpp **** 	nv.NVIC_IRQChannel = TIM6_DAC_IRQn;
- 287              		.loc 1 91 0
- 288 01ca 4FF03603 		mov	r3, #54
- 289 01ce 3B73     		strb	r3, [r7, #12]
+ 286              		.loc 1 91 0
+ 287 01ca 4FF03603 		mov	r3, #54
+ 288 01ce 3B73     		strb	r3, [r7, #12]
   92:../src/debug.cpp **** 	nv.NVIC_IRQChannelPreemptionPriority = 6; // Low-priority interrupt since this is just eye-candy..
- 290              		.loc 1 92 0
- 291 01d0 4FF00603 		mov	r3, #6
- 292 01d4 7B73     		strb	r3, [r7, #13]
+ 289              		.loc 1 92 0
+ 290 01d0 4FF00603 		mov	r3, #6
+ 291 01d4 7B73     		strb	r3, [r7, #13]
   93:../src/debug.cpp **** 	nv.NVIC_IRQChannelSubPriority = 0;
- 293              		.loc 1 93 0
- 294 01d6 4FF00003 		mov	r3, #0
- 295 01da BB73     		strb	r3, [r7, #14]
+ 292              		.loc 1 93 0
+ 293 01d6 4FF00003 		mov	r3, #0
+ 294 01da BB73     		strb	r3, [r7, #14]
   94:../src/debug.cpp **** 	nv.NVIC_IRQChannelCmd = ENABLE;
- 296              		.loc 1 94 0
- 297 01dc 4FF00103 		mov	r3, #1
- 298 01e0 FB73     		strb	r3, [r7, #15]
+ 295              		.loc 1 94 0
+ 296 01dc 4FF00103 		mov	r3, #1
+ 297 01e0 FB73     		strb	r3, [r7, #15]
   95:../src/debug.cpp **** 
   96:../src/debug.cpp **** 	NVIC_Init(&nv);
- 299              		.loc 1 96 0
- 300 01e2 07F10C03 		add	r3, r7, #12
- 301 01e6 1846     		mov	r0, r3
- 302 01e8 FFF7FEFF 		bl	NVIC_Init
+ 298              		.loc 1 96 0
+ 299 01e2 07F10C03 		add	r3, r7, #12
+ 300 01e6 1846     		mov	r0, r3
+ 301 01e8 FFF7FEFF 		bl	NVIC_Init
   97:../src/debug.cpp **** 
   98:../src/debug.cpp **** 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6, ENABLE); //Enable TIM4 on APB1
- 303              		.loc 1 98 0
- 304 01ec 4FF01000 		mov	r0, #16
- 305 01f0 4FF00101 		mov	r1, #1
- 306 01f4 FFF7FEFF 		bl	RCC_APB1PeriphClockCmd
+ 302              		.loc 1 98 0
+ 303 01ec 4FF01000 		mov	r0, #16
+ 304 01f0 4FF00101 		mov	r1, #1
+ 305 01f4 FFF7FEFF 		bl	RCC_APB1PeriphClockCmd
   99:../src/debug.cpp **** 
  100:../src/debug.cpp **** 	/*
  101:../src/debug.cpp **** 	 * UPDATE_FREQUENCY = TIM_CLK/[(PRESCALER+1)(ARR+1)(REPCOUNTER+1)]
@@ -410,71 +409,71 @@
  105:../src/debug.cpp **** 	 */
  106:../src/debug.cpp **** 
  107:../src/debug.cpp **** 	TIM6_init.TIM_Period = (10*DT_LED_MATRIX)-1;
- 307              		.loc 1 107 0
- 308 01f8 40F28333 		movw	r3, #899
- 309 01fc 7B60     		str	r3, [r7, #4]
+ 306              		.loc 1 107 0
+ 307 01f8 40F28333 		movw	r3, #899
+ 308 01fc 7B60     		str	r3, [r7, #4]
  108:../src/debug.cpp **** 	TIM6_init.TIM_Prescaler = 7199;
- 310              		.loc 1 108 0
- 311 01fe 41F61F43 		movw	r3, #7199
- 312 0202 3B80     		strh	r3, [r7, #0]	@ movhi
+ 309              		.loc 1 108 0
+ 310 01fe 41F61F43 		movw	r3, #7199
+ 311 0202 3B80     		strh	r3, [r7, #0]	@ movhi
  109:../src/debug.cpp **** 	TIM6_init.TIM_RepetitionCounter = 0;
- 313              		.loc 1 109 0
- 314 0204 4FF00003 		mov	r3, #0
- 315 0208 BB72     		strb	r3, [r7, #10]
+ 312              		.loc 1 109 0
+ 313 0204 4FF00003 		mov	r3, #0
+ 314 0208 BB72     		strb	r3, [r7, #10]
  110:../src/debug.cpp **** 	TIM6_init.TIM_ClockDivision = 0;
- 316              		.loc 1 110 0
- 317 020a 4FF00003 		mov	r3, #0
- 318 020e 3B81     		strh	r3, [r7, #8]	@ movhi
+ 315              		.loc 1 110 0
+ 316 020a 4FF00003 		mov	r3, #0
+ 317 020e 3B81     		strh	r3, [r7, #8]	@ movhi
  111:../src/debug.cpp **** 	TIM6_init.TIM_CounterMode = TIM_CounterMode_Up;
- 319              		.loc 1 111 0
- 320 0210 4FF00003 		mov	r3, #0
- 321 0214 7B80     		strh	r3, [r7, #2]	@ movhi
+ 318              		.loc 1 111 0
+ 319 0210 4FF00003 		mov	r3, #0
+ 320 0214 7B80     		strh	r3, [r7, #2]	@ movhi
  112:../src/debug.cpp **** 
  113:../src/debug.cpp **** 	TIM_TimeBaseInit(TIM6, &TIM6_init);
- 322              		.loc 1 113 0
- 323 0216 3B46     		mov	r3, r7
- 324 0218 4FF48050 		mov	r0, #4096
- 325 021c C4F20000 		movt	r0, 16384
- 326 0220 1946     		mov	r1, r3
- 327 0222 FFF7FEFF 		bl	TIM_TimeBaseInit
+ 321              		.loc 1 113 0
+ 322 0216 3B46     		mov	r3, r7
+ 323 0218 4FF48050 		mov	r0, #4096
+ 324 021c C4F20000 		movt	r0, 16384
+ 325 0220 1946     		mov	r1, r3
+ 326 0222 FFF7FEFF 		bl	TIM_TimeBaseInit
  114:../src/debug.cpp **** 
  115:../src/debug.cpp **** 	TIM_ITConfig(TIM6, TIM_IT_Update, ENABLE);
- 328              		.loc 1 115 0
- 329 0226 4FF48050 		mov	r0, #4096
- 330 022a C4F20000 		movt	r0, 16384
- 331 022e 4FF00101 		mov	r1, #1
- 332 0232 4FF00102 		mov	r2, #1
- 333 0236 FFF7FEFF 		bl	TIM_ITConfig
+ 327              		.loc 1 115 0
+ 328 0226 4FF48050 		mov	r0, #4096
+ 329 022a C4F20000 		movt	r0, 16384
+ 330 022e 4FF00101 		mov	r1, #1
+ 331 0232 4FF00102 		mov	r2, #1
+ 332 0236 FFF7FEFF 		bl	TIM_ITConfig
  116:../src/debug.cpp **** 	TIM_Cmd(TIM6, ENABLE);
- 334              		.loc 1 116 0
- 335 023a 4FF48050 		mov	r0, #4096
- 336 023e C4F20000 		movt	r0, 16384
- 337 0242 4FF00101 		mov	r1, #1
- 338 0246 FFF7FEFF 		bl	TIM_Cmd
- 339              	.LBE4:
+ 333              		.loc 1 116 0
+ 334 023a 4FF48050 		mov	r0, #4096
+ 335 023e C4F20000 		movt	r0, 16384
+ 336 0242 4FF00101 		mov	r1, #1
+ 337 0246 FFF7FEFF 		bl	TIM_Cmd
+ 338              	.LBE4:
  117:../src/debug.cpp **** }
- 340              		.loc 1 117 0
- 341 024a 07F11807 		add	r7, r7, #24
- 342 024e BD46     		mov	sp, r7
- 343 0250 80BD     		pop	{r7, pc}
- 344              		.cfi_endproc
- 345              	.LFE113:
- 347              	.Letext0:
- 348              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
- 349              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
- 350              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_gpio.h"
- 351              		.file 5 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_tim.h"
- 352              		.file 6 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_usart.h"
- 353              		.file 7 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_misc.h"
- 354              		.file 8 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
+ 339              		.loc 1 117 0
+ 340 024a 07F11807 		add	r7, r7, #24
+ 341 024e BD46     		mov	sp, r7
+ 342 0250 80BD     		pop	{r7, pc}
+ 343              		.cfi_endproc
+ 344              	.LFE113:
+ 346              	.Letext0:
+ 347              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
+ 348              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
+ 349              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_gpio.h"
+ 350              		.file 5 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_tim.h"
+ 351              		.file 6 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_usart.h"
+ 352              		.file 7 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_misc.h"
+ 353              		.file 8 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 debug.cpp
-     /tmp/cckwgLk6.s:20     .text:00000000 $t
-     /tmp/cckwgLk6.s:25     .text:00000000 _Z10blink_ledsv
-     /tmp/cckwgLk6.s:114    .text:0000008c _Z10UART1_initv
-     /tmp/cckwgLk6.s:244    .text:00000188 _Z19LED_MATRIX_ISR_initv
+     /tmp/cc5yRpTW.s:19     .text:00000000 $t
+     /tmp/cc5yRpTW.s:24     .text:00000000 _Z10blink_ledsv
+     /tmp/cc5yRpTW.s:113    .text:0000008c _Z10UART1_initv
+     /tmp/cc5yRpTW.s:243    .text:00000188 _Z19LED_MATRIX_ISR_initv
                      .debug_frame:00000010 $d
-                           .group:00000000 wm4.1.50a79f075d1434c9a8bd8ee500f78677
+                           .group:00000000 wm4.1.934603b1d669cb2b32fd4cb6dd11b673
                            .group:00000000 wm4.common_headers.h.9.669975762de5793e6d2436455cef4d0e
                            .group:00000000 wm4.stm32f30x.h.56.6f19c65e98e3319a61449cb2b2455af5
                            .group:00000000 wm4.core_cm4.h.32.1434cd257ff5806b1b03cd32ab0641e9

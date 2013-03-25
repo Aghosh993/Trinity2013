@@ -59,7 +59,7 @@ all: STM32F3x.elf secondary-outputs
 STM32F3x.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Sourcery Linux GCC C++ Linker'
-	arm-none-eabi-g++ -T"/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/linker/STM32F303VC_FLASH.ld" -Xlinker --gc-sections -Wl,-Map,STM32F3x.map -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "STM32F3x.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-g++ -T"/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/linker/STM32F303VC_FLASH.ld" -Xlinker --gc-sections -Wl,-Map,STM32F3x.map -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "STM32F3x.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
