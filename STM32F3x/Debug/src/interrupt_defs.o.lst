@@ -57,10 +57,24 @@
   28:../src/interrupt_defs.cpp **** 
   29:../src/interrupt_defs.cpp **** extern int count, stage;
   30:../src/interrupt_defs.cpp **** 
-  31:../src/interrupt_defs.cpp **** 	void TIM7_IRQHandler(void) // ISR that performs encoder state update:
-  32:../src/interrupt_defs.cpp **** 										// Runs every DT milliseconds
-  33:../src/interrupt_defs.cpp **** 	{
-  31              		.loc 1 33 0
+  31:../src/interrupt_defs.cpp **** extern float drive_cmd;// = 0.0f;
+  32:../src/interrupt_defs.cpp **** extern float err;// = 0.0f;
+  33:../src/interrupt_defs.cpp **** extern float last_err;// = 0.0f;
+  34:../src/interrupt_defs.cpp **** extern float diff_err;
+  35:../src/interrupt_defs.cpp **** extern float rt;// = 0.0f;
+  36:../src/interrupt_defs.cpp **** extern float d_front;// = 1.0f;
+  37:../src/interrupt_defs.cpp **** 
+  38:../src/interrupt_defs.cpp **** extern float left, right;
+  39:../src/interrupt_defs.cpp **** 
+  40:../src/interrupt_defs.cpp **** extern __IO uint32_t adcData[2];
+  41:../src/interrupt_defs.cpp **** extern __IO uint32_t adc2_data[2];
+  42:../src/interrupt_defs.cpp **** 
+  43:../src/interrupt_defs.cpp **** void update_pid(void);
+  44:../src/interrupt_defs.cpp **** 
+  45:../src/interrupt_defs.cpp **** 	void TIM7_IRQHandler(void) // ISR that performs encoder state update:
+  46:../src/interrupt_defs.cpp **** 										// Runs every DT milliseconds
+  47:../src/interrupt_defs.cpp **** 	{
+  31              		.loc 1 47 0
   32              		.cfi_startproc
   33              		@ args = 0, pretend = 0, frame = 96
   34              		@ frame_needed = 1, uses_anonymous_args = 0
@@ -77,58 +91,58 @@
   45              	.LCFI2:
   46              		.cfi_def_cfa_register 7
   47              	.LBB2:
-  34:../src/interrupt_defs.cpp **** 		float left_out, right_out;
-  35:../src/interrupt_defs.cpp **** 		int error, abs_err;
-  36:../src/interrupt_defs.cpp **** 
-  37:../src/interrupt_defs.cpp **** 		TIM_ClearITPendingBit(TIM7, TIM_IT_Update);
-  48              		.loc 1 37 0
+  48:../src/interrupt_defs.cpp **** 		float left_out, right_out;
+  49:../src/interrupt_defs.cpp **** 		int error, abs_err;
+  50:../src/interrupt_defs.cpp **** 
+  51:../src/interrupt_defs.cpp **** 		TIM_ClearITPendingBit(TIM7, TIM_IT_Update);
+  48              		.loc 1 51 0
   49 0006 4FF4A050 		mov	r0, #5120
   50 000a C4F20000 		movt	r0, 16384
   51 000e 4FF00101 		mov	r1, #1
   52 0012 FFF7FEFF 		bl	TIM_ClearITPendingBit
-  38:../src/interrupt_defs.cpp **** 
-  39:../src/interrupt_defs.cpp **** 		encoderState left_temp, right_temp;
-  40:../src/interrupt_defs.cpp **** 
-  41:../src/interrupt_defs.cpp **** 		left_temp.position = left_enc.position;
-  53              		.loc 1 41 0
+  52:../src/interrupt_defs.cpp **** 
+  53:../src/interrupt_defs.cpp **** 		encoderState left_temp, right_temp;
+  54:../src/interrupt_defs.cpp **** 
+  55:../src/interrupt_defs.cpp **** 		left_temp.position = left_enc.position;
+  53              		.loc 1 55 0
   54 0016 40F20003 		movw	r3, #:lower16:left_enc
   55 001a C0F20003 		movt	r3, #:upper16:left_enc
   56 001e 1B68     		ldr	r3, [r3, #0]
   57 0020 3B60     		str	r3, [r7, #0]
-  42:../src/interrupt_defs.cpp **** 		left_temp.speed = left_enc.speed;
-  58              		.loc 1 42 0
+  56:../src/interrupt_defs.cpp **** 		left_temp.speed = left_enc.speed;
+  58              		.loc 1 56 0
   59 0022 40F20003 		movw	r3, #:lower16:left_enc
   60 0026 C0F20003 		movt	r3, #:upper16:left_enc
   61 002a 5B68     		ldr	r3, [r3, #4]	@ float
   62 002c 7B60     		str	r3, [r7, #4]	@ float
-  43:../src/interrupt_defs.cpp **** 		left_temp.acceleration = left_enc.acceleration;
-  63              		.loc 1 43 0
+  57:../src/interrupt_defs.cpp **** 		left_temp.acceleration = left_enc.acceleration;
+  63              		.loc 1 57 0
   64 002e 40F20003 		movw	r3, #:lower16:left_enc
   65 0032 C0F20003 		movt	r3, #:upper16:left_enc
   66 0036 9B68     		ldr	r3, [r3, #8]	@ float
   67 0038 BB60     		str	r3, [r7, #8]	@ float
-  44:../src/interrupt_defs.cpp **** 
-  45:../src/interrupt_defs.cpp **** 		right_temp.position = right_enc.position;
-  68              		.loc 1 45 0
+  58:../src/interrupt_defs.cpp **** 
+  59:../src/interrupt_defs.cpp **** 		right_temp.position = right_enc.position;
+  68              		.loc 1 59 0
   69 003a 40F20003 		movw	r3, #:lower16:right_enc
   70 003e C0F20003 		movt	r3, #:upper16:right_enc
   71 0042 1B68     		ldr	r3, [r3, #0]
   72 0044 BB62     		str	r3, [r7, #40]
-  46:../src/interrupt_defs.cpp **** 		right_temp.speed = right_enc.speed;
-  73              		.loc 1 46 0
+  60:../src/interrupt_defs.cpp **** 		right_temp.speed = right_enc.speed;
+  73              		.loc 1 60 0
   74 0046 40F20003 		movw	r3, #:lower16:right_enc
   75 004a C0F20003 		movt	r3, #:upper16:right_enc
   76 004e 5B68     		ldr	r3, [r3, #4]	@ float
   77 0050 FB62     		str	r3, [r7, #44]	@ float
-  47:../src/interrupt_defs.cpp **** 		right_temp.acceleration = right_enc.acceleration;
-  78              		.loc 1 47 0
+  61:../src/interrupt_defs.cpp **** 		right_temp.acceleration = right_enc.acceleration;
+  78              		.loc 1 61 0
   79 0052 40F20003 		movw	r3, #:lower16:right_enc
   80 0056 C0F20003 		movt	r3, #:upper16:right_enc
   81 005a 9B68     		ldr	r3, [r3, #8]	@ float
   82 005c 3B63     		str	r3, [r7, #48]	@ float
-  48:../src/interrupt_defs.cpp **** 
-  49:../src/interrupt_defs.cpp **** 		left_enc.position = left_temp.position + (int16_t)TIM_GetCounter(TIM4); //Instead of TIM2 on othe
-  83              		.loc 1 49 0
+  62:../src/interrupt_defs.cpp **** 
+  63:../src/interrupt_defs.cpp **** 		left_enc.position = left_temp.position + (int16_t)TIM_GetCounter(TIM4); //Instead of TIM2 on othe
+  83              		.loc 1 63 0
   84 005e 3C68     		ldr	r4, [r7, #0]
   85 0060 4FF40060 		mov	r0, #2048
   86 0064 C4F20000 		movt	r0, 16384
@@ -140,14 +154,14 @@
   92 0074 40F20003 		movw	r3, #:lower16:left_enc
   93 0078 C0F20003 		movt	r3, #:upper16:left_enc
   94 007c 1A60     		str	r2, [r3, #0]
-  50:../src/interrupt_defs.cpp **** 		TIM_SetCounter(TIM4, 0);
-  95              		.loc 1 50 0
+  64:../src/interrupt_defs.cpp **** 		TIM_SetCounter(TIM4, 0);
+  95              		.loc 1 64 0
   96 007e 4FF40060 		mov	r0, #2048
   97 0082 C4F20000 		movt	r0, 16384
   98 0086 4FF00001 		mov	r1, #0
   99 008a FFF7FEFF 		bl	TIM_SetCounter
-  51:../src/interrupt_defs.cpp **** 		left_enc.speed = (float)((left_enc.position - left_temp.position)*1000)/(float)DT_ENCODER; // Sin
- 100              		.loc 1 51 0
+  65:../src/interrupt_defs.cpp **** 		left_enc.speed = (float)((left_enc.position - left_temp.position)*1000)/(float)DT_ENCODER; // Sin
+ 100              		.loc 1 65 0
  101 008e 40F20003 		movw	r3, #:lower16:left_enc
  102 0092 C0F20003 		movt	r3, #:upper16:left_enc
  103 0096 1A68     		ldr	r2, [r3, #0]
@@ -162,8 +176,8 @@
  112 00b4 40F20003 		movw	r3, #:lower16:left_enc
  113 00b8 C0F20003 		movt	r3, #:upper16:left_enc
  114 00bc C3ED017A 		fsts	s15, [r3, #4]
-  52:../src/interrupt_defs.cpp **** 		left_enc.acceleration = (float)((left_enc.speed - left_temp.speed)*1000)/(float)DT_ENCODER;
- 115              		.loc 1 52 0
+  66:../src/interrupt_defs.cpp **** 		left_enc.acceleration = (float)((left_enc.speed - left_temp.speed)*1000)/(float)DT_ENCODER;
+ 115              		.loc 1 66 0
  116 00c0 40F20003 		movw	r3, #:lower16:left_enc
  117 00c4 C0F20003 		movt	r3, #:upper16:left_enc
  118 00c8 93ED017A 		flds	s14, [r3, #4]
@@ -176,9 +190,9 @@
  125 00e4 40F20003 		movw	r3, #:lower16:left_enc
  126 00e8 C0F20003 		movt	r3, #:upper16:left_enc
  127 00ec C3ED027A 		fsts	s15, [r3, #8]
-  53:../src/interrupt_defs.cpp **** 
-  54:../src/interrupt_defs.cpp **** 		right_enc.position = right_temp.position + (int16_t)(TIM_GetCounter(TIM8));
- 128              		.loc 1 54 0
+  67:../src/interrupt_defs.cpp **** 
+  68:../src/interrupt_defs.cpp **** 		right_enc.position = right_temp.position + (int16_t)(TIM_GetCounter(TIM8));
+ 128              		.loc 1 68 0
  129 00f0 BC6A     		ldr	r4, [r7, #40]
  130 00f2 4FF45050 		mov	r0, #13312
  131 00f6 C4F20100 		movt	r0, 16385
@@ -190,14 +204,14 @@
  137 0106 40F20003 		movw	r3, #:lower16:right_enc
  138 010a C0F20003 		movt	r3, #:upper16:right_enc
  139 010e 1A60     		str	r2, [r3, #0]
-  55:../src/interrupt_defs.cpp **** 		TIM_SetCounter(TIM8, 0); // To get around the stupid 16-bit counter limitation present on all tim
- 140              		.loc 1 55 0
+  69:../src/interrupt_defs.cpp **** 		TIM_SetCounter(TIM8, 0); // To get around the stupid 16-bit counter limitation present on all tim
+ 140              		.loc 1 69 0
  141 0110 4FF45050 		mov	r0, #13312
  142 0114 C4F20100 		movt	r0, 16385
  143 0118 4FF00001 		mov	r1, #0
  144 011c FFF7FEFF 		bl	TIM_SetCounter
-  56:../src/interrupt_defs.cpp **** 		right_enc.speed = (float)((right_enc.position - right_temp.position)*1000)/(float)DT_ENCODER;
- 145              		.loc 1 56 0
+  70:../src/interrupt_defs.cpp **** 		right_enc.speed = (float)((right_enc.position - right_temp.position)*1000)/(float)DT_ENCODER;
+ 145              		.loc 1 70 0
  146 0120 40F20003 		movw	r3, #:lower16:right_enc
  147 0124 C0F20003 		movt	r3, #:upper16:right_enc
  148 0128 1A68     		ldr	r2, [r3, #0]
@@ -212,8 +226,8 @@
  157 0146 40F20003 		movw	r3, #:lower16:right_enc
  158 014a C0F20003 		movt	r3, #:upper16:right_enc
  159 014e C3ED017A 		fsts	s15, [r3, #4]
-  57:../src/interrupt_defs.cpp **** 		right_enc.acceleration = (float)((right_enc.speed - right_temp.speed)*1000)/(float)DT_ENCODER;
- 160              		.loc 1 57 0
+  71:../src/interrupt_defs.cpp **** 		right_enc.acceleration = (float)((right_enc.speed - right_temp.speed)*1000)/(float)DT_ENCODER;
+ 160              		.loc 1 71 0
  161 0152 40F20003 		movw	r3, #:lower16:right_enc
  162 0156 C0F20003 		movt	r3, #:upper16:right_enc
  163 015a 93ED017A 		flds	s14, [r3, #4]
@@ -226,19 +240,19 @@
  170 0176 40F20003 		movw	r3, #:lower16:right_enc
  171 017a C0F20003 		movt	r3, #:upper16:right_enc
  172 017e C3ED027A 		fsts	s15, [r3, #8]
-  58:../src/interrupt_defs.cpp **** 
-  59:../src/interrupt_defs.cpp **** 		if(left_enc.m == MODE_POSITION)
- 173              		.loc 1 59 0
+  72:../src/interrupt_defs.cpp **** 
+  73:../src/interrupt_defs.cpp **** 		if(left_enc.m == MODE_POSITION)
+ 173              		.loc 1 73 0
  174 0182 40F20003 		movw	r3, #:lower16:left_enc
  175 0186 C0F20003 		movt	r3, #:upper16:left_enc
  176 018a 93F82430 		ldrb	r3, [r3, #36]	@ zero_extendqisi2
  177 018e 012B     		cmp	r3, #1
  178 0190 5DD1     		bne	.L2
-  60:../src/interrupt_defs.cpp **** 		{
-  61:../src/interrupt_defs.cpp **** 			left_out = ((float)k_p * (float)(left_enc.position_target - left_enc.position))
-  62:../src/interrupt_defs.cpp **** 					+ ((float)k_i*(float)(left_enc.integral))
-  63:../src/interrupt_defs.cpp **** 					+ ((float)k_d*(float)left_enc.speed);
- 179              		.loc 1 63 0
+  74:../src/interrupt_defs.cpp **** 		{
+  75:../src/interrupt_defs.cpp **** 			left_out = ((float)k_p * (float)(left_enc.position_target - left_enc.position))
+  76:../src/interrupt_defs.cpp **** 					+ ((float)k_i*(float)(left_enc.integral))
+  77:../src/interrupt_defs.cpp **** 					+ ((float)k_d*(float)left_enc.speed);
+ 179              		.loc 1 77 0
  180 0192 40F20003 		movw	r3, #:lower16:left_enc
  181 0196 C0F20003 		movt	r3, #:upper16:left_enc
  182 019a DA68     		ldr	r2, [r3, #12]
@@ -263,40 +277,40 @@
  201 01e0 66EEA77A 		fmuls	s15, s13, s15
  202 01e4 77EE277A 		fadds	s15, s14, s15
  203 01e8 C7ED177A 		fsts	s15, [r7, #92]
-  64:../src/interrupt_defs.cpp **** 			left_out = (left_out > 100) ? 100 : ((left_out < -100) ? -100 : left_out);
- 204              		.loc 1 64 0
+  78:../src/interrupt_defs.cpp **** 			left_out = (left_out > 100) ? 100 : ((left_out < -100) ? -100 : left_out);
+ 204              		.loc 1 78 0
  205 01ec 97ED177A 		flds	s14, [r7, #92]
  206 01f0 DFED967A 		flds	s15, .L31+20
  207 01f4 B4EEE77A 		fcmpes	s14, s15
  208 01f8 F1EE10FA 		fmstat
  209 01fc 04DD     		ble	.L27
  210              	.L23:
- 211              		.loc 1 64 0 is_stmt 0 discriminator 1
+ 211              		.loc 1 78 0 is_stmt 0 discriminator 1
  212 01fe 4FF00003 		mov	r3, #0
  213 0202 C4F2C823 		movt	r3, 17096
  214 0206 0EE0     		b	.L5
  215              	.L27:
- 216              		.loc 1 64 0 discriminator 2
+ 216              		.loc 1 78 0 discriminator 2
  217 0208 97ED177A 		flds	s14, [r7, #92]
  218 020c DFED907A 		flds	s15, .L31+24
  219 0210 B4EEE77A 		fcmpes	s14, s15
  220 0214 F1EE10FA 		fmstat
  221 0218 04D5     		bpl	.L28
  222              	.L24:
- 223              		.loc 1 64 0 discriminator 3
+ 223              		.loc 1 78 0 discriminator 3
  224 021a 4FF00003 		mov	r3, #0
  225 021e CCF2C823 		movt	r3, 49864
  226 0222 00E0     		b	.L8
  227              	.L28:
- 228              		.loc 1 64 0 discriminator 4
+ 228              		.loc 1 78 0 discriminator 4
  229 0224 FB6D     		ldr	r3, [r7, #92]	@ float
  230              	.L8:
  231              	.L5:
- 232              		.loc 1 64 0 discriminator 6
+ 232              		.loc 1 78 0 discriminator 6
  233 0226 FB65     		str	r3, [r7, #92]	@ float
-  65:../src/interrupt_defs.cpp **** 
-  66:../src/interrupt_defs.cpp **** 			pwm2_output(100-((float)(left_out+100)/(float)2));
- 234              		.loc 1 66 0 is_stmt 1 discriminator 6
+  79:../src/interrupt_defs.cpp **** 
+  80:../src/interrupt_defs.cpp **** 			pwm2_output(100-((float)(left_out+100)/(float)2));
+ 234              		.loc 1 80 0 is_stmt 1 discriminator 6
  235 0228 97ED177A 		flds	s14, [r7, #92]
  236 022c DFED877A 		flds	s15, .L31+20
  237 0230 37EE277A 		fadds	s14, s14, s15
@@ -308,32 +322,32 @@
  243 0248 FFF7FEFF 		bl	_Z11pwm2_outputf
  244 024c 0BE0     		b	.L9
  245              	.L2:
-  67:../src/interrupt_defs.cpp **** 		}
-  68:../src/interrupt_defs.cpp **** 		else if(left_enc.m == MODE_SPEED)
- 246              		.loc 1 68 0
+  81:../src/interrupt_defs.cpp **** 		}
+  82:../src/interrupt_defs.cpp **** 		else if(left_enc.m == MODE_SPEED)
+ 246              		.loc 1 82 0
  247 024e 40F20003 		movw	r3, #:lower16:left_enc
  248 0252 C0F20003 		movt	r3, #:upper16:left_enc
  249 0256 93F82430 		ldrb	r3, [r3, #36]	@ zero_extendqisi2
  250 025a 022B     		cmp	r3, #2
  251 025c 03D1     		bne	.L9
-  69:../src/interrupt_defs.cpp **** 		{
-  70:../src/interrupt_defs.cpp **** 			pwm2_output(0);
- 252              		.loc 1 70 0
+  83:../src/interrupt_defs.cpp **** 		{
+  84:../src/interrupt_defs.cpp **** 			pwm2_output(0);
+ 252              		.loc 1 84 0
  253 025e 4FF00000 		mov	r0, #0
  254 0262 FFF7FEFF 		bl	_Z11pwm2_outputf
  255              	.L9:
-  71:../src/interrupt_defs.cpp **** 		}
-  72:../src/interrupt_defs.cpp **** 
-  73:../src/interrupt_defs.cpp **** 		if(right_enc.m == MODE_POSITION)
- 256              		.loc 1 73 0
+  85:../src/interrupt_defs.cpp **** 		}
+  86:../src/interrupt_defs.cpp **** 
+  87:../src/interrupt_defs.cpp **** 		if(right_enc.m == MODE_POSITION)
+ 256              		.loc 1 87 0
  257 0266 40F20003 		movw	r3, #:lower16:right_enc
  258 026a C0F20003 		movt	r3, #:upper16:right_enc
  259 026e 93F82430 		ldrb	r3, [r3, #36]	@ zero_extendqisi2
  260 0272 012B     		cmp	r3, #1
- 261 0274 40F0FE80 		bne	.L1
-  74:../src/interrupt_defs.cpp **** 		{
-  75:../src/interrupt_defs.cpp **** 			error = right_enc.position - right_enc.position_target;
- 262              		.loc 1 75 0
+ 261 0274 40F0FE80 		bne	.L10
+  88:../src/interrupt_defs.cpp **** 		{
+  89:../src/interrupt_defs.cpp **** 			error = right_enc.position - right_enc.position_target;
+ 262              		.loc 1 89 0
  263 0278 40F20003 		movw	r3, #:lower16:right_enc
  264 027c C0F20003 		movt	r3, #:upper16:right_enc
  265 0280 1A68     		ldr	r2, [r3, #0]
@@ -342,8 +356,8 @@
  268 028a DB68     		ldr	r3, [r3, #12]
  269 028c D31A     		subs	r3, r2, r3
  270 028e BB65     		str	r3, [r7, #88]
-  76:../src/interrupt_defs.cpp **** 			right_enc.integral += (float)(error) * (float)DT_ENCODER / (float)1000;
- 271              		.loc 1 76 0
+  90:../src/interrupt_defs.cpp **** 			right_enc.integral += (float)(error) * (float)DT_ENCODER / (float)1000;
+ 271              		.loc 1 90 0
  272 0290 40F20003 		movw	r3, #:lower16:right_enc
  273 0294 C0F20003 		movt	r3, #:upper16:right_enc
  274 0298 D3ED057A 		flds	s15, [r3, #20]	@ int
@@ -359,9 +373,9 @@
  284 02c0 40F20003 		movw	r3, #:lower16:right_enc
  285 02c4 C0F20003 		movt	r3, #:upper16:right_enc
  286 02c8 C3ED057A 		fsts	s15, [r3, #20]	@ int
-  77:../src/interrupt_defs.cpp **** 
-  78:../src/interrupt_defs.cpp **** 			if(right_enc.integral * k_i > 100 || right_enc.integral * k_i < -100)
- 287              		.loc 1 78 0
+  91:../src/interrupt_defs.cpp **** 
+  92:../src/interrupt_defs.cpp **** 			if(right_enc.integral * k_i > 100 || right_enc.integral * k_i < -100)
+ 287              		.loc 1 92 0
  288 02cc 40F20003 		movw	r3, #:lower16:right_enc
  289 02d0 C0F20003 		movt	r3, #:upper16:right_enc
  290 02d4 5B69     		ldr	r3, [r3, #20]
@@ -385,7 +399,7 @@
  308 0306 0346     		mov	r3, r0
  309 0308 002B     		cmp	r3, #0
  310 030a 1FD1     		bne	.L11
- 311              		.loc 1 78 0 is_stmt 0 discriminator 1
+ 311              		.loc 1 92 0 is_stmt 0 discriminator 1
  312 030c 40F20003 		movw	r3, #:lower16:right_enc
  313 0310 C0F20003 		movt	r3, #:upper16:right_enc
  314 0314 5B69     		ldr	r3, [r3, #20]
@@ -410,20 +424,20 @@
  333 0348 002B     		cmp	r3, #0
  334 034a 06D0     		beq	.L12
  335              	.L11:
-  79:../src/interrupt_defs.cpp **** 			{
-  80:../src/interrupt_defs.cpp **** 				right_enc.integral = (float)100/(float)k_i;
- 336              		.loc 1 80 0 is_stmt 1
+  93:../src/interrupt_defs.cpp **** 			{
+  94:../src/interrupt_defs.cpp **** 				right_enc.integral = (float)100/(float)k_i;
+ 336              		.loc 1 94 0 is_stmt 1
  337 034c 40F20003 		movw	r3, #:lower16:right_enc
  338 0350 C0F20003 		movt	r3, #:upper16:right_enc
  339 0354 40F29A22 		movw	r2, #666
  340 0358 5A61     		str	r2, [r3, #20]
  341              	.L12:
-  81:../src/interrupt_defs.cpp **** 			}
-  82:../src/interrupt_defs.cpp **** 
-  83:../src/interrupt_defs.cpp **** 			right_out = ((float)k_p * (float)error)
-  84:../src/interrupt_defs.cpp **** 					+ ((float)k_i*(float)(right_enc.integral))
-  85:../src/interrupt_defs.cpp **** 					+ ((float)k_d*(float)(error - right_enc.last_error)/(float)(DT_ENCODER/(float)1000));
- 342              		.loc 1 85 0
+  95:../src/interrupt_defs.cpp **** 			}
+  96:../src/interrupt_defs.cpp **** 
+  97:../src/interrupt_defs.cpp **** 			right_out = ((float)k_p * (float)error)
+  98:../src/interrupt_defs.cpp **** 					+ ((float)k_i*(float)(right_enc.integral))
+  99:../src/interrupt_defs.cpp **** 					+ ((float)k_d*(float)(error - right_enc.last_error)/(float)(DT_ENCODER/(float)1000));
+ 342              		.loc 1 99 0
  343 035a D7ED167A 		flds	s15, [r7, #88]	@ int
  344 035e F8EEE77A 		fsitos	s15, s15
  345 0362 37EEA77A 		fadds	s14, s15, s15
@@ -447,65 +461,65 @@
  363 03a4 C6EEA77A 		fdivs	s15, s13, s15
  364 03a8 77EE277A 		fadds	s15, s14, s15
  365 03ac C7ED157A 		fsts	s15, [r7, #84]
-  86:../src/interrupt_defs.cpp **** 			right_out = (right_out > 100) ? 100 : ((right_out < -100) ? -100 : right_out);
- 366              		.loc 1 86 0
+ 100:../src/interrupt_defs.cpp **** 			right_out = (right_out > 100) ? 100 : ((right_out < -100) ? -100 : right_out);
+ 366              		.loc 1 100 0
  367 03b0 97ED157A 		flds	s14, [r7, #84]
  368 03b4 DFED257A 		flds	s15, .L31+20
  369 03b8 B4EEE77A 		fcmpes	s14, s15
  370 03bc F1EE10FA 		fmstat
  371 03c0 04DD     		ble	.L29
  372              	.L25:
- 373              		.loc 1 86 0 is_stmt 0 discriminator 1
+ 373              		.loc 1 100 0 is_stmt 0 discriminator 1
  374 03c2 4FF00003 		mov	r3, #0
  375 03c6 C4F2C823 		movt	r3, 17096
  376 03ca 0EE0     		b	.L16
  377              	.L29:
- 378              		.loc 1 86 0 discriminator 2
+ 378              		.loc 1 100 0 discriminator 2
  379 03cc 97ED157A 		flds	s14, [r7, #84]
  380 03d0 DFED1F7A 		flds	s15, .L31+24
  381 03d4 B4EEE77A 		fcmpes	s14, s15
  382 03d8 F1EE10FA 		fmstat
  383 03dc 04D5     		bpl	.L30
  384              	.L26:
- 385              		.loc 1 86 0 discriminator 3
+ 385              		.loc 1 100 0 discriminator 3
  386 03de 4FF00003 		mov	r3, #0
  387 03e2 CCF2C823 		movt	r3, 49864
  388 03e6 00E0     		b	.L19
  389              	.L30:
- 390              		.loc 1 86 0 discriminator 4
+ 390              		.loc 1 100 0 discriminator 4
  391 03e8 7B6D     		ldr	r3, [r7, #84]	@ float
  392              	.L19:
  393              	.L16:
- 394              		.loc 1 86 0 discriminator 6
+ 394              		.loc 1 100 0 discriminator 6
  395 03ea 7B65     		str	r3, [r7, #84]	@ float
-  87:../src/interrupt_defs.cpp **** 			right_enc.last_error = error;
- 396              		.loc 1 87 0 is_stmt 1 discriminator 6
+ 101:../src/interrupt_defs.cpp **** 			right_enc.last_error = error;
+ 396              		.loc 1 101 0 is_stmt 1 discriminator 6
  397 03ec 40F20003 		movw	r3, #:lower16:right_enc
  398 03f0 C0F20003 		movt	r3, #:upper16:right_enc
  399 03f4 BA6D     		ldr	r2, [r7, #88]
  400 03f6 9A61     		str	r2, [r3, #24]
-  88:../src/interrupt_defs.cpp **** 
-  89:../src/interrupt_defs.cpp **** 			abs_err = (error > 0) ? error : (error*-1);
- 401              		.loc 1 89 0 discriminator 6
+ 102:../src/interrupt_defs.cpp **** 
+ 103:../src/interrupt_defs.cpp **** 			abs_err = (error > 0) ? error : (error*-1);
+ 401              		.loc 1 103 0 discriminator 6
  402 03f8 BB6D     		ldr	r3, [r7, #88]
  403 03fa 002B     		cmp	r3, #0
  404 03fc B8BF     		it	lt
  405 03fe 5B42     		rsblt	r3, r3, #0
  406 0400 3B65     		str	r3, [r7, #80]
-  90:../src/interrupt_defs.cpp **** 
-  91:../src/interrupt_defs.cpp **** 			if(error > 10 || error < -10)
- 407              		.loc 1 91 0 discriminator 6
+ 104:../src/interrupt_defs.cpp **** 
+ 105:../src/interrupt_defs.cpp **** 			if(error > 10 || error < -10)
+ 407              		.loc 1 105 0 discriminator 6
  408 0402 BB6D     		ldr	r3, [r7, #88]
  409 0404 0A2B     		cmp	r3, #10
  410 0406 03DC     		bgt	.L20
- 411              		.loc 1 91 0 is_stmt 0 discriminator 1
+ 411              		.loc 1 105 0 is_stmt 0 discriminator 1
  412 0408 BB6D     		ldr	r3, [r7, #88]
  413 040a 13F10A0F 		cmn	r3, #10
  414 040e 25DA     		bge	.L21
  415              	.L20:
-  92:../src/interrupt_defs.cpp **** 			{
-  93:../src/interrupt_defs.cpp **** 				pwm1_output((((float)(right_out+100)/(float)2))*(float)0.01);
- 416              		.loc 1 93 0 is_stmt 1
+ 106:../src/interrupt_defs.cpp **** 			{
+ 107:../src/interrupt_defs.cpp **** 				pwm1_output((((float)(right_out+100)/(float)2))*(float)0.01);
+ 416              		.loc 1 107 0 is_stmt 1
  417 0410 97ED157A 		flds	s14, [r7, #84]
  418 0414 DFED0D7A 		flds	s15, .L31+20
  419 0418 37EE277A 		fadds	s14, s14, s15
@@ -515,7 +529,7 @@
  423 0428 67EE277A 		fmuls	s15, s14, s15
  424 042c 17EE900A 		fmrs	r0, s15
  425 0430 FFF7FEFF 		bl	_Z11pwm1_outputf
- 426 0434 1EE0     		b	.L1
+ 426 0434 1EE0     		b	.L10
  427              	.L32:
  428 0436 00BF     		.align	3
  429              	.L31:
@@ -529,850 +543,1167 @@
  437 0454 CDCCCC3C 		.word	1020054733
  438 0458 0AD7233C 		.word	1008981770
  439              	.L21:
-  94:../src/interrupt_defs.cpp **** 			}
-  95:../src/interrupt_defs.cpp **** 			else
-  96:../src/interrupt_defs.cpp **** 			{
-  97:../src/interrupt_defs.cpp **** 				pwm1_output(0.50f);
- 440              		.loc 1 97 0
+ 108:../src/interrupt_defs.cpp **** 			}
+ 109:../src/interrupt_defs.cpp **** 			else
+ 110:../src/interrupt_defs.cpp **** 			{
+ 111:../src/interrupt_defs.cpp **** 				pwm1_output(0.50f);
+ 440              		.loc 1 111 0
  441 045c 4FF07C50 		mov	r0, #1056964608
  442 0460 FFF7FEFF 		bl	_Z11pwm1_outputf
-  98:../src/interrupt_defs.cpp **** 				right_enc.m = MODE_OPENLOOP;
- 443              		.loc 1 98 0
+ 112:../src/interrupt_defs.cpp **** 				right_enc.m = MODE_OPENLOOP;
+ 443              		.loc 1 112 0
  444 0464 40F20003 		movw	r3, #:lower16:right_enc
  445 0468 C0F20003 		movt	r3, #:upper16:right_enc
  446 046c 4FF00002 		mov	r2, #0
  447 0470 83F82420 		strb	r2, [r3, #36]
- 448              	.L1:
- 449              	.LBE2:
-  99:../src/interrupt_defs.cpp **** 			}
- 100:../src/interrupt_defs.cpp **** 		}
- 101:../src/interrupt_defs.cpp **** 		/*
- 102:../src/interrupt_defs.cpp **** 		else if(right_enc.m == MODE_SPEED)
- 103:../src/interrupt_defs.cpp **** 		{
- 104:../src/interrupt_defs.cpp **** 			error = right_enc.speed - right_enc.speed_target;
- 105:../src/interrupt_defs.cpp **** 
- 106:../src/interrupt_defs.cpp **** 			right_out = ((float)error * (float)k_p_s);// + ((float)k_d_s * (float)(error - right_enc.last_sp
- 107:../src/interrupt_defs.cpp **** //			right_out = (right_out > 100) ? 100 : ((right_out < -100) ? -100 : right_out);
- 108:../src/interrupt_defs.cpp **** 			right_enc.vel_cmd += right_out;
- 109:../src/interrupt_defs.cpp **** 			if(right_enc.vel_cmd > 1)
- 110:../src/interrupt_defs.cpp **** 			{
- 111:../src/interrupt_defs.cpp **** 				right_enc.vel_cmd = 1;
- 112:../src/interrupt_defs.cpp **** 			}
- 113:../src/interrupt_defs.cpp **** 
- 114:../src/interrupt_defs.cpp **** 			else if(right_enc.vel_cmd < 0)
- 115:../src/interrupt_defs.cpp **** 			{
- 116:../src/interrupt_defs.cpp **** 				right_enc.vel_cmd = 0;
- 117:../src/interrupt_defs.cpp **** 			}
- 118:../src/interrupt_defs.cpp **** 
- 119:../src/interrupt_defs.cpp **** //			pwm1_output((float)1.0-right_enc.vel_cmd);
- 120:../src/interrupt_defs.cpp **** 			pwm1_output(0.50f);
- 121:../src/interrupt_defs.cpp **** 
- 122:../src/interrupt_defs.cpp **** 			right_enc.last_speed_error = error;
- 123:../src/interrupt_defs.cpp **** 		}
- 124:../src/interrupt_defs.cpp **** 		*/
- 125:../src/interrupt_defs.cpp **** 	}
- 450              		.loc 1 125 0
- 451 0474 07F16407 		add	r7, r7, #100
- 452 0478 BD46     		mov	sp, r7
- 453 047a 90BD     		pop	{r4, r7, pc}
- 454              		.cfi_endproc
- 455              	.LFE111:
- 457              		.align	2
- 458              		.global	TIM1_TRG_COM_TIM17_IRQHandler
- 459              		.thumb
- 460              		.thumb_func
- 462              	TIM1_TRG_COM_TIM17_IRQHandler:
- 463              	.LFB112:
- 126:../src/interrupt_defs.cpp **** 
- 127:../src/interrupt_defs.cpp **** 	void TIM1_TRG_COM_TIM17_IRQHandler(void)
- 128:../src/interrupt_defs.cpp **** 	{
- 464              		.loc 1 128 0
- 465              		.cfi_startproc
- 466              		@ args = 0, pretend = 0, frame = 24
- 467              		@ frame_needed = 1, uses_anonymous_args = 0
- 468 047c 80B5     		push	{r7, lr}
- 469              	.LCFI3:
- 470              		.cfi_def_cfa_offset 8
- 471              		.cfi_offset 7, -8
- 472              		.cfi_offset 14, -4
- 473 047e 86B0     		sub	sp, sp, #24
- 474              	.LCFI4:
- 475              		.cfi_def_cfa_offset 32
- 476 0480 00AF     		add	r7, sp, #0
- 477              	.LCFI5:
- 478              		.cfi_def_cfa_register 7
- 479              	.LBB3:
- 129:../src/interrupt_defs.cpp **** 
- 130:../src/interrupt_defs.cpp **** 		TIM_ClearITPendingBit(TIM17, TIM_IT_Update);
- 480              		.loc 1 130 0
- 481 0482 4FF49040 		mov	r0, #18432
- 482 0486 C4F20100 		movt	r0, 16385
- 483 048a 4FF00101 		mov	r1, #1
- 484 048e FFF7FEFF 		bl	TIM_ClearITPendingBit
- 131:../src/interrupt_defs.cpp **** 		/*
- 132:../src/interrupt_defs.cpp **** 		uint8_t bytes[2];
+ 448              	.L10:
+ 113:../src/interrupt_defs.cpp **** 			}
+ 114:../src/interrupt_defs.cpp **** 		}
+ 115:../src/interrupt_defs.cpp **** 		update_pid();
+ 449              		.loc 1 115 0
+ 450 0474 FFF7FEFF 		bl	update_pid
+ 451              	.LBE2:
+ 116:../src/interrupt_defs.cpp **** 		/*
+ 117:../src/interrupt_defs.cpp **** 		else if(right_enc.m == MODE_SPEED)
+ 118:../src/interrupt_defs.cpp **** 		{
+ 119:../src/interrupt_defs.cpp **** 			error = right_enc.speed - right_enc.speed_target;
+ 120:../src/interrupt_defs.cpp **** 
+ 121:../src/interrupt_defs.cpp **** 			right_out = ((float)error * (float)k_p_s);// + ((float)k_d_s * (float)(error - right_enc.last_sp
+ 122:../src/interrupt_defs.cpp **** //			right_out = (right_out > 100) ? 100 : ((right_out < -100) ? -100 : right_out);
+ 123:../src/interrupt_defs.cpp **** 			right_enc.vel_cmd += right_out;
+ 124:../src/interrupt_defs.cpp **** 			if(right_enc.vel_cmd > 1)
+ 125:../src/interrupt_defs.cpp **** 			{
+ 126:../src/interrupt_defs.cpp **** 				right_enc.vel_cmd = 1;
+ 127:../src/interrupt_defs.cpp **** 			}
+ 128:../src/interrupt_defs.cpp **** 
+ 129:../src/interrupt_defs.cpp **** 			else if(right_enc.vel_cmd < 0)
+ 130:../src/interrupt_defs.cpp **** 			{
+ 131:../src/interrupt_defs.cpp **** 				right_enc.vel_cmd = 0;
+ 132:../src/interrupt_defs.cpp **** 			}
  133:../src/interrupt_defs.cpp **** 
- 134:../src/interrupt_defs.cpp **** 		union twosComp {		// Takes care of two's complement conversion
- 135:../src/interrupt_defs.cpp **** 			uint16_t un_signed;
- 136:../src/interrupt_defs.cpp **** 			int16_t output;
- 137:../src/interrupt_defs.cpp **** 		} convert;
- 138:../src/interrupt_defs.cpp **** 
- 139:../src/interrupt_defs.cpp **** 		L3GD20_Read(bytes, L3GD20_OUT_X_L_ADDR, 2);
- 140:../src/interrupt_defs.cpp **** 		convert.un_signed = (bytes[1] << 8) | bytes[0];
+ 134:../src/interrupt_defs.cpp **** //			pwm1_output((float)1.0-right_enc.vel_cmd);
+ 135:../src/interrupt_defs.cpp **** 			pwm1_output(0.50f);
+ 136:../src/interrupt_defs.cpp **** 
+ 137:../src/interrupt_defs.cpp **** 			right_enc.last_speed_error = error;
+ 138:../src/interrupt_defs.cpp **** 		}
+ 139:../src/interrupt_defs.cpp **** 		*/
+ 140:../src/interrupt_defs.cpp **** 	}
+ 452              		.loc 1 140 0
+ 453 0478 07F16407 		add	r7, r7, #100
+ 454 047c BD46     		mov	sp, r7
+ 455 047e 90BD     		pop	{r4, r7, pc}
+ 456              		.cfi_endproc
+ 457              	.LFE111:
+ 459              		.align	2
+ 460              		.global	TIM1_TRG_COM_TIM17_IRQHandler
+ 461              		.thumb
+ 462              		.thumb_func
+ 464              	TIM1_TRG_COM_TIM17_IRQHandler:
+ 465              	.LFB112:
  141:../src/interrupt_defs.cpp **** 
- 142:../src/interrupt_defs.cpp **** 		gyro_angle_x += (convert.output - gyro_bias_x) * (float)0.00763 * (float)0.001 * (float)DT_IMU;
- 143:../src/interrupt_defs.cpp **** 
- 144:../src/interrupt_defs.cpp **** 		*/
- 145:../src/interrupt_defs.cpp **** 		/*
- 146:../src/interrupt_defs.cpp **** 		 * Below: code required to trigger the ping sensor:
- 147:../src/interrupt_defs.cpp **** 		 */
+ 142:../src/interrupt_defs.cpp **** 	void TIM1_TRG_COM_TIM17_IRQHandler(void)
+ 143:../src/interrupt_defs.cpp **** 	{
+ 466              		.loc 1 143 0
+ 467              		.cfi_startproc
+ 468              		@ args = 0, pretend = 0, frame = 24
+ 469              		@ frame_needed = 1, uses_anonymous_args = 0
+ 470 0480 80B5     		push	{r7, lr}
+ 471              	.LCFI3:
+ 472              		.cfi_def_cfa_offset 8
+ 473              		.cfi_offset 7, -8
+ 474              		.cfi_offset 14, -4
+ 475 0482 86B0     		sub	sp, sp, #24
+ 476              	.LCFI4:
+ 477              		.cfi_def_cfa_offset 32
+ 478 0484 00AF     		add	r7, sp, #0
+ 479              	.LCFI5:
+ 480              		.cfi_def_cfa_register 7
+ 481              	.LBB3:
+ 144:../src/interrupt_defs.cpp **** 
+ 145:../src/interrupt_defs.cpp **** 		TIM_ClearITPendingBit(TIM17, TIM_IT_Update);
+ 482              		.loc 1 145 0
+ 483 0486 4FF49040 		mov	r0, #18432
+ 484 048a C4F20100 		movt	r0, 16385
+ 485 048e 4FF00101 		mov	r1, #1
+ 486 0492 FFF7FEFF 		bl	TIM_ClearITPendingBit
+ 146:../src/interrupt_defs.cpp **** 		/*
+ 147:../src/interrupt_defs.cpp **** 		uint8_t bytes[2];
  148:../src/interrupt_defs.cpp **** 
- 149:../src/interrupt_defs.cpp **** 		EXTI_InitTypeDef e;
- 150:../src/interrupt_defs.cpp **** 
- 151:../src/interrupt_defs.cpp **** 		e.EXTI_Line = EXTI_Line5;
- 485              		.loc 1 151 0
- 486 0492 4FF00503 		mov	r3, #5
- 487 0496 FB60     		str	r3, [r7, #12]
- 152:../src/interrupt_defs.cpp **** 		e.EXTI_LineCmd = DISABLE;
- 488              		.loc 1 152 0
- 489 0498 4FF00003 		mov	r3, #0
- 490 049c BB74     		strb	r3, [r7, #18]
- 153:../src/interrupt_defs.cpp **** 		e.EXTI_Mode = EXTI_Mode_Interrupt;
- 491              		.loc 1 153 0
- 492 049e 4FF00003 		mov	r3, #0
- 493 04a2 3B74     		strb	r3, [r7, #16]
- 154:../src/interrupt_defs.cpp **** 		e.EXTI_Trigger = EXTI_Trigger_Rising;
- 494              		.loc 1 154 0
- 495 04a4 4FF00803 		mov	r3, #8
- 496 04a8 7B74     		strb	r3, [r7, #17]
- 155:../src/interrupt_defs.cpp **** 
- 156:../src/interrupt_defs.cpp **** 		EXTI_Init(&e);
- 497              		.loc 1 156 0
- 498 04aa 07F10C03 		add	r3, r7, #12
- 499 04ae 1846     		mov	r0, r3
- 500 04b0 FFF7FEFF 		bl	EXTI_Init
- 157:../src/interrupt_defs.cpp **** 
- 158:../src/interrupt_defs.cpp **** 		GPIO_InitTypeDef g;
- 159:../src/interrupt_defs.cpp **** 		g.GPIO_Mode = GPIO_Mode_OUT;
- 501              		.loc 1 159 0
- 502 04b4 4FF00103 		mov	r3, #1
- 503 04b8 3B72     		strb	r3, [r7, #8]
- 160:../src/interrupt_defs.cpp **** 		g.GPIO_OType = GPIO_OType_PP;
- 504              		.loc 1 160 0
- 505 04ba 4FF00003 		mov	r3, #0
- 506 04be BB72     		strb	r3, [r7, #10]
- 161:../src/interrupt_defs.cpp **** 		g.GPIO_Pin = GPIO_Pin_0;
- 507              		.loc 1 161 0
- 508 04c0 4FF00103 		mov	r3, #1
- 509 04c4 7B60     		str	r3, [r7, #4]
- 162:../src/interrupt_defs.cpp **** 		g.GPIO_PuPd = GPIO_PuPd_NOPULL;
- 510              		.loc 1 162 0
- 511 04c6 4FF00003 		mov	r3, #0
- 512 04ca FB72     		strb	r3, [r7, #11]
- 163:../src/interrupt_defs.cpp **** 		g.GPIO_Speed = GPIO_Speed_Level_1;
- 513              		.loc 1 163 0
- 514 04cc 4FF00103 		mov	r3, #1
- 515 04d0 7B72     		strb	r3, [r7, #9]
- 164:../src/interrupt_defs.cpp **** 
- 165:../src/interrupt_defs.cpp **** 		GPIO_Init(GPIOB, &g);
- 516              		.loc 1 165 0
- 517 04d2 07F10403 		add	r3, r7, #4
- 518 04d6 4FF48060 		mov	r0, #1024
- 519 04da C4F60000 		movt	r0, 18432
- 520 04de 1946     		mov	r1, r3
- 521 04e0 FFF7FEFF 		bl	GPIO_Init
- 166:../src/interrupt_defs.cpp **** 		int iter = 0;
- 522              		.loc 1 166 0
- 523 04e4 4FF00003 		mov	r3, #0
- 524 04e8 7B61     		str	r3, [r7, #20]
- 167:../src/interrupt_defs.cpp **** 
- 168:../src/interrupt_defs.cpp **** 		for(iter=0;iter<10;++iter)
- 525              		.loc 1 168 0
- 526 04ea 4FF00003 		mov	r3, #0
- 527 04ee 7B61     		str	r3, [r7, #20]
- 528 04f0 0DE0     		b	.L34
- 529              	.L35:
- 169:../src/interrupt_defs.cpp **** 		{
- 170:../src/interrupt_defs.cpp **** 			GPIO_WriteBit(GPIOB, GPIO_Pin_0, Bit_SET);
- 530              		.loc 1 170 0 discriminator 2
- 531 04f2 4FF48060 		mov	r0, #1024
- 532 04f6 C4F60000 		movt	r0, 18432
- 533 04fa 4FF00101 		mov	r1, #1
- 534 04fe 4FF00102 		mov	r2, #1
- 535 0502 FFF7FEFF 		bl	GPIO_WriteBit
- 168:../src/interrupt_defs.cpp **** 		for(iter=0;iter<10;++iter)
- 536              		.loc 1 168 0 discriminator 2
- 537 0506 7B69     		ldr	r3, [r7, #20]
- 538 0508 03F10103 		add	r3, r3, #1
- 539 050c 7B61     		str	r3, [r7, #20]
- 540              	.L34:
- 168:../src/interrupt_defs.cpp **** 		for(iter=0;iter<10;++iter)
- 541              		.loc 1 168 0 is_stmt 0 discriminator 1
- 542 050e 7B69     		ldr	r3, [r7, #20]
- 543 0510 092B     		cmp	r3, #9
- 544 0512 CCBF     		ite	gt
- 545 0514 0023     		movgt	r3, #0
- 546 0516 0123     		movle	r3, #1
- 547 0518 DBB2     		uxtb	r3, r3
- 548 051a 002B     		cmp	r3, #0
- 549 051c E9D1     		bne	.L35
- 171:../src/interrupt_defs.cpp **** 		}
+ 149:../src/interrupt_defs.cpp **** 		union twosComp {		// Takes care of two's complement conversion
+ 150:../src/interrupt_defs.cpp **** 			uint16_t un_signed;
+ 151:../src/interrupt_defs.cpp **** 			int16_t output;
+ 152:../src/interrupt_defs.cpp **** 		} convert;
+ 153:../src/interrupt_defs.cpp **** 
+ 154:../src/interrupt_defs.cpp **** 		L3GD20_Read(bytes, L3GD20_OUT_X_L_ADDR, 2);
+ 155:../src/interrupt_defs.cpp **** 		convert.un_signed = (bytes[1] << 8) | bytes[0];
+ 156:../src/interrupt_defs.cpp **** 
+ 157:../src/interrupt_defs.cpp **** 		gyro_angle_x += (convert.output - gyro_bias_x) * (float)0.00763 * (float)0.001 * (float)DT_IMU;
+ 158:../src/interrupt_defs.cpp **** 
+ 159:../src/interrupt_defs.cpp **** 		*/
+ 160:../src/interrupt_defs.cpp **** 		/*
+ 161:../src/interrupt_defs.cpp **** 		 * Below: code required to trigger the ping sensor:
+ 162:../src/interrupt_defs.cpp **** 		 */
+ 163:../src/interrupt_defs.cpp **** 
+ 164:../src/interrupt_defs.cpp **** 		EXTI_InitTypeDef e;
+ 165:../src/interrupt_defs.cpp **** 
+ 166:../src/interrupt_defs.cpp **** 		e.EXTI_Line = EXTI_Line9;
+ 487              		.loc 1 166 0
+ 488 0496 4FF00903 		mov	r3, #9
+ 489 049a FB60     		str	r3, [r7, #12]
+ 167:../src/interrupt_defs.cpp **** 		e.EXTI_LineCmd = DISABLE;
+ 490              		.loc 1 167 0
+ 491 049c 4FF00003 		mov	r3, #0
+ 492 04a0 BB74     		strb	r3, [r7, #18]
+ 168:../src/interrupt_defs.cpp **** 		e.EXTI_Mode = EXTI_Mode_Interrupt;
+ 493              		.loc 1 168 0
+ 494 04a2 4FF00003 		mov	r3, #0
+ 495 04a6 3B74     		strb	r3, [r7, #16]
+ 169:../src/interrupt_defs.cpp **** 		e.EXTI_Trigger = EXTI_Trigger_Rising;
+ 496              		.loc 1 169 0
+ 497 04a8 4FF00803 		mov	r3, #8
+ 498 04ac 7B74     		strb	r3, [r7, #17]
+ 170:../src/interrupt_defs.cpp **** 
+ 171:../src/interrupt_defs.cpp **** 		EXTI_Init(&e);
+ 499              		.loc 1 171 0
+ 500 04ae 07F10C03 		add	r3, r7, #12
+ 501 04b2 1846     		mov	r0, r3
+ 502 04b4 FFF7FEFF 		bl	EXTI_Init
  172:../src/interrupt_defs.cpp **** 
- 173:../src/interrupt_defs.cpp **** 		GPIO_WriteBit(GPIOB, GPIO_Pin_0, Bit_RESET);
- 550              		.loc 1 173 0 is_stmt 1
- 551 051e 4FF48060 		mov	r0, #1024
- 552 0522 C4F60000 		movt	r0, 18432
- 553 0526 4FF00101 		mov	r1, #1
- 554 052a 4FF00002 		mov	r2, #0
- 555 052e FFF7FEFF 		bl	GPIO_WriteBit
- 174:../src/interrupt_defs.cpp **** 
- 175:../src/interrupt_defs.cpp **** 
- 176:../src/interrupt_defs.cpp **** 		g.GPIO_Mode = GPIO_Mode_IN;
- 556              		.loc 1 176 0
- 557 0532 4FF00003 		mov	r3, #0
- 558 0536 3B72     		strb	r3, [r7, #8]
- 177:../src/interrupt_defs.cpp **** 		g.GPIO_OType = GPIO_OType_OD;
- 559              		.loc 1 177 0
- 560 0538 4FF00103 		mov	r3, #1
- 561 053c BB72     		strb	r3, [r7, #10]
- 178:../src/interrupt_defs.cpp **** 		g.GPIO_Pin = GPIO_Pin_0;
- 562              		.loc 1 178 0
- 563 053e 4FF00103 		mov	r3, #1
- 564 0542 7B60     		str	r3, [r7, #4]
- 179:../src/interrupt_defs.cpp **** 		g.GPIO_PuPd = GPIO_PuPd_NOPULL;
- 565              		.loc 1 179 0
- 566 0544 4FF00003 		mov	r3, #0
- 567 0548 FB72     		strb	r3, [r7, #11]
- 180:../src/interrupt_defs.cpp **** 		g.GPIO_Speed = GPIO_Speed_Level_1;
- 568              		.loc 1 180 0
- 569 054a 4FF00103 		mov	r3, #1
- 570 054e 7B72     		strb	r3, [r7, #9]
- 181:../src/interrupt_defs.cpp **** 
- 182:../src/interrupt_defs.cpp **** 		GPIO_Init(GPIOB, &g);
- 571              		.loc 1 182 0
- 572 0550 07F10403 		add	r3, r7, #4
- 573 0554 4FF48060 		mov	r0, #1024
- 574 0558 C4F60000 		movt	r0, 18432
- 575 055c 1946     		mov	r1, r3
- 576 055e FFF7FEFF 		bl	GPIO_Init
- 183:../src/interrupt_defs.cpp **** 
- 184:../src/interrupt_defs.cpp **** 		TIM_SetCounter(TIM2, 0);
- 577              		.loc 1 184 0
- 578 0562 4FF08040 		mov	r0, #1073741824
- 579 0566 4FF00001 		mov	r1, #0
- 580 056a FFF7FEFF 		bl	TIM_SetCounter
- 185:../src/interrupt_defs.cpp **** 
- 186:../src/interrupt_defs.cpp **** 		stage = 0;
- 581              		.loc 1 186 0
- 582 056e 40F20003 		movw	r3, #:lower16:stage
- 583 0572 C0F20003 		movt	r3, #:upper16:stage
- 584 0576 4FF00002 		mov	r2, #0
- 585 057a 1A60     		str	r2, [r3, #0]
+ 173:../src/interrupt_defs.cpp **** 		GPIO_InitTypeDef g;
+ 174:../src/interrupt_defs.cpp **** 		g.GPIO_Mode = GPIO_Mode_OUT;
+ 503              		.loc 1 174 0
+ 504 04b8 4FF00103 		mov	r3, #1
+ 505 04bc 3B72     		strb	r3, [r7, #8]
+ 175:../src/interrupt_defs.cpp **** 		g.GPIO_OType = GPIO_OType_PP;
+ 506              		.loc 1 175 0
+ 507 04be 4FF00003 		mov	r3, #0
+ 508 04c2 BB72     		strb	r3, [r7, #10]
+ 176:../src/interrupt_defs.cpp **** 		g.GPIO_Pin = GPIO_Pin_0;
+ 509              		.loc 1 176 0
+ 510 04c4 4FF00103 		mov	r3, #1
+ 511 04c8 7B60     		str	r3, [r7, #4]
+ 177:../src/interrupt_defs.cpp **** 		g.GPIO_PuPd = GPIO_PuPd_NOPULL;
+ 512              		.loc 1 177 0
+ 513 04ca 4FF00003 		mov	r3, #0
+ 514 04ce FB72     		strb	r3, [r7, #11]
+ 178:../src/interrupt_defs.cpp **** 		g.GPIO_Speed = GPIO_Speed_Level_1;
+ 515              		.loc 1 178 0
+ 516 04d0 4FF00103 		mov	r3, #1
+ 517 04d4 7B72     		strb	r3, [r7, #9]
+ 179:../src/interrupt_defs.cpp **** 
+ 180:../src/interrupt_defs.cpp **** 		GPIO_Init(GPIOB, &g);
+ 518              		.loc 1 180 0
+ 519 04d6 07F10403 		add	r3, r7, #4
+ 520 04da 4FF48060 		mov	r0, #1024
+ 521 04de C4F60000 		movt	r0, 18432
+ 522 04e2 1946     		mov	r1, r3
+ 523 04e4 FFF7FEFF 		bl	GPIO_Init
+ 181:../src/interrupt_defs.cpp **** 		int iter = 0;
+ 524              		.loc 1 181 0
+ 525 04e8 4FF00003 		mov	r3, #0
+ 526 04ec 7B61     		str	r3, [r7, #20]
+ 182:../src/interrupt_defs.cpp **** 
+ 183:../src/interrupt_defs.cpp **** 		for(iter=0;iter<10;++iter)
+ 527              		.loc 1 183 0
+ 528 04ee 4FF00003 		mov	r3, #0
+ 529 04f2 7B61     		str	r3, [r7, #20]
+ 530 04f4 0DE0     		b	.L34
+ 531              	.L35:
+ 184:../src/interrupt_defs.cpp **** 		{
+ 185:../src/interrupt_defs.cpp **** 			GPIO_WriteBit(GPIOB, GPIO_Pin_0, Bit_SET);
+ 532              		.loc 1 185 0 discriminator 2
+ 533 04f6 4FF48060 		mov	r0, #1024
+ 534 04fa C4F60000 		movt	r0, 18432
+ 535 04fe 4FF00101 		mov	r1, #1
+ 536 0502 4FF00102 		mov	r2, #1
+ 537 0506 FFF7FEFF 		bl	GPIO_WriteBit
+ 183:../src/interrupt_defs.cpp **** 		for(iter=0;iter<10;++iter)
+ 538              		.loc 1 183 0 discriminator 2
+ 539 050a 7B69     		ldr	r3, [r7, #20]
+ 540 050c 03F10103 		add	r3, r3, #1
+ 541 0510 7B61     		str	r3, [r7, #20]
+ 542              	.L34:
+ 183:../src/interrupt_defs.cpp **** 		for(iter=0;iter<10;++iter)
+ 543              		.loc 1 183 0 is_stmt 0 discriminator 1
+ 544 0512 7B69     		ldr	r3, [r7, #20]
+ 545 0514 092B     		cmp	r3, #9
+ 546 0516 CCBF     		ite	gt
+ 547 0518 0023     		movgt	r3, #0
+ 548 051a 0123     		movle	r3, #1
+ 549 051c DBB2     		uxtb	r3, r3
+ 550 051e 002B     		cmp	r3, #0
+ 551 0520 E9D1     		bne	.L35
+ 186:../src/interrupt_defs.cpp **** 		}
  187:../src/interrupt_defs.cpp **** 
- 188:../src/interrupt_defs.cpp **** 		e.EXTI_Line = EXTI_Line5;
- 586              		.loc 1 188 0
- 587 057c 4FF00503 		mov	r3, #5
- 588 0580 FB60     		str	r3, [r7, #12]
- 189:../src/interrupt_defs.cpp **** 		e.EXTI_LineCmd = ENABLE;
- 589              		.loc 1 189 0
- 590 0582 4FF00103 		mov	r3, #1
- 591 0586 BB74     		strb	r3, [r7, #18]
- 190:../src/interrupt_defs.cpp **** 		e.EXTI_Mode = EXTI_Mode_Interrupt;
- 592              		.loc 1 190 0
- 593 0588 4FF00003 		mov	r3, #0
- 594 058c 3B74     		strb	r3, [r7, #16]
- 191:../src/interrupt_defs.cpp **** 		e.EXTI_Trigger = EXTI_Trigger_Rising;
- 595              		.loc 1 191 0
- 596 058e 4FF00803 		mov	r3, #8
- 597 0592 7B74     		strb	r3, [r7, #17]
- 192:../src/interrupt_defs.cpp **** 
- 193:../src/interrupt_defs.cpp **** 		EXTI_Init(&e);
- 598              		.loc 1 193 0
- 599 0594 07F10C03 		add	r3, r7, #12
- 600 0598 1846     		mov	r0, r3
- 601 059a FFF7FEFF 		bl	EXTI_Init
- 194:../src/interrupt_defs.cpp **** 
- 195:../src/interrupt_defs.cpp **** 		NVIC_InitTypeDef nv;
+ 188:../src/interrupt_defs.cpp **** 		GPIO_WriteBit(GPIOB, GPIO_Pin_0, Bit_RESET);
+ 552              		.loc 1 188 0 is_stmt 1
+ 553 0522 4FF48060 		mov	r0, #1024
+ 554 0526 C4F60000 		movt	r0, 18432
+ 555 052a 4FF00101 		mov	r1, #1
+ 556 052e 4FF00002 		mov	r2, #0
+ 557 0532 FFF7FEFF 		bl	GPIO_WriteBit
+ 189:../src/interrupt_defs.cpp **** 
+ 190:../src/interrupt_defs.cpp **** 
+ 191:../src/interrupt_defs.cpp **** 		g.GPIO_Mode = GPIO_Mode_IN;
+ 558              		.loc 1 191 0
+ 559 0536 4FF00003 		mov	r3, #0
+ 560 053a 3B72     		strb	r3, [r7, #8]
+ 192:../src/interrupt_defs.cpp **** 		g.GPIO_OType = GPIO_OType_OD;
+ 561              		.loc 1 192 0
+ 562 053c 4FF00103 		mov	r3, #1
+ 563 0540 BB72     		strb	r3, [r7, #10]
+ 193:../src/interrupt_defs.cpp **** 		g.GPIO_Pin = GPIO_Pin_0;
+ 564              		.loc 1 193 0
+ 565 0542 4FF00103 		mov	r3, #1
+ 566 0546 7B60     		str	r3, [r7, #4]
+ 194:../src/interrupt_defs.cpp **** 		g.GPIO_PuPd = GPIO_PuPd_NOPULL;
+ 567              		.loc 1 194 0
+ 568 0548 4FF00003 		mov	r3, #0
+ 569 054c FB72     		strb	r3, [r7, #11]
+ 195:../src/interrupt_defs.cpp **** 		g.GPIO_Speed = GPIO_Speed_Level_1;
+ 570              		.loc 1 195 0
+ 571 054e 4FF00103 		mov	r3, #1
+ 572 0552 7B72     		strb	r3, [r7, #9]
  196:../src/interrupt_defs.cpp **** 
- 197:../src/interrupt_defs.cpp **** 		nv.NVIC_IRQChannel = EXTI9_5_IRQn;
- 602              		.loc 1 197 0
- 603 059e 4FF01703 		mov	r3, #23
- 604 05a2 3B70     		strb	r3, [r7, #0]
- 198:../src/interrupt_defs.cpp **** 		nv.NVIC_IRQChannelCmd = ENABLE;
- 605              		.loc 1 198 0
- 606 05a4 4FF00103 		mov	r3, #1
- 607 05a8 FB70     		strb	r3, [r7, #3]
- 199:../src/interrupt_defs.cpp **** 		nv.NVIC_IRQChannelPreemptionPriority = 0;
- 608              		.loc 1 199 0
- 609 05aa 4FF00003 		mov	r3, #0
- 610 05ae 7B70     		strb	r3, [r7, #1]
- 200:../src/interrupt_defs.cpp **** 		nv.NVIC_IRQChannelSubPriority = 0;
- 611              		.loc 1 200 0
- 612 05b0 4FF00003 		mov	r3, #0
- 613 05b4 BB70     		strb	r3, [r7, #2]
- 201:../src/interrupt_defs.cpp **** 
- 202:../src/interrupt_defs.cpp **** 		NVIC_Init(&nv);
- 614              		.loc 1 202 0
- 615 05b6 3B46     		mov	r3, r7
- 616 05b8 1846     		mov	r0, r3
- 617 05ba FFF7FEFF 		bl	NVIC_Init
- 618              	.LBE3:
- 203:../src/interrupt_defs.cpp **** 
- 204:../src/interrupt_defs.cpp **** 	}
- 619              		.loc 1 204 0
- 620 05be 07F11807 		add	r7, r7, #24
- 621 05c2 BD46     		mov	sp, r7
- 622 05c4 80BD     		pop	{r7, pc}
- 623              		.cfi_endproc
- 624              	.LFE112:
- 626 05c6 00BF     		.align	2
- 627              		.global	TIM6_DAC_IRQHandler
- 628              		.thumb
- 629              		.thumb_func
- 631              	TIM6_DAC_IRQHandler:
- 632              	.LFB113:
- 205:../src/interrupt_defs.cpp **** 	void TIM6_DAC_IRQHandler(void)
- 206:../src/interrupt_defs.cpp **** 	{
- 633              		.loc 1 206 0
- 634              		.cfi_startproc
- 635              		@ args = 0, pretend = 0, frame = 0
- 636              		@ frame_needed = 1, uses_anonymous_args = 0
- 637 05c8 80B5     		push	{r7, lr}
- 638              	.LCFI6:
- 639              		.cfi_def_cfa_offset 8
- 640              		.cfi_offset 7, -8
- 641              		.cfi_offset 14, -4
- 642 05ca 00AF     		add	r7, sp, #0
- 643              	.LCFI7:
- 644              		.cfi_def_cfa_register 7
- 207:../src/interrupt_defs.cpp **** 		TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
- 645              		.loc 1 207 0
- 646 05cc 4FF48050 		mov	r0, #4096
- 647 05d0 C4F20000 		movt	r0, 16384
- 648 05d4 4FF00101 		mov	r1, #1
- 649 05d8 FFF7FEFF 		bl	TIM_ClearITPendingBit
- 208:../src/interrupt_defs.cpp **** 		GPIO_Write(GPIOE, led_matrix[led_iter] | led_matrix[7-led_iter]);
- 650              		.loc 1 208 0
- 651 05dc 40F20003 		movw	r3, #:lower16:led_iter
- 652 05e0 C0F20003 		movt	r3, #:upper16:led_iter
- 653 05e4 1A68     		ldr	r2, [r3, #0]
- 654 05e6 40F20003 		movw	r3, #:lower16:led_matrix
- 655 05ea C0F20003 		movt	r3, #:upper16:led_matrix
- 656 05ee 53F82230 		ldr	r3, [r3, r2, lsl #2]
- 657 05f2 9AB2     		uxth	r2, r3
- 658 05f4 40F20003 		movw	r3, #:lower16:led_iter
- 659 05f8 C0F20003 		movt	r3, #:upper16:led_iter
- 660 05fc 1B68     		ldr	r3, [r3, #0]
- 661 05fe C3F10701 		rsb	r1, r3, #7
- 662 0602 40F20003 		movw	r3, #:lower16:led_matrix
- 663 0606 C0F20003 		movt	r3, #:upper16:led_matrix
- 664 060a 53F82130 		ldr	r3, [r3, r1, lsl #2]
- 665 060e 9BB2     		uxth	r3, r3
- 666 0610 1343     		orrs	r3, r3, r2
+ 197:../src/interrupt_defs.cpp **** 		GPIO_Init(GPIOB, &g);
+ 573              		.loc 1 197 0
+ 574 0554 07F10403 		add	r3, r7, #4
+ 575 0558 4FF48060 		mov	r0, #1024
+ 576 055c C4F60000 		movt	r0, 18432
+ 577 0560 1946     		mov	r1, r3
+ 578 0562 FFF7FEFF 		bl	GPIO_Init
+ 198:../src/interrupt_defs.cpp **** 
+ 199:../src/interrupt_defs.cpp **** 		TIM_SetCounter(TIM2, 0);
+ 579              		.loc 1 199 0
+ 580 0566 4FF08040 		mov	r0, #1073741824
+ 581 056a 4FF00001 		mov	r1, #0
+ 582 056e FFF7FEFF 		bl	TIM_SetCounter
+ 200:../src/interrupt_defs.cpp **** 
+ 201:../src/interrupt_defs.cpp **** 		stage = 0;
+ 583              		.loc 1 201 0
+ 584 0572 40F20003 		movw	r3, #:lower16:stage
+ 585 0576 C0F20003 		movt	r3, #:upper16:stage
+ 586 057a 4FF00002 		mov	r2, #0
+ 587 057e 1A60     		str	r2, [r3, #0]
+ 202:../src/interrupt_defs.cpp **** 
+ 203:../src/interrupt_defs.cpp **** 		e.EXTI_Line = EXTI_Line9;
+ 588              		.loc 1 203 0
+ 589 0580 4FF00903 		mov	r3, #9
+ 590 0584 FB60     		str	r3, [r7, #12]
+ 204:../src/interrupt_defs.cpp **** 		e.EXTI_LineCmd = ENABLE;
+ 591              		.loc 1 204 0
+ 592 0586 4FF00103 		mov	r3, #1
+ 593 058a BB74     		strb	r3, [r7, #18]
+ 205:../src/interrupt_defs.cpp **** 		e.EXTI_Mode = EXTI_Mode_Interrupt;
+ 594              		.loc 1 205 0
+ 595 058c 4FF00003 		mov	r3, #0
+ 596 0590 3B74     		strb	r3, [r7, #16]
+ 206:../src/interrupt_defs.cpp **** 		e.EXTI_Trigger = EXTI_Trigger_Rising;
+ 597              		.loc 1 206 0
+ 598 0592 4FF00803 		mov	r3, #8
+ 599 0596 7B74     		strb	r3, [r7, #17]
+ 207:../src/interrupt_defs.cpp **** 
+ 208:../src/interrupt_defs.cpp **** 		EXTI_Init(&e);
+ 600              		.loc 1 208 0
+ 601 0598 07F10C03 		add	r3, r7, #12
+ 602 059c 1846     		mov	r0, r3
+ 603 059e FFF7FEFF 		bl	EXTI_Init
+ 209:../src/interrupt_defs.cpp **** 
+ 210:../src/interrupt_defs.cpp **** 		NVIC_InitTypeDef nv;
+ 211:../src/interrupt_defs.cpp **** 
+ 212:../src/interrupt_defs.cpp **** 		nv.NVIC_IRQChannel = EXTI9_5_IRQn;
+ 604              		.loc 1 212 0
+ 605 05a2 4FF01703 		mov	r3, #23
+ 606 05a6 3B70     		strb	r3, [r7, #0]
+ 213:../src/interrupt_defs.cpp **** 		nv.NVIC_IRQChannelCmd = ENABLE;
+ 607              		.loc 1 213 0
+ 608 05a8 4FF00103 		mov	r3, #1
+ 609 05ac FB70     		strb	r3, [r7, #3]
+ 214:../src/interrupt_defs.cpp **** 		nv.NVIC_IRQChannelPreemptionPriority = 0;
+ 610              		.loc 1 214 0
+ 611 05ae 4FF00003 		mov	r3, #0
+ 612 05b2 7B70     		strb	r3, [r7, #1]
+ 215:../src/interrupt_defs.cpp **** 		nv.NVIC_IRQChannelSubPriority = 0;
+ 613              		.loc 1 215 0
+ 614 05b4 4FF00003 		mov	r3, #0
+ 615 05b8 BB70     		strb	r3, [r7, #2]
+ 216:../src/interrupt_defs.cpp **** 
+ 217:../src/interrupt_defs.cpp **** 		NVIC_Init(&nv);
+ 616              		.loc 1 217 0
+ 617 05ba 3B46     		mov	r3, r7
+ 618 05bc 1846     		mov	r0, r3
+ 619 05be FFF7FEFF 		bl	NVIC_Init
+ 620              	.LBE3:
+ 218:../src/interrupt_defs.cpp **** 
+ 219:../src/interrupt_defs.cpp **** 	}
+ 621              		.loc 1 219 0
+ 622 05c2 07F11807 		add	r7, r7, #24
+ 623 05c6 BD46     		mov	sp, r7
+ 624 05c8 80BD     		pop	{r7, pc}
+ 625              		.cfi_endproc
+ 626              	.LFE112:
+ 628 05ca 00BF     		.align	2
+ 629              		.global	TIM6_DAC_IRQHandler
+ 630              		.thumb
+ 631              		.thumb_func
+ 633              	TIM6_DAC_IRQHandler:
+ 634              	.LFB113:
+ 220:../src/interrupt_defs.cpp **** 	void TIM6_DAC_IRQHandler(void)
+ 221:../src/interrupt_defs.cpp **** 	{
+ 635              		.loc 1 221 0
+ 636              		.cfi_startproc
+ 637              		@ args = 0, pretend = 0, frame = 0
+ 638              		@ frame_needed = 1, uses_anonymous_args = 0
+ 639 05cc 80B5     		push	{r7, lr}
+ 640              	.LCFI6:
+ 641              		.cfi_def_cfa_offset 8
+ 642              		.cfi_offset 7, -8
+ 643              		.cfi_offset 14, -4
+ 644 05ce 00AF     		add	r7, sp, #0
+ 645              	.LCFI7:
+ 646              		.cfi_def_cfa_register 7
+ 222:../src/interrupt_defs.cpp **** 		TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
+ 647              		.loc 1 222 0
+ 648 05d0 4FF48050 		mov	r0, #4096
+ 649 05d4 C4F20000 		movt	r0, 16384
+ 650 05d8 4FF00101 		mov	r1, #1
+ 651 05dc FFF7FEFF 		bl	TIM_ClearITPendingBit
+ 223:../src/interrupt_defs.cpp **** 		GPIO_Write(GPIOE, led_matrix[led_iter] | led_matrix[7-led_iter]);
+ 652              		.loc 1 223 0
+ 653 05e0 40F20003 		movw	r3, #:lower16:led_iter
+ 654 05e4 C0F20003 		movt	r3, #:upper16:led_iter
+ 655 05e8 1A68     		ldr	r2, [r3, #0]
+ 656 05ea 40F20003 		movw	r3, #:lower16:led_matrix
+ 657 05ee C0F20003 		movt	r3, #:upper16:led_matrix
+ 658 05f2 53F82230 		ldr	r3, [r3, r2, lsl #2]
+ 659 05f6 9AB2     		uxth	r2, r3
+ 660 05f8 40F20003 		movw	r3, #:lower16:led_iter
+ 661 05fc C0F20003 		movt	r3, #:upper16:led_iter
+ 662 0600 1B68     		ldr	r3, [r3, #0]
+ 663 0602 C3F10701 		rsb	r1, r3, #7
+ 664 0606 40F20003 		movw	r3, #:lower16:led_matrix
+ 665 060a C0F20003 		movt	r3, #:upper16:led_matrix
+ 666 060e 53F82130 		ldr	r3, [r3, r1, lsl #2]
  667 0612 9BB2     		uxth	r3, r3
- 668 0614 9BB2     		uxth	r3, r3
- 669 0616 4FF48050 		mov	r0, #4096
- 670 061a C4F60000 		movt	r0, 18432
- 671 061e 1946     		mov	r1, r3
- 672 0620 FFF7FEFF 		bl	GPIO_Write
- 209:../src/interrupt_defs.cpp **** 		++led_iter;
- 673              		.loc 1 209 0
- 674 0624 40F20003 		movw	r3, #:lower16:led_iter
- 675 0628 C0F20003 		movt	r3, #:upper16:led_iter
- 676 062c 1B68     		ldr	r3, [r3, #0]
- 677 062e 03F10102 		add	r2, r3, #1
- 678 0632 40F20003 		movw	r3, #:lower16:led_iter
- 679 0636 C0F20003 		movt	r3, #:upper16:led_iter
- 680 063a 1A60     		str	r2, [r3, #0]
- 210:../src/interrupt_defs.cpp **** 		if(led_iter > 7)
- 681              		.loc 1 210 0
- 682 063c 40F20003 		movw	r3, #:lower16:led_iter
- 683 0640 C0F20003 		movt	r3, #:upper16:led_iter
- 684 0644 1B68     		ldr	r3, [r3, #0]
- 685 0646 072B     		cmp	r3, #7
- 686 0648 D4BF     		ite	le
- 687 064a 0023     		movle	r3, #0
- 688 064c 0123     		movgt	r3, #1
- 689 064e DBB2     		uxtb	r3, r3
- 690 0650 002B     		cmp	r3, #0
- 691 0652 06D0     		beq	.L36
- 211:../src/interrupt_defs.cpp **** 		{
- 212:../src/interrupt_defs.cpp **** 			led_iter = 0;
- 692              		.loc 1 212 0
- 693 0654 40F20003 		movw	r3, #:lower16:led_iter
- 694 0658 C0F20003 		movt	r3, #:upper16:led_iter
- 695 065c 4FF00002 		mov	r2, #0
- 696 0660 1A60     		str	r2, [r3, #0]
- 697              	.L36:
- 213:../src/interrupt_defs.cpp **** 		}
- 214:../src/interrupt_defs.cpp **** 	}
- 698              		.loc 1 214 0
- 699 0662 80BD     		pop	{r7, pc}
- 700              		.cfi_endproc
- 701              	.LFE113:
- 703              		.align	2
- 704              		.global	ADC1_2_IRQHandler
- 705              		.thumb
- 706              		.thumb_func
- 708              	ADC1_2_IRQHandler:
- 709              	.LFB114:
- 215:../src/interrupt_defs.cpp **** 	void ADC1_2_IRQHandler(void)
- 216:../src/interrupt_defs.cpp **** 	{
- 710              		.loc 1 216 0
- 711              		.cfi_startproc
- 712              		@ args = 0, pretend = 0, frame = 0
- 713              		@ frame_needed = 1, uses_anonymous_args = 0
- 714 0664 80B5     		push	{r7, lr}
- 715              	.LCFI8:
- 716              		.cfi_def_cfa_offset 8
- 717              		.cfi_offset 7, -8
- 718              		.cfi_offset 14, -4
- 719 0666 00AF     		add	r7, sp, #0
- 720              	.LCFI9:
- 721              		.cfi_def_cfa_register 7
- 217:../src/interrupt_defs.cpp **** 		if(ADC_GetITStatus(ADC1, ADC_IT_EOC) == SET)
- 722              		.loc 1 217 0
- 723 0668 4FF0A040 		mov	r0, #1342177280
- 724 066c 4FF00401 		mov	r1, #4
- 725 0670 FFF7FEFF 		bl	ADC_GetITStatus
- 726 0674 0346     		mov	r3, r0
- 727 0676 012B     		cmp	r3, #1
- 728 0678 14BF     		ite	ne
- 729 067a 0023     		movne	r3, #0
- 730 067c 0123     		moveq	r3, #1
- 731 067e DBB2     		uxtb	r3, r3
- 732 0680 002B     		cmp	r3, #0
- 733 0682 10D0     		beq	.L38
- 218:../src/interrupt_defs.cpp **** 		{
- 219:../src/interrupt_defs.cpp **** 			adcval = ADC_GetConversionValue(ADC1);
- 734              		.loc 1 219 0
- 735 0684 4FF0A040 		mov	r0, #1342177280
- 736 0688 FFF7FEFF 		bl	ADC_GetConversionValue
- 737 068c 0346     		mov	r3, r0
- 738 068e 1A46     		mov	r2, r3
- 739 0690 40F20003 		movw	r3, #:lower16:adcval
- 740 0694 C0F20003 		movt	r3, #:upper16:adcval
- 741 0698 1A60     		str	r2, [r3, #0]
- 220:../src/interrupt_defs.cpp **** 			ADC_ClearITPendingBit(ADC1, ADC_IT_EOC);
- 742              		.loc 1 220 0
- 743 069a 4FF0A040 		mov	r0, #1342177280
- 744 069e 4FF00401 		mov	r1, #4
- 745 06a2 FFF7FEFF 		bl	ADC_ClearITPendingBit
- 746              	.L38:
- 221:../src/interrupt_defs.cpp **** 		}
- 222:../src/interrupt_defs.cpp **** 	}
- 747              		.loc 1 222 0
- 748 06a6 80BD     		pop	{r7, pc}
- 749              		.cfi_endproc
- 750              	.LFE114:
- 752              		.align	2
- 753              		.global	DMA1_Channel1_IRQHandler
- 754              		.thumb
- 755              		.thumb_func
- 757              	DMA1_Channel1_IRQHandler:
- 758              	.LFB115:
- 223:../src/interrupt_defs.cpp **** 
- 224:../src/interrupt_defs.cpp **** 	void DMA1_Channel1_IRQHandler(void)
- 225:../src/interrupt_defs.cpp **** 	{
- 759              		.loc 1 225 0
- 760              		.cfi_startproc
- 761              		@ args = 0, pretend = 0, frame = 0
- 762              		@ frame_needed = 1, uses_anonymous_args = 0
- 763 06a8 80B5     		push	{r7, lr}
- 764              	.LCFI10:
- 765              		.cfi_def_cfa_offset 8
- 766              		.cfi_offset 7, -8
- 767              		.cfi_offset 14, -4
- 768 06aa 00AF     		add	r7, sp, #0
- 769              	.LCFI11:
- 770              		.cfi_def_cfa_register 7
- 226:../src/interrupt_defs.cpp **** 		DMA_ClearITPendingBit(DMA1_IT_TC1);
- 771              		.loc 1 226 0
- 772 06ac 4FF00200 		mov	r0, #2
- 773 06b0 FFF7FEFF 		bl	DMA_ClearITPendingBit
- 227:../src/interrupt_defs.cpp **** 		new_data = 1;
- 774              		.loc 1 227 0
- 775 06b4 40F20003 		movw	r3, #:lower16:new_data
- 776 06b8 C0F20003 		movt	r3, #:upper16:new_data
- 777 06bc 4FF00102 		mov	r2, #1
- 778 06c0 1A60     		str	r2, [r3, #0]
- 228:../src/interrupt_defs.cpp **** 	}
- 779              		.loc 1 228 0
- 780 06c2 80BD     		pop	{r7, pc}
- 781              		.cfi_endproc
- 782              	.LFE115:
- 784              		.align	2
- 785              		.global	DMA2_Channel1_IRQHandler
- 786              		.thumb
- 787              		.thumb_func
- 789              	DMA2_Channel1_IRQHandler:
- 790              	.LFB116:
- 229:../src/interrupt_defs.cpp **** 
- 230:../src/interrupt_defs.cpp **** 	void DMA2_Channel1_IRQHandler(void)
+ 668 0614 1343     		orrs	r3, r3, r2
+ 669 0616 9BB2     		uxth	r3, r3
+ 670 0618 9BB2     		uxth	r3, r3
+ 671 061a 4FF48050 		mov	r0, #4096
+ 672 061e C4F60000 		movt	r0, 18432
+ 673 0622 1946     		mov	r1, r3
+ 674 0624 FFF7FEFF 		bl	GPIO_Write
+ 224:../src/interrupt_defs.cpp **** 		++led_iter;
+ 675              		.loc 1 224 0
+ 676 0628 40F20003 		movw	r3, #:lower16:led_iter
+ 677 062c C0F20003 		movt	r3, #:upper16:led_iter
+ 678 0630 1B68     		ldr	r3, [r3, #0]
+ 679 0632 03F10102 		add	r2, r3, #1
+ 680 0636 40F20003 		movw	r3, #:lower16:led_iter
+ 681 063a C0F20003 		movt	r3, #:upper16:led_iter
+ 682 063e 1A60     		str	r2, [r3, #0]
+ 225:../src/interrupt_defs.cpp **** 		if(led_iter > 7)
+ 683              		.loc 1 225 0
+ 684 0640 40F20003 		movw	r3, #:lower16:led_iter
+ 685 0644 C0F20003 		movt	r3, #:upper16:led_iter
+ 686 0648 1B68     		ldr	r3, [r3, #0]
+ 687 064a 072B     		cmp	r3, #7
+ 688 064c D4BF     		ite	le
+ 689 064e 0023     		movle	r3, #0
+ 690 0650 0123     		movgt	r3, #1
+ 691 0652 DBB2     		uxtb	r3, r3
+ 692 0654 002B     		cmp	r3, #0
+ 693 0656 06D0     		beq	.L36
+ 226:../src/interrupt_defs.cpp **** 		{
+ 227:../src/interrupt_defs.cpp **** 			led_iter = 0;
+ 694              		.loc 1 227 0
+ 695 0658 40F20003 		movw	r3, #:lower16:led_iter
+ 696 065c C0F20003 		movt	r3, #:upper16:led_iter
+ 697 0660 4FF00002 		mov	r2, #0
+ 698 0664 1A60     		str	r2, [r3, #0]
+ 699              	.L36:
+ 228:../src/interrupt_defs.cpp **** 		}
+ 229:../src/interrupt_defs.cpp **** 	}
+ 700              		.loc 1 229 0
+ 701 0666 80BD     		pop	{r7, pc}
+ 702              		.cfi_endproc
+ 703              	.LFE113:
+ 705              		.align	2
+ 706              		.global	ADC1_2_IRQHandler
+ 707              		.thumb
+ 708              		.thumb_func
+ 710              	ADC1_2_IRQHandler:
+ 711              	.LFB114:
+ 230:../src/interrupt_defs.cpp **** 	void ADC1_2_IRQHandler(void)
  231:../src/interrupt_defs.cpp **** 	{
- 791              		.loc 1 231 0
- 792              		.cfi_startproc
- 793              		@ args = 0, pretend = 0, frame = 0
- 794              		@ frame_needed = 1, uses_anonymous_args = 0
- 795 06c4 80B5     		push	{r7, lr}
- 796              	.LCFI12:
- 797              		.cfi_def_cfa_offset 8
- 798              		.cfi_offset 7, -8
- 799              		.cfi_offset 14, -4
- 800 06c6 00AF     		add	r7, sp, #0
- 801              	.LCFI13:
- 802              		.cfi_def_cfa_register 7
- 232:../src/interrupt_defs.cpp **** 		DMA_ClearITPendingBit(DMA2_IT_TC1);
- 803              		.loc 1 232 0
- 804 06c8 4FF00200 		mov	r0, #2
- 805 06cc C1F20000 		movt	r0, 4096
- 806 06d0 FFF7FEFF 		bl	DMA_ClearITPendingBit
- 233:../src/interrupt_defs.cpp **** 		adc2_new_data = 1;
- 807              		.loc 1 233 0
- 808 06d4 40F20003 		movw	r3, #:lower16:adc2_new_data
- 809 06d8 C0F20003 		movt	r3, #:upper16:adc2_new_data
- 810 06dc 4FF00102 		mov	r2, #1
- 811 06e0 1A70     		strb	r2, [r3, #0]
- 234:../src/interrupt_defs.cpp **** 	}
- 812              		.loc 1 234 0
- 813 06e2 80BD     		pop	{r7, pc}
- 814              		.cfi_endproc
- 815              	.LFE116:
- 817              		.align	2
- 818              		.global	ADC3_IRQHandler
- 819              		.thumb
- 820              		.thumb_func
- 822              	ADC3_IRQHandler:
- 823              	.LFB117:
- 235:../src/interrupt_defs.cpp **** 
- 236:../src/interrupt_defs.cpp **** 	void ADC3_IRQHandler(void)
- 237:../src/interrupt_defs.cpp **** 	{
- 824              		.loc 1 237 0
- 825              		.cfi_startproc
- 826              		@ args = 0, pretend = 0, frame = 8
- 827              		@ frame_needed = 1, uses_anonymous_args = 0
- 828 06e4 80B5     		push	{r7, lr}
- 829              	.LCFI14:
- 830              		.cfi_def_cfa_offset 8
- 831              		.cfi_offset 7, -8
- 832              		.cfi_offset 14, -4
- 833 06e6 82B0     		sub	sp, sp, #8
- 834              	.LCFI15:
- 835              		.cfi_def_cfa_offset 16
- 836 06e8 00AF     		add	r7, sp, #0
- 837              	.LCFI16:
- 838              		.cfi_def_cfa_register 7
- 839              	.LBB4:
- 238:../src/interrupt_defs.cpp **** 		int i = 0;
- 840              		.loc 1 238 0
- 841 06ea 4FF00003 		mov	r3, #0
- 842 06ee 7B60     		str	r3, [r7, #4]
- 239:../src/interrupt_defs.cpp **** 		int sum = 0;
- 843              		.loc 1 239 0
- 844 06f0 4FF00003 		mov	r3, #0
- 845 06f4 3B60     		str	r3, [r7, #0]
- 240:../src/interrupt_defs.cpp **** 		if(ADC_GetITStatus(ADC3, ADC_IT_AWD1) != RESET)
- 846              		.loc 1 240 0
- 847 06f6 4FF48060 		mov	r0, #1024
- 848 06fa C5F20000 		movt	r0, 20480
- 849 06fe 4FF08001 		mov	r1, #128
- 850 0702 FFF7FEFF 		bl	ADC_GetITStatus
- 851 0706 0346     		mov	r3, r0
- 852 0708 002B     		cmp	r3, #0
- 853 070a 0CBF     		ite	eq
- 854 070c 0023     		moveq	r3, #0
- 855 070e 0123     		movne	r3, #1
- 856 0710 DBB2     		uxtb	r3, r3
- 857 0712 002B     		cmp	r3, #0
- 858 0714 38D0     		beq	.L43
- 241:../src/interrupt_defs.cpp **** 		{
- 242:../src/interrupt_defs.cpp **** 			ADC_ClearITPendingBit(ADC3, ADC_IT_AWD1);
- 859              		.loc 1 242 0
- 860 0716 4FF48060 		mov	r0, #1024
- 861 071a C5F20000 		movt	r0, 20480
- 862 071e 4FF08001 		mov	r1, #128
- 863 0722 FFF7FEFF 		bl	ADC_ClearITPendingBit
- 243:../src/interrupt_defs.cpp **** 			for(i=0; i<35;++i)
- 864              		.loc 1 243 0
- 865 0726 4FF00003 		mov	r3, #0
- 866 072a 7B60     		str	r3, [r7, #4]
- 867 072c 0DE0     		b	.L44
- 868              	.L45:
- 244:../src/interrupt_defs.cpp **** 			{
- 245:../src/interrupt_defs.cpp **** 				sum += ADC_GetConversionValue(ADC3);
- 869              		.loc 1 245 0 discriminator 2
- 870 072e 4FF48060 		mov	r0, #1024
- 871 0732 C5F20000 		movt	r0, 20480
- 872 0736 FFF7FEFF 		bl	ADC_GetConversionValue
- 873 073a 0346     		mov	r3, r0
- 874 073c 3A68     		ldr	r2, [r7, #0]
- 875 073e D318     		adds	r3, r2, r3
- 876 0740 3B60     		str	r3, [r7, #0]
- 243:../src/interrupt_defs.cpp **** 			for(i=0; i<35;++i)
- 877              		.loc 1 243 0 discriminator 2
- 878 0742 7B68     		ldr	r3, [r7, #4]
- 879 0744 03F10103 		add	r3, r3, #1
- 880 0748 7B60     		str	r3, [r7, #4]
- 881              	.L44:
- 243:../src/interrupt_defs.cpp **** 			for(i=0; i<35;++i)
- 882              		.loc 1 243 0 is_stmt 0 discriminator 1
- 883 074a 7B68     		ldr	r3, [r7, #4]
- 884 074c 222B     		cmp	r3, #34
- 885 074e CCBF     		ite	gt
- 886 0750 0023     		movgt	r3, #0
- 887 0752 0123     		movle	r3, #1
- 888 0754 DBB2     		uxtb	r3, r3
- 889 0756 002B     		cmp	r3, #0
- 890 0758 E9D1     		bne	.L45
- 246:../src/interrupt_defs.cpp **** 			}
- 247:../src/interrupt_defs.cpp **** 			if((float)sum/float(35) > 2048)
- 891              		.loc 1 247 0 is_stmt 1
- 892 075a D7ED007A 		flds	s15, [r7, #0]	@ int
- 893 075e B8EEE77A 		fsitos	s14, s15
- 894 0762 DFED1B7A 		flds	s15, .L49
- 895 0766 87EE277A 		fdivs	s14, s14, s15
- 896 076a DFED1A7A 		flds	s15, .L49+4
- 897 076e B4EEE77A 		fcmpes	s14, s15
- 898 0772 F1EE10FA 		fmstat
- 899 0776 26DD     		ble	.L42
- 900              	.L48:
- 248:../src/interrupt_defs.cpp **** 			{
- 249:../src/interrupt_defs.cpp **** 				adc3_awd1 = 1;
- 901              		.loc 1 249 0
- 902 0778 40F20003 		movw	r3, #:lower16:adc3_awd1
- 903 077c C0F20003 		movt	r3, #:upper16:adc3_awd1
- 904 0780 4FF00102 		mov	r2, #1
- 905 0784 1A70     		strb	r2, [r3, #0]
- 906 0786 1EE0     		b	.L42
- 907              	.L43:
- 250:../src/interrupt_defs.cpp **** 			}
- 251:../src/interrupt_defs.cpp **** 		}
- 252:../src/interrupt_defs.cpp **** 		else if (ADC_GetITStatus(ADC3, ADC_IT_AWD2) != RESET)
- 908              		.loc 1 252 0
- 909 0788 4FF48060 		mov	r0, #1024
- 910 078c C5F20000 		movt	r0, 20480
- 911 0790 4FF48071 		mov	r1, #256
- 912 0794 FFF7FEFF 		bl	ADC_GetITStatus
- 913 0798 0346     		mov	r3, r0
- 914 079a 002B     		cmp	r3, #0
- 915 079c 0CBF     		ite	eq
- 916 079e 0023     		moveq	r3, #0
- 917 07a0 0123     		movne	r3, #1
- 918 07a2 DBB2     		uxtb	r3, r3
- 919 07a4 002B     		cmp	r3, #0
- 920 07a6 0ED0     		beq	.L42
- 253:../src/interrupt_defs.cpp **** 		{
- 254:../src/interrupt_defs.cpp **** 			ADC_ClearITPendingBit(ADC3, ADC_IT_AWD2);
- 921              		.loc 1 254 0
- 922 07a8 4FF48060 		mov	r0, #1024
- 923 07ac C5F20000 		movt	r0, 20480
- 924 07b0 4FF48071 		mov	r1, #256
- 925 07b4 FFF7FEFF 		bl	ADC_ClearITPendingBit
- 255:../src/interrupt_defs.cpp **** 			adc3_awd2 = 1;
- 926              		.loc 1 255 0
- 927 07b8 40F20003 		movw	r3, #:lower16:adc3_awd2
- 928 07bc C0F20003 		movt	r3, #:upper16:adc3_awd2
- 929 07c0 4FF00102 		mov	r2, #1
- 930 07c4 1A70     		strb	r2, [r3, #0]
- 931              	.L42:
- 932              	.LBE4:
- 256:../src/interrupt_defs.cpp **** 		}
- 257:../src/interrupt_defs.cpp **** 	}
- 933              		.loc 1 257 0
- 934 07c6 07F10807 		add	r7, r7, #8
- 935 07ca BD46     		mov	sp, r7
- 936 07cc 80BD     		pop	{r7, pc}
- 937              	.L50:
- 938 07ce 00BF     		.align	2
- 939              	.L49:
- 940 07d0 00000C42 		.word	1108082688
- 941 07d4 00000045 		.word	1157627904
- 942              		.cfi_endproc
- 943              	.LFE117:
- 945              		.align	2
- 946              		.global	EXTI9_5_IRQHandler
- 947              		.thumb
- 948              		.thumb_func
- 950              	EXTI9_5_IRQHandler:
- 951              	.LFB118:
- 258:../src/interrupt_defs.cpp **** 
- 259:../src/interrupt_defs.cpp **** 	void EXTI9_5_IRQHandler(void)//EXTI5_IRQHandler(void)
- 260:../src/interrupt_defs.cpp **** 	{
- 952              		.loc 1 260 0
- 953              		.cfi_startproc
- 954              		@ args = 0, pretend = 0, frame = 16
- 955              		@ frame_needed = 1, uses_anonymous_args = 0
- 956 07d8 80B5     		push	{r7, lr}
- 957              	.LCFI17:
- 958              		.cfi_def_cfa_offset 8
- 959              		.cfi_offset 7, -8
- 960              		.cfi_offset 14, -4
- 961 07da 84B0     		sub	sp, sp, #16
- 962              	.LCFI18:
- 963              		.cfi_def_cfa_offset 24
- 964 07dc 00AF     		add	r7, sp, #0
- 965              	.LCFI19:
- 966              		.cfi_def_cfa_register 7
- 967              	.LBB5:
- 261:../src/interrupt_defs.cpp **** 		EXTI_ClearITPendingBit(EXTI_Line5);
- 968              		.loc 1 261 0
- 969 07de 4FF00500 		mov	r0, #5
- 970 07e2 FFF7FEFF 		bl	EXTI_ClearITPendingBit
- 971              	.LBB6:
- 262:../src/interrupt_defs.cpp **** 		if(stage == 0)
- 972              		.loc 1 262 0
- 973 07e6 40F20003 		movw	r3, #:lower16:stage
- 974 07ea C0F20003 		movt	r3, #:upper16:stage
- 975 07ee 1B68     		ldr	r3, [r3, #0]
- 976 07f0 002B     		cmp	r3, #0
- 977 07f2 24D1     		bne	.L52
- 978              	.LBB7:
- 263:../src/interrupt_defs.cpp **** 		{
- 264:../src/interrupt_defs.cpp **** 			TIM_SetCounter(TIM2, 0);
- 979              		.loc 1 264 0
- 980 07f4 4FF08040 		mov	r0, #1073741824
- 981 07f8 4FF00001 		mov	r1, #0
- 982 07fc FFF7FEFF 		bl	TIM_SetCounter
- 265:../src/interrupt_defs.cpp **** 			TIM_Cmd(TIM2, ENABLE);
- 983              		.loc 1 265 0
- 984 0800 4FF08040 		mov	r0, #1073741824
- 985 0804 4FF00101 		mov	r1, #1
- 986 0808 FFF7FEFF 		bl	TIM_Cmd
- 266:../src/interrupt_defs.cpp **** 
- 267:../src/interrupt_defs.cpp **** 			EXTI_InitTypeDef e;
- 268:../src/interrupt_defs.cpp **** 
- 269:../src/interrupt_defs.cpp **** 			e.EXTI_Line = EXTI_Line5;
- 987              		.loc 1 269 0
- 988 080c 4FF00503 		mov	r3, #5
- 989 0810 BB60     		str	r3, [r7, #8]
- 270:../src/interrupt_defs.cpp **** 			e.EXTI_LineCmd = ENABLE;
- 990              		.loc 1 270 0
- 991 0812 4FF00103 		mov	r3, #1
- 992 0816 BB73     		strb	r3, [r7, #14]
- 271:../src/interrupt_defs.cpp **** 			e.EXTI_Mode = EXTI_Mode_Interrupt;
- 993              		.loc 1 271 0
- 994 0818 4FF00003 		mov	r3, #0
- 995 081c 3B73     		strb	r3, [r7, #12]
- 272:../src/interrupt_defs.cpp **** 			e.EXTI_Trigger = EXTI_Trigger_Falling;
- 996              		.loc 1 272 0
- 997 081e 4FF00C03 		mov	r3, #12
- 998 0822 7B73     		strb	r3, [r7, #13]
+ 712              		.loc 1 231 0
+ 713              		.cfi_startproc
+ 714              		@ args = 0, pretend = 0, frame = 0
+ 715              		@ frame_needed = 1, uses_anonymous_args = 0
+ 716 0668 80B5     		push	{r7, lr}
+ 717              	.LCFI8:
+ 718              		.cfi_def_cfa_offset 8
+ 719              		.cfi_offset 7, -8
+ 720              		.cfi_offset 14, -4
+ 721 066a 00AF     		add	r7, sp, #0
+ 722              	.LCFI9:
+ 723              		.cfi_def_cfa_register 7
+ 232:../src/interrupt_defs.cpp **** 		if(ADC_GetITStatus(ADC1, ADC_IT_EOC) == SET)
+ 724              		.loc 1 232 0
+ 725 066c 4FF0A040 		mov	r0, #1342177280
+ 726 0670 4FF00401 		mov	r1, #4
+ 727 0674 FFF7FEFF 		bl	ADC_GetITStatus
+ 728 0678 0346     		mov	r3, r0
+ 729 067a 012B     		cmp	r3, #1
+ 730 067c 14BF     		ite	ne
+ 731 067e 0023     		movne	r3, #0
+ 732 0680 0123     		moveq	r3, #1
+ 733 0682 DBB2     		uxtb	r3, r3
+ 734 0684 002B     		cmp	r3, #0
+ 735 0686 10D0     		beq	.L38
+ 233:../src/interrupt_defs.cpp **** 		{
+ 234:../src/interrupt_defs.cpp **** 			adcval = ADC_GetConversionValue(ADC1);
+ 736              		.loc 1 234 0
+ 737 0688 4FF0A040 		mov	r0, #1342177280
+ 738 068c FFF7FEFF 		bl	ADC_GetConversionValue
+ 739 0690 0346     		mov	r3, r0
+ 740 0692 1A46     		mov	r2, r3
+ 741 0694 40F20003 		movw	r3, #:lower16:adcval
+ 742 0698 C0F20003 		movt	r3, #:upper16:adcval
+ 743 069c 1A60     		str	r2, [r3, #0]
+ 235:../src/interrupt_defs.cpp **** 			ADC_ClearITPendingBit(ADC1, ADC_IT_EOC);
+ 744              		.loc 1 235 0
+ 745 069e 4FF0A040 		mov	r0, #1342177280
+ 746 06a2 4FF00401 		mov	r1, #4
+ 747 06a6 FFF7FEFF 		bl	ADC_ClearITPendingBit
+ 748              	.L38:
+ 236:../src/interrupt_defs.cpp **** 		}
+ 237:../src/interrupt_defs.cpp **** 	}
+ 749              		.loc 1 237 0
+ 750 06aa 80BD     		pop	{r7, pc}
+ 751              		.cfi_endproc
+ 752              	.LFE114:
+ 754              		.align	2
+ 755              		.global	DMA1_Channel1_IRQHandler
+ 756              		.thumb
+ 757              		.thumb_func
+ 759              	DMA1_Channel1_IRQHandler:
+ 760              	.LFB115:
+ 238:../src/interrupt_defs.cpp **** 
+ 239:../src/interrupt_defs.cpp **** 	void DMA1_Channel1_IRQHandler(void)
+ 240:../src/interrupt_defs.cpp **** 	{
+ 761              		.loc 1 240 0
+ 762              		.cfi_startproc
+ 763              		@ args = 0, pretend = 0, frame = 0
+ 764              		@ frame_needed = 1, uses_anonymous_args = 0
+ 765 06ac 80B5     		push	{r7, lr}
+ 766              	.LCFI10:
+ 767              		.cfi_def_cfa_offset 8
+ 768              		.cfi_offset 7, -8
+ 769              		.cfi_offset 14, -4
+ 770 06ae 00AF     		add	r7, sp, #0
+ 771              	.LCFI11:
+ 772              		.cfi_def_cfa_register 7
+ 241:../src/interrupt_defs.cpp **** 		DMA_ClearITPendingBit(DMA1_IT_TC1);
+ 773              		.loc 1 241 0
+ 774 06b0 4FF00200 		mov	r0, #2
+ 775 06b4 FFF7FEFF 		bl	DMA_ClearITPendingBit
+ 242:../src/interrupt_defs.cpp **** 		new_data = 1;
+ 776              		.loc 1 242 0
+ 777 06b8 40F20003 		movw	r3, #:lower16:new_data
+ 778 06bc C0F20003 		movt	r3, #:upper16:new_data
+ 779 06c0 4FF00102 		mov	r2, #1
+ 780 06c4 1A60     		str	r2, [r3, #0]
+ 243:../src/interrupt_defs.cpp **** 	}
+ 781              		.loc 1 243 0
+ 782 06c6 80BD     		pop	{r7, pc}
+ 783              		.cfi_endproc
+ 784              	.LFE115:
+ 786              		.align	2
+ 787              		.global	DMA2_Channel1_IRQHandler
+ 788              		.thumb
+ 789              		.thumb_func
+ 791              	DMA2_Channel1_IRQHandler:
+ 792              	.LFB116:
+ 244:../src/interrupt_defs.cpp **** 
+ 245:../src/interrupt_defs.cpp **** 	void DMA2_Channel1_IRQHandler(void)
+ 246:../src/interrupt_defs.cpp **** 	{
+ 793              		.loc 1 246 0
+ 794              		.cfi_startproc
+ 795              		@ args = 0, pretend = 0, frame = 0
+ 796              		@ frame_needed = 1, uses_anonymous_args = 0
+ 797 06c8 80B5     		push	{r7, lr}
+ 798              	.LCFI12:
+ 799              		.cfi_def_cfa_offset 8
+ 800              		.cfi_offset 7, -8
+ 801              		.cfi_offset 14, -4
+ 802 06ca 00AF     		add	r7, sp, #0
+ 803              	.LCFI13:
+ 804              		.cfi_def_cfa_register 7
+ 247:../src/interrupt_defs.cpp **** 		DMA_ClearITPendingBit(DMA2_IT_TC1);
+ 805              		.loc 1 247 0
+ 806 06cc 4FF00200 		mov	r0, #2
+ 807 06d0 C1F20000 		movt	r0, 4096
+ 808 06d4 FFF7FEFF 		bl	DMA_ClearITPendingBit
+ 248:../src/interrupt_defs.cpp **** 		adc2_new_data = 1;
+ 809              		.loc 1 248 0
+ 810 06d8 40F20003 		movw	r3, #:lower16:adc2_new_data
+ 811 06dc C0F20003 		movt	r3, #:upper16:adc2_new_data
+ 812 06e0 4FF00102 		mov	r2, #1
+ 813 06e4 1A70     		strb	r2, [r3, #0]
+ 249:../src/interrupt_defs.cpp **** 	}
+ 814              		.loc 1 249 0
+ 815 06e6 80BD     		pop	{r7, pc}
+ 816              		.cfi_endproc
+ 817              	.LFE116:
+ 819              		.align	2
+ 820              		.global	ADC3_IRQHandler
+ 821              		.thumb
+ 822              		.thumb_func
+ 824              	ADC3_IRQHandler:
+ 825              	.LFB117:
+ 250:../src/interrupt_defs.cpp **** 
+ 251:../src/interrupt_defs.cpp **** 	void ADC3_IRQHandler(void)
+ 252:../src/interrupt_defs.cpp **** 	{
+ 826              		.loc 1 252 0
+ 827              		.cfi_startproc
+ 828              		@ args = 0, pretend = 0, frame = 8
+ 829              		@ frame_needed = 1, uses_anonymous_args = 0
+ 830 06e8 80B5     		push	{r7, lr}
+ 831              	.LCFI14:
+ 832              		.cfi_def_cfa_offset 8
+ 833              		.cfi_offset 7, -8
+ 834              		.cfi_offset 14, -4
+ 835 06ea 82B0     		sub	sp, sp, #8
+ 836              	.LCFI15:
+ 837              		.cfi_def_cfa_offset 16
+ 838 06ec 00AF     		add	r7, sp, #0
+ 839              	.LCFI16:
+ 840              		.cfi_def_cfa_register 7
+ 841              	.LBB4:
+ 253:../src/interrupt_defs.cpp **** 		int i = 0;
+ 842              		.loc 1 253 0
+ 843 06ee 4FF00003 		mov	r3, #0
+ 844 06f2 7B60     		str	r3, [r7, #4]
+ 254:../src/interrupt_defs.cpp **** 		int sum = 0;
+ 845              		.loc 1 254 0
+ 846 06f4 4FF00003 		mov	r3, #0
+ 847 06f8 3B60     		str	r3, [r7, #0]
+ 255:../src/interrupt_defs.cpp **** 		if(ADC_GetITStatus(ADC3, ADC_IT_AWD1) != RESET)
+ 848              		.loc 1 255 0
+ 849 06fa 4FF48060 		mov	r0, #1024
+ 850 06fe C5F20000 		movt	r0, 20480
+ 851 0702 4FF08001 		mov	r1, #128
+ 852 0706 FFF7FEFF 		bl	ADC_GetITStatus
+ 853 070a 0346     		mov	r3, r0
+ 854 070c 002B     		cmp	r3, #0
+ 855 070e 0CBF     		ite	eq
+ 856 0710 0023     		moveq	r3, #0
+ 857 0712 0123     		movne	r3, #1
+ 858 0714 DBB2     		uxtb	r3, r3
+ 859 0716 002B     		cmp	r3, #0
+ 860 0718 38D0     		beq	.L43
+ 256:../src/interrupt_defs.cpp **** 		{
+ 257:../src/interrupt_defs.cpp **** 			ADC_ClearITPendingBit(ADC3, ADC_IT_AWD1);
+ 861              		.loc 1 257 0
+ 862 071a 4FF48060 		mov	r0, #1024
+ 863 071e C5F20000 		movt	r0, 20480
+ 864 0722 4FF08001 		mov	r1, #128
+ 865 0726 FFF7FEFF 		bl	ADC_ClearITPendingBit
+ 258:../src/interrupt_defs.cpp **** 			for(i=0; i<35;++i)
+ 866              		.loc 1 258 0
+ 867 072a 4FF00003 		mov	r3, #0
+ 868 072e 7B60     		str	r3, [r7, #4]
+ 869 0730 0DE0     		b	.L44
+ 870              	.L45:
+ 259:../src/interrupt_defs.cpp **** 			{
+ 260:../src/interrupt_defs.cpp **** 				sum += ADC_GetConversionValue(ADC3);
+ 871              		.loc 1 260 0 discriminator 2
+ 872 0732 4FF48060 		mov	r0, #1024
+ 873 0736 C5F20000 		movt	r0, 20480
+ 874 073a FFF7FEFF 		bl	ADC_GetConversionValue
+ 875 073e 0346     		mov	r3, r0
+ 876 0740 3A68     		ldr	r2, [r7, #0]
+ 877 0742 D318     		adds	r3, r2, r3
+ 878 0744 3B60     		str	r3, [r7, #0]
+ 258:../src/interrupt_defs.cpp **** 			for(i=0; i<35;++i)
+ 879              		.loc 1 258 0 discriminator 2
+ 880 0746 7B68     		ldr	r3, [r7, #4]
+ 881 0748 03F10103 		add	r3, r3, #1
+ 882 074c 7B60     		str	r3, [r7, #4]
+ 883              	.L44:
+ 258:../src/interrupt_defs.cpp **** 			for(i=0; i<35;++i)
+ 884              		.loc 1 258 0 is_stmt 0 discriminator 1
+ 885 074e 7B68     		ldr	r3, [r7, #4]
+ 886 0750 222B     		cmp	r3, #34
+ 887 0752 CCBF     		ite	gt
+ 888 0754 0023     		movgt	r3, #0
+ 889 0756 0123     		movle	r3, #1
+ 890 0758 DBB2     		uxtb	r3, r3
+ 891 075a 002B     		cmp	r3, #0
+ 892 075c E9D1     		bne	.L45
+ 261:../src/interrupt_defs.cpp **** 			}
+ 262:../src/interrupt_defs.cpp **** 			if((float)sum/float(35) > 2048)
+ 893              		.loc 1 262 0 is_stmt 1
+ 894 075e D7ED007A 		flds	s15, [r7, #0]	@ int
+ 895 0762 B8EEE77A 		fsitos	s14, s15
+ 896 0766 DFED1B7A 		flds	s15, .L49
+ 897 076a 87EE277A 		fdivs	s14, s14, s15
+ 898 076e DFED1A7A 		flds	s15, .L49+4
+ 899 0772 B4EEE77A 		fcmpes	s14, s15
+ 900 0776 F1EE10FA 		fmstat
+ 901 077a 26DD     		ble	.L42
+ 902              	.L48:
+ 263:../src/interrupt_defs.cpp **** 			{
+ 264:../src/interrupt_defs.cpp **** 				adc3_awd1 = 1;
+ 903              		.loc 1 264 0
+ 904 077c 40F20003 		movw	r3, #:lower16:adc3_awd1
+ 905 0780 C0F20003 		movt	r3, #:upper16:adc3_awd1
+ 906 0784 4FF00102 		mov	r2, #1
+ 907 0788 1A70     		strb	r2, [r3, #0]
+ 908 078a 1EE0     		b	.L42
+ 909              	.L43:
+ 265:../src/interrupt_defs.cpp **** 			}
+ 266:../src/interrupt_defs.cpp **** 		}
+ 267:../src/interrupt_defs.cpp **** 		else if (ADC_GetITStatus(ADC3, ADC_IT_AWD2) != RESET)
+ 910              		.loc 1 267 0
+ 911 078c 4FF48060 		mov	r0, #1024
+ 912 0790 C5F20000 		movt	r0, 20480
+ 913 0794 4FF48071 		mov	r1, #256
+ 914 0798 FFF7FEFF 		bl	ADC_GetITStatus
+ 915 079c 0346     		mov	r3, r0
+ 916 079e 002B     		cmp	r3, #0
+ 917 07a0 0CBF     		ite	eq
+ 918 07a2 0023     		moveq	r3, #0
+ 919 07a4 0123     		movne	r3, #1
+ 920 07a6 DBB2     		uxtb	r3, r3
+ 921 07a8 002B     		cmp	r3, #0
+ 922 07aa 0ED0     		beq	.L42
+ 268:../src/interrupt_defs.cpp **** 		{
+ 269:../src/interrupt_defs.cpp **** 			ADC_ClearITPendingBit(ADC3, ADC_IT_AWD2);
+ 923              		.loc 1 269 0
+ 924 07ac 4FF48060 		mov	r0, #1024
+ 925 07b0 C5F20000 		movt	r0, 20480
+ 926 07b4 4FF48071 		mov	r1, #256
+ 927 07b8 FFF7FEFF 		bl	ADC_ClearITPendingBit
+ 270:../src/interrupt_defs.cpp **** 			adc3_awd2 = 1;
+ 928              		.loc 1 270 0
+ 929 07bc 40F20003 		movw	r3, #:lower16:adc3_awd2
+ 930 07c0 C0F20003 		movt	r3, #:upper16:adc3_awd2
+ 931 07c4 4FF00102 		mov	r2, #1
+ 932 07c8 1A70     		strb	r2, [r3, #0]
+ 933              	.L42:
+ 934              	.LBE4:
+ 271:../src/interrupt_defs.cpp **** 		}
+ 272:../src/interrupt_defs.cpp **** 	}
+ 935              		.loc 1 272 0
+ 936 07ca 07F10807 		add	r7, r7, #8
+ 937 07ce BD46     		mov	sp, r7
+ 938 07d0 80BD     		pop	{r7, pc}
+ 939              	.L50:
+ 940 07d2 00BF     		.align	2
+ 941              	.L49:
+ 942 07d4 00000C42 		.word	1108082688
+ 943 07d8 00000045 		.word	1157627904
+ 944              		.cfi_endproc
+ 945              	.LFE117:
+ 947              		.align	2
+ 948              		.global	EXTI9_5_IRQHandler
+ 949              		.thumb
+ 950              		.thumb_func
+ 952              	EXTI9_5_IRQHandler:
+ 953              	.LFB118:
  273:../src/interrupt_defs.cpp **** 
- 274:../src/interrupt_defs.cpp **** 			EXTI_Init(&e);
- 999              		.loc 1 274 0
- 1000 0824 07F10803 		add	r3, r7, #8
- 1001 0828 1846     		mov	r0, r3
- 1002 082a FFF7FEFF 		bl	EXTI_Init
- 275:../src/interrupt_defs.cpp **** 
- 276:../src/interrupt_defs.cpp **** 			stage = 1;
- 1003              		.loc 1 276 0
- 1004 082e 40F20003 		movw	r3, #:lower16:stage
- 1005 0832 C0F20003 		movt	r3, #:upper16:stage
- 1006 0836 4FF00102 		mov	r2, #1
- 1007 083a 1A60     		str	r2, [r3, #0]
- 1008 083c 2FE0     		b	.L51
- 1009              	.L52:
- 1010              	.LBE7:
- 1011              	.LBB8:
- 1012              	.LBB9:
- 277:../src/interrupt_defs.cpp **** 			return;
- 278:../src/interrupt_defs.cpp **** 		}
- 279:../src/interrupt_defs.cpp **** 		else if(stage == 1)
- 1013              		.loc 1 279 0
- 1014 083e 40F20003 		movw	r3, #:lower16:stage
- 1015 0842 C0F20003 		movt	r3, #:upper16:stage
- 1016 0846 1B68     		ldr	r3, [r3, #0]
- 1017 0848 012B     		cmp	r3, #1
- 1018 084a 28D1     		bne	.L51
- 1019              	.LBB10:
- 280:../src/interrupt_defs.cpp **** 		{
- 281:../src/interrupt_defs.cpp **** 			count = TIM_GetCounter(TIM2);
- 1020              		.loc 1 281 0
- 1021 084c 4FF08040 		mov	r0, #1073741824
- 1022 0850 FFF7FEFF 		bl	TIM_GetCounter
- 1023 0854 0346     		mov	r3, r0
- 1024 0856 1A46     		mov	r2, r3
- 1025 0858 40F20003 		movw	r3, #:lower16:count
- 1026 085c C0F20003 		movt	r3, #:upper16:count
- 1027 0860 1A60     		str	r2, [r3, #0]
- 282:../src/interrupt_defs.cpp **** 			TIM_Cmd(TIM2, DISABLE);
- 1028              		.loc 1 282 0
- 1029 0862 4FF08040 		mov	r0, #1073741824
- 1030 0866 4FF00001 		mov	r1, #0
- 1031 086a FFF7FEFF 		bl	TIM_Cmd
+ 274:../src/interrupt_defs.cpp **** 	void EXTI9_5_IRQHandler(void)//EXTI5_IRQHandler(void)
+ 275:../src/interrupt_defs.cpp **** 	{
+ 954              		.loc 1 275 0
+ 955              		.cfi_startproc
+ 956              		@ args = 0, pretend = 0, frame = 16
+ 957              		@ frame_needed = 1, uses_anonymous_args = 0
+ 958 07dc 80B5     		push	{r7, lr}
+ 959              	.LCFI17:
+ 960              		.cfi_def_cfa_offset 8
+ 961              		.cfi_offset 7, -8
+ 962              		.cfi_offset 14, -4
+ 963 07de 84B0     		sub	sp, sp, #16
+ 964              	.LCFI18:
+ 965              		.cfi_def_cfa_offset 24
+ 966 07e0 00AF     		add	r7, sp, #0
+ 967              	.LCFI19:
+ 968              		.cfi_def_cfa_register 7
+ 969              	.LBB5:
+ 276:../src/interrupt_defs.cpp **** 		EXTI_ClearITPendingBit(EXTI_Line9);
+ 970              		.loc 1 276 0
+ 971 07e2 4FF00900 		mov	r0, #9
+ 972 07e6 FFF7FEFF 		bl	EXTI_ClearITPendingBit
+ 973              	.LBB6:
+ 277:../src/interrupt_defs.cpp **** 		if(stage == 0)
+ 974              		.loc 1 277 0
+ 975 07ea 40F20003 		movw	r3, #:lower16:stage
+ 976 07ee C0F20003 		movt	r3, #:upper16:stage
+ 977 07f2 1B68     		ldr	r3, [r3, #0]
+ 978 07f4 002B     		cmp	r3, #0
+ 979 07f6 24D1     		bne	.L52
+ 980              	.LBB7:
+ 278:../src/interrupt_defs.cpp **** 		{
+ 279:../src/interrupt_defs.cpp **** 			TIM_SetCounter(TIM2, 0);
+ 981              		.loc 1 279 0
+ 982 07f8 4FF08040 		mov	r0, #1073741824
+ 983 07fc 4FF00001 		mov	r1, #0
+ 984 0800 FFF7FEFF 		bl	TIM_SetCounter
+ 280:../src/interrupt_defs.cpp **** 			TIM_Cmd(TIM2, ENABLE);
+ 985              		.loc 1 280 0
+ 986 0804 4FF08040 		mov	r0, #1073741824
+ 987 0808 4FF00101 		mov	r1, #1
+ 988 080c FFF7FEFF 		bl	TIM_Cmd
+ 281:../src/interrupt_defs.cpp **** 
+ 282:../src/interrupt_defs.cpp **** 			EXTI_InitTypeDef e;
  283:../src/interrupt_defs.cpp **** 
- 284:../src/interrupt_defs.cpp **** 			NVIC_InitTypeDef nv;
- 285:../src/interrupt_defs.cpp **** 
- 286:../src/interrupt_defs.cpp **** 			nv.NVIC_IRQChannel = EXTI9_5_IRQn;
- 1032              		.loc 1 286 0
- 1033 086e 4FF01703 		mov	r3, #23
- 1034 0872 3B71     		strb	r3, [r7, #4]
- 287:../src/interrupt_defs.cpp **** 			nv.NVIC_IRQChannelCmd = DISABLE;
- 1035              		.loc 1 287 0
- 1036 0874 4FF00003 		mov	r3, #0
- 1037 0878 FB71     		strb	r3, [r7, #7]
- 288:../src/interrupt_defs.cpp **** 			nv.NVIC_IRQChannelPreemptionPriority = 0;
- 1038              		.loc 1 288 0
- 1039 087a 4FF00003 		mov	r3, #0
- 1040 087e 7B71     		strb	r3, [r7, #5]
- 289:../src/interrupt_defs.cpp **** 			nv.NVIC_IRQChannelSubPriority = 0;
- 1041              		.loc 1 289 0
- 1042 0880 4FF00003 		mov	r3, #0
- 1043 0884 BB71     		strb	r3, [r7, #6]
+ 284:../src/interrupt_defs.cpp **** 			e.EXTI_Line = EXTI_Line9;
+ 989              		.loc 1 284 0
+ 990 0810 4FF00903 		mov	r3, #9
+ 991 0814 BB60     		str	r3, [r7, #8]
+ 285:../src/interrupt_defs.cpp **** 			e.EXTI_LineCmd = ENABLE;
+ 992              		.loc 1 285 0
+ 993 0816 4FF00103 		mov	r3, #1
+ 994 081a BB73     		strb	r3, [r7, #14]
+ 286:../src/interrupt_defs.cpp **** 			e.EXTI_Mode = EXTI_Mode_Interrupt;
+ 995              		.loc 1 286 0
+ 996 081c 4FF00003 		mov	r3, #0
+ 997 0820 3B73     		strb	r3, [r7, #12]
+ 287:../src/interrupt_defs.cpp **** 			e.EXTI_Trigger = EXTI_Trigger_Falling;
+ 998              		.loc 1 287 0
+ 999 0822 4FF00C03 		mov	r3, #12
+ 1000 0826 7B73     		strb	r3, [r7, #13]
+ 288:../src/interrupt_defs.cpp **** 
+ 289:../src/interrupt_defs.cpp **** 			EXTI_Init(&e);
+ 1001              		.loc 1 289 0
+ 1002 0828 07F10803 		add	r3, r7, #8
+ 1003 082c 1846     		mov	r0, r3
+ 1004 082e FFF7FEFF 		bl	EXTI_Init
  290:../src/interrupt_defs.cpp **** 
- 291:../src/interrupt_defs.cpp **** 			NVIC_Init(&nv);
- 1044              		.loc 1 291 0
- 1045 0886 07F10403 		add	r3, r7, #4
- 1046 088a 1846     		mov	r0, r3
- 1047 088c FFF7FEFF 		bl	NVIC_Init
- 292:../src/interrupt_defs.cpp **** 
- 293:../src/interrupt_defs.cpp **** 			stage = 0;
- 1048              		.loc 1 293 0
- 1049 0890 40F20003 		movw	r3, #:lower16:stage
- 1050 0894 C0F20003 		movt	r3, #:upper16:stage
- 1051 0898 4FF00002 		mov	r2, #0
- 1052 089c 1A60     		str	r2, [r3, #0]
- 1053              	.L51:
- 1054              	.LBE10:
- 1055              	.LBE9:
- 1056              	.LBE8:
- 1057              	.LBE6:
- 1058              	.LBE5:
- 294:../src/interrupt_defs.cpp **** 			return;
- 295:../src/interrupt_defs.cpp **** 		}
- 296:../src/interrupt_defs.cpp **** 	}
- 1059              		.loc 1 296 0
- 1060 089e 07F11007 		add	r7, r7, #16
- 1061 08a2 BD46     		mov	sp, r7
- 1062 08a4 80BD     		pop	{r7, pc}
- 1063              		.cfi_endproc
- 1064              	.LFE118:
- 1066              	.Letext0:
- 1067              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
- 1068              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
- 1069              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_exti.h"
- 1070              		.file 5 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_gpio.h"
- 1071              		.file 6 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_misc.h"
- 1072              		.file 7 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot/encoder.h"
- 1073              		.file 8 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
+ 291:../src/interrupt_defs.cpp **** 			stage = 1;
+ 1005              		.loc 1 291 0
+ 1006 0832 40F20003 		movw	r3, #:lower16:stage
+ 1007 0836 C0F20003 		movt	r3, #:upper16:stage
+ 1008 083a 4FF00102 		mov	r2, #1
+ 1009 083e 1A60     		str	r2, [r3, #0]
+ 1010 0840 2FE0     		b	.L51
+ 1011              	.L52:
+ 1012              	.LBE7:
+ 1013              	.LBB8:
+ 1014              	.LBB9:
+ 292:../src/interrupt_defs.cpp **** 			return;
+ 293:../src/interrupt_defs.cpp **** 		}
+ 294:../src/interrupt_defs.cpp **** 		else if(stage == 1)
+ 1015              		.loc 1 294 0
+ 1016 0842 40F20003 		movw	r3, #:lower16:stage
+ 1017 0846 C0F20003 		movt	r3, #:upper16:stage
+ 1018 084a 1B68     		ldr	r3, [r3, #0]
+ 1019 084c 012B     		cmp	r3, #1
+ 1020 084e 28D1     		bne	.L51
+ 1021              	.LBB10:
+ 295:../src/interrupt_defs.cpp **** 		{
+ 296:../src/interrupt_defs.cpp **** 			count = TIM_GetCounter(TIM2);
+ 1022              		.loc 1 296 0
+ 1023 0850 4FF08040 		mov	r0, #1073741824
+ 1024 0854 FFF7FEFF 		bl	TIM_GetCounter
+ 1025 0858 0346     		mov	r3, r0
+ 1026 085a 1A46     		mov	r2, r3
+ 1027 085c 40F20003 		movw	r3, #:lower16:count
+ 1028 0860 C0F20003 		movt	r3, #:upper16:count
+ 1029 0864 1A60     		str	r2, [r3, #0]
+ 297:../src/interrupt_defs.cpp **** 			TIM_Cmd(TIM2, DISABLE);
+ 1030              		.loc 1 297 0
+ 1031 0866 4FF08040 		mov	r0, #1073741824
+ 1032 086a 4FF00001 		mov	r1, #0
+ 1033 086e FFF7FEFF 		bl	TIM_Cmd
+ 298:../src/interrupt_defs.cpp **** 
+ 299:../src/interrupt_defs.cpp **** 			NVIC_InitTypeDef nv;
+ 300:../src/interrupt_defs.cpp **** 
+ 301:../src/interrupt_defs.cpp **** 			nv.NVIC_IRQChannel = EXTI9_5_IRQn;
+ 1034              		.loc 1 301 0
+ 1035 0872 4FF01703 		mov	r3, #23
+ 1036 0876 3B71     		strb	r3, [r7, #4]
+ 302:../src/interrupt_defs.cpp **** 			nv.NVIC_IRQChannelCmd = DISABLE;
+ 1037              		.loc 1 302 0
+ 1038 0878 4FF00003 		mov	r3, #0
+ 1039 087c FB71     		strb	r3, [r7, #7]
+ 303:../src/interrupt_defs.cpp **** 			nv.NVIC_IRQChannelPreemptionPriority = 0;
+ 1040              		.loc 1 303 0
+ 1041 087e 4FF00003 		mov	r3, #0
+ 1042 0882 7B71     		strb	r3, [r7, #5]
+ 304:../src/interrupt_defs.cpp **** 			nv.NVIC_IRQChannelSubPriority = 0;
+ 1043              		.loc 1 304 0
+ 1044 0884 4FF00003 		mov	r3, #0
+ 1045 0888 BB71     		strb	r3, [r7, #6]
+ 305:../src/interrupt_defs.cpp **** 
+ 306:../src/interrupt_defs.cpp **** 			NVIC_Init(&nv);
+ 1046              		.loc 1 306 0
+ 1047 088a 07F10403 		add	r3, r7, #4
+ 1048 088e 1846     		mov	r0, r3
+ 1049 0890 FFF7FEFF 		bl	NVIC_Init
+ 307:../src/interrupt_defs.cpp **** 
+ 308:../src/interrupt_defs.cpp **** 			stage = 0;
+ 1050              		.loc 1 308 0
+ 1051 0894 40F20003 		movw	r3, #:lower16:stage
+ 1052 0898 C0F20003 		movt	r3, #:upper16:stage
+ 1053 089c 4FF00002 		mov	r2, #0
+ 1054 08a0 1A60     		str	r2, [r3, #0]
+ 1055              	.L51:
+ 1056              	.LBE10:
+ 1057              	.LBE9:
+ 1058              	.LBE8:
+ 1059              	.LBE6:
+ 1060              	.LBE5:
+ 309:../src/interrupt_defs.cpp **** 			return;
+ 310:../src/interrupt_defs.cpp **** 		}
+ 311:../src/interrupt_defs.cpp **** 	}
+ 1061              		.loc 1 311 0
+ 1062 08a2 07F11007 		add	r7, r7, #16
+ 1063 08a6 BD46     		mov	sp, r7
+ 1064 08a8 80BD     		pop	{r7, pc}
+ 1065              		.cfi_endproc
+ 1066              	.LFE118:
+ 1068              		.global	__aeabi_f2d
+ 1069 08aa 00BF     		.align	2
+ 1070              		.global	update_pid
+ 1071              		.thumb
+ 1072              		.thumb_func
+ 1074              	update_pid:
+ 1075              	.LFB119:
+ 312:../src/interrupt_defs.cpp **** 
+ 313:../src/interrupt_defs.cpp **** 	void update_pid(void)
+ 314:../src/interrupt_defs.cpp **** 	{
+ 1076              		.loc 1 314 0
+ 1077              		.cfi_startproc
+ 1078              		@ args = 0, pretend = 0, frame = 8
+ 1079              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1080 08ac 80B5     		push	{r7, lr}
+ 1081              	.LCFI20:
+ 1082              		.cfi_def_cfa_offset 8
+ 1083              		.cfi_offset 7, -8
+ 1084              		.cfi_offset 14, -4
+ 1085 08ae 82B0     		sub	sp, sp, #8
+ 1086              	.LCFI21:
+ 1087              		.cfi_def_cfa_offset 16
+ 1088 08b0 00AF     		add	r7, sp, #0
+ 1089              	.LCFI22:
+ 1090              		.cfi_def_cfa_register 7
+ 1091              	.LBB11:
+ 315:../src/interrupt_defs.cpp **** 		d_front = ((float)count*(float)0.5*(float)K_ULTRASONIC);
+ 1092              		.loc 1 315 0
+ 1093 08b2 40F20003 		movw	r3, #:lower16:count
+ 1094 08b6 C0F20003 		movt	r3, #:upper16:count
+ 1095 08ba D3ED007A 		flds	s15, [r3, #0]	@ int
+ 1096 08be B8EEE77A 		fsitos	s14, s15
+ 1097 08c2 F6EE007A 		fconsts	s15, #96
+ 1098 08c6 27EE277A 		fmuls	s14, s14, s15
+ 1099 08ca DFEDA17A 		flds	s15, .L80+8
+ 1100 08ce 67EE277A 		fmuls	s15, s14, s15
+ 1101 08d2 40F20003 		movw	r3, #:lower16:d_front
+ 1102 08d6 C0F20003 		movt	r3, #:upper16:d_front
+ 1103 08da C3ED007A 		fsts	s15, [r3, #0]
+ 316:../src/interrupt_defs.cpp **** 		err = (float)((int)adc2_data[0] - 1500);// + 0.3f*(float)((int)adc2_data[0] - 2400);//(0.5*IR_dis
+ 1104              		.loc 1 316 0
+ 1105 08de 40F20003 		movw	r3, #:lower16:adc2_data
+ 1106 08e2 C0F20003 		movt	r3, #:upper16:adc2_data
+ 1107 08e6 1B68     		ldr	r3, [r3, #0]
+ 1108 08e8 A3F2DC53 		subw	r3, r3, #1500
+ 1109 08ec 07EE103A 		fmsr	s14, r3	@ int
+ 1110 08f0 F8EEC77A 		fsitos	s15, s14
+ 1111 08f4 40F20003 		movw	r3, #:lower16:err
+ 1112 08f8 C0F20003 		movt	r3, #:upper16:err
+ 1113 08fc C3ED007A 		fsts	s15, [r3, #0]
+ 317:../src/interrupt_defs.cpp **** 		diff_err = (float)(err-last_err)*((float)DT_ENCODER/(float)1000);
+ 1114              		.loc 1 317 0
+ 1115 0900 40F20003 		movw	r3, #:lower16:err
+ 1116 0904 C0F20003 		movt	r3, #:upper16:err
+ 1117 0908 93ED007A 		flds	s14, [r3, #0]
+ 1118 090c 40F20003 		movw	r3, #:lower16:last_err
+ 1119 0910 C0F20003 		movt	r3, #:upper16:last_err
+ 1120 0914 D3ED007A 		flds	s15, [r3, #0]
+ 1121 0918 37EE677A 		fsubs	s14, s14, s15
+ 1122 091c DFED8D7A 		flds	s15, .L80+12
+ 1123 0920 67EE277A 		fmuls	s15, s14, s15
+ 1124 0924 40F20003 		movw	r3, #:lower16:diff_err
+ 1125 0928 C0F20003 		movt	r3, #:upper16:diff_err
+ 1126 092c C3ED007A 		fsts	s15, [r3, #0]
+ 318:../src/interrupt_defs.cpp **** 		drive_cmd = (((float)(err)/(float)2500) + ((float)diff_err/(float)3720)); //1100=diff term
+ 1127              		.loc 1 318 0
+ 1128 0930 40F20003 		movw	r3, #:lower16:err
+ 1129 0934 C0F20003 		movt	r3, #:upper16:err
+ 1130 0938 93ED007A 		flds	s14, [r3, #0]
+ 1131 093c DFED867A 		flds	s15, .L80+16
+ 1132 0940 87EE277A 		fdivs	s14, s14, s15
+ 1133 0944 40F20003 		movw	r3, #:lower16:diff_err
+ 1134 0948 C0F20003 		movt	r3, #:upper16:diff_err
+ 1135 094c D3ED006A 		flds	s13, [r3, #0]
+ 1136 0950 DFED827A 		flds	s15, .L80+20
+ 1137 0954 C6EEA77A 		fdivs	s15, s13, s15
+ 1138 0958 77EE277A 		fadds	s15, s14, s15
+ 1139 095c 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1140 0960 C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1141 0964 C3ED007A 		fsts	s15, [r3, #0]
+ 319:../src/interrupt_defs.cpp **** 
+ 320:../src/interrupt_defs.cpp **** 		if(d_front < 0.52)
+ 1142              		.loc 1 320 0
+ 1143 0968 40F20003 		movw	r3, #:lower16:d_front
+ 1144 096c C0F20003 		movt	r3, #:upper16:d_front
+ 1145 0970 1B68     		ldr	r3, [r3, #0]	@ float
+ 1146 0972 1846     		mov	r0, r3	@ float
+ 1147 0974 FFF7FEFF 		bl	__aeabi_f2d
+ 1148 0978 0246     		mov	r2, r0
+ 1149 097a 0B46     		mov	r3, r1
+ 1150 097c 1046     		mov	r0, r2
+ 1151 097e 1946     		mov	r1, r3
+ 1152 0980 71A3     		adr	r3, .L80
+ 1153 0982 D3E90023 		ldrd	r2, [r3]
+ 1154 0986 FFF7FEFF 		bl	__aeabi_dcmplt
+ 1155 098a 0346     		mov	r3, r0
+ 1156 098c 002B     		cmp	r3, #0
+ 1157 098e 07D0     		beq	.L77
+ 1158              	.L70:
+ 321:../src/interrupt_defs.cpp **** 		{
+ 322:../src/interrupt_defs.cpp **** 			rt = 0.5;
+ 1159              		.loc 1 322 0
+ 1160 0990 40F20003 		movw	r3, #:lower16:rt
+ 1161 0994 C0F20003 		movt	r3, #:upper16:rt
+ 1162 0998 4FF07C52 		mov	r2, #1056964608
+ 1163 099c 1A60     		str	r2, [r3, #0]	@ float
+ 1164 099e 06E0     		b	.L57
+ 1165              	.L77:
+ 323:../src/interrupt_defs.cpp **** 		}
+ 324:../src/interrupt_defs.cpp **** 		else
+ 325:../src/interrupt_defs.cpp **** 		{
+ 326:../src/interrupt_defs.cpp **** 			rt = 0.0f;
+ 1166              		.loc 1 326 0
+ 1167 09a0 40F20003 		movw	r3, #:lower16:rt
+ 1168 09a4 C0F20003 		movt	r3, #:upper16:rt
+ 1169 09a8 4FF00002 		mov	r2, #0
+ 1170 09ac 1A60     		str	r2, [r3, #0]	@ float
+ 1171              	.L57:
+ 327:../src/interrupt_defs.cpp **** 		}
+ 328:../src/interrupt_defs.cpp **** 
+ 329:../src/interrupt_defs.cpp **** 		if(drive_cmd > 0.5)
+ 1172              		.loc 1 329 0
+ 1173 09ae 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1174 09b2 C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1175 09b6 93ED007A 		flds	s14, [r3, #0]
+ 1176 09ba F6EE007A 		fconsts	s15, #96
+ 1177 09be B4EEE77A 		fcmpes	s14, s15
+ 1178 09c2 F1EE10FA 		fmstat
+ 1179 09c6 06DD     		ble	.L58
+ 1180              	.L71:
+ 330:../src/interrupt_defs.cpp **** 		{
+ 331:../src/interrupt_defs.cpp **** 			drive_cmd = 0.5f;
+ 1181              		.loc 1 331 0
+ 1182 09c8 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1183 09cc C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1184 09d0 4FF07C52 		mov	r2, #1056964608
+ 1185 09d4 1A60     		str	r2, [r3, #0]	@ float
+ 1186              	.L58:
+ 332:../src/interrupt_defs.cpp **** 		}
+ 333:../src/interrupt_defs.cpp **** 		if(drive_cmd < -0.5)
+ 1187              		.loc 1 333 0
+ 1188 09d6 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1189 09da C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1190 09de 93ED007A 		flds	s14, [r3, #0]
+ 1191 09e2 FEEE007A 		fconsts	s15, #224
+ 1192 09e6 B4EEE77A 		fcmpes	s14, s15
+ 1193 09ea F1EE10FA 		fmstat
+ 1194 09ee 06D5     		bpl	.L60
+ 1195              	.L72:
+ 334:../src/interrupt_defs.cpp **** 		{
+ 335:../src/interrupt_defs.cpp **** 			drive_cmd = -0.5f;
+ 1196              		.loc 1 335 0
+ 1197 09f0 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1198 09f4 C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1199 09f8 4FF03F42 		mov	r2, #-1090519040
+ 1200 09fc 1A60     		str	r2, [r3, #0]	@ float
+ 1201              	.L60:
+ 336:../src/interrupt_defs.cpp **** 		}
+ 337:../src/interrupt_defs.cpp **** 
+ 338:../src/interrupt_defs.cpp **** 		float mtr_out = 0.8; // Forward velocity
+ 1202              		.loc 1 338 0
+ 1203 09fe 4CF6CD43 		movw	r3, #52429
+ 1204 0a02 C3F64C73 		movt	r3, 16204
+ 1205 0a06 7B60     		str	r3, [r7, #4]	@ float
+ 339:../src/interrupt_defs.cpp **** 		left = (1-mtr_out) - drive_cmd - rt;
+ 1206              		.loc 1 339 0
+ 1207 0a08 B7EE007A 		fconsts	s14, #112
+ 1208 0a0c D7ED017A 		flds	s15, [r7, #4]
+ 1209 0a10 37EE677A 		fsubs	s14, s14, s15
+ 1210 0a14 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1211 0a18 C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1212 0a1c D3ED007A 		flds	s15, [r3, #0]
+ 1213 0a20 37EE677A 		fsubs	s14, s14, s15
+ 1214 0a24 40F20003 		movw	r3, #:lower16:rt
+ 1215 0a28 C0F20003 		movt	r3, #:upper16:rt
+ 1216 0a2c D3ED007A 		flds	s15, [r3, #0]
+ 1217 0a30 77EE677A 		fsubs	s15, s14, s15
+ 1218 0a34 40F20003 		movw	r3, #:lower16:left
+ 1219 0a38 C0F20003 		movt	r3, #:upper16:left
+ 1220 0a3c C3ED007A 		fsts	s15, [r3, #0]
+ 340:../src/interrupt_defs.cpp **** 		right = mtr_out - drive_cmd - rt;
+ 1221              		.loc 1 340 0
+ 1222 0a40 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1223 0a44 C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1224 0a48 D3ED007A 		flds	s15, [r3, #0]
+ 1225 0a4c 97ED017A 		flds	s14, [r7, #4]
+ 1226 0a50 37EE677A 		fsubs	s14, s14, s15
+ 1227 0a54 40F20003 		movw	r3, #:lower16:rt
+ 1228 0a58 C0F20003 		movt	r3, #:upper16:rt
+ 1229 0a5c D3ED007A 		flds	s15, [r3, #0]
+ 1230 0a60 77EE677A 		fsubs	s15, s14, s15
+ 1231 0a64 40F20003 		movw	r3, #:lower16:right
+ 1232 0a68 C0F20003 		movt	r3, #:upper16:right
+ 1233 0a6c C3ED007A 		fsts	s15, [r3, #0]
+ 341:../src/interrupt_defs.cpp **** 
+ 342:../src/interrupt_defs.cpp **** 		if(left>1.0)
+ 1234              		.loc 1 342 0
+ 1235 0a70 40F20003 		movw	r3, #:lower16:left
+ 1236 0a74 C0F20003 		movt	r3, #:upper16:left
+ 1237 0a78 93ED007A 		flds	s14, [r3, #0]
+ 1238 0a7c F7EE007A 		fconsts	s15, #112
+ 1239 0a80 B4EEE77A 		fcmpes	s14, s15
+ 1240 0a84 F1EE10FA 		fmstat
+ 1241 0a88 07DD     		ble	.L78
+ 1242              	.L73:
+ 343:../src/interrupt_defs.cpp **** 		{
+ 344:../src/interrupt_defs.cpp **** 			left=1.0;
+ 1243              		.loc 1 344 0
+ 1244 0a8a 40F20003 		movw	r3, #:lower16:left
+ 1245 0a8e C0F20003 		movt	r3, #:upper16:left
+ 1246 0a92 4FF07E52 		mov	r2, #1065353216
+ 1247 0a96 1A60     		str	r2, [r3, #0]	@ float
+ 1248 0a98 11E0     		b	.L64
+ 1249              	.L78:
+ 345:../src/interrupt_defs.cpp **** 		}
+ 346:../src/interrupt_defs.cpp **** 		else if(left<0)
+ 1250              		.loc 1 346 0
+ 1251 0a9a 40F20003 		movw	r3, #:lower16:left
+ 1252 0a9e C0F20003 		movt	r3, #:upper16:left
+ 1253 0aa2 D3ED007A 		flds	s15, [r3, #0]
+ 1254 0aa6 F5EEC07A 		fcmpezs	s15
+ 1255 0aaa F1EE10FA 		fmstat
+ 1256 0aae 06D5     		bpl	.L64
+ 1257              	.L74:
+ 347:../src/interrupt_defs.cpp **** 		{
+ 348:../src/interrupt_defs.cpp **** 			left=0;//-1.0;
+ 1258              		.loc 1 348 0
+ 1259 0ab0 40F20003 		movw	r3, #:lower16:left
+ 1260 0ab4 C0F20003 		movt	r3, #:upper16:left
+ 1261 0ab8 4FF00002 		mov	r2, #0
+ 1262 0abc 1A60     		str	r2, [r3, #0]	@ float
+ 1263              	.L64:
+ 349:../src/interrupt_defs.cpp **** 		}
+ 350:../src/interrupt_defs.cpp **** 
+ 351:../src/interrupt_defs.cpp **** 		if(right>1.0f)
+ 1264              		.loc 1 351 0
+ 1265 0abe 40F20003 		movw	r3, #:lower16:right
+ 1266 0ac2 C0F20003 		movt	r3, #:upper16:right
+ 1267 0ac6 93ED007A 		flds	s14, [r3, #0]
+ 1268 0aca F7EE007A 		fconsts	s15, #112
+ 1269 0ace B4EEE77A 		fcmpes	s14, s15
+ 1270 0ad2 F1EE10FA 		fmstat
+ 1271 0ad6 07DD     		ble	.L79
+ 1272              	.L75:
+ 352:../src/interrupt_defs.cpp **** 		{
+ 353:../src/interrupt_defs.cpp **** 			right=1.0f;
+ 1273              		.loc 1 353 0
+ 1274 0ad8 40F20003 		movw	r3, #:lower16:right
+ 1275 0adc C0F20003 		movt	r3, #:upper16:right
+ 1276 0ae0 4FF07E52 		mov	r2, #1065353216
+ 1277 0ae4 1A60     		str	r2, [r3, #0]	@ float
+ 1278 0ae6 11E0     		b	.L68
+ 1279              	.L79:
+ 354:../src/interrupt_defs.cpp **** 		}
+ 355:../src/interrupt_defs.cpp **** 		else if(right<0)
+ 1280              		.loc 1 355 0
+ 1281 0ae8 40F20003 		movw	r3, #:lower16:right
+ 1282 0aec C0F20003 		movt	r3, #:upper16:right
+ 1283 0af0 D3ED007A 		flds	s15, [r3, #0]
+ 1284 0af4 F5EEC07A 		fcmpezs	s15
+ 1285 0af8 F1EE10FA 		fmstat
+ 1286 0afc 06D5     		bpl	.L68
+ 1287              	.L76:
+ 356:../src/interrupt_defs.cpp **** 		{
+ 357:../src/interrupt_defs.cpp **** 			right=0;
+ 1288              		.loc 1 357 0
+ 1289 0afe 40F20003 		movw	r3, #:lower16:right
+ 1290 0b02 C0F20003 		movt	r3, #:upper16:right
+ 1291 0b06 4FF00002 		mov	r2, #0
+ 1292 0b0a 1A60     		str	r2, [r3, #0]	@ float
+ 1293              	.L68:
+ 358:../src/interrupt_defs.cpp **** 		}
+ 359:../src/interrupt_defs.cpp **** 
+ 360:../src/interrupt_defs.cpp **** 		pwm1_output(left);
+ 1294              		.loc 1 360 0
+ 1295 0b0c 40F20003 		movw	r3, #:lower16:left
+ 1296 0b10 C0F20003 		movt	r3, #:upper16:left
+ 1297 0b14 1B68     		ldr	r3, [r3, #0]	@ float
+ 1298 0b16 1846     		mov	r0, r3	@ float
+ 1299 0b18 FFF7FEFF 		bl	_Z11pwm1_outputf
+ 361:../src/interrupt_defs.cpp **** 		pwm2_output(right);
+ 1300              		.loc 1 361 0
+ 1301 0b1c 40F20003 		movw	r3, #:lower16:right
+ 1302 0b20 C0F20003 		movt	r3, #:upper16:right
+ 1303 0b24 1B68     		ldr	r3, [r3, #0]	@ float
+ 1304 0b26 1846     		mov	r0, r3	@ float
+ 1305 0b28 FFF7FEFF 		bl	_Z11pwm2_outputf
+ 362:../src/interrupt_defs.cpp **** 		last_err = err;
+ 1306              		.loc 1 362 0
+ 1307 0b2c 40F20003 		movw	r3, #:lower16:err
+ 1308 0b30 C0F20003 		movt	r3, #:upper16:err
+ 1309 0b34 1A68     		ldr	r2, [r3, #0]	@ float
+ 1310 0b36 40F20003 		movw	r3, #:lower16:last_err
+ 1311 0b3a C0F20003 		movt	r3, #:upper16:last_err
+ 1312 0b3e 1A60     		str	r2, [r3, #0]	@ float
+ 1313              	.LBE11:
+ 363:../src/interrupt_defs.cpp **** 	}
+ 1314              		.loc 1 363 0
+ 1315 0b40 07F10807 		add	r7, r7, #8
+ 1316 0b44 BD46     		mov	sp, r7
+ 1317 0b46 80BD     		pop	{r7, pc}
+ 1318              	.L81:
+ 1319              		.align	3
+ 1320              	.L80:
+ 1321 0b48 A4703D0A 		.word	171798692
+ 1322 0b4c D7A3E03F 		.word	1071686615
+ 1323 0b50 821C943A 		.word	982785154
+ 1324 0b54 CDCCCC3C 		.word	1020054733
+ 1325 0b58 00401C45 		.word	1159479296
+ 1326 0b5c 00806845 		.word	1164476416
+ 1327              		.cfi_endproc
+ 1328              	.LFE119:
+ 1330              	.Letext0:
+ 1331              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
+ 1332              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
+ 1333              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_exti.h"
+ 1334              		.file 5 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_gpio.h"
+ 1335              		.file 6 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_misc.h"
+ 1336              		.file 7 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot/encoder.h"
+ 1337              		.file 8 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 interrupt_defs.cpp
-     /tmp/cckOAmmB.s:23     .text:00000000 $t
-     /tmp/cckOAmmB.s:28     .text:00000000 TIM7_IRQHandler
-     /tmp/cckOAmmB.s:430    .text:00000438 $d
-     /tmp/cckOAmmB.s:441    .text:0000045c $t
-     /tmp/cckOAmmB.s:462    .text:0000047c TIM1_TRG_COM_TIM17_IRQHandler
-     /tmp/cckOAmmB.s:631    .text:000005c8 TIM6_DAC_IRQHandler
-     /tmp/cckOAmmB.s:708    .text:00000664 ADC1_2_IRQHandler
-     /tmp/cckOAmmB.s:757    .text:000006a8 DMA1_Channel1_IRQHandler
-     /tmp/cckOAmmB.s:789    .text:000006c4 DMA2_Channel1_IRQHandler
-     /tmp/cckOAmmB.s:822    .text:000006e4 ADC3_IRQHandler
-     /tmp/cckOAmmB.s:940    .text:000007d0 $d
-     /tmp/cckOAmmB.s:945    .text:000007d8 $t
-     /tmp/cckOAmmB.s:950    .text:000007d8 EXTI9_5_IRQHandler
+     /tmp/ccdClKKG.s:23     .text:00000000 $t
+     /tmp/ccdClKKG.s:28     .text:00000000 TIM7_IRQHandler
+     /tmp/ccdClKKG.s:430    .text:00000438 $d
+     /tmp/ccdClKKG.s:441    .text:0000045c $t
+     /tmp/ccdClKKG.s:1074   .text:000008ac update_pid
+     /tmp/ccdClKKG.s:464    .text:00000480 TIM1_TRG_COM_TIM17_IRQHandler
+     /tmp/ccdClKKG.s:633    .text:000005cc TIM6_DAC_IRQHandler
+     /tmp/ccdClKKG.s:710    .text:00000668 ADC1_2_IRQHandler
+     /tmp/ccdClKKG.s:759    .text:000006ac DMA1_Channel1_IRQHandler
+     /tmp/ccdClKKG.s:791    .text:000006c8 DMA2_Channel1_IRQHandler
+     /tmp/ccdClKKG.s:824    .text:000006e8 ADC3_IRQHandler
+     /tmp/ccdClKKG.s:942    .text:000007d4 $d
+     /tmp/ccdClKKG.s:947    .text:000007dc $t
+     /tmp/ccdClKKG.s:952    .text:000007dc EXTI9_5_IRQHandler
+     /tmp/ccdClKKG.s:1321   .text:00000b48 $d
                      .debug_frame:00000010 $d
                            .group:00000000 wm4.1.934603b1d669cb2b32fd4cb6dd11b673
-                           .group:00000000 wm4.common_headers.h.9.669975762de5793e6d2436455cef4d0e
+                           .group:00000000 wm4.common_headers.h.9.8e587b4e25369b5c8e89ee518c5d2e90
                            .group:00000000 wm4.stm32f30x.h.56.6f19c65e98e3319a61449cb2b2455af5
                            .group:00000000 wm4.core_cm4.h.32.1434cd257ff5806b1b03cd32ab0641e9
                            .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05
@@ -1445,3 +1776,13 @@ adc3_awd2
 EXTI_ClearITPendingBit
 TIM_Cmd
 count
+__aeabi_f2d
+d_front
+adc2_data
+err
+last_err
+diff_err
+drive_cmd
+rt
+left
+right

@@ -62,6 +62,8 @@ void timer2_timebase_init(void);
 
 void comp_init(void);
 
+float IR_distance(int IR_ADC_VAL);
+
 // Global variables to keep track of encoders and inertial sensors:
 
 encoderState left_enc, right_enc;
@@ -69,7 +71,6 @@ encoderState left_enc, right_enc;
 volatile float gyro_angle_x;
 int gyro_bias_x, adcval;
 
-//__IO uint16_t adcData[3];
 __IO uint32_t adcData[2];
 int new_data;
 
@@ -79,7 +80,15 @@ uint8_t adc2_new_data;
 uint8_t adc3_awd1, adc3_awd2;
 
 int count, stage;
-#define K_ULTRASONIC 0.001130f
+
+float drive_cmd;// = 0.0f;
+float err;// = 0.0f;
+float last_err;// = 0.0f;
+float diff_err;
+float rt;// = 0.0f;
+float d_front;// = 1.0f;
+
+float left, right;
 
 // Initialize all encoder data structures to zero:
 
@@ -111,12 +120,8 @@ int main(void)
 	 * and set position/speed targets as necessary:
 	 */
 
-
 	init_encoder_struct(&left_enc);
 	init_encoder_struct(&right_enc);
-
-	right_enc.position_target = 8400;
- //	right_enc.speed_target = 8400;
 
 	// Initialize PWM outputs 1 and 2 at 5.0 kHz duty frequency:
 
@@ -142,134 +147,44 @@ int main(void)
 //	battery_watchdog_init();
 
 	encoder_update_ISR_init();	//Update the state of the two encoders (left/right)
-//	imu_update_ISR_init(); 		//IMU (gyro/acclerometer/magnetometer ISR)
 	LED_MATRIX_ISR_init();		//Hand out some eye candy while we're at it...
 
 	// Ping Sensor Init:
 
 	ping_pin_init();
 	timer2_timebase_init();
-
 	imu_update_ISR_init();
 
+	// Encoder comparator init for noise debounce:
 	comp_init();
 
 	adcval = 0;
-	float mtr_out = 0;
-	char *mode;
+//	mtr_out = 0;
 
-	float drive_cmd = 0.0f;
-	int err = 0.0f;
-	int last_err = 0.0f;
-	float diff_err;
-	float rt = 0.0f;
-	float d_front = 1.0f;
+	drive_cmd = 0.0f;
+	err = 0.0f;
+	last_err = 0.0f;
+	diff_err = 0.0f;
+	rt = 0.0f;
+	d_front = 1.0f;
 
-	float left, right;
-//	right_enc.m = MODE_POSITION;
+//	float left, right;
 
 	while(true)
 	{
-		d_front = ((float)count*(float)0.5*(float)K_ULTRASONIC);
-		if(d_front < 0.42)
-		{
-			rt = 0.6;
-		}
-		else
-		{
-			rt = 0.0f;
-		}
-		err = (int)adcData[1] - 2200;
-		diff_err = (float)(err-last_err);
-		drive_cmd = 0.5*(((float)(err)/(float)2500) + ((float)diff_err/(float)1100));
-		if(drive_cmd > 0.5)
-		{
-			drive_cmd = 0.5f;
-		}
-		if(drive_cmd < -0.5)
-		{
-			drive_cmd = -0.5f;
-		}
-
-		printf("%f %d\n\r", drive_cmd, adcData[1]);
-//		pwm2_output(0.5f);						// Fixed 1 kHz, 50% duty output on PWM output #2
-
-		// Debug Statements:
-
-//		printf("%d %d %d\n\r", adcData[0], adcData[1], adcval);
-//		printf("%d\n\r", adcval);
-//		if(right_enc.m == MODE_OPENLOOP)
-//		{
-//			pwm1_output(0.50f);
-//		}
-
-//		mode = (right_enc.m == MODE_OPENLOOP) ? (char *)"Open" : ((right_enc.m == MODE_POSITION) ? (char *)"Position" : (char *)"Velocity");
-//		GPIO_WriteBit(GPIOE, GPIO_Pin_2, Bit_RESET);
-//		GPIO_WriteBit(GPIOE, GPIO_Pin_3, Bit_RESET);
-		mtr_out = 0.8;//(float)adcData[0]/(float)4096;
-		left = (1-mtr_out) - drive_cmd - rt;
-		right = mtr_out - drive_cmd - rt;
-
-		if(left>1.0)
-		{
-			left=1.0;
-		}
-		else if(left<-1.0)
-		{
-			left=-1.0;
-		}
-
-		if(right>1.0)
-		{
-			right=1.0;
-		}
-		else if(right<-1.0)
-		{
-			right=-1.0;
-		}
-
-		pwm1_output(left);//mtr_out);
-		pwm2_output(right);//1-mtr_out);
-		last_err = err;
-//		printf("COMP7 %d\n\r", (int)COMP_GetOutputLevel(COMP_Selection_COMP7));
-//		printf("Left: %d | Right: %d\n\r", left_enc.position, right_enc.position);//, mode);
-//		printf("%3.3f Counter: %d\n\r", ((float)count*(float)0.5*(float)K_ULTRASONIC), TIM_GetCounter(TIM2));
-
-//		printf("Bias_x: %d | Theta_x: %5.2f | Left: %d | Right: %d\n\r", gyro_bias_x, gyro_angle_x, left_enc.position, right_enc.position);
-//		printf("ADC Value on Channel 3: %d || Theta_x: %5.2f\n\r", adcval, gyro_angle_x);
-//		while(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) != SET);
-//		DMA_ClearFlag(DMA1_FLAG_GL1 | DMA1_FLAG_TC1);
-
-		/*
-		while(new_data==0);
-		printf("ADC1: %4d || ADC2: %4d\n\r", adcData[0], adcData[1]);//adcData, (uint32_t)&(ADC1->DR));//, adcData[1]);
-		new_data = 0;
-
-		*/
-/*
-		printf("ADC1: ");
-		while(new_data==0);
-		for(iter=0;iter<2;++iter)
-		{
-			printf("%4d ", adcData[iter]);
-		}
-
-//		pwm1_output((float)adcData[0]/(float)4096);
-
-		printf("ADC2: ");
-		while(adc2_new_data==0);
-		for(iter=0;iter<4;++iter)
-		{
-			printf("%4d ", adc2_data[iter]);
-		}
-	*/
-//		printf("AWD1: %d, AWD2: %d, ADC: %d", adc3_awd1, adc3_awd2, ADC_GetConversionValue(ADC3));
-//		adc3_awd1 = 0;
-//		adc3_awd2 = 0;
-//		printf("\n\r");
+		printf("Front: %1.3f, Front left:%1.4f, Front back:%1.4f\n\r", d_front, IR_distance(adc2_data[0]), IR_distance(adcData[1]));
 
 	}
 	return 0; // We should never manage to get here...
+}
+
+float IR_distance(int IR_ADC_VAL)
+{
+	float v_sensor_actual = (float)0.0008698 * (float)IR_ADC_VAL;
+	return (((float)0.632)*((float)pow(v_sensor_actual,6))-((float)8.012)*((float)pow(v_sensor_actual,5))
+			+ ((float)41.05)*((float)pow(v_sensor_actual,4)) - ((float)109.7)*((float)pow(v_sensor_actual,3))
+			+ ((float)164.7)*((float)pow(v_sensor_actual,2)) - (((float)138.8)*(float)v_sensor_actual)
+			+ (float)60.24);
 }
 
 // Initializes the ISR that reads inertial sensors (gyro + accelerometer)
@@ -359,16 +274,16 @@ void brake_pins_init(void)
 void ping_pin_init(void)
 {
 
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB | RCC_AHBPeriph_GPIOC, ENABLE);
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB | RCC_AHBPeriph_GPIOF, ENABLE);
 
 	GPIO_InitTypeDef g;
 	g.GPIO_Mode = GPIO_Mode_IN;
 	g.GPIO_OType = GPIO_OType_OD;
-	g.GPIO_Pin = GPIO_Pin_5;
+	g.GPIO_Pin = GPIO_Pin_9;
 	g.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	g.GPIO_Speed = GPIO_Speed_Level_1;
 
-	GPIO_Init(GPIOC, &g);
+	GPIO_Init(GPIOF, &g);
 
 	g.GPIO_Mode = GPIO_Mode_OUT;
 	g.GPIO_OType = GPIO_OType_PP;
@@ -379,7 +294,7 @@ void ping_pin_init(void)
 	GPIO_Init(GPIOB, &g);
 
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
-	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOC, EXTI_PinSource5);
+	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOF, EXTI_PinSource9);
 
 }
 

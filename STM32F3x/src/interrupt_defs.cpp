@@ -28,6 +28,20 @@ extern uint8_t adc3_awd1, adc3_awd2;
 
 extern int count, stage;
 
+extern float drive_cmd;// = 0.0f;
+extern float err;// = 0.0f;
+extern float last_err;// = 0.0f;
+extern float diff_err;
+extern float rt;// = 0.0f;
+extern float d_front;// = 1.0f;
+
+extern float left, right;
+
+extern __IO uint32_t adcData[2];
+extern __IO uint32_t adc2_data[2];
+
+void update_pid(void);
+
 	void TIM7_IRQHandler(void) // ISR that performs encoder state update:
 										// Runs every DT milliseconds
 	{
@@ -98,6 +112,7 @@ extern int count, stage;
 				right_enc.m = MODE_OPENLOOP;
 			}
 		}
+		update_pid();
 		/*
 		else if(right_enc.m == MODE_SPEED)
 		{
@@ -148,7 +163,7 @@ extern int count, stage;
 
 		EXTI_InitTypeDef e;
 
-		e.EXTI_Line = EXTI_Line5;
+		e.EXTI_Line = EXTI_Line9;
 		e.EXTI_LineCmd = DISABLE;
 		e.EXTI_Mode = EXTI_Mode_Interrupt;
 		e.EXTI_Trigger = EXTI_Trigger_Rising;
@@ -185,7 +200,7 @@ extern int count, stage;
 
 		stage = 0;
 
-		e.EXTI_Line = EXTI_Line5;
+		e.EXTI_Line = EXTI_Line9;
 		e.EXTI_LineCmd = ENABLE;
 		e.EXTI_Mode = EXTI_Mode_Interrupt;
 		e.EXTI_Trigger = EXTI_Trigger_Rising;
@@ -258,7 +273,7 @@ extern int count, stage;
 
 	void EXTI9_5_IRQHandler(void)//EXTI5_IRQHandler(void)
 	{
-		EXTI_ClearITPendingBit(EXTI_Line5);
+		EXTI_ClearITPendingBit(EXTI_Line9);
 		if(stage == 0)
 		{
 			TIM_SetCounter(TIM2, 0);
@@ -266,7 +281,7 @@ extern int count, stage;
 
 			EXTI_InitTypeDef e;
 
-			e.EXTI_Line = EXTI_Line5;
+			e.EXTI_Line = EXTI_Line9;
 			e.EXTI_LineCmd = ENABLE;
 			e.EXTI_Mode = EXTI_Mode_Interrupt;
 			e.EXTI_Trigger = EXTI_Trigger_Falling;
@@ -293,6 +308,58 @@ extern int count, stage;
 			stage = 0;
 			return;
 		}
+	}
+
+	void update_pid(void)
+	{
+		d_front = ((float)count*(float)0.5*(float)K_ULTRASONIC);
+		err = (float)((int)adc2_data[0] - 1500);// + 0.3f*(float)((int)adc2_data[0] - 2400);//(0.5*IR_distance(adc2_data[0]) + 0.6*IR_distance(adcData[1]) + 0.2*d_front) - 6;//(int)adcData[1] - 2200;
+		diff_err = (float)(err-last_err)*((float)DT_ENCODER/(float)1000);
+		drive_cmd = (((float)(err)/(float)2500) + ((float)diff_err/(float)3720)); //1100=diff term
+
+		if(d_front < 0.52)
+		{
+			rt = 0.5;
+		}
+		else
+		{
+			rt = 0.0f;
+		}
+
+		if(drive_cmd > 0.5)
+		{
+			drive_cmd = 0.5f;
+		}
+		if(drive_cmd < -0.5)
+		{
+			drive_cmd = -0.5f;
+		}
+
+		float mtr_out = 0.8; // Forward velocity
+		left = (1-mtr_out) - drive_cmd - rt;
+		right = mtr_out - drive_cmd - rt;
+
+		if(left>1.0)
+		{
+			left=1.0;
+		}
+		else if(left<0)
+		{
+			left=0;//-1.0;
+		}
+
+		if(right>1.0f)
+		{
+			right=1.0f;
+		}
+		else if(right<0)
+		{
+			right=0;
+		}
+
+		pwm1_output(left);
+		pwm2_output(right);
+		last_err = err;
 	}
 
 }
