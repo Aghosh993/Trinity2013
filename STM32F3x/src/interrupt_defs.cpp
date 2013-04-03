@@ -34,11 +34,14 @@ extern float last_err;// = 0.0f;
 extern float diff_err;
 extern float rt;// = 0.0f;
 extern float d_front;// = 1.0f;
+extern float integral;
 
 extern float left, right;
 
 extern __IO uint32_t adcData[2];
 extern __IO uint32_t adc2_data[2];
+
+extern int state;
 
 void update_pid(void);
 
@@ -312,18 +315,68 @@ void update_pid(void);
 
 	void update_pid(void)
 	{
+		float mtr_out = 0.50f;
 		d_front = ((float)count*(float)0.5*(float)K_ULTRASONIC);
-		err = (float)((int)adc2_data[0] - 1500);// + 0.3f*(float)((int)adc2_data[0] - 2400);//(0.5*IR_distance(adc2_data[0]) + 0.6*IR_distance(adcData[1]) + 0.2*d_front) - 6;//(int)adcData[1] - 2200;
-		diff_err = (float)(err-last_err)*((float)DT_ENCODER/(float)1000);
-		drive_cmd = (((float)(err)/(float)2500) + ((float)diff_err/(float)3720)); //1100=diff term
 
-		if(d_front < 0.52)
+		if(state == ST_HOMING)
 		{
-			rt = 0.5;
+			err = (float)(1.0) * (float)((int)adcData[0] - (int)adc2_data[2]);// + (float)450*((float)adcData[0] + (float)adc2_data[3])/((float)2 * (float)4000));
+
+			diff_err = (float)(err-last_err)*((float)DT_ENCODER/(float)1000);
+			integral =0;//+= err * 0.04f;
+			drive_cmd = (((float)(err)/(float)500) + ((float)diff_err/(float)744));// + ((float)integral/(float)6000);
+//			drive_cmd = err/(float)5500;
+
+			rt = 0.0f;
+			mtr_out = 0.5f;
+
+			if(drive_cmd > 0.5)
+			{
+				drive_cmd = 0.5f;
+			}
+			if(drive_cmd < -0.5)
+			{
+				drive_cmd = -0.5f;
+			}
+
+			left = (1-mtr_out) - drive_cmd - rt;
+			right = mtr_out - drive_cmd - rt;
+
+			if(left>1.0)
+			{
+				left=1.0;
+			}
+			else if(left<0)
+			{
+				left=0;//-1.0;
+			}
+
+			if(right>1.0f)
+			{
+				right=1.0f;
+			}
+			else if(right<0)
+			{
+				right=0;
+			}
 		}
 		else
 		{
+			err = ((float)(0.55)*(float)((int)adc2_data[0] - 2200)) + ((float)(0.45)*(float)((int)adcData[1] - 150));
+
+		diff_err = (float)(err-last_err)*((float)DT_ENCODER/(float)1000);
+		drive_cmd = (((float)(err)/(float)2500) + ((float)diff_err/(float)3720)); //1100=diff term
+
+		if(d_front < 0.65)//0.6
+		{
+			rt = 0.5f;
+			mtr_out = 0.3f;
+			drive_cmd = 0;
+		}//1900
+		else
+		{
 			rt = 0.0f;
+			mtr_out = 0.85f;
 		}
 
 		if(drive_cmd > 0.5)
@@ -335,7 +388,6 @@ void update_pid(void);
 			drive_cmd = -0.5f;
 		}
 
-		float mtr_out = 0.8; // Forward velocity
 		left = (1-mtr_out) - drive_cmd - rt;
 		right = mtr_out - drive_cmd - rt;
 
@@ -355,6 +407,7 @@ void update_pid(void);
 		else if(right<0)
 		{
 			right=0;
+		}
 		}
 
 		pwm1_output(left);

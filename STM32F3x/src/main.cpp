@@ -26,9 +26,14 @@
  *
  * Other pins/resources used:
  *
- * Analog: 	Channel 3 (PA2)
- * 			Channel 4 (PA3)
- * 			Channel 5 (PF4)
+ * Analog: 	PA2: adcData[0]
+ * 			PA3: adcData[1]
+ *
+ * 			PA4: adc2_data[0]
+ * 			PC4: adc2_data[1]
+ * 			PC5: adc2_data[2]
+ * 			PB2: adc2_data[3]
+ *
  * Debug port information: Baud Rate=115200, 8n1 UART (TTL pins PA9, PA10)
  * 							PA9 = TX, PA10 = RX (W/respect to STM32 device)
  *
@@ -87,8 +92,11 @@ float last_err;// = 0.0f;
 float diff_err;
 float rt;// = 0.0f;
 float d_front;// = 1.0f;
+float integral;
 
 float left, right;
+
+int state;
 
 // Initialize all encoder data structures to zero:
 
@@ -97,6 +105,8 @@ int main(void)
 	SystemInit(); // Set up clocks/PLL/et. al
 
 	UART1_init(); // Debug bridge
+
+	state = ST_HOMING; //ST_WANDER;
 
 	// Initialize ADC data buffers to 0;
 
@@ -167,12 +177,14 @@ int main(void)
 	diff_err = 0.0f;
 	rt = 0.0f;
 	d_front = 1.0f;
+	integral = 0.0f;
 
 //	float left, right;
 
 	while(true)
 	{
-		printf("Front: %1.3f, Front left:%1.4f, Front back:%1.4f\n\r", d_front, IR_distance(adc2_data[0]), IR_distance(adcData[1]));
+//		printf("Front: %1.3f, Front left:%1.4f, Front back:%1.4f\n\r", d_front, IR_distance(adc2_data[0]), IR_distance(adcData[1]));
+		printf("%4d %4d %4d\n\r", (int)adcData[0] , (int)adc2_data[2], ((int)adcData[0] - (int)adc2_data[2]));
 
 	}
 	return 0; // We should never manage to get here...
