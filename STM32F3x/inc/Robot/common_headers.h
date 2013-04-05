@@ -11,6 +11,7 @@
 #define DT_IMU 			40
 #define K_ULTRASONIC 0.001130f
 
+#define ST_READY -1
 #define ST_WANDER 0
 #define ST_HOMING 1
 #define ST_FIREFIGHT 2

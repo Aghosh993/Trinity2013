@@ -223,12 +223,33 @@ void update_pid(void);
 	void TIM6_DAC_IRQHandler(void)
 	{
 		TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
-		GPIO_Write(GPIOE, led_matrix[led_iter] | led_matrix[6-led_iter]);
-		++led_iter;
-		if(led_iter > 6)
+		if(state == ST_READY)
 		{
-			led_iter = 0;
+			GPIO_Write(GPIOE, led_matrix[2] | led_matrix[5]);
 		}
+		else if(state == ST_WANDER)
+		{
+			GPIO_Write(GPIOE, led_matrix[6]);
+		}
+		else if(state == ST_HOMING)
+		{
+			GPIO_Write(GPIOE, led_matrix[0] | led_matrix[3]);
+		}
+		else if(state == ST_FIREFIGHT)
+		{
+			GPIO_Write(GPIOE, led_matrix[0] | led_matrix[3] | led_matrix[6]);
+		}
+		else if (state == ST_DONE)
+		{
+			GPIO_Write(GPIOE, led_matrix[6] | led_matrix[0] | led_matrix[1] | led_matrix[2] | led_matrix[3]
+                                            | led_matrix[4] | led_matrix[5]);
+		}
+//		GPIO_Write(GPIOE, led_matrix[led_iter] | led_matrix[6-led_iter]);
+//		++led_iter;
+//		if(led_iter > 6)
+//		{
+//			led_iter = 0;
+//		}
 	}
 	void ADC1_2_IRQHandler(void)
 	{
@@ -321,7 +342,7 @@ void update_pid(void);
 		if(state == ST_HOMING)
 		{
 			err = (float)(1.0) * (float)((int)adcData[0] - (int)adc2_data[2]);// + (float)450*((float)adcData[0] + (float)adc2_data[3])/((float)2 * (float)4000));
-			if(err > -140 && err < 140)
+			if(err > -20 && err < 20)
 			{
 				pwm1_output(0.50f);
 				pwm2_output(0.50f);
@@ -331,7 +352,7 @@ void update_pid(void);
 
 			diff_err = (float)(err-last_err)*((float)DT_ENCODER/(float)1000);
 			integral =0;//+= err * 0.04f;
-			drive_cmd = (((float)(err)/(float)500) + ((float)diff_err/(float)1444));// + ((float)integral/(float)6000);
+			drive_cmd = (((float)(err)/(float)500) + ((float)diff_err/(float)944));// + ((float)integral/(float)6000);
 //			drive_cmd = err/(float)5500;
 
 			rt = 0.0f;
@@ -374,7 +395,7 @@ void update_pid(void);
 		diff_err = (float)(err-last_err)*((float)DT_ENCODER/(float)1000);
 		drive_cmd = (((float)(err)/(float)2500) + ((float)diff_err/(float)3720)); //1100=diff term
 
-		if(d_front < 0.65)//0.6
+		if(d_front < 0.69)//0.65
 		{
 			rt = 0.5f;
 			mtr_out = 0.3f;
@@ -416,7 +437,48 @@ void update_pid(void);
 			right=0;
 		}
 		}
-		if(state == ST_WANDER || state == ST_HOMING) {
+		else if(state == ST_DONE)
+				{
+					err = (float)(1.0) * (float)((int)adcData[0] - (int)adc2_data[2]);
+
+					diff_err = (float)(err-last_err)*((float)DT_ENCODER/(float)1000);
+					integral =0;//+= err * 0.04f;
+					drive_cmd = (((float)(err)/(float)500) + ((float)diff_err/(float)944));
+
+					rt = 0.0f;
+					mtr_out = 0.5f;
+
+					if(drive_cmd > 0.5)
+					{
+						drive_cmd = 0.5f;
+					}
+					if(drive_cmd < -0.5)
+					{
+						drive_cmd = -0.5f;
+					}
+
+					left = (1-mtr_out) - drive_cmd - rt;
+					right = mtr_out - drive_cmd - rt;
+
+					if(left>1.0)
+					{
+						left=1.0;
+					}
+					else if(left<0)
+					{
+						left=0;//-1.0;
+					}
+
+					if(right>1.0f)
+					{
+						right=1.0f;
+					}
+					else if(right<0)
+					{
+						right=0;
+					}
+				}
+		if(state == ST_WANDER || state == ST_HOMING || state == ST_DONE) {
 		pwm1_output(left);
 		pwm2_output(right);
 		last_err = err;

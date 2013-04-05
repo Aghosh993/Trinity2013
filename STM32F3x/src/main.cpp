@@ -14,14 +14,20 @@
 
 /*
  * Timer usage manifest:
+ *
+ * TIM1: 16-bit PWM output mode (PE14) [for BLDC control...]
  * TIM2: 32-bit encoder interface input (PC6, PC7) (NOT ON TRINITY BOARD DUE TO HARDWARE FAULT!!)
- * TIM4: 16-bit encoder interface input (PD12, PD13) (ONLY ON TRINITY BOARD, DUE TO ABOVE!!)
- * TIM8: 16-bit encoder interface input (PA0, PA1)
  *
  * TIM3: PWM Output Channels 1 and 2 	(PB4, PB5)
  *
+ * TIM4: 16-bit encoder interface input (PD12, PD13) (ONLY ON TRINITY BOARD, DUE TO ABOVE!!)
+ *
  * TIM6: LED matrix ISR
  * TIM7: Encoder update ISR
+ *
+ * TIM8: 16-bit encoder interface input (PA0, PA1)
+ *
+ *
  * TIM17: IMU update ISR
  *
  * Other pins/resources used:
@@ -33,6 +39,8 @@
  * 			PC4: adc2_data[1]
  * 			PC5: adc2_data[2]
  * 			PB2: adc2_data[3]
+ *
+ * Digital:
  *
  * Debug port information: Baud Rate=115200, 8n1 UART (TTL pins PA9, PA10)
  * 							PA9 = TX, PA10 = RX (W/respect to STM32 device)
@@ -66,6 +74,8 @@ void ping_pin_init(void);
 void timer2_timebase_init(void);
 
 void comp_init(void);
+
+void trinity2013_waitForStart(void);
 
 float IR_distance(int IR_ADC_VAL);
 
@@ -105,6 +115,12 @@ int main(void)
 	SystemInit(); // Set up clocks/PLL/et. al
 
 	UART1_init(); // Debug bridge
+
+	state = ST_READY;
+
+	LED_MATRIX_ISR_init();
+
+	trinity2013_waitForStart();
 
 	state = ST_WANDER;
 
@@ -156,10 +172,10 @@ int main(void)
 
 	// Initialize ADC2 DMA:
 	adc2_init_DMA();
-//	battery_watchdog_init();
+
+	//	battery_watchdog_init();
 
 	encoder_update_ISR_init();	//Update the state of the two encoders (left/right)
-	LED_MATRIX_ISR_init();		//Hand out some eye candy while we're at it...
 
 	// Ping Sensor Init:
 
@@ -171,7 +187,6 @@ int main(void)
 	comp_init();
 
 	adcval = 0;
-//	mtr_out = 0;
 
 	drive_cmd = 0.0f;
 	err = 0.0f;
@@ -181,13 +196,32 @@ int main(void)
 	d_front = 1.0f;
 	integral = 0.0f;
 
+	int uv_avgBuf1 = 0;
+	int uv_avgBuf2 = 0;
+	int uv_iter = 0;
+
+	float uv1_avg, uv2_avg;
+
+	LED_MATRIX_ISR_init();		//Hand out some eye candy while we're at it...
+
 	while(true)
 	{
 		printf("%4d %4d %4d\n\r", (int)adcData[0] , (int)adc2_data[2], ((int)adcData[0] - (int)adc2_data[2]));
-	//	pwm3_output(0.1f); // Fan full-throttle
-		if(((adc2_data[2] > 600 || adcData[0] > 600)) && state == ST_WANDER)
+		if(((adc2_data[2] > 500 || adcData[0] > 500)) && state == ST_WANDER)
 		{
-			state = ST_HOMING;
+			for(uv_iter=0; uv_iter<300; ++uv_iter)
+			{
+				uv_avgBuf1 += (int)adcData[0];
+				uv_avgBuf2 += (int)adc2_data[2];
+			}
+			uv1_avg = (float)uv_avgBuf1/(float)300;
+			uv2_avg = (float)uv_avgBuf2/(float)300;
+
+			if(uv1_avg > 500.00 || uv2_avg > 500.00)
+			{
+				state = ST_HOMING;
+			}
+
 		}
 		else if (state == ST_FIREFIGHT)
 		{
@@ -204,6 +238,42 @@ int main(void)
 
 	}
 	return 0; // We should never manage to get here...
+}
+
+void trinity2013_waitForStart(void)
+{
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOD, ENABLE);
+	GPIO_DeInit(GPIOD);
+	GPIO_InitTypeDef g;
+	g.GPIO_Mode = GPIO_Mode_IN;
+	g.GPIO_OType = GPIO_OType_OD;
+	g.GPIO_Pin = GPIO_Pin_3;
+	g.GPIO_PuPd = GPIO_PuPd_DOWN;
+//	g.GPIO_Speed = GPIO_Speed_Level_2;
+	GPIO_Init(GPIOD,&g);
+
+	while(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_3) == (uint8_t)Bit_RESET);
+	state = ST_WANDER;
+//	while(!(GPIOD->IDR & GPIO_Pin));
+
+	/*
+	 * {
+		if(GPIO_ReadInputDataBit(GPIOC, 11) == Bit_SET)
+		{
+			int i = 0;
+			for(i=0; i< 10000;++i)
+			{
+				if(GPIO_ReadInputDataBit(GPIOC, 11) == Bit_SET)
+				{
+					break;
+				}
+			}
+			return;
+		}
+	}
+	 */
+
+
 }
 
 float IR_distance(int IR_ADC_VAL)
