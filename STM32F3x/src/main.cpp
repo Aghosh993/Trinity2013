@@ -47,7 +47,7 @@
  */
 
 volatile int led_iter;
-volatile int led_matrix[8] = {GPIO_Pin_9, GPIO_Pin_8, GPIO_Pin_15, GPIO_Pin_14, GPIO_Pin_13,
+volatile int led_matrix[7] = {GPIO_Pin_9, GPIO_Pin_8, GPIO_Pin_15, GPIO_Pin_13,
 										GPIO_Pin_12, GPIO_Pin_11, GPIO_Pin_10};
 
 void imu_update_ISR_init(void);
@@ -106,7 +106,7 @@ int main(void)
 
 	UART1_init(); // Debug bridge
 
-	state = ST_HOMING; //ST_WANDER;
+	state = ST_WANDER;
 
 	// Initialize ADC data buffers to 0;
 
@@ -138,6 +138,8 @@ int main(void)
 	brake_pins_init();
 	pwm_out1_init(2000);
 	pwm_out2_init(2000);
+
+	pwm_out3_init(50);
 
 	// Initialize hardware quadrature encoder input interfaces:
 
@@ -179,12 +181,26 @@ int main(void)
 	d_front = 1.0f;
 	integral = 0.0f;
 
-//	float left, right;
-
 	while(true)
 	{
-//		printf("Front: %1.3f, Front left:%1.4f, Front back:%1.4f\n\r", d_front, IR_distance(adc2_data[0]), IR_distance(adcData[1]));
 		printf("%4d %4d %4d\n\r", (int)adcData[0] , (int)adc2_data[2], ((int)adcData[0] - (int)adc2_data[2]));
+	//	pwm3_output(0.1f); // Fan full-throttle
+		if(((adc2_data[2] > 600 || adcData[0] > 600)) && state == ST_WANDER)
+		{
+			state = ST_HOMING;
+		}
+		else if (state == ST_FIREFIGHT)
+		{
+			pwm1_output(0.5);
+			pwm2_output(0.5);
+			int jk = 0;
+			for(jk=0;jk<1250000;++jk)
+			{
+				pwm3_output(0.06f);
+			}
+			pwm3_output(0.1f);
+			state = ST_DONE;
+		}
 
 	}
 	return 0; // We should never manage to get here...

@@ -107,6 +107,112 @@ void pwm2_output(float duty)
 	uint16_t setval = (uint16_t)((float)TIM3->ARR * duty);
 	TIM_SetCompare2(TIM3, setval);
 }
+// PE0, TIM16:
+void pwm_out3_init(uint16_t frequency)
+{
+	/*
+	int period = 0;
+	int psc = 0;
+	config_pwm_freq((int)frequency, &period, &psc);
+
+
+	TIM_TimeBaseInitTypeDef i;
+	TIM_OCInitTypeDef j;
+	GPIO_InitTypeDef g;
+
+	i.TIM_CounterMode = TIM_CounterMode_Up;
+	i.TIM_ClockDivision = 0;
+	i.TIM_RepetitionCounter = 0;
+	i.TIM_Prescaler = ((uint16_t)psc)-1;
+	i.TIM_Period = ((uint16_t)period)-1;
+
+	j.TIM_OCMode = TIM_OCMode_PWM1;
+	j.TIM_OutputState = TIM_OutputState_Enable;
+	j.TIM_Pulse = 8191;
+	j.TIM_OCPolarity = TIM_OCPolarity_High;
+
+	// PE0
+
+	g.GPIO_Mode = GPIO_Mode_AF;
+	g.GPIO_OType = GPIO_OType_PP;
+	g.GPIO_Pin = GPIO_Pin_12;
+	g.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	g.GPIO_Speed = GPIO_Speed_50MHz;
+
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
+	GPIO_PinAFConfig(GPIOA, GPIO_PinSource12, GPIO_AF_4); // AF 1, 2, 3, or 9 (TIM15); 1, 4 (TIM16); 1, 2, 10 (TIM2); 2, 4, 6, 9, 11 (TIM1)
+	GPIO_Init(GPIOA, &g);
+
+
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM16, ENABLE);
+	TIM_InternalClockConfig(TIM16);
+	TIM_TimeBaseInit(TIM16, &i);
+	TIM_OC1Init(TIM16, &j);
+	TIM_OC1PreloadConfig(TIM16, TIM_OCPreload_Enable);
+	TIM_ARRPreloadConfig(TIM16, ENABLE);
+
+	TIM_CtrlPWMOutputs(TIM16, ENABLE);
+	TIM_CCPreloadControl(TIM16, ENABLE);
+
+	TIM_CCxCmd(TIM16, TIM_Channel_1, TIM_CCx_Enable);
+	TIM_Cmd(TIM16, ENABLE);
+	TIM_GenerateEvent(TIM16, TIM_EventSource_Update);
+	*/
+
+	///////////////////////////////////////////////////
+
+	int period = 0;
+	int psc = 0;
+	config_pwm_freq((int)frequency, &period, &psc);
+
+
+	TIM_TimeBaseInitTypeDef i;
+	TIM_OCInitTypeDef j;
+	GPIO_InitTypeDef g;
+
+	i.TIM_CounterMode = TIM_CounterMode_Up;
+	i.TIM_ClockDivision = 0;
+	i.TIM_RepetitionCounter = 0;
+	i.TIM_Prescaler = ((uint16_t)psc)-1;
+	i.TIM_Period = ((uint16_t)period)-1;
+
+	j.TIM_OCMode = TIM_OCMode_PWM1;
+	j.TIM_OutputState = TIM_OutputState_Enable;
+	j.TIM_Pulse = 8191;
+	j.TIM_OCPolarity = TIM_OCPolarity_High;
+
+	// PE0
+
+	g.GPIO_Mode = GPIO_Mode_AF;
+	g.GPIO_OType = GPIO_OType_PP;
+	g.GPIO_Pin = GPIO_Pin_14;
+	g.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	g.GPIO_Speed = GPIO_Speed_Level_1;//GPIO_Speed_50MHz;
+
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOE, ENABLE);
+	GPIO_PinAFConfig(GPIOE, GPIO_PinSource14, GPIO_AF_2); // AF 1, 2, 3, or 9 (TIM15); 1, 4 (TIM16); 1, 2, 10 (TIM2); 2, 4, 6, 9, 11, 12 (TIM1)
+	GPIO_Init(GPIOE, &g);
+
+
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE);
+	TIM_InternalClockConfig(TIM1);
+	TIM_TimeBaseInit(TIM1, &i);
+	TIM_OC4Init(TIM1, &j);
+	TIM_OC4PreloadConfig(TIM1, TIM_OCPreload_Enable);
+	TIM_ARRPreloadConfig(TIM1, ENABLE);
+
+	TIM_CtrlPWMOutputs(TIM1, ENABLE);
+//	TIM_CCPreloadControl(TIM1, ENABLE);
+
+	TIM_CCxCmd(TIM1, TIM_Channel_4, TIM_CCx_Enable);
+	TIM_Cmd(TIM1, ENABLE);
+	TIM_GenerateEvent(TIM1, TIM_EventSource_Update);
+}
+void pwm3_output(float duty)
+{
+	uint16_t setval = (uint16_t)((float)TIM1->ARR * duty);
+	TIM_SetCompare4(TIM1, setval);
+}
 
 void config_pwm_freq(int frequency, int* period, int* prescaler)
 {

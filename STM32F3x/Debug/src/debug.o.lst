@@ -342,7 +342,7 @@
   79:../src/debug.cpp **** 
   80:../src/debug.cpp **** 	a.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13 | GPI
  265              		.loc 1 80 0
- 266 019a 4FF47F43 		mov	r3, #65280
+ 266 019a 4FF43F43 		mov	r3, #48896
  267 019e 3B61     		str	r3, [r7, #16]
   81:../src/debug.cpp **** 	a.GPIO_Mode = GPIO_Mode_OUT;
  268              		.loc 1 81 0
@@ -468,13 +468,13 @@
  353              		.file 8 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 debug.cpp
-     /tmp/cc3vvScR.s:19     .text:00000000 $t
-     /tmp/cc3vvScR.s:24     .text:00000000 _Z10blink_ledsv
-     /tmp/cc3vvScR.s:113    .text:0000008c _Z10UART1_initv
-     /tmp/cc3vvScR.s:243    .text:00000188 _Z19LED_MATRIX_ISR_initv
+     /tmp/ccWN19Fb.s:19     .text:00000000 $t
+     /tmp/ccWN19Fb.s:24     .text:00000000 _Z10blink_ledsv
+     /tmp/ccWN19Fb.s:113    .text:0000008c _Z10UART1_initv
+     /tmp/ccWN19Fb.s:243    .text:00000188 _Z19LED_MATRIX_ISR_initv
                      .debug_frame:00000010 $d
                            .group:00000000 wm4.1.934603b1d669cb2b32fd4cb6dd11b673
-                           .group:00000000 wm4.common_headers.h.9.6b500163148c84ade0acac8214c38e88
+                           .group:00000000 wm4.common_headers.h.9.071a1fb1765528594ea6643cada8c0ec
                            .group:00000000 wm4.stm32f30x.h.56.6f19c65e98e3319a61449cb2b2455af5
                            .group:00000000 wm4.core_cm4.h.32.1434cd257ff5806b1b03cd32ab0641e9
                            .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05

@@ -14,6 +14,7 @@
 #define ST_WANDER 0
 #define ST_HOMING 1
 #define ST_FIREFIGHT 2
+#define ST_DONE 3
 
 #include "stm32f30x.h"
 #include "stm32f30x_adc.h"

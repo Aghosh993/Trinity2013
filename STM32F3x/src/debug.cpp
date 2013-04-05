@@ -77,7 +77,7 @@ void LED_MATRIX_ISR_init(void)
 
 	GPIO_InitTypeDef a;
 
-	a.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
+	a.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_15;
 	a.GPIO_Mode = GPIO_Mode_OUT;
 	a.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	a.GPIO_OType = GPIO_OType_PP;

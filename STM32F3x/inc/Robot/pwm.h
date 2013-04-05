@@ -19,6 +19,9 @@ void pwm1_output(float duty);
 void pwm_out2_init(uint16_t frequency);
 void pwm2_output(float duty);
 
+void pwm_out3_init(uint16_t frequency);
+void pwm3_output(float duty);
+
 void config_pwm_freq(int frequency, int* period, int* prescaler);
 
 #endif /* PWM_H_ */

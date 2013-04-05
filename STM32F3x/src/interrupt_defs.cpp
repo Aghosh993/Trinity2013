@@ -223,9 +223,9 @@ void update_pid(void);
 	void TIM6_DAC_IRQHandler(void)
 	{
 		TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
-		GPIO_Write(GPIOE, led_matrix[led_iter] | led_matrix[7-led_iter]);
+		GPIO_Write(GPIOE, led_matrix[led_iter] | led_matrix[6-led_iter]);
 		++led_iter;
-		if(led_iter > 7)
+		if(led_iter > 6)
 		{
 			led_iter = 0;
 		}
@@ -321,10 +321,17 @@ void update_pid(void);
 		if(state == ST_HOMING)
 		{
 			err = (float)(1.0) * (float)((int)adcData[0] - (int)adc2_data[2]);// + (float)450*((float)adcData[0] + (float)adc2_data[3])/((float)2 * (float)4000));
+			if(err > -140 && err < 140)
+			{
+				pwm1_output(0.50f);
+				pwm2_output(0.50f);
+				state = ST_FIREFIGHT;
+				return;
+			}
 
 			diff_err = (float)(err-last_err)*((float)DT_ENCODER/(float)1000);
 			integral =0;//+= err * 0.04f;
-			drive_cmd = (((float)(err)/(float)500) + ((float)diff_err/(float)744));// + ((float)integral/(float)6000);
+			drive_cmd = (((float)(err)/(float)500) + ((float)diff_err/(float)1444));// + ((float)integral/(float)6000);
 //			drive_cmd = err/(float)5500;
 
 			rt = 0.0f;
@@ -360,7 +367,7 @@ void update_pid(void);
 				right=0;
 			}
 		}
-		else
+		else if(state == ST_WANDER)
 		{
 			err = ((float)(0.55)*(float)((int)adc2_data[0] - 2200)) + ((float)(0.45)*(float)((int)adcData[1] - 150));
 
@@ -409,10 +416,11 @@ void update_pid(void);
 			right=0;
 		}
 		}
-
+		if(state == ST_WANDER || state == ST_HOMING) {
 		pwm1_output(left);
 		pwm2_output(right);
 		last_err = err;
+		}
 	}
 
 }
