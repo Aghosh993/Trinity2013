@@ -43,6 +43,9 @@ extern __IO uint32_t adc2_data[2];
 
 extern int state;
 
+extern int leds_on;
+extern float match_time_counter, t_firefight_start;
+
 void update_pid(void);
 
 	void TIM7_IRQHandler(void) // ISR that performs encoder state update:
@@ -116,6 +119,11 @@ void update_pid(void);
 			}
 		}
 		update_pid();
+		if(state > ST_READY)
+		{
+			match_time_counter += (float)DT_ENCODER/(float)1000; // Increment main match time counter by DT_ENCODER ms
+		}
+
 		/*
 		else if(right_enc.m == MODE_SPEED)
 		{
@@ -146,6 +154,7 @@ void update_pid(void);
 	{
 
 		TIM_ClearITPendingBit(TIM17, TIM_IT_Update);
+
 		/*
 		uint8_t bytes[2];
 
@@ -158,8 +167,8 @@ void update_pid(void);
 		convert.un_signed = (bytes[1] << 8) | bytes[0];
 
 		gyro_angle_x += (convert.output - gyro_bias_x) * (float)0.00763 * (float)0.001 * (float)DT_IMU;
-
 		*/
+
 		/*
 		 * Below: code required to trigger the ping sensor:
 		 */
@@ -225,31 +234,50 @@ void update_pid(void);
 		TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
 		if(state == ST_READY)
 		{
-			GPIO_Write(GPIOE, led_matrix[2] | led_matrix[5]);
+			GPIO_Write(GPIOE, led_matrix[2] | led_matrix[5]); 	// Two greens
 		}
 		else if(state == ST_WANDER)
 		{
-			GPIO_Write(GPIOE, led_matrix[6]);
+			GPIO_Write(GPIOE, led_matrix[6]);					// Two Orange (one's lit via PWM pin for ESC control)
 		}
 		else if(state == ST_HOMING)
 		{
-			GPIO_Write(GPIOE, led_matrix[0] | led_matrix[3]);
+			GPIO_Write(GPIOE, led_matrix[0] | led_matrix[3]);	// Two orange + Two red
 		}
 		else if(state == ST_FIREFIGHT)
 		{
 			GPIO_Write(GPIOE, led_matrix[0] | led_matrix[3] | led_matrix[6]);
 		}
-		else if (state == ST_DONE)
+		else if (state == ST_CANDLE_BLOWOUT)
 		{
 			GPIO_Write(GPIOE, led_matrix[6] | led_matrix[0] | led_matrix[1] | led_matrix[2] | led_matrix[3]
-                                            | led_matrix[4] | led_matrix[5]);
+                                            | led_matrix[4] | led_matrix[5]); // All LED's
 		}
-//		GPIO_Write(GPIOE, led_matrix[led_iter] | led_matrix[6-led_iter]);
-//		++led_iter;
-//		if(led_iter > 6)
-//		{
-//			led_iter = 0;
-//		}
+		else if (state == ST_DONE)
+		{
+			++led_iter;
+			GPIO_Write(GPIOE, led_matrix[led_iter] | led_matrix[6-led_iter]);
+			if(led_iter > 6)
+			{
+				led_iter = 0;
+			}
+			/*
+			if(led_iter == 3)
+			{
+				led_iter = 0;
+				if(leds_on == 0)
+				{
+					GPIO_Write(GPIOE, 0); // All LED's
+				}
+				else
+				{
+					GPIO_Write(GPIOE, led_matrix[6] | led_matrix[0] | led_matrix[1] | led_matrix[2] | led_matrix[3]
+		                                            | led_matrix[4] | led_matrix[5]); // All LED's
+				}
+				leds_on = (leds_on == 1) ? leds_on = 0 : leds_on = 1;
+			}
+			*/
+		}
 	}
 	void ADC1_2_IRQHandler(void)
 	{
@@ -341,7 +369,7 @@ void update_pid(void);
 
 		if(state == ST_HOMING)
 		{
-			err = (float)(1.0) * (float)((int)adcData[0] - (int)adc2_data[2]);// + (float)450*((float)adcData[0] + (float)adc2_data[3])/((float)2 * (float)4000));
+			err = (float)(1.0) * (float)((int)adcData[0] - (int)adc2_data[2]);
 			if(err > -20 && err < 20)
 			{
 				pwm1_output(0.50f);
@@ -352,8 +380,7 @@ void update_pid(void);
 
 			diff_err = (float)(err-last_err)*((float)DT_ENCODER/(float)1000);
 			integral =0;//+= err * 0.04f;
-			drive_cmd = (((float)(err)/(float)500) + ((float)diff_err/(float)944));// + ((float)integral/(float)6000);
-//			drive_cmd = err/(float)5500;
+			drive_cmd = (((float)(err)/(float)500) + ((float)diff_err/(float)735)); // k_deriv = 944
 
 			rt = 0.0f;
 			mtr_out = 0.5f;
@@ -395,12 +422,12 @@ void update_pid(void);
 		diff_err = (float)(err-last_err)*((float)DT_ENCODER/(float)1000);
 		drive_cmd = (((float)(err)/(float)2500) + ((float)diff_err/(float)3720)); //1100=diff term
 
-		if(d_front < 0.69)//0.65
+		if(d_front < 0.690 || adc2_data[3] > 1870)//0.69
 		{
 			rt = 0.5f;
 			mtr_out = 0.3f;
 			drive_cmd = 0;
-		}//1900
+		}
 		else
 		{
 			rt = 0.0f;
@@ -437,48 +464,68 @@ void update_pid(void);
 			right=0;
 		}
 		}
-		else if(state == ST_DONE)
+		else if(state == ST_CANDLE_BLOWOUT)
+		{
+			err = (float)(1.0) * (float)((int)adcData[0] - (int)adc2_data[2]);
+
+			diff_err = (float)(err-last_err)*((float)DT_ENCODER/(float)1000);
+			integral =0;//+= err * 0.04f;
+			drive_cmd = (((float)(err)/(float)500) + ((float)diff_err/(float)944));
+
+			rt = 0.0f;
+			mtr_out = 0.5f;
+
+			if(drive_cmd > 0.5)
+			{
+				drive_cmd = 0.5f;
+			}
+			if(drive_cmd < -0.5)
+			{
+				drive_cmd = -0.5f;
+			}
+
+			left = (1-mtr_out) - drive_cmd - rt;
+			right = mtr_out - drive_cmd - rt;
+
+			if(left>1.0)
+			{
+				left=1.0;
+			}
+			else if(left<0)
+			{
+				left=0;//-1.0;
+			}
+
+			if(right>1.0f)
+			{
+				right=1.0f;
+			}
+			else if(right<0)
+			{
+				right=0;
+			}
+
+			if(match_time_counter - t_firefight_start > FIREFIGHT_TIMEOUT)
+			{
+				pwm3_output(0.05f);
+				if((adc2_data[2] > UV_THRESHOLD || adcData[0] > UV_THRESHOLD))
 				{
-					err = (float)(1.0) * (float)((int)adcData[0] - (int)adc2_data[2]);
-
-					diff_err = (float)(err-last_err)*((float)DT_ENCODER/(float)1000);
-					integral =0;//+= err * 0.04f;
-					drive_cmd = (((float)(err)/(float)500) + ((float)diff_err/(float)944));
-
-					rt = 0.0f;
-					mtr_out = 0.5f;
-
-					if(drive_cmd > 0.5)
-					{
-						drive_cmd = 0.5f;
-					}
-					if(drive_cmd < -0.5)
-					{
-						drive_cmd = -0.5f;
-					}
-
-					left = (1-mtr_out) - drive_cmd - rt;
-					right = mtr_out - drive_cmd - rt;
-
-					if(left>1.0)
-					{
-						left=1.0;
-					}
-					else if(left<0)
-					{
-						left=0;//-1.0;
-					}
-
-					if(right>1.0f)
-					{
-						right=1.0f;
-					}
-					else if(right<0)
-					{
-						right=0;
-					}
+					state = ST_WANDER;
 				}
-		if(state == ST_WANDER || state == ST_HOMING || state == ST_DONE) {
+				else
+				{
+					pwm1_output(0.5f);
+					pwm2_output(0.5f);
+					rt = 0;
+					state = ST_DONE;
+				}
+			}
+//			else if(match_time_counter - t_firefight_start > FIREFIGHT_TIMEOUT)
+//			{
+
+//			}
+		}
+		if(state == ST_WANDER || state == ST_HOMING || state == ST_CANDLE_BLOWOUT) {
 		pwm1_output(left);
 		pwm2_output(right);
 		last_err = err;

@@ -108,6 +108,10 @@ float left, right;
 
 int state;
 
+float match_time_counter;
+float t_firefight_start;
+int leds_on;
+
 // Initialize all encoder data structures to zero:
 
 int main(void)
@@ -203,21 +207,24 @@ int main(void)
 	float uv1_avg, uv2_avg;
 
 	LED_MATRIX_ISR_init();		//Hand out some eye candy while we're at it...
+	leds_on = 0;
 
 	while(true)
 	{
 		printf("%4d %4d %4d\n\r", (int)adcData[0] , (int)adc2_data[2], ((int)adcData[0] - (int)adc2_data[2]));
-		if(((adc2_data[2] > 500 || adcData[0] > 500)) && state == ST_WANDER)
+//		printf("%d %1.3f \n\r", (int)adc2_data[3], d_front);
+//		printf("Time elapsed since start: %1.3f \n\r", match_time_counter);
+		if(((adc2_data[2] > UV_THRESHOLD || adcData[0] > UV_THRESHOLD)) && state == ST_WANDER) //500
 		{
-			for(uv_iter=0; uv_iter<300; ++uv_iter)
+			for(uv_iter=0; uv_iter<UV_NUMSAMPLES; ++uv_iter)
 			{
 				uv_avgBuf1 += (int)adcData[0];
 				uv_avgBuf2 += (int)adc2_data[2];
 			}
-			uv1_avg = (float)uv_avgBuf1/(float)300;
-			uv2_avg = (float)uv_avgBuf2/(float)300;
+			uv1_avg = (float)uv_avgBuf1/(float)UV_NUMSAMPLES;
+			uv2_avg = (float)uv_avgBuf2/(float)UV_NUMSAMPLES;
 
-			if(uv1_avg > 500.00 || uv2_avg > 500.00)
+			if(uv1_avg > (float)UV_THRESHOLD || uv2_avg > (float)UV_THRESHOLD)
 			{
 				state = ST_HOMING;
 			}
@@ -233,7 +240,8 @@ int main(void)
 				pwm3_output(0.06f);
 			}
 			pwm3_output(0.1f);
-			state = ST_DONE;
+			t_firefight_start = match_time_counter;
+			state = ST_CANDLE_BLOWOUT;
 		}
 
 	}
@@ -249,31 +257,11 @@ void trinity2013_waitForStart(void)
 	g.GPIO_OType = GPIO_OType_OD;
 	g.GPIO_Pin = GPIO_Pin_3;
 	g.GPIO_PuPd = GPIO_PuPd_DOWN;
-//	g.GPIO_Speed = GPIO_Speed_Level_2;
 	GPIO_Init(GPIOD,&g);
 
 	while(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_3) == (uint8_t)Bit_RESET);
+	match_time_counter = 0.0f;
 	state = ST_WANDER;
-//	while(!(GPIOD->IDR & GPIO_Pin));
-
-	/*
-	 * {
-		if(GPIO_ReadInputDataBit(GPIOC, 11) == Bit_SET)
-		{
-			int i = 0;
-			for(i=0; i< 10000;++i)
-			{
-				if(GPIO_ReadInputDataBit(GPIOC, 11) == Bit_SET)
-				{
-					break;
-				}
-			}
-			return;
-		}
-	}
-	 */
-
-
 }
 
 float IR_distance(int IR_ADC_VAL)
@@ -356,14 +344,6 @@ void brake_pins_init(void)
 
 	GPIO_WriteBit(GPIOE, GPIO_Pin_2, Bit_RESET);
 	GPIO_WriteBit(GPIOE, GPIO_Pin_3, Bit_RESET);
-
-	/*
-	 * 	a.GPIO_Mode = GPIO_Mode_OUT;
-	a.GPIO_PuPd = GPIO_PuPd_NOPULL;
-	a.GPIO_OType = GPIO_OType_PP;
-	a.GPIO_Speed = GPIO_Speed_Level_2;
-
-	 */
 }
 /*
  * PB0: OUTPUT
@@ -406,7 +386,6 @@ void timer2_timebase_init(void)
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
-//	TIM_Cmd(TIM2, ENABLE);
 
 	TIM_SetCounter(TIM2, 0);
 }
