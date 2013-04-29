@@ -3796,49 +3796,49 @@ LOAD /home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.
                 0x00001178       0x24 /home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/armv7e-m/softfp/crtn.o
 OUTPUT(STM32F3x.elf elf32-littlearm)
 
-.debug_info     0x00000000     0xd0fc
+.debug_info     0x00000000     0xd0ff
  .debug_info    0x00000000      0x9bc ./src/debug.o
  .debug_info    0x000009bc      0x954 ./src/encoder.o
  .debug_info    0x00001310      0xe59 ./src/interrupt_defs.o
- .debug_info    0x00002169     0x14bf ./src/main.o
- .debug_info    0x00003628      0x866 ./src/newlib_stubs.o
- .debug_info    0x00003e8e      0x8f8 ./src/pwm.o
- .debug_info    0x00004786       0x6d ./src/startup_stm32f30x.o
- .debug_info    0x000047f3     0x14b5 ./src/stm32f30x_adc.o
- .debug_info    0x00005ca8      0x2ee ./src/stm32f30x_comp.o
- .debug_info    0x00005f96      0x4b5 ./src/stm32f30x_dma.o
- .debug_info    0x0000644b      0x3f4 ./src/stm32f30x_exti.o
- .debug_info    0x0000683f      0x63f ./src/stm32f30x_gpio.o
- .debug_info    0x00006e7e      0x596 ./src/stm32f30x_misc.o
- .debug_info    0x00007414      0xb85 ./src/stm32f30x_rcc.o
- .debug_info    0x00007f99      0xc50 ./src/stm32f30x_spi.o
- .debug_info    0x00008be9      0x3fd ./src/stm32f30x_syscfg.o
- .debug_info    0x00008fe6     0x2404 ./src/stm32f30x_tim.o
- .debug_info    0x0000b3ea      0xfe1 ./src/stm32f30x_usart.o
- .debug_info    0x0000c3cb      0x854 ./src/stm32f3_discovery_l3gd20.o
- .debug_info    0x0000cc1f      0x4dd ./src/system_stm32f30x.o
+ .debug_info    0x00002169     0x14c2 ./src/main.o
+ .debug_info    0x0000362b      0x866 ./src/newlib_stubs.o
+ .debug_info    0x00003e91      0x8f8 ./src/pwm.o
+ .debug_info    0x00004789       0x6d ./src/startup_stm32f30x.o
+ .debug_info    0x000047f6     0x14b5 ./src/stm32f30x_adc.o
+ .debug_info    0x00005cab      0x2ee ./src/stm32f30x_comp.o
+ .debug_info    0x00005f99      0x4b5 ./src/stm32f30x_dma.o
+ .debug_info    0x0000644e      0x3f4 ./src/stm32f30x_exti.o
+ .debug_info    0x00006842      0x63f ./src/stm32f30x_gpio.o
+ .debug_info    0x00006e81      0x596 ./src/stm32f30x_misc.o
+ .debug_info    0x00007417      0xb85 ./src/stm32f30x_rcc.o
+ .debug_info    0x00007f9c      0xc50 ./src/stm32f30x_spi.o
+ .debug_info    0x00008bec      0x3fd ./src/stm32f30x_syscfg.o
+ .debug_info    0x00008fe9     0x2404 ./src/stm32f30x_tim.o
+ .debug_info    0x0000b3ed      0xfe1 ./src/stm32f30x_usart.o
+ .debug_info    0x0000c3ce      0x854 ./src/stm32f3_discovery_l3gd20.o
+ .debug_info    0x0000cc22      0x4dd ./src/system_stm32f30x.o
 
-.debug_abbrev   0x00000000     0x1d81
+.debug_abbrev   0x00000000     0x1d57
  .debug_abbrev  0x00000000      0x141 ./src/debug.o
  .debug_abbrev  0x00000141      0x17a ./src/encoder.o
  .debug_abbrev  0x000002bb      0x1dc ./src/interrupt_defs.o
- .debug_abbrev  0x00000497      0x22e ./src/main.o
- .debug_abbrev  0x000006c5      0x201 ./src/newlib_stubs.o
- .debug_abbrev  0x000008c6      0x168 ./src/pwm.o
- .debug_abbrev  0x00000a2e       0x12 ./src/startup_stm32f30x.o
- .debug_abbrev  0x00000a40      0x195 ./src/stm32f30x_adc.o
- .debug_abbrev  0x00000bd5      0x126 ./src/stm32f30x_comp.o
- .debug_abbrev  0x00000cfb      0x15a ./src/stm32f30x_dma.o
- .debug_abbrev  0x00000e55      0x17f ./src/stm32f30x_exti.o
- .debug_abbrev  0x00000fd4      0x199 ./src/stm32f30x_gpio.o
- .debug_abbrev  0x0000116d      0x12c ./src/stm32f30x_misc.o
- .debug_abbrev  0x00001299      0x1e8 ./src/stm32f30x_rcc.o
- .debug_abbrev  0x00001481      0x18e ./src/stm32f30x_spi.o
- .debug_abbrev  0x0000160f      0x186 ./src/stm32f30x_syscfg.o
- .debug_abbrev  0x00001795      0x18c ./src/stm32f30x_tim.o
- .debug_abbrev  0x00001921      0x15a ./src/stm32f30x_usart.o
- .debug_abbrev  0x00001a7b      0x1bc ./src/stm32f3_discovery_l3gd20.o
- .debug_abbrev  0x00001c37      0x14a ./src/system_stm32f30x.o
+ .debug_abbrev  0x00000497      0x204 ./src/main.o
+ .debug_abbrev  0x0000069b      0x201 ./src/newlib_stubs.o
+ .debug_abbrev  0x0000089c      0x168 ./src/pwm.o
+ .debug_abbrev  0x00000a04       0x12 ./src/startup_stm32f30x.o
+ .debug_abbrev  0x00000a16      0x195 ./src/stm32f30x_adc.o
+ .debug_abbrev  0x00000bab      0x126 ./src/stm32f30x_comp.o
+ .debug_abbrev  0x00000cd1      0x15a ./src/stm32f30x_dma.o
+ .debug_abbrev  0x00000e2b      0x17f ./src/stm32f30x_exti.o
+ .debug_abbrev  0x00000faa      0x199 ./src/stm32f30x_gpio.o
+ .debug_abbrev  0x00001143      0x12c ./src/stm32f30x_misc.o
+ .debug_abbrev  0x0000126f      0x1e8 ./src/stm32f30x_rcc.o
+ .debug_abbrev  0x00001457      0x18e ./src/stm32f30x_spi.o
+ .debug_abbrev  0x000015e5      0x186 ./src/stm32f30x_syscfg.o
+ .debug_abbrev  0x0000176b      0x18c ./src/stm32f30x_tim.o
+ .debug_abbrev  0x000018f7      0x15a ./src/stm32f30x_usart.o
+ .debug_abbrev  0x00001a51      0x1bc ./src/stm32f3_discovery_l3gd20.o
+ .debug_abbrev  0x00001c0d      0x14a ./src/system_stm32f30x.o
 
 .debug_loc      0x00000000     0x5caa
  .debug_loc     0x00000000       0xa8 ./src/debug.o

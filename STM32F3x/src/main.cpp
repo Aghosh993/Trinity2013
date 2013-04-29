@@ -13,6 +13,49 @@
 #include <math.h>
 
 /*
+    This program (program referring to all source and header files in this repository (repository
+    referring to https://github.com/Aghosh993/Trinity2013/tree) not containing code covered
+    under the terms of STMicroelectronic's Liberty v2 License) is free software: you can redistribute
+    it and/or modify it ("it" refers to all sections of this code as covered in the aforementioned way)
+    under the terms of the GNU General Public License as published by the Free Software Foundation,
+    either version 3 of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program (please refer to the file COPYING in the root of
+    the repository).  If not, see <http://www.gnu.org/licenses/>.
+
+    (c) Abhimanyu Ghosh, Polytechnic Institute of NYU (2013-2014)
+ */
+
+/*
+ * All other code is covered by the following terms:
+ *
+ *   ******************************************************************************
+  * @attention
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  *
+  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  * You may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at:
+  *
+  *        http://www.st.com/software_license_agreement_liberty_v2
+  *
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  *
+  ******************************************************************************
+ */
+
+/*
  * Timer usage manifest:
  *
  * TIM1: 16-bit PWM output mode (PE14) [for BLDC control...]
