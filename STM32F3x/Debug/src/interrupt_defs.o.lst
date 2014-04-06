@@ -1626,966 +1626,1083 @@
  1269              	.LCFI22:
  1270              		.cfi_def_cfa_register 7
  1271              	.LBB11:
- 367:../src/interrupt_defs.cpp **** 		float mtr_out = 0.50f;
+ 367:../src/interrupt_defs.cpp **** 		int i = 0;
  1272              		.loc 1 367 0
- 1273 0a6e 4FF07C53 		mov	r3, #1056964608
- 1274 0a72 7B60     		str	r3, [r7, #4]	@ float
- 368:../src/interrupt_defs.cpp **** 		d_front = ((float)count*(float)0.5*(float)K_ULTRASONIC);
+ 1273 0a6e 4FF00003 		mov	r3, #0
+ 1274 0a72 7B60     		str	r3, [r7, #4]
+ 368:../src/interrupt_defs.cpp **** 		float mtr_out = 0.50f;
  1275              		.loc 1 368 0
- 1276 0a74 40F20003 		movw	r3, #:lower16:count
- 1277 0a78 C0F20003 		movt	r3, #:upper16:count
- 1278 0a7c D3ED007A 		flds	s15, [r3, #0]	@ int
- 1279 0a80 B8EEE77A 		fsitos	s14, s15
- 1280 0a84 F6EE007A 		fconsts	s15, #96
- 1281 0a88 27EE277A 		fmuls	s14, s14, s15
- 1282 0a8c DFEDE47A 		flds	s15, .L140+8
- 1283 0a90 67EE277A 		fmuls	s15, s14, s15
- 1284 0a94 40F20003 		movw	r3, #:lower16:d_front
- 1285 0a98 C0F20003 		movt	r3, #:upper16:d_front
- 1286 0a9c C3ED007A 		fsts	s15, [r3, #0]
- 369:../src/interrupt_defs.cpp **** 
- 370:../src/interrupt_defs.cpp **** 		if(state == ST_HOMING)
- 1287              		.loc 1 370 0
- 1288 0aa0 40F20003 		movw	r3, #:lower16:state
- 1289 0aa4 C0F20003 		movt	r3, #:upper16:state
- 1290 0aa8 1B68     		ldr	r3, [r3, #0]
- 1291 0aaa 012B     		cmp	r3, #1
- 1292 0aac 40F03181 		bne	.L61
- 371:../src/interrupt_defs.cpp **** 		{
- 372:../src/interrupt_defs.cpp **** 			err = (float)(1.0) * (float)((int)adcData[0] - (int)adc2_data[2]);
- 1293              		.loc 1 372 0
- 1294 0ab0 40F20003 		movw	r3, #:lower16:adcData
- 1295 0ab4 C0F20003 		movt	r3, #:upper16:adcData
- 1296 0ab8 1B68     		ldr	r3, [r3, #0]
- 1297 0aba 1A46     		mov	r2, r3
- 1298 0abc 40F20003 		movw	r3, #:lower16:adc2_data
- 1299 0ac0 C0F20003 		movt	r3, #:upper16:adc2_data
- 1300 0ac4 9B68     		ldr	r3, [r3, #8]
- 1301 0ac6 D31A     		subs	r3, r2, r3
- 1302 0ac8 07EE103A 		fmsr	s14, r3	@ int
- 1303 0acc F8EEC77A 		fsitos	s15, s14
- 1304 0ad0 40F20003 		movw	r3, #:lower16:err
- 1305 0ad4 C0F20003 		movt	r3, #:upper16:err
- 1306 0ad8 C3ED007A 		fsts	s15, [r3, #0]
- 373:../src/interrupt_defs.cpp **** 			if(err > -20 && err < 20)
- 1307              		.loc 1 373 0
- 1308 0adc 40F20003 		movw	r3, #:lower16:err
- 1309 0ae0 C0F20003 		movt	r3, #:upper16:err
- 1310 0ae4 93ED007A 		flds	s14, [r3, #0]
- 1311 0ae8 FBEE047A 		fconsts	s15, #180
- 1312 0aec B4EEE77A 		fcmpes	s14, s15
- 1313 0af0 F1EE10FA 		fmstat
- 1314 0af4 1CDD     		ble	.L62
- 1315              	.L113:
- 1316              		.loc 1 373 0 is_stmt 0 discriminator 1
- 1317 0af6 40F20003 		movw	r3, #:lower16:err
- 1318 0afa C0F20003 		movt	r3, #:upper16:err
- 1319 0afe 93ED007A 		flds	s14, [r3, #0]
- 1320 0b02 F3EE047A 		fconsts	s15, #52
- 1321 0b06 B4EEE77A 		fcmpes	s14, s15
- 1322 0b0a F1EE10FA 		fmstat
- 1323 0b0e 0FD5     		bpl	.L62
- 1324              	.L114:
- 374:../src/interrupt_defs.cpp **** 			{
- 375:../src/interrupt_defs.cpp **** 				pwm1_output(0.50f);
- 1325              		.loc 1 375 0 is_stmt 1
- 1326 0b10 4FF07C50 		mov	r0, #1056964608
- 1327 0b14 FFF7FEFF 		bl	_Z11pwm1_outputf
- 376:../src/interrupt_defs.cpp **** 				pwm2_output(0.50f);
- 1328              		.loc 1 376 0
- 1329 0b18 4FF07C50 		mov	r0, #1056964608
- 1330 0b1c FFF7FEFF 		bl	_Z11pwm2_outputf
- 377:../src/interrupt_defs.cpp **** 				state = ST_FIREFIGHT;
+ 1276 0a74 4FF07C53 		mov	r3, #1056964608
+ 1277 0a78 3B60     		str	r3, [r7, #0]	@ float
+ 369:../src/interrupt_defs.cpp **** 		d_front = ((float)count*(float)0.5*(float)K_ULTRASONIC);
+ 1278              		.loc 1 369 0
+ 1279 0a7a 40F20003 		movw	r3, #:lower16:count
+ 1280 0a7e C0F20003 		movt	r3, #:upper16:count
+ 1281 0a82 D3ED007A 		flds	s15, [r3, #0]	@ int
+ 1282 0a86 B8EEE77A 		fsitos	s14, s15
+ 1283 0a8a F6EE007A 		fconsts	s15, #96
+ 1284 0a8e 27EE277A 		fmuls	s14, s14, s15
+ 1285 0a92 DFEDE57A 		flds	s15, .L145+8
+ 1286 0a96 67EE277A 		fmuls	s15, s14, s15
+ 1287 0a9a 40F20003 		movw	r3, #:lower16:d_front
+ 1288 0a9e C0F20003 		movt	r3, #:upper16:d_front
+ 1289 0aa2 C3ED007A 		fsts	s15, [r3, #0]
+ 370:../src/interrupt_defs.cpp **** 
+ 371:../src/interrupt_defs.cpp **** 		if(state == ST_HOMING)
+ 1290              		.loc 1 371 0
+ 1291 0aa6 40F20003 		movw	r3, #:lower16:state
+ 1292 0aaa C0F20003 		movt	r3, #:upper16:state
+ 1293 0aae 1B68     		ldr	r3, [r3, #0]
+ 1294 0ab0 012B     		cmp	r3, #1
+ 1295 0ab2 40F03281 		bne	.L61
+ 372:../src/interrupt_defs.cpp **** 		{
+ 373:../src/interrupt_defs.cpp **** 			err = (float)(1.0) * (float)((int)adcData[0] - (int)adc2_data[2]);
+ 1296              		.loc 1 373 0
+ 1297 0ab6 40F20003 		movw	r3, #:lower16:adcData
+ 1298 0aba C0F20003 		movt	r3, #:upper16:adcData
+ 1299 0abe 1B68     		ldr	r3, [r3, #0]
+ 1300 0ac0 1A46     		mov	r2, r3
+ 1301 0ac2 40F20003 		movw	r3, #:lower16:adc2_data
+ 1302 0ac6 C0F20003 		movt	r3, #:upper16:adc2_data
+ 1303 0aca 9B68     		ldr	r3, [r3, #8]
+ 1304 0acc D31A     		subs	r3, r2, r3
+ 1305 0ace 07EE103A 		fmsr	s14, r3	@ int
+ 1306 0ad2 F8EEC77A 		fsitos	s15, s14
+ 1307 0ad6 40F20003 		movw	r3, #:lower16:err
+ 1308 0ada C0F20003 		movt	r3, #:upper16:err
+ 1309 0ade C3ED007A 		fsts	s15, [r3, #0]
+ 374:../src/interrupt_defs.cpp **** 			if(err > -20 && err < 20)
+ 1310              		.loc 1 374 0
+ 1311 0ae2 40F20003 		movw	r3, #:lower16:err
+ 1312 0ae6 C0F20003 		movt	r3, #:upper16:err
+ 1313 0aea 93ED007A 		flds	s14, [r3, #0]
+ 1314 0aee FBEE047A 		fconsts	s15, #180
+ 1315 0af2 B4EEE77A 		fcmpes	s14, s15
+ 1316 0af6 F1EE10FA 		fmstat
+ 1317 0afa 1DDD     		ble	.L62
+ 1318              	.L117:
+ 1319              		.loc 1 374 0 is_stmt 0 discriminator 1
+ 1320 0afc 40F20003 		movw	r3, #:lower16:err
+ 1321 0b00 C0F20003 		movt	r3, #:upper16:err
+ 1322 0b04 93ED007A 		flds	s14, [r3, #0]
+ 1323 0b08 F3EE047A 		fconsts	s15, #52
+ 1324 0b0c B4EEE77A 		fcmpes	s14, s15
+ 1325 0b10 F1EE10FA 		fmstat
+ 1326 0b14 10D5     		bpl	.L62
+ 1327              	.L118:
+ 375:../src/interrupt_defs.cpp **** 			{
+ 376:../src/interrupt_defs.cpp **** 				pwm1_output(0.50f);
+ 1328              		.loc 1 376 0 is_stmt 1
+ 1329 0b16 4FF07C50 		mov	r0, #1056964608
+ 1330 0b1a FFF7FEFF 		bl	_Z11pwm1_outputf
+ 377:../src/interrupt_defs.cpp **** 				pwm2_output(0.50f);
  1331              		.loc 1 377 0
- 1332 0b20 40F20003 		movw	r3, #:lower16:state
- 1333 0b24 C0F20003 		movt	r3, #:upper16:state
- 1334 0b28 4FF00202 		mov	r2, #2
- 1335 0b2c 1A60     		str	r2, [r3, #0]
- 378:../src/interrupt_defs.cpp **** 				return;
- 1336              		.loc 1 378 0
- 1337 0b2e E5E3     		b	.L60
- 1338              	.L62:
- 379:../src/interrupt_defs.cpp **** 			}
- 380:../src/interrupt_defs.cpp **** 
- 381:../src/interrupt_defs.cpp **** 			diff_err = (float)(err-last_err)*((float)DT_ENCODER/(float)1000);
- 1339              		.loc 1 381 0
- 1340 0b30 40F20003 		movw	r3, #:lower16:err
- 1341 0b34 C0F20003 		movt	r3, #:upper16:err
- 1342 0b38 93ED007A 		flds	s14, [r3, #0]
- 1343 0b3c 40F20003 		movw	r3, #:lower16:last_err
- 1344 0b40 C0F20003 		movt	r3, #:upper16:last_err
- 1345 0b44 D3ED007A 		flds	s15, [r3, #0]
- 1346 0b48 37EE677A 		fsubs	s14, s14, s15
- 1347 0b4c DFEDBA7A 		flds	s15, .L140+32
- 1348 0b50 67EE277A 		fmuls	s15, s14, s15
- 1349 0b54 40F20003 		movw	r3, #:lower16:diff_err
- 1350 0b58 C0F20003 		movt	r3, #:upper16:diff_err
- 1351 0b5c C3ED007A 		fsts	s15, [r3, #0]
- 382:../src/interrupt_defs.cpp **** 			integral =0;//+= err * 0.04f;
- 1352              		.loc 1 382 0
- 1353 0b60 40F20003 		movw	r3, #:lower16:integral
- 1354 0b64 C0F20003 		movt	r3, #:upper16:integral
- 1355 0b68 4FF00002 		mov	r2, #0
- 1356 0b6c 1A60     		str	r2, [r3, #0]	@ float
- 383:../src/interrupt_defs.cpp **** 			drive_cmd = (((float)(err)/(float)500) + ((float)diff_err/(float)735)); // k_deriv = 944
- 1357              		.loc 1 383 0
- 1358 0b6e 40F20003 		movw	r3, #:lower16:err
- 1359 0b72 C0F20003 		movt	r3, #:upper16:err
- 1360 0b76 93ED007A 		flds	s14, [r3, #0]
- 1361 0b7a DFEDB07A 		flds	s15, .L140+36
- 1362 0b7e 87EE277A 		fdivs	s14, s14, s15
- 1363 0b82 40F20003 		movw	r3, #:lower16:diff_err
- 1364 0b86 C0F20003 		movt	r3, #:upper16:diff_err
- 1365 0b8a D3ED006A 		flds	s13, [r3, #0]
- 1366 0b8e DFEDA57A 		flds	s15, .L140+12
- 1367 0b92 C6EEA77A 		fdivs	s15, s13, s15
- 1368 0b96 77EE277A 		fadds	s15, s14, s15
- 1369 0b9a 40F20003 		movw	r3, #:lower16:drive_cmd
- 1370 0b9e C0F20003 		movt	r3, #:upper16:drive_cmd
- 1371 0ba2 C3ED007A 		fsts	s15, [r3, #0]
- 384:../src/interrupt_defs.cpp **** 
- 385:../src/interrupt_defs.cpp **** 			rt = 0.0f;
- 1372              		.loc 1 385 0
- 1373 0ba6 40F20003 		movw	r3, #:lower16:rt
- 1374 0baa C0F20003 		movt	r3, #:upper16:rt
- 1375 0bae 4FF00002 		mov	r2, #0
- 1376 0bb2 1A60     		str	r2, [r3, #0]	@ float
- 386:../src/interrupt_defs.cpp **** 			mtr_out = 0.5f;
- 1377              		.loc 1 386 0
- 1378 0bb4 4FF07C53 		mov	r3, #1056964608
- 1379 0bb8 7B60     		str	r3, [r7, #4]	@ float
- 387:../src/interrupt_defs.cpp **** 
- 388:../src/interrupt_defs.cpp **** 			if(drive_cmd > 0.5)
- 1380              		.loc 1 388 0
- 1381 0bba 40F20003 		movw	r3, #:lower16:drive_cmd
- 1382 0bbe C0F20003 		movt	r3, #:upper16:drive_cmd
- 1383 0bc2 93ED007A 		flds	s14, [r3, #0]
- 1384 0bc6 F6EE007A 		fconsts	s15, #96
- 1385 0bca B4EEE77A 		fcmpes	s14, s15
- 1386 0bce F1EE10FA 		fmstat
- 1387 0bd2 06DD     		ble	.L66
- 1388              	.L115:
- 389:../src/interrupt_defs.cpp **** 			{
- 390:../src/interrupt_defs.cpp **** 				drive_cmd = 0.5f;
- 1389              		.loc 1 390 0
- 1390 0bd4 40F20003 		movw	r3, #:lower16:drive_cmd
- 1391 0bd8 C0F20003 		movt	r3, #:upper16:drive_cmd
- 1392 0bdc 4FF07C52 		mov	r2, #1056964608
- 1393 0be0 1A60     		str	r2, [r3, #0]	@ float
- 1394              	.L66:
- 391:../src/interrupt_defs.cpp **** 			}
- 392:../src/interrupt_defs.cpp **** 			if(drive_cmd < -0.5)
- 1395              		.loc 1 392 0
- 1396 0be2 40F20003 		movw	r3, #:lower16:drive_cmd
- 1397 0be6 C0F20003 		movt	r3, #:upper16:drive_cmd
- 1398 0bea 93ED007A 		flds	s14, [r3, #0]
- 1399 0bee FEEE007A 		fconsts	s15, #224
- 1400 0bf2 B4EEE77A 		fcmpes	s14, s15
- 1401 0bf6 F1EE10FA 		fmstat
- 1402 0bfa 06D5     		bpl	.L68
- 1403              	.L116:
- 393:../src/interrupt_defs.cpp **** 			{
- 394:../src/interrupt_defs.cpp **** 				drive_cmd = -0.5f;
- 1404              		.loc 1 394 0
- 1405 0bfc 40F20003 		movw	r3, #:lower16:drive_cmd
- 1406 0c00 C0F20003 		movt	r3, #:upper16:drive_cmd
- 1407 0c04 4FF03F42 		mov	r2, #-1090519040
- 1408 0c08 1A60     		str	r2, [r3, #0]	@ float
- 1409              	.L68:
- 395:../src/interrupt_defs.cpp **** 			}
- 396:../src/interrupt_defs.cpp **** 
- 397:../src/interrupt_defs.cpp **** 			left = (1-mtr_out) - drive_cmd - rt;
- 1410              		.loc 1 397 0
- 1411 0c0a B7EE007A 		fconsts	s14, #112
- 1412 0c0e D7ED017A 		flds	s15, [r7, #4]
- 1413 0c12 37EE677A 		fsubs	s14, s14, s15
- 1414 0c16 40F20003 		movw	r3, #:lower16:drive_cmd
- 1415 0c1a C0F20003 		movt	r3, #:upper16:drive_cmd
- 1416 0c1e D3ED007A 		flds	s15, [r3, #0]
- 1417 0c22 37EE677A 		fsubs	s14, s14, s15
- 1418 0c26 40F20003 		movw	r3, #:lower16:rt
- 1419 0c2a C0F20003 		movt	r3, #:upper16:rt
- 1420 0c2e D3ED007A 		flds	s15, [r3, #0]
- 1421 0c32 77EE677A 		fsubs	s15, s14, s15
- 1422 0c36 40F20003 		movw	r3, #:lower16:left
- 1423 0c3a C0F20003 		movt	r3, #:upper16:left
- 1424 0c3e C3ED007A 		fsts	s15, [r3, #0]
- 398:../src/interrupt_defs.cpp **** 			right = mtr_out - drive_cmd - rt;
- 1425              		.loc 1 398 0
- 1426 0c42 40F20003 		movw	r3, #:lower16:drive_cmd
- 1427 0c46 C0F20003 		movt	r3, #:upper16:drive_cmd
- 1428 0c4a D3ED007A 		flds	s15, [r3, #0]
- 1429 0c4e 97ED017A 		flds	s14, [r7, #4]
- 1430 0c52 37EE677A 		fsubs	s14, s14, s15
- 1431 0c56 40F20003 		movw	r3, #:lower16:rt
- 1432 0c5a C0F20003 		movt	r3, #:upper16:rt
- 1433 0c5e D3ED007A 		flds	s15, [r3, #0]
- 1434 0c62 77EE677A 		fsubs	s15, s14, s15
- 1435 0c66 40F20003 		movw	r3, #:lower16:right
- 1436 0c6a C0F20003 		movt	r3, #:upper16:right
- 1437 0c6e C3ED007A 		fsts	s15, [r3, #0]
- 399:../src/interrupt_defs.cpp **** 
- 400:../src/interrupt_defs.cpp **** 			if(left>1.0)
- 1438              		.loc 1 400 0
- 1439 0c72 40F20003 		movw	r3, #:lower16:left
- 1440 0c76 C0F20003 		movt	r3, #:upper16:left
- 1441 0c7a 93ED007A 		flds	s14, [r3, #0]
- 1442 0c7e F7EE007A 		fconsts	s15, #112
- 1443 0c82 B4EEE77A 		fcmpes	s14, s15
- 1444 0c86 F1EE10FA 		fmstat
- 1445 0c8a 07DD     		ble	.L134
- 1446              	.L117:
- 401:../src/interrupt_defs.cpp **** 			{
- 402:../src/interrupt_defs.cpp **** 				left=1.0;
- 1447              		.loc 1 402 0
- 1448 0c8c 40F20003 		movw	r3, #:lower16:left
- 1449 0c90 C0F20003 		movt	r3, #:upper16:left
- 1450 0c94 4FF07E52 		mov	r2, #1065353216
- 1451 0c98 1A60     		str	r2, [r3, #0]	@ float
- 1452 0c9a 11E0     		b	.L72
- 1453              	.L134:
- 403:../src/interrupt_defs.cpp **** 			}
- 404:../src/interrupt_defs.cpp **** 			else if(left<0)
- 1454              		.loc 1 404 0
- 1455 0c9c 40F20003 		movw	r3, #:lower16:left
- 1456 0ca0 C0F20003 		movt	r3, #:upper16:left
- 1457 0ca4 D3ED007A 		flds	s15, [r3, #0]
- 1458 0ca8 F5EEC07A 		fcmpezs	s15
- 1459 0cac F1EE10FA 		fmstat
- 1460 0cb0 06D5     		bpl	.L72
- 1461              	.L118:
- 405:../src/interrupt_defs.cpp **** 			{
- 406:../src/interrupt_defs.cpp **** 				left=0;//-1.0;
- 1462              		.loc 1 406 0
- 1463 0cb2 40F20003 		movw	r3, #:lower16:left
- 1464 0cb6 C0F20003 		movt	r3, #:upper16:left
- 1465 0cba 4FF00002 		mov	r2, #0
- 1466 0cbe 1A60     		str	r2, [r3, #0]	@ float
- 1467              	.L72:
- 407:../src/interrupt_defs.cpp **** 			}
- 408:../src/interrupt_defs.cpp **** 
- 409:../src/interrupt_defs.cpp **** 			if(right>1.0f)
- 1468              		.loc 1 409 0
- 1469 0cc0 40F20003 		movw	r3, #:lower16:right
- 1470 0cc4 C0F20003 		movt	r3, #:upper16:right
- 1471 0cc8 93ED007A 		flds	s14, [r3, #0]
- 1472 0ccc F7EE007A 		fconsts	s15, #112
- 1473 0cd0 B4EEE77A 		fcmpes	s14, s15
- 1474 0cd4 F1EE10FA 		fmstat
- 1475 0cd8 07DD     		ble	.L135
- 1476              	.L119:
- 410:../src/interrupt_defs.cpp **** 			{
- 411:../src/interrupt_defs.cpp **** 				right=1.0f;
- 1477              		.loc 1 411 0
- 1478 0cda 40F20003 		movw	r3, #:lower16:right
- 1479 0cde C0F20003 		movt	r3, #:upper16:right
- 1480 0ce2 4FF07E52 		mov	r2, #1065353216
- 1481 0ce6 1A60     		str	r2, [r3, #0]	@ float
- 1482 0ce8 D9E2     		b	.L76
- 1483              	.L135:
- 412:../src/interrupt_defs.cpp **** 			}
- 413:../src/interrupt_defs.cpp **** 			else if(right<0)
- 1484              		.loc 1 413 0
- 1485 0cea 40F20003 		movw	r3, #:lower16:right
- 1486 0cee C0F20003 		movt	r3, #:upper16:right
- 1487 0cf2 D3ED007A 		flds	s15, [r3, #0]
- 1488 0cf6 F5EEC07A 		fcmpezs	s15
- 1489 0cfa F1EE10FA 		fmstat
- 1490 0cfe 40F1CE82 		bpl	.L76
- 1491              	.L120:
- 414:../src/interrupt_defs.cpp **** 			{
- 415:../src/interrupt_defs.cpp **** 				right=0;
- 1492              		.loc 1 415 0
- 1493 0d02 40F20003 		movw	r3, #:lower16:right
- 1494 0d06 C0F20003 		movt	r3, #:upper16:right
- 1495 0d0a 4FF00002 		mov	r2, #0
- 1496 0d0e 1A60     		str	r2, [r3, #0]	@ float
- 1497 0d10 C5E2     		b	.L76
- 1498              	.L61:
- 416:../src/interrupt_defs.cpp **** 			}
- 417:../src/interrupt_defs.cpp **** 		}
- 418:../src/interrupt_defs.cpp **** 		else if(state == ST_WANDER)
- 1499              		.loc 1 418 0
- 1500 0d12 40F20003 		movw	r3, #:lower16:state
- 1501 0d16 C0F20003 		movt	r3, #:upper16:state
- 1502 0d1a 1B68     		ldr	r3, [r3, #0]
- 1503 0d1c 002B     		cmp	r3, #0
- 1504 0d1e 40F06181 		bne	.L78
- 419:../src/interrupt_defs.cpp **** 		{
- 420:../src/interrupt_defs.cpp **** 			err = ((float)(0.55)*(float)((int)adc2_data[0] - 2200)) + ((float)(0.45)*(float)((int)adcData[1]
- 1505              		.loc 1 420 0
- 1506 0d22 40F20003 		movw	r3, #:lower16:adc2_data
- 1507 0d26 C0F20003 		movt	r3, #:upper16:adc2_data
- 1508 0d2a 1B68     		ldr	r3, [r3, #0]
- 1509 0d2c A3F69803 		subw	r3, r3, #2200
- 1510 0d30 07EE903A 		fmsr	s15, r3	@ int
- 1511 0d34 B8EEE77A 		fsitos	s14, s15
- 1512 0d38 DFED3B7A 		flds	s15, .L140+16
- 1513 0d3c 27EE277A 		fmuls	s14, s14, s15
- 1514 0d40 40F20003 		movw	r3, #:lower16:adcData
- 1515 0d44 C0F20003 		movt	r3, #:upper16:adcData
- 1516 0d48 5B68     		ldr	r3, [r3, #4]
- 1517 0d4a A3F19603 		sub	r3, r3, #150
- 1518 0d4e 07EE903A 		fmsr	s15, r3	@ int
- 1519 0d52 F8EEE76A 		fsitos	s13, s15
- 1520 0d56 DFED357A 		flds	s15, .L140+20
- 1521 0d5a 66EEA77A 		fmuls	s15, s13, s15
- 1522 0d5e 77EE277A 		fadds	s15, s14, s15
- 1523 0d62 40F20003 		movw	r3, #:lower16:err
- 1524 0d66 C0F20003 		movt	r3, #:upper16:err
- 1525 0d6a C3ED007A 		fsts	s15, [r3, #0]
- 421:../src/interrupt_defs.cpp **** 
- 422:../src/interrupt_defs.cpp **** 		diff_err = (float)(err-last_err)*((float)DT_ENCODER/(float)1000);
- 1526              		.loc 1 422 0
- 1527 0d6e 40F20003 		movw	r3, #:lower16:err
- 1528 0d72 C0F20003 		movt	r3, #:upper16:err
- 1529 0d76 93ED007A 		flds	s14, [r3, #0]
- 1530 0d7a 40F20003 		movw	r3, #:lower16:last_err
- 1531 0d7e C0F20003 		movt	r3, #:upper16:last_err
- 1532 0d82 D3ED007A 		flds	s15, [r3, #0]
- 1533 0d86 37EE677A 		fsubs	s14, s14, s15
- 1534 0d8a DFED2B7A 		flds	s15, .L140+32
- 1535 0d8e 67EE277A 		fmuls	s15, s14, s15
- 1536 0d92 40F20003 		movw	r3, #:lower16:diff_err
- 1537 0d96 C0F20003 		movt	r3, #:upper16:diff_err
- 1538 0d9a C3ED007A 		fsts	s15, [r3, #0]
- 423:../src/interrupt_defs.cpp **** 		drive_cmd = (((float)(err)/(float)2500) + ((float)diff_err/(float)3720)); //1100=diff term
- 1539              		.loc 1 423 0
- 1540 0d9e 40F20003 		movw	r3, #:lower16:err
- 1541 0da2 C0F20003 		movt	r3, #:upper16:err
- 1542 0da6 93ED007A 		flds	s14, [r3, #0]
- 1543 0daa DFED217A 		flds	s15, .L140+24
- 1544 0dae 87EE277A 		fdivs	s14, s14, s15
- 1545 0db2 40F20003 		movw	r3, #:lower16:diff_err
- 1546 0db6 C0F20003 		movt	r3, #:upper16:diff_err
- 1547 0dba D3ED006A 		flds	s13, [r3, #0]
- 1548 0dbe DFED1D7A 		flds	s15, .L140+28
- 1549 0dc2 C6EEA77A 		fdivs	s15, s13, s15
- 1550 0dc6 77EE277A 		fadds	s15, s14, s15
- 1551 0dca 40F20003 		movw	r3, #:lower16:drive_cmd
- 1552 0dce C0F20003 		movt	r3, #:upper16:drive_cmd
- 1553 0dd2 C3ED007A 		fsts	s15, [r3, #0]
- 424:../src/interrupt_defs.cpp **** 
- 425:../src/interrupt_defs.cpp **** 		if(d_front < 0.690 || adc2_data[3] > 1870)//0.69
- 1554              		.loc 1 425 0
- 1555 0dd6 40F20003 		movw	r3, #:lower16:d_front
- 1556 0dda C0F20003 		movt	r3, #:upper16:d_front
- 1557 0dde 1B68     		ldr	r3, [r3, #0]	@ float
- 1558 0de0 1846     		mov	r0, r3	@ float
- 1559 0de2 FFF7FEFF 		bl	__aeabi_f2d
- 1560 0de6 0246     		mov	r2, r0
- 1561 0de8 0B46     		mov	r3, r1
- 1562 0dea 1046     		mov	r0, r2
- 1563 0dec 1946     		mov	r1, r3
- 1564 0dee 0AA3     		adr	r3, .L140
- 1565 0df0 D3E90023 		ldrd	r2, [r3]
- 1566 0df4 FFF7FEFF 		bl	__aeabi_dcmplt
- 1567 0df8 0346     		mov	r3, r0
- 1568 0dfa 002B     		cmp	r3, #0
- 1569 0dfc 08D1     		bne	.L79
- 1570              		.loc 1 425 0 is_stmt 0 discriminator 2
- 1571 0dfe 40F20003 		movw	r3, #:lower16:adc2_data
- 1572 0e02 C0F20003 		movt	r3, #:upper16:adc2_data
- 1573 0e06 DA68     		ldr	r2, [r3, #12]
- 1574 0e08 40F24E73 		movw	r3, #1870
- 1575 0e0c 9A42     		cmp	r2, r3
- 1576 0e0e 19D9     		bls	.L80
- 1577              	.L79:
- 1578              		.loc 1 425 0 discriminator 1
- 1579 0e10 4FF00103 		mov	r3, #1
- 1580 0e14 18E0     		b	.L81
- 1581              	.L141:
- 1582 0e16 00BF     		.align	3
- 1583              	.L140:
- 1584 0e18 14AE47E1 		.word	-515396076
- 1585 0e1c 7A14E63F 		.word	1072043130
- 1586 0e20 821C943A 		.word	982785154
- 1587 0e24 00C03744 		.word	1144504320
- 1588 0e28 CDCC0C3F 		.word	1057803469
- 1589 0e2c 6666E63E 		.word	1055286886
- 1590 0e30 00401C45 		.word	1159479296
- 1591 0e34 00806845 		.word	1164476416
- 1592 0e38 CDCCCC3C 		.word	1020054733
- 1593 0e3c 0000FA43 		.word	1140457472
- 1594 0e40 00006C44 		.word	1147928576
- 1595              	.L80:
- 1596              		.loc 1 425 0 discriminator 3
- 1597 0e44 4FF00003 		mov	r3, #0
- 1598              	.L81:
- 1599              		.loc 1 425 0 discriminator 4
- 1600 0e48 002B     		cmp	r3, #0
- 1601 0e4a 13D0     		beq	.L82
- 426:../src/interrupt_defs.cpp **** 		{
- 427:../src/interrupt_defs.cpp **** 			rt = 0.5f;
- 1602              		.loc 1 427 0 is_stmt 1
- 1603 0e4c 40F20003 		movw	r3, #:lower16:rt
- 1604 0e50 C0F20003 		movt	r3, #:upper16:rt
- 1605 0e54 4FF07C52 		mov	r2, #1056964608
- 1606 0e58 1A60     		str	r2, [r3, #0]	@ float
- 428:../src/interrupt_defs.cpp **** 			mtr_out = 0.3f;
- 1607              		.loc 1 428 0
- 1608 0e5a 49F69A13 		movw	r3, #39322
- 1609 0e5e C3F69963 		movt	r3, 16025
- 1610 0e62 7B60     		str	r3, [r7, #4]	@ float
- 429:../src/interrupt_defs.cpp **** 			drive_cmd = 0;
- 1611              		.loc 1 429 0
- 1612 0e64 40F20003 		movw	r3, #:lower16:drive_cmd
- 1613 0e68 C0F20003 		movt	r3, #:upper16:drive_cmd
- 1614 0e6c 4FF00002 		mov	r2, #0
- 1615 0e70 1A60     		str	r2, [r3, #0]	@ float
- 1616 0e72 0BE0     		b	.L83
- 1617              	.L82:
- 430:../src/interrupt_defs.cpp **** 		}
- 431:../src/interrupt_defs.cpp **** 		else
- 432:../src/interrupt_defs.cpp **** 		{
- 433:../src/interrupt_defs.cpp **** 			rt = 0.0f;
- 1618              		.loc 1 433 0
- 1619 0e74 40F20003 		movw	r3, #:lower16:rt
- 1620 0e78 C0F20003 		movt	r3, #:upper16:rt
- 1621 0e7c 4FF00002 		mov	r2, #0
- 1622 0e80 1A60     		str	r2, [r3, #0]	@ float
- 434:../src/interrupt_defs.cpp **** 			mtr_out = 0.85f;
- 1623              		.loc 1 434 0
- 1624 0e82 49F69A13 		movw	r3, #39322
- 1625 0e86 C3F65973 		movt	r3, 16217
- 1626 0e8a 7B60     		str	r3, [r7, #4]	@ float
- 1627              	.L83:
- 435:../src/interrupt_defs.cpp **** 		}
- 436:../src/interrupt_defs.cpp **** 
- 437:../src/interrupt_defs.cpp **** 		if(drive_cmd > 0.5)
- 1628              		.loc 1 437 0
- 1629 0e8c 40F20003 		movw	r3, #:lower16:drive_cmd
- 1630 0e90 C0F20003 		movt	r3, #:upper16:drive_cmd
- 1631 0e94 93ED007A 		flds	s14, [r3, #0]
- 1632 0e98 F6EE007A 		fconsts	s15, #96
- 1633 0e9c B4EEE77A 		fcmpes	s14, s15
- 1634 0ea0 F1EE10FA 		fmstat
- 1635 0ea4 06DD     		ble	.L84
- 1636              	.L121:
- 438:../src/interrupt_defs.cpp **** 		{
- 439:../src/interrupt_defs.cpp **** 			drive_cmd = 0.5f;
- 1637              		.loc 1 439 0
- 1638 0ea6 40F20003 		movw	r3, #:lower16:drive_cmd
- 1639 0eaa C0F20003 		movt	r3, #:upper16:drive_cmd
- 1640 0eae 4FF07C52 		mov	r2, #1056964608
- 1641 0eb2 1A60     		str	r2, [r3, #0]	@ float
- 1642              	.L84:
- 440:../src/interrupt_defs.cpp **** 		}
- 441:../src/interrupt_defs.cpp **** 		if(drive_cmd < -0.5)
- 1643              		.loc 1 441 0
- 1644 0eb4 40F20003 		movw	r3, #:lower16:drive_cmd
- 1645 0eb8 C0F20003 		movt	r3, #:upper16:drive_cmd
- 1646 0ebc 93ED007A 		flds	s14, [r3, #0]
- 1647 0ec0 FEEE007A 		fconsts	s15, #224
- 1648 0ec4 B4EEE77A 		fcmpes	s14, s15
- 1649 0ec8 F1EE10FA 		fmstat
- 1650 0ecc 06D5     		bpl	.L86
- 1651              	.L122:
- 442:../src/interrupt_defs.cpp **** 		{
- 443:../src/interrupt_defs.cpp **** 			drive_cmd = -0.5f;
- 1652              		.loc 1 443 0
- 1653 0ece 40F20003 		movw	r3, #:lower16:drive_cmd
- 1654 0ed2 C0F20003 		movt	r3, #:upper16:drive_cmd
- 1655 0ed6 4FF03F42 		mov	r2, #-1090519040
- 1656 0eda 1A60     		str	r2, [r3, #0]	@ float
- 1657              	.L86:
- 444:../src/interrupt_defs.cpp **** 		}
- 445:../src/interrupt_defs.cpp **** 
- 446:../src/interrupt_defs.cpp **** 		left = (1-mtr_out) - drive_cmd - rt;
- 1658              		.loc 1 446 0
- 1659 0edc B7EE007A 		fconsts	s14, #112
- 1660 0ee0 D7ED017A 		flds	s15, [r7, #4]
- 1661 0ee4 37EE677A 		fsubs	s14, s14, s15
- 1662 0ee8 40F20003 		movw	r3, #:lower16:drive_cmd
- 1663 0eec C0F20003 		movt	r3, #:upper16:drive_cmd
- 1664 0ef0 D3ED007A 		flds	s15, [r3, #0]
- 1665 0ef4 37EE677A 		fsubs	s14, s14, s15
- 1666 0ef8 40F20003 		movw	r3, #:lower16:rt
- 1667 0efc C0F20003 		movt	r3, #:upper16:rt
- 1668 0f00 D3ED007A 		flds	s15, [r3, #0]
- 1669 0f04 77EE677A 		fsubs	s15, s14, s15
- 1670 0f08 40F20003 		movw	r3, #:lower16:left
- 1671 0f0c C0F20003 		movt	r3, #:upper16:left
- 1672 0f10 C3ED007A 		fsts	s15, [r3, #0]
- 447:../src/interrupt_defs.cpp **** 		right = mtr_out - drive_cmd - rt;
- 1673              		.loc 1 447 0
- 1674 0f14 40F20003 		movw	r3, #:lower16:drive_cmd
- 1675 0f18 C0F20003 		movt	r3, #:upper16:drive_cmd
- 1676 0f1c D3ED007A 		flds	s15, [r3, #0]
- 1677 0f20 97ED017A 		flds	s14, [r7, #4]
- 1678 0f24 37EE677A 		fsubs	s14, s14, s15
- 1679 0f28 40F20003 		movw	r3, #:lower16:rt
- 1680 0f2c C0F20003 		movt	r3, #:upper16:rt
- 1681 0f30 D3ED007A 		flds	s15, [r3, #0]
- 1682 0f34 77EE677A 		fsubs	s15, s14, s15
- 1683 0f38 40F20003 		movw	r3, #:lower16:right
- 1684 0f3c C0F20003 		movt	r3, #:upper16:right
- 1685 0f40 C3ED007A 		fsts	s15, [r3, #0]
- 448:../src/interrupt_defs.cpp **** 
- 449:../src/interrupt_defs.cpp **** 		if(left>1.0)
- 1686              		.loc 1 449 0
- 1687 0f44 40F20003 		movw	r3, #:lower16:left
- 1688 0f48 C0F20003 		movt	r3, #:upper16:left
- 1689 0f4c 93ED007A 		flds	s14, [r3, #0]
- 1690 0f50 F7EE007A 		fconsts	s15, #112
- 1691 0f54 B4EEE77A 		fcmpes	s14, s15
- 1692 0f58 F1EE10FA 		fmstat
- 1693 0f5c 07DD     		ble	.L136
- 1694              	.L123:
- 450:../src/interrupt_defs.cpp **** 		{
- 451:../src/interrupt_defs.cpp **** 			left=1.0;
- 1695              		.loc 1 451 0
- 1696 0f5e 40F20003 		movw	r3, #:lower16:left
- 1697 0f62 C0F20003 		movt	r3, #:upper16:left
- 1698 0f66 4FF07E52 		mov	r2, #1065353216
- 1699 0f6a 1A60     		str	r2, [r3, #0]	@ float
- 1700 0f6c 11E0     		b	.L90
- 1701              	.L136:
- 452:../src/interrupt_defs.cpp **** 		}
- 453:../src/interrupt_defs.cpp **** 		else if(left<0)
- 1702              		.loc 1 453 0
- 1703 0f6e 40F20003 		movw	r3, #:lower16:left
- 1704 0f72 C0F20003 		movt	r3, #:upper16:left
- 1705 0f76 D3ED007A 		flds	s15, [r3, #0]
- 1706 0f7a F5EEC07A 		fcmpezs	s15
- 1707 0f7e F1EE10FA 		fmstat
- 1708 0f82 06D5     		bpl	.L90
- 1709              	.L124:
- 454:../src/interrupt_defs.cpp **** 		{
- 455:../src/interrupt_defs.cpp **** 			left=0;//-1.0;
- 1710              		.loc 1 455 0
- 1711 0f84 40F20003 		movw	r3, #:lower16:left
- 1712 0f88 C0F20003 		movt	r3, #:upper16:left
- 1713 0f8c 4FF00002 		mov	r2, #0
- 1714 0f90 1A60     		str	r2, [r3, #0]	@ float
- 1715              	.L90:
- 456:../src/interrupt_defs.cpp **** 		}
- 457:../src/interrupt_defs.cpp **** 
- 458:../src/interrupt_defs.cpp **** 		if(right>1.0f)
- 1716              		.loc 1 458 0
- 1717 0f92 40F20003 		movw	r3, #:lower16:right
- 1718 0f96 C0F20003 		movt	r3, #:upper16:right
- 1719 0f9a 93ED007A 		flds	s14, [r3, #0]
- 1720 0f9e F7EE007A 		fconsts	s15, #112
- 1721 0fa2 B4EEE77A 		fcmpes	s14, s15
- 1722 0fa6 F1EE10FA 		fmstat
- 1723 0faa 07DD     		ble	.L137
- 1724              	.L125:
- 459:../src/interrupt_defs.cpp **** 		{
- 460:../src/interrupt_defs.cpp **** 			right=1.0f;
- 1725              		.loc 1 460 0
- 1726 0fac 40F20003 		movw	r3, #:lower16:right
- 1727 0fb0 C0F20003 		movt	r3, #:upper16:right
- 1728 0fb4 4FF07E52 		mov	r2, #1065353216
- 1729 0fb8 1A60     		str	r2, [r3, #0]	@ float
- 1730 0fba 70E1     		b	.L76
- 1731              	.L137:
- 461:../src/interrupt_defs.cpp **** 		}
- 462:../src/interrupt_defs.cpp **** 		else if(right<0)
- 1732              		.loc 1 462 0
- 1733 0fbc 40F20003 		movw	r3, #:lower16:right
- 1734 0fc0 C0F20003 		movt	r3, #:upper16:right
- 1735 0fc4 D3ED007A 		flds	s15, [r3, #0]
- 1736 0fc8 F5EEC07A 		fcmpezs	s15
- 1737 0fcc F1EE10FA 		fmstat
- 1738 0fd0 40F16581 		bpl	.L76
- 1739              	.L126:
- 463:../src/interrupt_defs.cpp **** 		{
- 464:../src/interrupt_defs.cpp **** 			right=0;
- 1740              		.loc 1 464 0
- 1741 0fd4 40F20003 		movw	r3, #:lower16:right
- 1742 0fd8 C0F20003 		movt	r3, #:upper16:right
- 1743 0fdc 4FF00002 		mov	r2, #0
- 1744 0fe0 1A60     		str	r2, [r3, #0]	@ float
- 1745 0fe2 5CE1     		b	.L76
- 1746              	.L78:
- 465:../src/interrupt_defs.cpp **** 		}
+ 1332 0b1e 4FF07C50 		mov	r0, #1056964608
+ 1333 0b22 FFF7FEFF 		bl	_Z11pwm2_outputf
+ 378:../src/interrupt_defs.cpp **** 				state = ST_FIREFIGHT;
+ 1334              		.loc 1 378 0
+ 1335 0b26 40F20003 		movw	r3, #:lower16:state
+ 1336 0b2a C0F20003 		movt	r3, #:upper16:state
+ 1337 0b2e 4FF00202 		mov	r2, #2
+ 1338 0b32 1A60     		str	r2, [r3, #0]
+ 379:../src/interrupt_defs.cpp **** 				return;
+ 1339              		.loc 1 379 0
+ 1340 0b34 00F03CBC 		b	.L60
+ 1341              	.L62:
+ 380:../src/interrupt_defs.cpp **** 			}
+ 381:../src/interrupt_defs.cpp **** 
+ 382:../src/interrupt_defs.cpp **** 			diff_err = (float)(err-last_err)*((float)DT_ENCODER/(float)1000);
+ 1342              		.loc 1 382 0
+ 1343 0b38 40F20003 		movw	r3, #:lower16:err
+ 1344 0b3c C0F20003 		movt	r3, #:upper16:err
+ 1345 0b40 93ED007A 		flds	s14, [r3, #0]
+ 1346 0b44 40F20003 		movw	r3, #:lower16:last_err
+ 1347 0b48 C0F20003 		movt	r3, #:upper16:last_err
+ 1348 0b4c D3ED007A 		flds	s15, [r3, #0]
+ 1349 0b50 37EE677A 		fsubs	s14, s14, s15
+ 1350 0b54 DFEDBA7A 		flds	s15, .L145+32
+ 1351 0b58 67EE277A 		fmuls	s15, s14, s15
+ 1352 0b5c 40F20003 		movw	r3, #:lower16:diff_err
+ 1353 0b60 C0F20003 		movt	r3, #:upper16:diff_err
+ 1354 0b64 C3ED007A 		fsts	s15, [r3, #0]
+ 383:../src/interrupt_defs.cpp **** 			integral =0;//+= err * 0.04f;
+ 1355              		.loc 1 383 0
+ 1356 0b68 40F20003 		movw	r3, #:lower16:integral
+ 1357 0b6c C0F20003 		movt	r3, #:upper16:integral
+ 1358 0b70 4FF00002 		mov	r2, #0
+ 1359 0b74 1A60     		str	r2, [r3, #0]	@ float
+ 384:../src/interrupt_defs.cpp **** 			drive_cmd = (((float)(err)/(float)500) + ((float)diff_err/(float)735)); // k_deriv = 944
+ 1360              		.loc 1 384 0
+ 1361 0b76 40F20003 		movw	r3, #:lower16:err
+ 1362 0b7a C0F20003 		movt	r3, #:upper16:err
+ 1363 0b7e 93ED007A 		flds	s14, [r3, #0]
+ 1364 0b82 DFEDB07A 		flds	s15, .L145+36
+ 1365 0b86 87EE277A 		fdivs	s14, s14, s15
+ 1366 0b8a 40F20003 		movw	r3, #:lower16:diff_err
+ 1367 0b8e C0F20003 		movt	r3, #:upper16:diff_err
+ 1368 0b92 D3ED006A 		flds	s13, [r3, #0]
+ 1369 0b96 DFEDA57A 		flds	s15, .L145+12
+ 1370 0b9a C6EEA77A 		fdivs	s15, s13, s15
+ 1371 0b9e 77EE277A 		fadds	s15, s14, s15
+ 1372 0ba2 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1373 0ba6 C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1374 0baa C3ED007A 		fsts	s15, [r3, #0]
+ 385:../src/interrupt_defs.cpp **** 
+ 386:../src/interrupt_defs.cpp **** 			rt = 0.0f;
+ 1375              		.loc 1 386 0
+ 1376 0bae 40F20003 		movw	r3, #:lower16:rt
+ 1377 0bb2 C0F20003 		movt	r3, #:upper16:rt
+ 1378 0bb6 4FF00002 		mov	r2, #0
+ 1379 0bba 1A60     		str	r2, [r3, #0]	@ float
+ 387:../src/interrupt_defs.cpp **** 			mtr_out = 0.5f;
+ 1380              		.loc 1 387 0
+ 1381 0bbc 4FF07C53 		mov	r3, #1056964608
+ 1382 0bc0 3B60     		str	r3, [r7, #0]	@ float
+ 388:../src/interrupt_defs.cpp **** 
+ 389:../src/interrupt_defs.cpp **** 			if(drive_cmd > 0.5)
+ 1383              		.loc 1 389 0
+ 1384 0bc2 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1385 0bc6 C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1386 0bca 93ED007A 		flds	s14, [r3, #0]
+ 1387 0bce F6EE007A 		fconsts	s15, #96
+ 1388 0bd2 B4EEE77A 		fcmpes	s14, s15
+ 1389 0bd6 F1EE10FA 		fmstat
+ 1390 0bda 06DD     		ble	.L66
+ 1391              	.L119:
+ 390:../src/interrupt_defs.cpp **** 			{
+ 391:../src/interrupt_defs.cpp **** 				drive_cmd = 0.5f;
+ 1392              		.loc 1 391 0
+ 1393 0bdc 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1394 0be0 C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1395 0be4 4FF07C52 		mov	r2, #1056964608
+ 1396 0be8 1A60     		str	r2, [r3, #0]	@ float
+ 1397              	.L66:
+ 392:../src/interrupt_defs.cpp **** 			}
+ 393:../src/interrupt_defs.cpp **** 			if(drive_cmd < -0.5)
+ 1398              		.loc 1 393 0
+ 1399 0bea 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1400 0bee C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1401 0bf2 93ED007A 		flds	s14, [r3, #0]
+ 1402 0bf6 FEEE007A 		fconsts	s15, #224
+ 1403 0bfa B4EEE77A 		fcmpes	s14, s15
+ 1404 0bfe F1EE10FA 		fmstat
+ 1405 0c02 06D5     		bpl	.L68
+ 1406              	.L120:
+ 394:../src/interrupt_defs.cpp **** 			{
+ 395:../src/interrupt_defs.cpp **** 				drive_cmd = -0.5f;
+ 1407              		.loc 1 395 0
+ 1408 0c04 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1409 0c08 C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1410 0c0c 4FF03F42 		mov	r2, #-1090519040
+ 1411 0c10 1A60     		str	r2, [r3, #0]	@ float
+ 1412              	.L68:
+ 396:../src/interrupt_defs.cpp **** 			}
+ 397:../src/interrupt_defs.cpp **** 
+ 398:../src/interrupt_defs.cpp **** 			left = (1-mtr_out) - drive_cmd - rt;
+ 1413              		.loc 1 398 0
+ 1414 0c12 B7EE007A 		fconsts	s14, #112
+ 1415 0c16 D7ED007A 		flds	s15, [r7, #0]
+ 1416 0c1a 37EE677A 		fsubs	s14, s14, s15
+ 1417 0c1e 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1418 0c22 C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1419 0c26 D3ED007A 		flds	s15, [r3, #0]
+ 1420 0c2a 37EE677A 		fsubs	s14, s14, s15
+ 1421 0c2e 40F20003 		movw	r3, #:lower16:rt
+ 1422 0c32 C0F20003 		movt	r3, #:upper16:rt
+ 1423 0c36 D3ED007A 		flds	s15, [r3, #0]
+ 1424 0c3a 77EE677A 		fsubs	s15, s14, s15
+ 1425 0c3e 40F20003 		movw	r3, #:lower16:left
+ 1426 0c42 C0F20003 		movt	r3, #:upper16:left
+ 1427 0c46 C3ED007A 		fsts	s15, [r3, #0]
+ 399:../src/interrupt_defs.cpp **** 			right = mtr_out - drive_cmd - rt;
+ 1428              		.loc 1 399 0
+ 1429 0c4a 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1430 0c4e C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1431 0c52 D3ED007A 		flds	s15, [r3, #0]
+ 1432 0c56 97ED007A 		flds	s14, [r7, #0]
+ 1433 0c5a 37EE677A 		fsubs	s14, s14, s15
+ 1434 0c5e 40F20003 		movw	r3, #:lower16:rt
+ 1435 0c62 C0F20003 		movt	r3, #:upper16:rt
+ 1436 0c66 D3ED007A 		flds	s15, [r3, #0]
+ 1437 0c6a 77EE677A 		fsubs	s15, s14, s15
+ 1438 0c6e 40F20003 		movw	r3, #:lower16:right
+ 1439 0c72 C0F20003 		movt	r3, #:upper16:right
+ 1440 0c76 C3ED007A 		fsts	s15, [r3, #0]
+ 400:../src/interrupt_defs.cpp **** 
+ 401:../src/interrupt_defs.cpp **** 			if(left>1.0)
+ 1441              		.loc 1 401 0
+ 1442 0c7a 40F20003 		movw	r3, #:lower16:left
+ 1443 0c7e C0F20003 		movt	r3, #:upper16:left
+ 1444 0c82 93ED007A 		flds	s14, [r3, #0]
+ 1445 0c86 F7EE007A 		fconsts	s15, #112
+ 1446 0c8a B4EEE77A 		fcmpes	s14, s15
+ 1447 0c8e F1EE10FA 		fmstat
+ 1448 0c92 07DD     		ble	.L139
+ 1449              	.L121:
+ 402:../src/interrupt_defs.cpp **** 			{
+ 403:../src/interrupt_defs.cpp **** 				left=1.0;
+ 1450              		.loc 1 403 0
+ 1451 0c94 40F20003 		movw	r3, #:lower16:left
+ 1452 0c98 C0F20003 		movt	r3, #:upper16:left
+ 1453 0c9c 4FF07E52 		mov	r2, #1065353216
+ 1454 0ca0 1A60     		str	r2, [r3, #0]	@ float
+ 1455 0ca2 11E0     		b	.L72
+ 1456              	.L139:
+ 404:../src/interrupt_defs.cpp **** 			}
+ 405:../src/interrupt_defs.cpp **** 			else if(left<0)
+ 1457              		.loc 1 405 0
+ 1458 0ca4 40F20003 		movw	r3, #:lower16:left
+ 1459 0ca8 C0F20003 		movt	r3, #:upper16:left
+ 1460 0cac D3ED007A 		flds	s15, [r3, #0]
+ 1461 0cb0 F5EEC07A 		fcmpezs	s15
+ 1462 0cb4 F1EE10FA 		fmstat
+ 1463 0cb8 06D5     		bpl	.L72
+ 1464              	.L122:
+ 406:../src/interrupt_defs.cpp **** 			{
+ 407:../src/interrupt_defs.cpp **** 				left=0;//-1.0;
+ 1465              		.loc 1 407 0
+ 1466 0cba 40F20003 		movw	r3, #:lower16:left
+ 1467 0cbe C0F20003 		movt	r3, #:upper16:left
+ 1468 0cc2 4FF00002 		mov	r2, #0
+ 1469 0cc6 1A60     		str	r2, [r3, #0]	@ float
+ 1470              	.L72:
+ 408:../src/interrupt_defs.cpp **** 			}
+ 409:../src/interrupt_defs.cpp **** 
+ 410:../src/interrupt_defs.cpp **** 			if(right>1.0f)
+ 1471              		.loc 1 410 0
+ 1472 0cc8 40F20003 		movw	r3, #:lower16:right
+ 1473 0ccc C0F20003 		movt	r3, #:upper16:right
+ 1474 0cd0 93ED007A 		flds	s14, [r3, #0]
+ 1475 0cd4 F7EE007A 		fconsts	s15, #112
+ 1476 0cd8 B4EEE77A 		fcmpes	s14, s15
+ 1477 0cdc F1EE10FA 		fmstat
+ 1478 0ce0 07DD     		ble	.L140
+ 1479              	.L123:
+ 411:../src/interrupt_defs.cpp **** 			{
+ 412:../src/interrupt_defs.cpp **** 				right=1.0f;
+ 1480              		.loc 1 412 0
+ 1481 0ce2 40F20003 		movw	r3, #:lower16:right
+ 1482 0ce6 C0F20003 		movt	r3, #:upper16:right
+ 1483 0cea 4FF07E52 		mov	r2, #1065353216
+ 1484 0cee 1A60     		str	r2, [r3, #0]	@ float
+ 1485 0cf0 0CE3     		b	.L76
+ 1486              	.L140:
+ 413:../src/interrupt_defs.cpp **** 			}
+ 414:../src/interrupt_defs.cpp **** 			else if(right<0)
+ 1487              		.loc 1 414 0
+ 1488 0cf2 40F20003 		movw	r3, #:lower16:right
+ 1489 0cf6 C0F20003 		movt	r3, #:upper16:right
+ 1490 0cfa D3ED007A 		flds	s15, [r3, #0]
+ 1491 0cfe F5EEC07A 		fcmpezs	s15
+ 1492 0d02 F1EE10FA 		fmstat
+ 1493 0d06 40F10183 		bpl	.L76
+ 1494              	.L124:
+ 415:../src/interrupt_defs.cpp **** 			{
+ 416:../src/interrupt_defs.cpp **** 				right=0;
+ 1495              		.loc 1 416 0
+ 1496 0d0a 40F20003 		movw	r3, #:lower16:right
+ 1497 0d0e C0F20003 		movt	r3, #:upper16:right
+ 1498 0d12 4FF00002 		mov	r2, #0
+ 1499 0d16 1A60     		str	r2, [r3, #0]	@ float
+ 1500 0d18 F8E2     		b	.L76
+ 1501              	.L61:
+ 417:../src/interrupt_defs.cpp **** 			}
+ 418:../src/interrupt_defs.cpp **** 		}
+ 419:../src/interrupt_defs.cpp **** 		else if(state == ST_WANDER)
+ 1502              		.loc 1 419 0
+ 1503 0d1a 40F20003 		movw	r3, #:lower16:state
+ 1504 0d1e C0F20003 		movt	r3, #:upper16:state
+ 1505 0d22 1B68     		ldr	r3, [r3, #0]
+ 1506 0d24 002B     		cmp	r3, #0
+ 1507 0d26 40F06181 		bne	.L78
+ 420:../src/interrupt_defs.cpp **** 		{
+ 421:../src/interrupt_defs.cpp **** 			err = ((float)(0.55)*(float)((int)adc2_data[0] - 2200)) + ((float)(0.45)*(float)((int)adcData[1]
+ 1508              		.loc 1 421 0
+ 1509 0d2a 40F20003 		movw	r3, #:lower16:adc2_data
+ 1510 0d2e C0F20003 		movt	r3, #:upper16:adc2_data
+ 1511 0d32 1B68     		ldr	r3, [r3, #0]
+ 1512 0d34 A3F69803 		subw	r3, r3, #2200
+ 1513 0d38 07EE903A 		fmsr	s15, r3	@ int
+ 1514 0d3c B8EEE77A 		fsitos	s14, s15
+ 1515 0d40 DFED3B7A 		flds	s15, .L145+16
+ 1516 0d44 27EE277A 		fmuls	s14, s14, s15
+ 1517 0d48 40F20003 		movw	r3, #:lower16:adcData
+ 1518 0d4c C0F20003 		movt	r3, #:upper16:adcData
+ 1519 0d50 5B68     		ldr	r3, [r3, #4]
+ 1520 0d52 A3F19603 		sub	r3, r3, #150
+ 1521 0d56 07EE903A 		fmsr	s15, r3	@ int
+ 1522 0d5a F8EEE76A 		fsitos	s13, s15
+ 1523 0d5e DFED357A 		flds	s15, .L145+20
+ 1524 0d62 66EEA77A 		fmuls	s15, s13, s15
+ 1525 0d66 77EE277A 		fadds	s15, s14, s15
+ 1526 0d6a 40F20003 		movw	r3, #:lower16:err
+ 1527 0d6e C0F20003 		movt	r3, #:upper16:err
+ 1528 0d72 C3ED007A 		fsts	s15, [r3, #0]
+ 422:../src/interrupt_defs.cpp **** 
+ 423:../src/interrupt_defs.cpp **** 		diff_err = (float)(err-last_err)*((float)DT_ENCODER/(float)1000);
+ 1529              		.loc 1 423 0
+ 1530 0d76 40F20003 		movw	r3, #:lower16:err
+ 1531 0d7a C0F20003 		movt	r3, #:upper16:err
+ 1532 0d7e 93ED007A 		flds	s14, [r3, #0]
+ 1533 0d82 40F20003 		movw	r3, #:lower16:last_err
+ 1534 0d86 C0F20003 		movt	r3, #:upper16:last_err
+ 1535 0d8a D3ED007A 		flds	s15, [r3, #0]
+ 1536 0d8e 37EE677A 		fsubs	s14, s14, s15
+ 1537 0d92 DFED2B7A 		flds	s15, .L145+32
+ 1538 0d96 67EE277A 		fmuls	s15, s14, s15
+ 1539 0d9a 40F20003 		movw	r3, #:lower16:diff_err
+ 1540 0d9e C0F20003 		movt	r3, #:upper16:diff_err
+ 1541 0da2 C3ED007A 		fsts	s15, [r3, #0]
+ 424:../src/interrupt_defs.cpp **** 		drive_cmd = (((float)(err)/(float)2500) + ((float)diff_err/(float)3720)); //1100=diff term
+ 1542              		.loc 1 424 0
+ 1543 0da6 40F20003 		movw	r3, #:lower16:err
+ 1544 0daa C0F20003 		movt	r3, #:upper16:err
+ 1545 0dae 93ED007A 		flds	s14, [r3, #0]
+ 1546 0db2 DFED217A 		flds	s15, .L145+24
+ 1547 0db6 87EE277A 		fdivs	s14, s14, s15
+ 1548 0dba 40F20003 		movw	r3, #:lower16:diff_err
+ 1549 0dbe C0F20003 		movt	r3, #:upper16:diff_err
+ 1550 0dc2 D3ED006A 		flds	s13, [r3, #0]
+ 1551 0dc6 DFED1D7A 		flds	s15, .L145+28
+ 1552 0dca C6EEA77A 		fdivs	s15, s13, s15
+ 1553 0dce 77EE277A 		fadds	s15, s14, s15
+ 1554 0dd2 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1555 0dd6 C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1556 0dda C3ED007A 		fsts	s15, [r3, #0]
+ 425:../src/interrupt_defs.cpp **** 
+ 426:../src/interrupt_defs.cpp **** 		if(d_front < 0.690 || adc2_data[3] > 1870)//0.69
+ 1557              		.loc 1 426 0
+ 1558 0dde 40F20003 		movw	r3, #:lower16:d_front
+ 1559 0de2 C0F20003 		movt	r3, #:upper16:d_front
+ 1560 0de6 1B68     		ldr	r3, [r3, #0]	@ float
+ 1561 0de8 1846     		mov	r0, r3	@ float
+ 1562 0dea FFF7FEFF 		bl	__aeabi_f2d
+ 1563 0dee 0246     		mov	r2, r0
+ 1564 0df0 0B46     		mov	r3, r1
+ 1565 0df2 1046     		mov	r0, r2
+ 1566 0df4 1946     		mov	r1, r3
+ 1567 0df6 0AA3     		adr	r3, .L145
+ 1568 0df8 D3E90023 		ldrd	r2, [r3]
+ 1569 0dfc FFF7FEFF 		bl	__aeabi_dcmplt
+ 1570 0e00 0346     		mov	r3, r0
+ 1571 0e02 002B     		cmp	r3, #0
+ 1572 0e04 08D1     		bne	.L79
+ 1573              		.loc 1 426 0 is_stmt 0 discriminator 2
+ 1574 0e06 40F20003 		movw	r3, #:lower16:adc2_data
+ 1575 0e0a C0F20003 		movt	r3, #:upper16:adc2_data
+ 1576 0e0e DA68     		ldr	r2, [r3, #12]
+ 1577 0e10 40F24E73 		movw	r3, #1870
+ 1578 0e14 9A42     		cmp	r2, r3
+ 1579 0e16 19D9     		bls	.L80
+ 1580              	.L79:
+ 1581              		.loc 1 426 0 discriminator 1
+ 1582 0e18 4FF00103 		mov	r3, #1
+ 1583 0e1c 18E0     		b	.L81
+ 1584              	.L146:
+ 1585 0e1e 00BF     		.align	3
+ 1586              	.L145:
+ 1587 0e20 14AE47E1 		.word	-515396076
+ 1588 0e24 7A14E63F 		.word	1072043130
+ 1589 0e28 821C943A 		.word	982785154
+ 1590 0e2c 00C03744 		.word	1144504320
+ 1591 0e30 CDCC0C3F 		.word	1057803469
+ 1592 0e34 6666E63E 		.word	1055286886
+ 1593 0e38 00401C45 		.word	1159479296
+ 1594 0e3c 00806845 		.word	1164476416
+ 1595 0e40 CDCCCC3C 		.word	1020054733
+ 1596 0e44 0000FA43 		.word	1140457472
+ 1597 0e48 00006C44 		.word	1147928576
+ 1598              	.L80:
+ 1599              		.loc 1 426 0 discriminator 3
+ 1600 0e4c 4FF00003 		mov	r3, #0
+ 1601              	.L81:
+ 1602              		.loc 1 426 0 discriminator 4
+ 1603 0e50 002B     		cmp	r3, #0
+ 1604 0e52 13D0     		beq	.L82
+ 427:../src/interrupt_defs.cpp **** 		{
+ 428:../src/interrupt_defs.cpp **** 			rt = 0.5f;
+ 1605              		.loc 1 428 0 is_stmt 1
+ 1606 0e54 40F20003 		movw	r3, #:lower16:rt
+ 1607 0e58 C0F20003 		movt	r3, #:upper16:rt
+ 1608 0e5c 4FF07C52 		mov	r2, #1056964608
+ 1609 0e60 1A60     		str	r2, [r3, #0]	@ float
+ 429:../src/interrupt_defs.cpp **** 			mtr_out = 0.3f;
+ 1610              		.loc 1 429 0
+ 1611 0e62 49F69A13 		movw	r3, #39322
+ 1612 0e66 C3F69963 		movt	r3, 16025
+ 1613 0e6a 3B60     		str	r3, [r7, #0]	@ float
+ 430:../src/interrupt_defs.cpp **** 			drive_cmd = 0;
+ 1614              		.loc 1 430 0
+ 1615 0e6c 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1616 0e70 C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1617 0e74 4FF00002 		mov	r2, #0
+ 1618 0e78 1A60     		str	r2, [r3, #0]	@ float
+ 1619 0e7a 0BE0     		b	.L83
+ 1620              	.L82:
+ 431:../src/interrupt_defs.cpp **** 		}
+ 432:../src/interrupt_defs.cpp **** 		else
+ 433:../src/interrupt_defs.cpp **** 		{
+ 434:../src/interrupt_defs.cpp **** 			rt = 0.0f;
+ 1621              		.loc 1 434 0
+ 1622 0e7c 40F20003 		movw	r3, #:lower16:rt
+ 1623 0e80 C0F20003 		movt	r3, #:upper16:rt
+ 1624 0e84 4FF00002 		mov	r2, #0
+ 1625 0e88 1A60     		str	r2, [r3, #0]	@ float
+ 435:../src/interrupt_defs.cpp **** 			mtr_out = 0.85f;
+ 1626              		.loc 1 435 0
+ 1627 0e8a 49F69A13 		movw	r3, #39322
+ 1628 0e8e C3F65973 		movt	r3, 16217
+ 1629 0e92 3B60     		str	r3, [r7, #0]	@ float
+ 1630              	.L83:
+ 436:../src/interrupt_defs.cpp **** 		}
+ 437:../src/interrupt_defs.cpp **** 
+ 438:../src/interrupt_defs.cpp **** 		if(drive_cmd > 0.5)
+ 1631              		.loc 1 438 0
+ 1632 0e94 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1633 0e98 C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1634 0e9c 93ED007A 		flds	s14, [r3, #0]
+ 1635 0ea0 F6EE007A 		fconsts	s15, #96
+ 1636 0ea4 B4EEE77A 		fcmpes	s14, s15
+ 1637 0ea8 F1EE10FA 		fmstat
+ 1638 0eac 06DD     		ble	.L84
+ 1639              	.L125:
+ 439:../src/interrupt_defs.cpp **** 		{
+ 440:../src/interrupt_defs.cpp **** 			drive_cmd = 0.5f;
+ 1640              		.loc 1 440 0
+ 1641 0eae 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1642 0eb2 C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1643 0eb6 4FF07C52 		mov	r2, #1056964608
+ 1644 0eba 1A60     		str	r2, [r3, #0]	@ float
+ 1645              	.L84:
+ 441:../src/interrupt_defs.cpp **** 		}
+ 442:../src/interrupt_defs.cpp **** 		if(drive_cmd < -0.5)
+ 1646              		.loc 1 442 0
+ 1647 0ebc 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1648 0ec0 C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1649 0ec4 93ED007A 		flds	s14, [r3, #0]
+ 1650 0ec8 FEEE007A 		fconsts	s15, #224
+ 1651 0ecc B4EEE77A 		fcmpes	s14, s15
+ 1652 0ed0 F1EE10FA 		fmstat
+ 1653 0ed4 06D5     		bpl	.L86
+ 1654              	.L126:
+ 443:../src/interrupt_defs.cpp **** 		{
+ 444:../src/interrupt_defs.cpp **** 			drive_cmd = -0.5f;
+ 1655              		.loc 1 444 0
+ 1656 0ed6 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1657 0eda C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1658 0ede 4FF03F42 		mov	r2, #-1090519040
+ 1659 0ee2 1A60     		str	r2, [r3, #0]	@ float
+ 1660              	.L86:
+ 445:../src/interrupt_defs.cpp **** 		}
+ 446:../src/interrupt_defs.cpp **** 
+ 447:../src/interrupt_defs.cpp **** 		left = (1-mtr_out) - drive_cmd - rt;
+ 1661              		.loc 1 447 0
+ 1662 0ee4 B7EE007A 		fconsts	s14, #112
+ 1663 0ee8 D7ED007A 		flds	s15, [r7, #0]
+ 1664 0eec 37EE677A 		fsubs	s14, s14, s15
+ 1665 0ef0 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1666 0ef4 C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1667 0ef8 D3ED007A 		flds	s15, [r3, #0]
+ 1668 0efc 37EE677A 		fsubs	s14, s14, s15
+ 1669 0f00 40F20003 		movw	r3, #:lower16:rt
+ 1670 0f04 C0F20003 		movt	r3, #:upper16:rt
+ 1671 0f08 D3ED007A 		flds	s15, [r3, #0]
+ 1672 0f0c 77EE677A 		fsubs	s15, s14, s15
+ 1673 0f10 40F20003 		movw	r3, #:lower16:left
+ 1674 0f14 C0F20003 		movt	r3, #:upper16:left
+ 1675 0f18 C3ED007A 		fsts	s15, [r3, #0]
+ 448:../src/interrupt_defs.cpp **** 		right = mtr_out - drive_cmd - rt;
+ 1676              		.loc 1 448 0
+ 1677 0f1c 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1678 0f20 C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1679 0f24 D3ED007A 		flds	s15, [r3, #0]
+ 1680 0f28 97ED007A 		flds	s14, [r7, #0]
+ 1681 0f2c 37EE677A 		fsubs	s14, s14, s15
+ 1682 0f30 40F20003 		movw	r3, #:lower16:rt
+ 1683 0f34 C0F20003 		movt	r3, #:upper16:rt
+ 1684 0f38 D3ED007A 		flds	s15, [r3, #0]
+ 1685 0f3c 77EE677A 		fsubs	s15, s14, s15
+ 1686 0f40 40F20003 		movw	r3, #:lower16:right
+ 1687 0f44 C0F20003 		movt	r3, #:upper16:right
+ 1688 0f48 C3ED007A 		fsts	s15, [r3, #0]
+ 449:../src/interrupt_defs.cpp **** 
+ 450:../src/interrupt_defs.cpp **** 		if(left>1.0)
+ 1689              		.loc 1 450 0
+ 1690 0f4c 40F20003 		movw	r3, #:lower16:left
+ 1691 0f50 C0F20003 		movt	r3, #:upper16:left
+ 1692 0f54 93ED007A 		flds	s14, [r3, #0]
+ 1693 0f58 F7EE007A 		fconsts	s15, #112
+ 1694 0f5c B4EEE77A 		fcmpes	s14, s15
+ 1695 0f60 F1EE10FA 		fmstat
+ 1696 0f64 07DD     		ble	.L141
+ 1697              	.L127:
+ 451:../src/interrupt_defs.cpp **** 		{
+ 452:../src/interrupt_defs.cpp **** 			left=1.0;
+ 1698              		.loc 1 452 0
+ 1699 0f66 40F20003 		movw	r3, #:lower16:left
+ 1700 0f6a C0F20003 		movt	r3, #:upper16:left
+ 1701 0f6e 4FF07E52 		mov	r2, #1065353216
+ 1702 0f72 1A60     		str	r2, [r3, #0]	@ float
+ 1703 0f74 11E0     		b	.L90
+ 1704              	.L141:
+ 453:../src/interrupt_defs.cpp **** 		}
+ 454:../src/interrupt_defs.cpp **** 		else if(left<0)
+ 1705              		.loc 1 454 0
+ 1706 0f76 40F20003 		movw	r3, #:lower16:left
+ 1707 0f7a C0F20003 		movt	r3, #:upper16:left
+ 1708 0f7e D3ED007A 		flds	s15, [r3, #0]
+ 1709 0f82 F5EEC07A 		fcmpezs	s15
+ 1710 0f86 F1EE10FA 		fmstat
+ 1711 0f8a 06D5     		bpl	.L90
+ 1712              	.L128:
+ 455:../src/interrupt_defs.cpp **** 		{
+ 456:../src/interrupt_defs.cpp **** 			left=0;//-1.0;
+ 1713              		.loc 1 456 0
+ 1714 0f8c 40F20003 		movw	r3, #:lower16:left
+ 1715 0f90 C0F20003 		movt	r3, #:upper16:left
+ 1716 0f94 4FF00002 		mov	r2, #0
+ 1717 0f98 1A60     		str	r2, [r3, #0]	@ float
+ 1718              	.L90:
+ 457:../src/interrupt_defs.cpp **** 		}
+ 458:../src/interrupt_defs.cpp **** 
+ 459:../src/interrupt_defs.cpp **** 		if(right>1.0f)
+ 1719              		.loc 1 459 0
+ 1720 0f9a 40F20003 		movw	r3, #:lower16:right
+ 1721 0f9e C0F20003 		movt	r3, #:upper16:right
+ 1722 0fa2 93ED007A 		flds	s14, [r3, #0]
+ 1723 0fa6 F7EE007A 		fconsts	s15, #112
+ 1724 0faa B4EEE77A 		fcmpes	s14, s15
+ 1725 0fae F1EE10FA 		fmstat
+ 1726 0fb2 07DD     		ble	.L142
+ 1727              	.L129:
+ 460:../src/interrupt_defs.cpp **** 		{
+ 461:../src/interrupt_defs.cpp **** 			right=1.0f;
+ 1728              		.loc 1 461 0
+ 1729 0fb4 40F20003 		movw	r3, #:lower16:right
+ 1730 0fb8 C0F20003 		movt	r3, #:upper16:right
+ 1731 0fbc 4FF07E52 		mov	r2, #1065353216
+ 1732 0fc0 1A60     		str	r2, [r3, #0]	@ float
+ 1733 0fc2 A3E1     		b	.L76
+ 1734              	.L142:
+ 462:../src/interrupt_defs.cpp **** 		}
+ 463:../src/interrupt_defs.cpp **** 		else if(right<0)
+ 1735              		.loc 1 463 0
+ 1736 0fc4 40F20003 		movw	r3, #:lower16:right
+ 1737 0fc8 C0F20003 		movt	r3, #:upper16:right
+ 1738 0fcc D3ED007A 		flds	s15, [r3, #0]
+ 1739 0fd0 F5EEC07A 		fcmpezs	s15
+ 1740 0fd4 F1EE10FA 		fmstat
+ 1741 0fd8 40F19881 		bpl	.L76
+ 1742              	.L130:
+ 464:../src/interrupt_defs.cpp **** 		{
+ 465:../src/interrupt_defs.cpp **** 			right=0;
+ 1743              		.loc 1 465 0
+ 1744 0fdc 40F20003 		movw	r3, #:lower16:right
+ 1745 0fe0 C0F20003 		movt	r3, #:upper16:right
+ 1746 0fe4 4FF00002 		mov	r2, #0
+ 1747 0fe8 1A60     		str	r2, [r3, #0]	@ float
+ 1748 0fea 8FE1     		b	.L76
+ 1749              	.L78:
  466:../src/interrupt_defs.cpp **** 		}
- 467:../src/interrupt_defs.cpp **** 		else if(state == ST_CANDLE_BLOWOUT)
- 1747              		.loc 1 467 0
- 1748 0fe4 40F20003 		movw	r3, #:lower16:state
- 1749 0fe8 C0F20003 		movt	r3, #:upper16:state
- 1750 0fec 1B68     		ldr	r3, [r3, #0]
- 1751 0fee 032B     		cmp	r3, #3
- 1752 0ff0 40F05581 		bne	.L76
- 468:../src/interrupt_defs.cpp **** 		{
- 469:../src/interrupt_defs.cpp **** 			err = (float)(1.0) * (float)((int)adcData[0] - (int)adc2_data[2]);
- 1753              		.loc 1 469 0
- 1754 0ff4 40F20003 		movw	r3, #:lower16:adcData
- 1755 0ff8 C0F20003 		movt	r3, #:upper16:adcData
- 1756 0ffc 1B68     		ldr	r3, [r3, #0]
- 1757 0ffe 1A46     		mov	r2, r3
- 1758 1000 40F20003 		movw	r3, #:lower16:adc2_data
- 1759 1004 C0F20003 		movt	r3, #:upper16:adc2_data
- 1760 1008 9B68     		ldr	r3, [r3, #8]
- 1761 100a D31A     		subs	r3, r2, r3
- 1762 100c 07EE103A 		fmsr	s14, r3	@ int
- 1763 1010 F8EEC77A 		fsitos	s15, s14
- 1764 1014 40F20003 		movw	r3, #:lower16:err
- 1765 1018 C0F20003 		movt	r3, #:upper16:err
- 1766 101c C3ED007A 		fsts	s15, [r3, #0]
- 470:../src/interrupt_defs.cpp **** 
- 471:../src/interrupt_defs.cpp **** 			diff_err = (float)(err-last_err)*((float)DT_ENCODER/(float)1000);
- 1767              		.loc 1 471 0
- 1768 1020 40F20003 		movw	r3, #:lower16:err
- 1769 1024 C0F20003 		movt	r3, #:upper16:err
- 1770 1028 93ED007A 		flds	s14, [r3, #0]
- 1771 102c 40F20003 		movw	r3, #:lower16:last_err
- 1772 1030 C0F20003 		movt	r3, #:upper16:last_err
- 1773 1034 D3ED007A 		flds	s15, [r3, #0]
- 1774 1038 37EE677A 		fsubs	s14, s14, s15
- 1775 103c 5FED827A 		flds	s15, .L140+32
- 1776 1040 67EE277A 		fmuls	s15, s14, s15
- 1777 1044 40F20003 		movw	r3, #:lower16:diff_err
- 1778 1048 C0F20003 		movt	r3, #:upper16:diff_err
- 1779 104c C3ED007A 		fsts	s15, [r3, #0]
- 472:../src/interrupt_defs.cpp **** 			integral =0;//+= err * 0.04f;
- 1780              		.loc 1 472 0
- 1781 1050 40F20003 		movw	r3, #:lower16:integral
- 1782 1054 C0F20003 		movt	r3, #:upper16:integral
- 1783 1058 4FF00002 		mov	r2, #0
- 1784 105c 1A60     		str	r2, [r3, #0]	@ float
- 473:../src/interrupt_defs.cpp **** 			drive_cmd = (((float)(err)/(float)500) + ((float)diff_err/(float)944));
- 1785              		.loc 1 473 0
- 1786 105e 40F20003 		movw	r3, #:lower16:err
- 1787 1062 C0F20003 		movt	r3, #:upper16:err
- 1788 1066 93ED007A 		flds	s14, [r3, #0]
- 1789 106a 5FED8C7A 		flds	s15, .L140+36
- 1790 106e 87EE277A 		fdivs	s14, s14, s15
- 1791 1072 40F20003 		movw	r3, #:lower16:diff_err
- 1792 1076 C0F20003 		movt	r3, #:upper16:diff_err
- 1793 107a D3ED006A 		flds	s13, [r3, #0]
- 1794 107e 5FED907A 		flds	s15, .L140+40
- 1795 1082 C6EEA77A 		fdivs	s15, s13, s15
- 1796 1086 77EE277A 		fadds	s15, s14, s15
- 1797 108a 40F20003 		movw	r3, #:lower16:drive_cmd
- 1798 108e C0F20003 		movt	r3, #:upper16:drive_cmd
- 1799 1092 C3ED007A 		fsts	s15, [r3, #0]
- 474:../src/interrupt_defs.cpp **** 
- 475:../src/interrupt_defs.cpp **** 			rt = 0.0f;
- 1800              		.loc 1 475 0
- 1801 1096 40F20003 		movw	r3, #:lower16:rt
- 1802 109a C0F20003 		movt	r3, #:upper16:rt
- 1803 109e 4FF00002 		mov	r2, #0
- 1804 10a2 1A60     		str	r2, [r3, #0]	@ float
- 476:../src/interrupt_defs.cpp **** 			mtr_out = 0.5f;
- 1805              		.loc 1 476 0
- 1806 10a4 4FF07C53 		mov	r3, #1056964608
- 1807 10a8 7B60     		str	r3, [r7, #4]	@ float
- 477:../src/interrupt_defs.cpp **** 
- 478:../src/interrupt_defs.cpp **** 			if(drive_cmd > 0.5)
- 1808              		.loc 1 478 0
- 1809 10aa 40F20003 		movw	r3, #:lower16:drive_cmd
- 1810 10ae C0F20003 		movt	r3, #:upper16:drive_cmd
- 1811 10b2 93ED007A 		flds	s14, [r3, #0]
- 1812 10b6 F6EE007A 		fconsts	s15, #96
- 1813 10ba B4EEE77A 		fcmpes	s14, s15
- 1814 10be F1EE10FA 		fmstat
- 1815 10c2 06DD     		ble	.L95
- 1816              	.L127:
- 479:../src/interrupt_defs.cpp **** 			{
- 480:../src/interrupt_defs.cpp **** 				drive_cmd = 0.5f;
- 1817              		.loc 1 480 0
- 1818 10c4 40F20003 		movw	r3, #:lower16:drive_cmd
- 1819 10c8 C0F20003 		movt	r3, #:upper16:drive_cmd
- 1820 10cc 4FF07C52 		mov	r2, #1056964608
- 1821 10d0 1A60     		str	r2, [r3, #0]	@ float
- 1822              	.L95:
- 481:../src/interrupt_defs.cpp **** 			}
- 482:../src/interrupt_defs.cpp **** 			if(drive_cmd < -0.5)
- 1823              		.loc 1 482 0
- 1824 10d2 40F20003 		movw	r3, #:lower16:drive_cmd
- 1825 10d6 C0F20003 		movt	r3, #:upper16:drive_cmd
- 1826 10da 93ED007A 		flds	s14, [r3, #0]
- 1827 10de FEEE007A 		fconsts	s15, #224
- 1828 10e2 B4EEE77A 		fcmpes	s14, s15
- 1829 10e6 F1EE10FA 		fmstat
- 1830 10ea 06D5     		bpl	.L97
- 1831              	.L128:
- 483:../src/interrupt_defs.cpp **** 			{
- 484:../src/interrupt_defs.cpp **** 				drive_cmd = -0.5f;
- 1832              		.loc 1 484 0
- 1833 10ec 40F20003 		movw	r3, #:lower16:drive_cmd
- 1834 10f0 C0F20003 		movt	r3, #:upper16:drive_cmd
- 1835 10f4 4FF03F42 		mov	r2, #-1090519040
- 1836 10f8 1A60     		str	r2, [r3, #0]	@ float
- 1837              	.L97:
- 485:../src/interrupt_defs.cpp **** 			}
- 486:../src/interrupt_defs.cpp **** 
- 487:../src/interrupt_defs.cpp **** 			left = (1-mtr_out) - drive_cmd - rt;
- 1838              		.loc 1 487 0
- 1839 10fa B7EE007A 		fconsts	s14, #112
- 1840 10fe D7ED017A 		flds	s15, [r7, #4]
- 1841 1102 37EE677A 		fsubs	s14, s14, s15
- 1842 1106 40F20003 		movw	r3, #:lower16:drive_cmd
- 1843 110a C0F20003 		movt	r3, #:upper16:drive_cmd
- 1844 110e D3ED007A 		flds	s15, [r3, #0]
- 1845 1112 37EE677A 		fsubs	s14, s14, s15
- 1846 1116 40F20003 		movw	r3, #:lower16:rt
- 1847 111a C0F20003 		movt	r3, #:upper16:rt
- 1848 111e D3ED007A 		flds	s15, [r3, #0]
- 1849 1122 77EE677A 		fsubs	s15, s14, s15
- 1850 1126 40F20003 		movw	r3, #:lower16:left
- 1851 112a C0F20003 		movt	r3, #:upper16:left
- 1852 112e C3ED007A 		fsts	s15, [r3, #0]
- 488:../src/interrupt_defs.cpp **** 			right = mtr_out - drive_cmd - rt;
- 1853              		.loc 1 488 0
- 1854 1132 40F20003 		movw	r3, #:lower16:drive_cmd
- 1855 1136 C0F20003 		movt	r3, #:upper16:drive_cmd
- 1856 113a D3ED007A 		flds	s15, [r3, #0]
- 1857 113e 97ED017A 		flds	s14, [r7, #4]
- 1858 1142 37EE677A 		fsubs	s14, s14, s15
- 1859 1146 40F20003 		movw	r3, #:lower16:rt
- 1860 114a C0F20003 		movt	r3, #:upper16:rt
- 1861 114e D3ED007A 		flds	s15, [r3, #0]
- 1862 1152 77EE677A 		fsubs	s15, s14, s15
- 1863 1156 40F20003 		movw	r3, #:lower16:right
- 1864 115a C0F20003 		movt	r3, #:upper16:right
- 1865 115e C3ED007A 		fsts	s15, [r3, #0]
- 489:../src/interrupt_defs.cpp **** 
- 490:../src/interrupt_defs.cpp **** 			if(left>1.0)
- 1866              		.loc 1 490 0
- 1867 1162 40F20003 		movw	r3, #:lower16:left
- 1868 1166 C0F20003 		movt	r3, #:upper16:left
- 1869 116a 93ED007A 		flds	s14, [r3, #0]
- 1870 116e F7EE007A 		fconsts	s15, #112
- 1871 1172 B4EEE77A 		fcmpes	s14, s15
- 1872 1176 F1EE10FA 		fmstat
- 1873 117a 07DD     		ble	.L138
- 1874              	.L129:
- 491:../src/interrupt_defs.cpp **** 			{
- 492:../src/interrupt_defs.cpp **** 				left=1.0;
- 1875              		.loc 1 492 0
- 1876 117c 40F20003 		movw	r3, #:lower16:left
- 1877 1180 C0F20003 		movt	r3, #:upper16:left
- 1878 1184 4FF07E52 		mov	r2, #1065353216
- 1879 1188 1A60     		str	r2, [r3, #0]	@ float
- 1880 118a 11E0     		b	.L101
- 1881              	.L138:
- 493:../src/interrupt_defs.cpp **** 			}
- 494:../src/interrupt_defs.cpp **** 			else if(left<0)
- 1882              		.loc 1 494 0
- 1883 118c 40F20003 		movw	r3, #:lower16:left
- 1884 1190 C0F20003 		movt	r3, #:upper16:left
- 1885 1194 D3ED007A 		flds	s15, [r3, #0]
- 1886 1198 F5EEC07A 		fcmpezs	s15
- 1887 119c F1EE10FA 		fmstat
- 1888 11a0 06D5     		bpl	.L101
- 1889              	.L130:
- 495:../src/interrupt_defs.cpp **** 			{
- 496:../src/interrupt_defs.cpp **** 				left=0;//-1.0;
- 1890              		.loc 1 496 0
- 1891 11a2 40F20003 		movw	r3, #:lower16:left
- 1892 11a6 C0F20003 		movt	r3, #:upper16:left
- 1893 11aa 4FF00002 		mov	r2, #0
- 1894 11ae 1A60     		str	r2, [r3, #0]	@ float
- 1895              	.L101:
- 497:../src/interrupt_defs.cpp **** 			}
- 498:../src/interrupt_defs.cpp **** 
- 499:../src/interrupt_defs.cpp **** 			if(right>1.0f)
- 1896              		.loc 1 499 0
- 1897 11b0 40F20003 		movw	r3, #:lower16:right
- 1898 11b4 C0F20003 		movt	r3, #:upper16:right
- 1899 11b8 93ED007A 		flds	s14, [r3, #0]
- 1900 11bc F7EE007A 		fconsts	s15, #112
- 1901 11c0 B4EEE77A 		fcmpes	s14, s15
- 1902 11c4 F1EE10FA 		fmstat
- 1903 11c8 07DD     		ble	.L139
- 1904              	.L131:
- 500:../src/interrupt_defs.cpp **** 			{
- 501:../src/interrupt_defs.cpp **** 				right=1.0f;
- 1905              		.loc 1 501 0
- 1906 11ca 40F20003 		movw	r3, #:lower16:right
- 1907 11ce C0F20003 		movt	r3, #:upper16:right
- 1908 11d2 4FF07E52 		mov	r2, #1065353216
- 1909 11d6 1A60     		str	r2, [r3, #0]	@ float
- 1910 11d8 11E0     		b	.L105
- 1911              	.L139:
- 502:../src/interrupt_defs.cpp **** 			}
- 503:../src/interrupt_defs.cpp **** 			else if(right<0)
- 1912              		.loc 1 503 0
- 1913 11da 40F20003 		movw	r3, #:lower16:right
- 1914 11de C0F20003 		movt	r3, #:upper16:right
- 1915 11e2 D3ED007A 		flds	s15, [r3, #0]
- 1916 11e6 F5EEC07A 		fcmpezs	s15
- 1917 11ea F1EE10FA 		fmstat
- 1918 11ee 06D5     		bpl	.L105
- 1919              	.L132:
- 504:../src/interrupt_defs.cpp **** 			{
- 505:../src/interrupt_defs.cpp **** 				right=0;
- 1920              		.loc 1 505 0
- 1921 11f0 40F20003 		movw	r3, #:lower16:right
- 1922 11f4 C0F20003 		movt	r3, #:upper16:right
- 1923 11f8 4FF00002 		mov	r2, #0
- 1924 11fc 1A60     		str	r2, [r3, #0]	@ float
- 1925              	.L105:
- 506:../src/interrupt_defs.cpp **** 			}
- 507:../src/interrupt_defs.cpp **** 
- 508:../src/interrupt_defs.cpp **** 			if(match_time_counter - t_firefight_start > FIREFIGHT_TIMEOUT)
- 1926              		.loc 1 508 0
- 1927 11fe 40F20003 		movw	r3, #:lower16:match_time_counter
- 1928 1202 C0F20003 		movt	r3, #:upper16:match_time_counter
- 1929 1206 93ED007A 		flds	s14, [r3, #0]
- 1930 120a 40F20003 		movw	r3, #:lower16:t_firefight_start
- 1931 120e C0F20003 		movt	r3, #:upper16:t_firefight_start
- 1932 1212 D3ED007A 		flds	s15, [r3, #0]
- 1933 1216 37EE677A 		fsubs	s14, s14, s15
- 1934 121a F2EE047A 		fconsts	s15, #36
- 1935 121e B4EEE77A 		fcmpes	s14, s15
- 1936 1222 F1EE10FA 		fmstat
- 1937 1226 3ADD     		ble	.L76
- 1938              	.L133:
- 509:../src/interrupt_defs.cpp **** 			{
- 510:../src/interrupt_defs.cpp **** 				pwm3_output(0.05f);
- 1939              		.loc 1 510 0
- 1940 1228 4CF6CD40 		movw	r0, #52429
- 1941 122c C3F64C50 		movt	r0, 15692
- 1942 1230 FFF7FEFF 		bl	_Z11pwm3_outputf
- 511:../src/interrupt_defs.cpp **** 				if((adc2_data[2] > UV_THRESHOLD || adcData[0] > UV_THRESHOLD))
- 1943              		.loc 1 511 0
- 1944 1234 40F20003 		movw	r3, #:lower16:adc2_data
- 1945 1238 C0F20003 		movt	r3, #:upper16:adc2_data
- 1946 123c 9B68     		ldr	r3, [r3, #8]
- 1947 123e B3F5077F 		cmp	r3, #540
- 1948 1242 07D8     		bhi	.L108
- 1949              		.loc 1 511 0 is_stmt 0 discriminator 2
- 1950 1244 40F20003 		movw	r3, #:lower16:adcData
- 1951 1248 C0F20003 		movt	r3, #:upper16:adcData
- 1952 124c 1B68     		ldr	r3, [r3, #0]
- 1953 124e B3F5077F 		cmp	r3, #540
- 1954 1252 02D9     		bls	.L109
- 1955              	.L108:
- 1956              		.loc 1 511 0 discriminator 1
- 1957 1254 4FF00103 		mov	r3, #1
- 1958 1258 01E0     		b	.L110
- 1959              	.L109:
- 1960              		.loc 1 511 0 discriminator 3
- 1961 125a 4FF00003 		mov	r3, #0
- 1962              	.L110:
- 1963              		.loc 1 511 0 discriminator 4
- 1964 125e 002B     		cmp	r3, #0
- 1965 1260 07D0     		beq	.L111
- 512:../src/interrupt_defs.cpp **** 				{
- 513:../src/interrupt_defs.cpp **** 					state = ST_WANDER;
- 1966              		.loc 1 513 0 is_stmt 1
- 1967 1262 40F20003 		movw	r3, #:lower16:state
- 1968 1266 C0F20003 		movt	r3, #:upper16:state
- 1969 126a 4FF00002 		mov	r2, #0
- 1970 126e 1A60     		str	r2, [r3, #0]
- 1971 1270 15E0     		b	.L76
- 1972              	.L111:
- 514:../src/interrupt_defs.cpp **** 				}
- 515:../src/interrupt_defs.cpp **** 				else
- 516:../src/interrupt_defs.cpp **** 				{
- 517:../src/interrupt_defs.cpp **** 					pwm1_output(0.5f);
- 1973              		.loc 1 517 0
- 1974 1272 4FF07C50 		mov	r0, #1056964608
- 1975 1276 FFF7FEFF 		bl	_Z11pwm1_outputf
- 518:../src/interrupt_defs.cpp **** 					pwm2_output(0.5f);
- 1976              		.loc 1 518 0
- 1977 127a 4FF07C50 		mov	r0, #1056964608
- 1978 127e FFF7FEFF 		bl	_Z11pwm2_outputf
- 519:../src/interrupt_defs.cpp **** 					rt = 0;
- 1979              		.loc 1 519 0
- 1980 1282 40F20003 		movw	r3, #:lower16:rt
- 1981 1286 C0F20003 		movt	r3, #:upper16:rt
- 1982 128a 4FF00002 		mov	r2, #0
- 1983 128e 1A60     		str	r2, [r3, #0]	@ float
- 520:../src/interrupt_defs.cpp **** 					state = ST_DONE;
- 1984              		.loc 1 520 0
- 1985 1290 40F20003 		movw	r3, #:lower16:state
- 1986 1294 C0F20003 		movt	r3, #:upper16:state
- 1987 1298 4FF00402 		mov	r2, #4
- 1988 129c 1A60     		str	r2, [r3, #0]
- 1989              	.L76:
+ 467:../src/interrupt_defs.cpp **** 		}
+ 468:../src/interrupt_defs.cpp **** 		else if(state == ST_CANDLE_BLOWOUT)
+ 1750              		.loc 1 468 0
+ 1751 0fec 40F20003 		movw	r3, #:lower16:state
+ 1752 0ff0 C0F20003 		movt	r3, #:upper16:state
+ 1753 0ff4 1B68     		ldr	r3, [r3, #0]
+ 1754 0ff6 032B     		cmp	r3, #3
+ 1755 0ff8 40F08881 		bne	.L76
+ 469:../src/interrupt_defs.cpp **** 		{
+ 470:../src/interrupt_defs.cpp **** 			err = (float)(1.0) * (float)((int)adcData[0] - (int)adc2_data[2]);
+ 1756              		.loc 1 470 0
+ 1757 0ffc 40F20003 		movw	r3, #:lower16:adcData
+ 1758 1000 C0F20003 		movt	r3, #:upper16:adcData
+ 1759 1004 1B68     		ldr	r3, [r3, #0]
+ 1760 1006 1A46     		mov	r2, r3
+ 1761 1008 40F20003 		movw	r3, #:lower16:adc2_data
+ 1762 100c C0F20003 		movt	r3, #:upper16:adc2_data
+ 1763 1010 9B68     		ldr	r3, [r3, #8]
+ 1764 1012 D31A     		subs	r3, r2, r3
+ 1765 1014 07EE103A 		fmsr	s14, r3	@ int
+ 1766 1018 F8EEC77A 		fsitos	s15, s14
+ 1767 101c 40F20003 		movw	r3, #:lower16:err
+ 1768 1020 C0F20003 		movt	r3, #:upper16:err
+ 1769 1024 C3ED007A 		fsts	s15, [r3, #0]
+ 471:../src/interrupt_defs.cpp **** 
+ 472:../src/interrupt_defs.cpp **** 			diff_err = (float)(err-last_err)*((float)DT_ENCODER/(float)1000);
+ 1770              		.loc 1 472 0
+ 1771 1028 40F20003 		movw	r3, #:lower16:err
+ 1772 102c C0F20003 		movt	r3, #:upper16:err
+ 1773 1030 93ED007A 		flds	s14, [r3, #0]
+ 1774 1034 40F20003 		movw	r3, #:lower16:last_err
+ 1775 1038 C0F20003 		movt	r3, #:upper16:last_err
+ 1776 103c D3ED007A 		flds	s15, [r3, #0]
+ 1777 1040 37EE677A 		fsubs	s14, s14, s15
+ 1778 1044 5FED827A 		flds	s15, .L145+32
+ 1779 1048 67EE277A 		fmuls	s15, s14, s15
+ 1780 104c 40F20003 		movw	r3, #:lower16:diff_err
+ 1781 1050 C0F20003 		movt	r3, #:upper16:diff_err
+ 1782 1054 C3ED007A 		fsts	s15, [r3, #0]
+ 473:../src/interrupt_defs.cpp **** 			integral =0;//+= err * 0.04f;
+ 1783              		.loc 1 473 0
+ 1784 1058 40F20003 		movw	r3, #:lower16:integral
+ 1785 105c C0F20003 		movt	r3, #:upper16:integral
+ 1786 1060 4FF00002 		mov	r2, #0
+ 1787 1064 1A60     		str	r2, [r3, #0]	@ float
+ 474:../src/interrupt_defs.cpp **** 			drive_cmd = (((float)(err)/(float)500) + ((float)diff_err/(float)944));
+ 1788              		.loc 1 474 0
+ 1789 1066 40F20003 		movw	r3, #:lower16:err
+ 1790 106a C0F20003 		movt	r3, #:upper16:err
+ 1791 106e 93ED007A 		flds	s14, [r3, #0]
+ 1792 1072 5FED8C7A 		flds	s15, .L145+36
+ 1793 1076 87EE277A 		fdivs	s14, s14, s15
+ 1794 107a 40F20003 		movw	r3, #:lower16:diff_err
+ 1795 107e C0F20003 		movt	r3, #:upper16:diff_err
+ 1796 1082 D3ED006A 		flds	s13, [r3, #0]
+ 1797 1086 5FED907A 		flds	s15, .L145+40
+ 1798 108a C6EEA77A 		fdivs	s15, s13, s15
+ 1799 108e 77EE277A 		fadds	s15, s14, s15
+ 1800 1092 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1801 1096 C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1802 109a C3ED007A 		fsts	s15, [r3, #0]
+ 475:../src/interrupt_defs.cpp **** 
+ 476:../src/interrupt_defs.cpp **** 			rt = 0.0f;
+ 1803              		.loc 1 476 0
+ 1804 109e 40F20003 		movw	r3, #:lower16:rt
+ 1805 10a2 C0F20003 		movt	r3, #:upper16:rt
+ 1806 10a6 4FF00002 		mov	r2, #0
+ 1807 10aa 1A60     		str	r2, [r3, #0]	@ float
+ 477:../src/interrupt_defs.cpp **** 			mtr_out = 0.5f;
+ 1808              		.loc 1 477 0
+ 1809 10ac 4FF07C53 		mov	r3, #1056964608
+ 1810 10b0 3B60     		str	r3, [r7, #0]	@ float
+ 478:../src/interrupt_defs.cpp **** 
+ 479:../src/interrupt_defs.cpp **** 			if(drive_cmd > 0.5)
+ 1811              		.loc 1 479 0
+ 1812 10b2 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1813 10b6 C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1814 10ba 93ED007A 		flds	s14, [r3, #0]
+ 1815 10be F6EE007A 		fconsts	s15, #96
+ 1816 10c2 B4EEE77A 		fcmpes	s14, s15
+ 1817 10c6 F1EE10FA 		fmstat
+ 1818 10ca 06DD     		ble	.L95
+ 1819              	.L131:
+ 480:../src/interrupt_defs.cpp **** 			{
+ 481:../src/interrupt_defs.cpp **** 				drive_cmd = 0.5f;
+ 1820              		.loc 1 481 0
+ 1821 10cc 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1822 10d0 C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1823 10d4 4FF07C52 		mov	r2, #1056964608
+ 1824 10d8 1A60     		str	r2, [r3, #0]	@ float
+ 1825              	.L95:
+ 482:../src/interrupt_defs.cpp **** 			}
+ 483:../src/interrupt_defs.cpp **** 			if(drive_cmd < -0.5)
+ 1826              		.loc 1 483 0
+ 1827 10da 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1828 10de C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1829 10e2 93ED007A 		flds	s14, [r3, #0]
+ 1830 10e6 FEEE007A 		fconsts	s15, #224
+ 1831 10ea B4EEE77A 		fcmpes	s14, s15
+ 1832 10ee F1EE10FA 		fmstat
+ 1833 10f2 06D5     		bpl	.L97
+ 1834              	.L132:
+ 484:../src/interrupt_defs.cpp **** 			{
+ 485:../src/interrupt_defs.cpp **** 				drive_cmd = -0.5f;
+ 1835              		.loc 1 485 0
+ 1836 10f4 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1837 10f8 C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1838 10fc 4FF03F42 		mov	r2, #-1090519040
+ 1839 1100 1A60     		str	r2, [r3, #0]	@ float
+ 1840              	.L97:
+ 486:../src/interrupt_defs.cpp **** 			}
+ 487:../src/interrupt_defs.cpp **** 
+ 488:../src/interrupt_defs.cpp **** 			left = (1-mtr_out) - drive_cmd - rt;
+ 1841              		.loc 1 488 0
+ 1842 1102 B7EE007A 		fconsts	s14, #112
+ 1843 1106 D7ED007A 		flds	s15, [r7, #0]
+ 1844 110a 37EE677A 		fsubs	s14, s14, s15
+ 1845 110e 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1846 1112 C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1847 1116 D3ED007A 		flds	s15, [r3, #0]
+ 1848 111a 37EE677A 		fsubs	s14, s14, s15
+ 1849 111e 40F20003 		movw	r3, #:lower16:rt
+ 1850 1122 C0F20003 		movt	r3, #:upper16:rt
+ 1851 1126 D3ED007A 		flds	s15, [r3, #0]
+ 1852 112a 77EE677A 		fsubs	s15, s14, s15
+ 1853 112e 40F20003 		movw	r3, #:lower16:left
+ 1854 1132 C0F20003 		movt	r3, #:upper16:left
+ 1855 1136 C3ED007A 		fsts	s15, [r3, #0]
+ 489:../src/interrupt_defs.cpp **** 			right = mtr_out - drive_cmd - rt;
+ 1856              		.loc 1 489 0
+ 1857 113a 40F20003 		movw	r3, #:lower16:drive_cmd
+ 1858 113e C0F20003 		movt	r3, #:upper16:drive_cmd
+ 1859 1142 D3ED007A 		flds	s15, [r3, #0]
+ 1860 1146 97ED007A 		flds	s14, [r7, #0]
+ 1861 114a 37EE677A 		fsubs	s14, s14, s15
+ 1862 114e 40F20003 		movw	r3, #:lower16:rt
+ 1863 1152 C0F20003 		movt	r3, #:upper16:rt
+ 1864 1156 D3ED007A 		flds	s15, [r3, #0]
+ 1865 115a 77EE677A 		fsubs	s15, s14, s15
+ 1866 115e 40F20003 		movw	r3, #:lower16:right
+ 1867 1162 C0F20003 		movt	r3, #:upper16:right
+ 1868 1166 C3ED007A 		fsts	s15, [r3, #0]
+ 490:../src/interrupt_defs.cpp **** 
+ 491:../src/interrupt_defs.cpp **** 			if(left>1.0)
+ 1869              		.loc 1 491 0
+ 1870 116a 40F20003 		movw	r3, #:lower16:left
+ 1871 116e C0F20003 		movt	r3, #:upper16:left
+ 1872 1172 93ED007A 		flds	s14, [r3, #0]
+ 1873 1176 F7EE007A 		fconsts	s15, #112
+ 1874 117a B4EEE77A 		fcmpes	s14, s15
+ 1875 117e F1EE10FA 		fmstat
+ 1876 1182 07DD     		ble	.L143
+ 1877              	.L133:
+ 492:../src/interrupt_defs.cpp **** 			{
+ 493:../src/interrupt_defs.cpp **** 				left=1.0;
+ 1878              		.loc 1 493 0
+ 1879 1184 40F20003 		movw	r3, #:lower16:left
+ 1880 1188 C0F20003 		movt	r3, #:upper16:left
+ 1881 118c 4FF07E52 		mov	r2, #1065353216
+ 1882 1190 1A60     		str	r2, [r3, #0]	@ float
+ 1883 1192 11E0     		b	.L101
+ 1884              	.L143:
+ 494:../src/interrupt_defs.cpp **** 			}
+ 495:../src/interrupt_defs.cpp **** 			else if(left<0)
+ 1885              		.loc 1 495 0
+ 1886 1194 40F20003 		movw	r3, #:lower16:left
+ 1887 1198 C0F20003 		movt	r3, #:upper16:left
+ 1888 119c D3ED007A 		flds	s15, [r3, #0]
+ 1889 11a0 F5EEC07A 		fcmpezs	s15
+ 1890 11a4 F1EE10FA 		fmstat
+ 1891 11a8 06D5     		bpl	.L101
+ 1892              	.L134:
+ 496:../src/interrupt_defs.cpp **** 			{
+ 497:../src/interrupt_defs.cpp **** 				left=0;//-1.0;
+ 1893              		.loc 1 497 0
+ 1894 11aa 40F20003 		movw	r3, #:lower16:left
+ 1895 11ae C0F20003 		movt	r3, #:upper16:left
+ 1896 11b2 4FF00002 		mov	r2, #0
+ 1897 11b6 1A60     		str	r2, [r3, #0]	@ float
+ 1898              	.L101:
+ 498:../src/interrupt_defs.cpp **** 			}
+ 499:../src/interrupt_defs.cpp **** 
+ 500:../src/interrupt_defs.cpp **** 			if(right>1.0f)
+ 1899              		.loc 1 500 0
+ 1900 11b8 40F20003 		movw	r3, #:lower16:right
+ 1901 11bc C0F20003 		movt	r3, #:upper16:right
+ 1902 11c0 93ED007A 		flds	s14, [r3, #0]
+ 1903 11c4 F7EE007A 		fconsts	s15, #112
+ 1904 11c8 B4EEE77A 		fcmpes	s14, s15
+ 1905 11cc F1EE10FA 		fmstat
+ 1906 11d0 07DD     		ble	.L144
+ 1907              	.L135:
+ 501:../src/interrupt_defs.cpp **** 			{
+ 502:../src/interrupt_defs.cpp **** 				right=1.0f;
+ 1908              		.loc 1 502 0
+ 1909 11d2 40F20003 		movw	r3, #:lower16:right
+ 1910 11d6 C0F20003 		movt	r3, #:upper16:right
+ 1911 11da 4FF07E52 		mov	r2, #1065353216
+ 1912 11de 1A60     		str	r2, [r3, #0]	@ float
+ 1913 11e0 11E0     		b	.L105
+ 1914              	.L144:
+ 503:../src/interrupt_defs.cpp **** 			}
+ 504:../src/interrupt_defs.cpp **** 			else if(right<0)
+ 1915              		.loc 1 504 0
+ 1916 11e2 40F20003 		movw	r3, #:lower16:right
+ 1917 11e6 C0F20003 		movt	r3, #:upper16:right
+ 1918 11ea D3ED007A 		flds	s15, [r3, #0]
+ 1919 11ee F5EEC07A 		fcmpezs	s15
+ 1920 11f2 F1EE10FA 		fmstat
+ 1921 11f6 06D5     		bpl	.L105
+ 1922              	.L136:
+ 505:../src/interrupt_defs.cpp **** 			{
+ 506:../src/interrupt_defs.cpp **** 				right=0;
+ 1923              		.loc 1 506 0
+ 1924 11f8 40F20003 		movw	r3, #:lower16:right
+ 1925 11fc C0F20003 		movt	r3, #:upper16:right
+ 1926 1200 4FF00002 		mov	r2, #0
+ 1927 1204 1A60     		str	r2, [r3, #0]	@ float
+ 1928              	.L105:
+ 507:../src/interrupt_defs.cpp **** 			}
+ 508:../src/interrupt_defs.cpp **** 
+ 509:../src/interrupt_defs.cpp **** 			if(match_time_counter - t_firefight_start > FIREFIGHT_TIMEOUT)
+ 1929              		.loc 1 509 0
+ 1930 1206 40F20003 		movw	r3, #:lower16:match_time_counter
+ 1931 120a C0F20003 		movt	r3, #:upper16:match_time_counter
+ 1932 120e 93ED007A 		flds	s14, [r3, #0]
+ 1933 1212 40F20003 		movw	r3, #:lower16:t_firefight_start
+ 1934 1216 C0F20003 		movt	r3, #:upper16:t_firefight_start
+ 1935 121a D3ED007A 		flds	s15, [r3, #0]
+ 1936 121e 37EE677A 		fsubs	s14, s14, s15
+ 1937 1222 F2EE047A 		fconsts	s15, #36
+ 1938 1226 B4EEE77A 		fcmpes	s14, s15
+ 1939 122a F1EE10FA 		fmstat
+ 1940 122e 6DDD     		ble	.L76
+ 1941              	.L137:
+ 510:../src/interrupt_defs.cpp **** 			{
+ 511:../src/interrupt_defs.cpp **** 				// Turn off motors:
+ 512:../src/interrupt_defs.cpp **** 				pwm1_output(0.5f);
+ 1942              		.loc 1 512 0
+ 1943 1230 4FF07C50 		mov	r0, #1056964608
+ 1944 1234 FFF7FEFF 		bl	_Z11pwm1_outputf
+ 513:../src/interrupt_defs.cpp **** 				pwm2_output(0.5f);
+ 1945              		.loc 1 513 0
+ 1946 1238 4FF07C50 		mov	r0, #1056964608
+ 1947 123c FFF7FEFF 		bl	_Z11pwm2_outputf
+ 514:../src/interrupt_defs.cpp **** 
+ 515:../src/interrupt_defs.cpp **** 				// Turn off the fan:
+ 516:../src/interrupt_defs.cpp **** 				pwm3_output(0.05f);
+ 1948              		.loc 1 516 0
+ 1949 1240 4CF6CD40 		movw	r0, #52429
+ 1950 1244 C3F64C50 		movt	r0, 15692
+ 1951 1248 FFF7FEFF 		bl	_Z11pwm3_outputf
+ 517:../src/interrupt_defs.cpp **** 
+ 518:../src/interrupt_defs.cpp **** 				for(i=0;i<40000000;++i)
+ 1952              		.loc 1 518 0
+ 1953 124c 4FF00003 		mov	r3, #0
+ 1954 1250 7B60     		str	r3, [r7, #4]
+ 1955 1252 07E0     		b	.L108
+ 1956              	.L109:
+ 519:../src/interrupt_defs.cpp **** 				{
+ 520:../src/interrupt_defs.cpp **** 					++i;
+ 1957              		.loc 1 520 0 discriminator 2
+ 1958 1254 7B68     		ldr	r3, [r7, #4]
+ 1959 1256 03F10103 		add	r3, r3, #1
+ 1960 125a 7B60     		str	r3, [r7, #4]
+ 518:../src/interrupt_defs.cpp **** 				for(i=0;i<40000000;++i)
+ 1961              		.loc 1 518 0 discriminator 2
+ 1962 125c 7B68     		ldr	r3, [r7, #4]
+ 1963 125e 03F10103 		add	r3, r3, #1
+ 1964 1262 7B60     		str	r3, [r7, #4]
+ 1965              	.L108:
+ 518:../src/interrupt_defs.cpp **** 				for(i=0;i<40000000;++i)
+ 1966              		.loc 1 518 0 is_stmt 0 discriminator 1
+ 1967 1264 7A68     		ldr	r2, [r7, #4]
+ 1968 1266 45F6FF13 		movw	r3, #23039
+ 1969 126a C0F26223 		movt	r3, 610
+ 1970 126e 9A42     		cmp	r2, r3
+ 1971 1270 CCBF     		ite	gt
+ 1972 1272 0023     		movgt	r3, #0
+ 1973 1274 0123     		movle	r3, #1
+ 1974 1276 DBB2     		uxtb	r3, r3
+ 1975 1278 002B     		cmp	r3, #0
+ 1976 127a EBD1     		bne	.L109
  521:../src/interrupt_defs.cpp **** 				}
- 522:../src/interrupt_defs.cpp **** 			}
- 523:../src/interrupt_defs.cpp **** //			else if(match_time_counter - t_firefight_start > FIREFIGHT_TIMEOUT)
- 524:../src/interrupt_defs.cpp **** //			{
- 525:../src/interrupt_defs.cpp **** 
- 526:../src/interrupt_defs.cpp **** //			}
- 527:../src/interrupt_defs.cpp **** 		}
- 528:../src/interrupt_defs.cpp **** 		if(state == ST_WANDER || state == ST_HOMING || state == ST_CANDLE_BLOWOUT) {
- 1990              		.loc 1 528 0
- 1991 129e 40F20003 		movw	r3, #:lower16:state
- 1992 12a2 C0F20003 		movt	r3, #:upper16:state
- 1993 12a6 1B68     		ldr	r3, [r3, #0]
- 1994 12a8 002B     		cmp	r3, #0
- 1995 12aa 0DD0     		beq	.L112
- 1996              		.loc 1 528 0 is_stmt 0 discriminator 1
- 1997 12ac 40F20003 		movw	r3, #:lower16:state
- 1998 12b0 C0F20003 		movt	r3, #:upper16:state
- 1999 12b4 1B68     		ldr	r3, [r3, #0]
- 2000 12b6 012B     		cmp	r3, #1
- 2001 12b8 06D0     		beq	.L112
- 2002              		.loc 1 528 0 discriminator 2
- 2003 12ba 40F20003 		movw	r3, #:lower16:state
- 2004 12be C0F20003 		movt	r3, #:upper16:state
- 2005 12c2 1B68     		ldr	r3, [r3, #0]
- 2006 12c4 032B     		cmp	r3, #3
- 2007 12c6 19D1     		bne	.L60
- 2008              	.L112:
- 529:../src/interrupt_defs.cpp **** 		pwm1_output(left);
- 2009              		.loc 1 529 0 is_stmt 1
- 2010 12c8 40F20003 		movw	r3, #:lower16:left
- 2011 12cc C0F20003 		movt	r3, #:upper16:left
- 2012 12d0 1B68     		ldr	r3, [r3, #0]	@ float
- 2013 12d2 1846     		mov	r0, r3	@ float
- 2014 12d4 FFF7FEFF 		bl	_Z11pwm1_outputf
- 530:../src/interrupt_defs.cpp **** 		pwm2_output(right);
- 2015              		.loc 1 530 0
- 2016 12d8 40F20003 		movw	r3, #:lower16:right
- 2017 12dc C0F20003 		movt	r3, #:upper16:right
- 2018 12e0 1B68     		ldr	r3, [r3, #0]	@ float
- 2019 12e2 1846     		mov	r0, r3	@ float
- 2020 12e4 FFF7FEFF 		bl	_Z11pwm2_outputf
- 531:../src/interrupt_defs.cpp **** 		last_err = err;
- 2021              		.loc 1 531 0
- 2022 12e8 40F20003 		movw	r3, #:lower16:err
- 2023 12ec C0F20003 		movt	r3, #:upper16:err
- 2024 12f0 1A68     		ldr	r2, [r3, #0]	@ float
- 2025 12f2 40F20003 		movw	r3, #:lower16:last_err
- 2026 12f6 C0F20003 		movt	r3, #:upper16:last_err
- 2027 12fa 1A60     		str	r2, [r3, #0]	@ float
- 2028              	.L60:
- 2029              	.LBE11:
- 532:../src/interrupt_defs.cpp **** 		}
- 533:../src/interrupt_defs.cpp **** 	}
- 2030              		.loc 1 533 0
- 2031 12fc 07F10807 		add	r7, r7, #8
- 2032 1300 BD46     		mov	sp, r7
- 2033 1302 80BD     		pop	{r7, pc}
- 2034              		.cfi_endproc
- 2035              	.LFE119:
- 2037              	.Letext0:
- 2038              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
- 2039              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
- 2040              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_exti.h"
- 2041              		.file 5 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_gpio.h"
- 2042              		.file 6 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_misc.h"
- 2043              		.file 7 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot/encoder.h"
- 2044              		.file 8 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
+ 522:../src/interrupt_defs.cpp **** 
+ 523:../src/interrupt_defs.cpp **** 				if((adc2_data[2] > UV_THRESHOLD || adcData[0] > UV_THRESHOLD))
+ 1977              		.loc 1 523 0 is_stmt 1
+ 1978 127c 40F20003 		movw	r3, #:lower16:adc2_data
+ 1979 1280 C0F20003 		movt	r3, #:upper16:adc2_data
+ 1980 1284 9A68     		ldr	r2, [r3, #8]
+ 1981 1286 40F22713 		movw	r3, #295
+ 1982 128a 9A42     		cmp	r2, r3
+ 1983 128c 08D8     		bhi	.L110
+ 1984              		.loc 1 523 0 is_stmt 0 discriminator 2
+ 1985 128e 40F20003 		movw	r3, #:lower16:adcData
+ 1986 1292 C0F20003 		movt	r3, #:upper16:adcData
+ 1987 1296 1A68     		ldr	r2, [r3, #0]
+ 1988 1298 40F22713 		movw	r3, #295
+ 1989 129c 9A42     		cmp	r2, r3
+ 1990 129e 02D9     		bls	.L111
+ 1991              	.L110:
+ 1992              		.loc 1 523 0 discriminator 1
+ 1993 12a0 4FF00103 		mov	r3, #1
+ 1994 12a4 01E0     		b	.L112
+ 1995              	.L111:
+ 1996              		.loc 1 523 0 discriminator 3
+ 1997 12a6 4FF00003 		mov	r3, #0
+ 1998              	.L112:
+ 1999              		.loc 1 523 0 discriminator 4
+ 2000 12aa 002B     		cmp	r3, #0
+ 2001 12ac 18D0     		beq	.L113
+ 524:../src/interrupt_defs.cpp **** 				{
+ 525:../src/interrupt_defs.cpp **** 					/*
+ 526:../src/interrupt_defs.cpp **** 					match_time_counter = 0.0f;
+ 527:../src/interrupt_defs.cpp **** 
+ 528:../src/interrupt_defs.cpp **** 					// Turn off the fan:
+ 529:../src/interrupt_defs.cpp **** 					// pwm3_output(0.05f);
+ 530:../src/interrupt_defs.cpp **** 
+ 531:../src/interrupt_defs.cpp **** 					// Wait for flame to settle, if it's still there...
+ 532:../src/interrupt_defs.cpp **** 					// Twitch robot in some other direction
+ 533:../src/interrupt_defs.cpp **** 					pwm1_output(0.85f);
+ 534:../src/interrupt_defs.cpp **** 					pwm2_output(0.00f);
+ 535:../src/interrupt_defs.cpp **** 					while(match_time_counter < 1.5f)
+ 536:../src/interrupt_defs.cpp **** 					{
+ 537:../src/interrupt_defs.cpp **** 						if(match_time_counter > 1.5f)
+ 538:../src/interrupt_defs.cpp **** 						{
+ 539:../src/interrupt_defs.cpp **** 							pwm1_output(0.5f);
+ 540:../src/interrupt_defs.cpp **** 							pwm2_output(0.5f);
+ 541:../src/interrupt_defs.cpp **** 							break;
+ 542:../src/interrupt_defs.cpp **** 						}
+ 543:../src/interrupt_defs.cpp **** 					}*/
+ 544:../src/interrupt_defs.cpp **** 
+ 545:../src/interrupt_defs.cpp **** 					pwm1_output(0.0f);
+ 2002              		.loc 1 545 0 is_stmt 1
+ 2003 12ae 4FF00000 		mov	r0, #0
+ 2004 12b2 FFF7FEFF 		bl	_Z11pwm1_outputf
+ 546:../src/interrupt_defs.cpp **** 					pwm2_output(0.85f);
+ 2005              		.loc 1 546 0
+ 2006 12b6 49F69A10 		movw	r0, #39322
+ 2007 12ba C3F65970 		movt	r0, 16217
+ 2008 12be FFF7FEFF 		bl	_Z11pwm2_outputf
+ 547:../src/interrupt_defs.cpp **** 					match_time_counter = 0.0f;
+ 2009              		.loc 1 547 0
+ 2010 12c2 40F20003 		movw	r3, #:lower16:match_time_counter
+ 2011 12c6 C0F20003 		movt	r3, #:upper16:match_time_counter
+ 2012 12ca 4FF00002 		mov	r2, #0
+ 2013 12ce 1A60     		str	r2, [r3, #0]	@ float
+ 548:../src/interrupt_defs.cpp **** 					state = ST_REDO_FIREFIGHT;
+ 2014              		.loc 1 548 0
+ 2015 12d0 40F20003 		movw	r3, #:lower16:state
+ 2016 12d4 C0F20003 		movt	r3, #:upper16:state
+ 2017 12d8 4FF00502 		mov	r2, #5
+ 2018 12dc 1A60     		str	r2, [r3, #0]
+ 2019 12de 15E0     		b	.L76
+ 2020              	.L113:
+ 549:../src/interrupt_defs.cpp **** 				}
+ 550:../src/interrupt_defs.cpp **** 				else
+ 551:../src/interrupt_defs.cpp **** 				{
+ 552:../src/interrupt_defs.cpp **** 					pwm1_output(0.5f);
+ 2021              		.loc 1 552 0
+ 2022 12e0 4FF07C50 		mov	r0, #1056964608
+ 2023 12e4 FFF7FEFF 		bl	_Z11pwm1_outputf
+ 553:../src/interrupt_defs.cpp **** 					pwm2_output(0.5f);
+ 2024              		.loc 1 553 0
+ 2025 12e8 4FF07C50 		mov	r0, #1056964608
+ 2026 12ec FFF7FEFF 		bl	_Z11pwm2_outputf
+ 554:../src/interrupt_defs.cpp **** 					rt = 0;
+ 2027              		.loc 1 554 0
+ 2028 12f0 40F20003 		movw	r3, #:lower16:rt
+ 2029 12f4 C0F20003 		movt	r3, #:upper16:rt
+ 2030 12f8 4FF00002 		mov	r2, #0
+ 2031 12fc 1A60     		str	r2, [r3, #0]	@ float
+ 555:../src/interrupt_defs.cpp **** 					state = ST_DONE;
+ 2032              		.loc 1 555 0
+ 2033 12fe 40F20003 		movw	r3, #:lower16:state
+ 2034 1302 C0F20003 		movt	r3, #:upper16:state
+ 2035 1306 4FF00402 		mov	r2, #4
+ 2036 130a 1A60     		str	r2, [r3, #0]
+ 2037              	.L76:
+ 556:../src/interrupt_defs.cpp **** 				}
+ 557:../src/interrupt_defs.cpp **** 			}
+ 558:../src/interrupt_defs.cpp **** 		}
+ 559:../src/interrupt_defs.cpp **** 		if(state == ST_REDO_FIREFIGHT)
+ 2038              		.loc 1 559 0
+ 2039 130c 40F20003 		movw	r3, #:lower16:state
+ 2040 1310 C0F20003 		movt	r3, #:upper16:state
+ 2041 1314 1B68     		ldr	r3, [r3, #0]
+ 2042 1316 052B     		cmp	r3, #5
+ 2043 1318 1BD1     		bne	.L114
+ 560:../src/interrupt_defs.cpp **** 		{
+ 561:../src/interrupt_defs.cpp **** 			if(match_time_counter > 1.5f)
+ 2044              		.loc 1 561 0
+ 2045 131a 40F20003 		movw	r3, #:lower16:match_time_counter
+ 2046 131e C0F20003 		movt	r3, #:upper16:match_time_counter
+ 2047 1322 93ED007A 		flds	s14, [r3, #0]
+ 2048 1326 F7EE087A 		fconsts	s15, #120
+ 2049 132a B4EEE77A 		fcmpes	s14, s15
+ 2050 132e F1EE10FA 		fmstat
+ 2051 1332 0EDD     		ble	.L114
+ 2052              	.L138:
+ 562:../src/interrupt_defs.cpp **** 			{
+ 563:../src/interrupt_defs.cpp **** 				pwm1_output(0.5f);
+ 2053              		.loc 1 563 0
+ 2054 1334 4FF07C50 		mov	r0, #1056964608
+ 2055 1338 FFF7FEFF 		bl	_Z11pwm1_outputf
+ 564:../src/interrupt_defs.cpp **** 				pwm2_output(0.5f);
+ 2056              		.loc 1 564 0
+ 2057 133c 4FF07C50 		mov	r0, #1056964608
+ 2058 1340 FFF7FEFF 		bl	_Z11pwm2_outputf
+ 565:../src/interrupt_defs.cpp **** 				state = ST_HOMING;
+ 2059              		.loc 1 565 0
+ 2060 1344 40F20003 		movw	r3, #:lower16:state
+ 2061 1348 C0F20003 		movt	r3, #:upper16:state
+ 2062 134c 4FF00102 		mov	r2, #1
+ 2063 1350 1A60     		str	r2, [r3, #0]
+ 2064              	.L114:
+ 566:../src/interrupt_defs.cpp **** 			}
+ 567:../src/interrupt_defs.cpp **** 		}
+ 568:../src/interrupt_defs.cpp **** 		if(state == ST_WANDER || state == ST_HOMING || state == ST_CANDLE_BLOWOUT) {
+ 2065              		.loc 1 568 0
+ 2066 1352 40F20003 		movw	r3, #:lower16:state
+ 2067 1356 C0F20003 		movt	r3, #:upper16:state
+ 2068 135a 1B68     		ldr	r3, [r3, #0]
+ 2069 135c 002B     		cmp	r3, #0
+ 2070 135e 0DD0     		beq	.L116
+ 2071              		.loc 1 568 0 is_stmt 0 discriminator 1
+ 2072 1360 40F20003 		movw	r3, #:lower16:state
+ 2073 1364 C0F20003 		movt	r3, #:upper16:state
+ 2074 1368 1B68     		ldr	r3, [r3, #0]
+ 2075 136a 012B     		cmp	r3, #1
+ 2076 136c 06D0     		beq	.L116
+ 2077              		.loc 1 568 0 discriminator 2
+ 2078 136e 40F20003 		movw	r3, #:lower16:state
+ 2079 1372 C0F20003 		movt	r3, #:upper16:state
+ 2080 1376 1B68     		ldr	r3, [r3, #0]
+ 2081 1378 032B     		cmp	r3, #3
+ 2082 137a 19D1     		bne	.L60
+ 2083              	.L116:
+ 569:../src/interrupt_defs.cpp **** 		pwm1_output(left);
+ 2084              		.loc 1 569 0 is_stmt 1
+ 2085 137c 40F20003 		movw	r3, #:lower16:left
+ 2086 1380 C0F20003 		movt	r3, #:upper16:left
+ 2087 1384 1B68     		ldr	r3, [r3, #0]	@ float
+ 2088 1386 1846     		mov	r0, r3	@ float
+ 2089 1388 FFF7FEFF 		bl	_Z11pwm1_outputf
+ 570:../src/interrupt_defs.cpp **** 		pwm2_output(right);
+ 2090              		.loc 1 570 0
+ 2091 138c 40F20003 		movw	r3, #:lower16:right
+ 2092 1390 C0F20003 		movt	r3, #:upper16:right
+ 2093 1394 1B68     		ldr	r3, [r3, #0]	@ float
+ 2094 1396 1846     		mov	r0, r3	@ float
+ 2095 1398 FFF7FEFF 		bl	_Z11pwm2_outputf
+ 571:../src/interrupt_defs.cpp **** 		last_err = err;
+ 2096              		.loc 1 571 0
+ 2097 139c 40F20003 		movw	r3, #:lower16:err
+ 2098 13a0 C0F20003 		movt	r3, #:upper16:err
+ 2099 13a4 1A68     		ldr	r2, [r3, #0]	@ float
+ 2100 13a6 40F20003 		movw	r3, #:lower16:last_err
+ 2101 13aa C0F20003 		movt	r3, #:upper16:last_err
+ 2102 13ae 1A60     		str	r2, [r3, #0]	@ float
+ 2103              	.L60:
+ 2104              	.LBE11:
+ 572:../src/interrupt_defs.cpp **** 		}
+ 573:../src/interrupt_defs.cpp **** 	}
+ 2105              		.loc 1 573 0
+ 2106 13b0 07F10807 		add	r7, r7, #8
+ 2107 13b4 BD46     		mov	sp, r7
+ 2108 13b6 80BD     		pop	{r7, pc}
+ 2109              		.cfi_endproc
+ 2110              	.LFE119:
+ 2112              	.Letext0:
+ 2113              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
+ 2114              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
+ 2115              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_exti.h"
+ 2116              		.file 5 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_gpio.h"
+ 2117              		.file 6 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_misc.h"
+ 2118              		.file 7 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot/encoder.h"
+ 2119              		.file 8 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 interrupt_defs.cpp
-     /tmp/cc8TKNC6.s:23     .text:00000000 $t
-     /tmp/cc8TKNC6.s:28     .text:00000000 TIM7_IRQHandler
-     /tmp/cc8TKNC6.s:430    .text:00000438 $d
-     /tmp/cc8TKNC6.s:441    .text:0000045c $t
-     /tmp/cc8TKNC6.s:1254   .text:00000a68 update_pid
-     /tmp/cc8TKNC6.s:480    .text:000004b0 TIM1_TRG_COM_TIM17_IRQHandler
-     /tmp/cc8TKNC6.s:649    .text:000005fc TIM6_DAC_IRQHandler
-     /tmp/cc8TKNC6.s:890    .text:00000824 ADC1_2_IRQHandler
-     /tmp/cc8TKNC6.s:939    .text:00000868 DMA1_Channel1_IRQHandler
-     /tmp/cc8TKNC6.s:971    .text:00000884 DMA2_Channel1_IRQHandler
-     /tmp/cc8TKNC6.s:1004   .text:000008a4 ADC3_IRQHandler
-     /tmp/cc8TKNC6.s:1122   .text:00000990 $d
-     /tmp/cc8TKNC6.s:1127   .text:00000998 $t
-     /tmp/cc8TKNC6.s:1132   .text:00000998 EXTI9_5_IRQHandler
-     /tmp/cc8TKNC6.s:1584   .text:00000e18 $d
-     /tmp/cc8TKNC6.s:1597   .text:00000e44 $t
+     /tmp/cc2rk5e0.s:23     .text:00000000 $t
+     /tmp/cc2rk5e0.s:28     .text:00000000 TIM7_IRQHandler
+     /tmp/cc2rk5e0.s:430    .text:00000438 $d
+     /tmp/cc2rk5e0.s:441    .text:0000045c $t
+     /tmp/cc2rk5e0.s:1254   .text:00000a68 update_pid
+     /tmp/cc2rk5e0.s:480    .text:000004b0 TIM1_TRG_COM_TIM17_IRQHandler
+     /tmp/cc2rk5e0.s:649    .text:000005fc TIM6_DAC_IRQHandler
+     /tmp/cc2rk5e0.s:890    .text:00000824 ADC1_2_IRQHandler
+     /tmp/cc2rk5e0.s:939    .text:00000868 DMA1_Channel1_IRQHandler
+     /tmp/cc2rk5e0.s:971    .text:00000884 DMA2_Channel1_IRQHandler
+     /tmp/cc2rk5e0.s:1004   .text:000008a4 ADC3_IRQHandler
+     /tmp/cc2rk5e0.s:1122   .text:00000990 $d
+     /tmp/cc2rk5e0.s:1127   .text:00000998 $t
+     /tmp/cc2rk5e0.s:1132   .text:00000998 EXTI9_5_IRQHandler
+     /tmp/cc2rk5e0.s:1587   .text:00000e20 $d
+     /tmp/cc2rk5e0.s:1600   .text:00000e4c $t
                      .debug_frame:00000010 $d
                            .group:00000000 wm4.1.934603b1d669cb2b32fd4cb6dd11b673
-                           .group:00000000 wm4.common_headers.h.9.a77b7af68303fe0609f9dd844a078e2a
+                           .group:00000000 wm4.common_headers.h.9.0807ea068105522ac6d873d27913cd99
                            .group:00000000 wm4.stm32f30x.h.56.6f19c65e98e3319a61449cb2b2455af5
                            .group:00000000 wm4.core_cm4.h.32.1434cd257ff5806b1b03cd32ab0641e9
                            .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05

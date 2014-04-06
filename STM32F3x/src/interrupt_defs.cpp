@@ -364,6 +364,7 @@ void update_pid(void);
 
 	void update_pid(void)
 	{
+		int i = 0;
 		float mtr_out = 0.50f;
 		d_front = ((float)count*(float)0.5*(float)K_ULTRASONIC);
 
@@ -507,10 +508,44 @@ void update_pid(void);
 
 			if(match_time_counter - t_firefight_start > FIREFIGHT_TIMEOUT)
 			{
+				// Turn off motors:
+				pwm1_output(0.5f);
+				pwm2_output(0.5f);
+
+				// Turn off the fan:
 				pwm3_output(0.05f);
+
+				for(i=0;i<40000000;++i)
+				{
+					++i;
+				}
+
 				if((adc2_data[2] > UV_THRESHOLD || adcData[0] > UV_THRESHOLD))
 				{
-					state = ST_WANDER;
+					/*
+					match_time_counter = 0.0f;
+
+					// Turn off the fan:
+					// pwm3_output(0.05f);
+
+					// Wait for flame to settle, if it's still there...
+					// Twitch robot in some other direction
+					pwm1_output(0.85f);
+					pwm2_output(0.00f);
+					while(match_time_counter < 1.5f)
+					{
+						if(match_time_counter > 1.5f)
+						{
+							pwm1_output(0.5f);
+							pwm2_output(0.5f);
+							break;
+						}
+					}*/
+
+					pwm1_output(0.0f);
+					pwm2_output(0.85f);
+					match_time_counter = 0.0f;
+					state = ST_REDO_FIREFIGHT;
 				}
 				else
 				{
@@ -520,10 +555,15 @@ void update_pid(void);
 					state = ST_DONE;
 				}
 			}
-//			else if(match_time_counter - t_firefight_start > FIREFIGHT_TIMEOUT)
-//			{
-
-//			}
+		}
+		if(state == ST_REDO_FIREFIGHT)
+		{
+			if(match_time_counter > 1.5f)
+			{
+				pwm1_output(0.5f);
+				pwm2_output(0.5f);
+				state = ST_HOMING;
+			}
 		}
 		if(state == ST_WANDER || state == ST_HOMING || state == ST_CANDLE_BLOWOUT) {
 		pwm1_output(left);
