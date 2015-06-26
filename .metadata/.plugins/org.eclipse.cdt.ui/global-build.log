@@ -1,0 +1,346 @@
+
+**** Clean-only build of configuration Debug for project STM32F3x ****
+
+make clean 
+rm -rf  ./src/debug.o ./src/encoder.o ./src/interrupt_defs.o ./src/main.o ./src/newlib_stubs.o ./src/pwm.o ./src/startup_stm32f30x.o ./src/stm32f30x_adc.o ./src/stm32f30x_can.o ./src/stm32f30x_comp.o ./src/stm32f30x_crc.o ./src/stm32f30x_dac.o ./src/stm32f30x_dbgmcu.o ./src/stm32f30x_dma.o ./src/stm32f30x_exti.o ./src/stm32f30x_flash.o ./src/stm32f30x_gpio.o ./src/stm32f30x_i2c.o ./src/stm32f30x_iwdg.o ./src/stm32f30x_misc.o ./src/stm32f30x_opamp.o ./src/stm32f30x_pwr.o ./src/stm32f30x_rcc.o ./src/stm32f30x_rtc.o ./src/stm32f30x_spi.o ./src/stm32f30x_syscfg.o ./src/stm32f30x_tim.o ./src/stm32f30x_usart.o ./src/stm32f30x_wwdg.o ./src/stm32f3_discovery_l3gd20.o ./src/system_stm32f30x.o  ./src/newlib_stubs.d ./src/stm32f30x_adc.d ./src/stm32f30x_can.d ./src/stm32f30x_comp.d ./src/stm32f30x_crc.d ./src/stm32f30x_dac.d ./src/stm32f30x_dbgmcu.d ./src/stm32f30x_dma.d ./src/stm32f30x_exti.d ./src/stm32f30x_flash.d ./src/stm32f30x_gpio.d ./src/stm32f30x_i2c.d ./src/stm32f30x_iwdg.d ./src/stm32f30x_misc.d ./src/stm32f30x_opamp.d ./src/stm32f30x_pwr.d ./src/stm32f30x_rcc.d ./src/stm32f30x_rtc.d ./src/stm32f30x_spi.d ./src/stm32f30x_syscfg.d ./src/stm32f30x_tim.d ./src/stm32f30x_usart.d ./src/stm32f30x_wwdg.d ./src/stm32f3_discovery_l3gd20.d ./src/system_stm32f30x.d  STM32F3x.hex  ./src/startup_stm32f30x.d  STM32F3x.lst  STM32F3x.siz  ./src/debug.d ./src/encoder.d ./src/interrupt_defs.d ./src/main.d ./src/pwm.d  STM32F3x.elf
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project STM32F3x ****
+
+make all 
+Building file: ../src/debug.cpp
+Invoking: ARM Sourcery Linux GCC C++ Compiler
+arm-none-eabi-g++ -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/debug.o.lst" -fno-exceptions -fno-rtti -c -fmessage-length=0 -MMD -MP -MF"src/debug.d" -MT"src/debug.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/debug.o" "../src/debug.cpp"
+Finished building: ../src/debug.cpp
+ 
+Building file: ../src/encoder.cpp
+Invoking: ARM Sourcery Linux GCC C++ Compiler
+arm-none-eabi-g++ -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/encoder.o.lst" -fno-exceptions -fno-rtti -c -fmessage-length=0 -MMD -MP -MF"src/encoder.d" -MT"src/encoder.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/encoder.o" "../src/encoder.cpp"
+Finished building: ../src/encoder.cpp
+ 
+Building file: ../src/interrupt_defs.cpp
+Invoking: ARM Sourcery Linux GCC C++ Compiler
+arm-none-eabi-g++ -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/interrupt_defs.o.lst" -fno-exceptions -fno-rtti -c -fmessage-length=0 -MMD -MP -MF"src/interrupt_defs.d" -MT"src/interrupt_defs.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/interrupt_defs.o" "../src/interrupt_defs.cpp"
+../src/interrupt_defs.cpp: In function 'void TIM7_IRQHandler()':
+../src/interrupt_defs.cpp:55:14: warning: variable 'abs_err' set but not used [-Wunused-but-set-variable]
+Finished building: ../src/interrupt_defs.cpp
+ 
+Building file: ../src/main.cpp
+Invoking: ARM Sourcery Linux GCC C++ Compiler
+arm-none-eabi-g++ -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/main.o.lst" -fno-exceptions -fno-rtti -c -fmessage-length=0 -MMD -MP -MF"src/main.d" -MT"src/main.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/main.o" "../src/main.cpp"
+Finished building: ../src/main.cpp
+ 
+Building file: ../src/newlib_stubs.c
+Invoking: ARM Sourcery Linux GCC C Compiler
+arm-none-eabi-gcc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/newlib_stubs.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/newlib_stubs.d" -MT"src/newlib_stubs.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/newlib_stubs.o" "../src/newlib_stubs.c"
+Finished building: ../src/newlib_stubs.c
+ 
+Building file: ../src/pwm.cpp
+Invoking: ARM Sourcery Linux GCC C++ Compiler
+arm-none-eabi-g++ -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/pwm.o.lst" -fno-exceptions -fno-rtti -c -fmessage-length=0 -MMD -MP -MF"src/pwm.d" -MT"src/pwm.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/pwm.o" "../src/pwm.cpp"
+Finished building: ../src/pwm.cpp
+ 
+Building file: ../src/startup_stm32f30x.S
+Invoking: ARM Sourcery Linux GCC Assembler
+arm-none-eabi-gcc -x assembler-with-cpp -Wall -Wa,-adhlns="src/startup_stm32f30x.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/startup_stm32f30x.d" -MT"src/startup_stm32f30x.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/startup_stm32f30x.o" "../src/startup_stm32f30x.S"
+Finished building: ../src/startup_stm32f30x.S
+ 
+Building file: ../src/stm32f30x_adc.c
+Invoking: ARM Sourcery Linux GCC C Compiler
+arm-none-eabi-gcc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/stm32f30x_adc.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/stm32f30x_adc.d" -MT"src/stm32f30x_adc.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/stm32f30x_adc.o" "../src/stm32f30x_adc.c"
+Finished building: ../src/stm32f30x_adc.c
+ 
+Building file: ../src/stm32f30x_can.c
+Invoking: ARM Sourcery Linux GCC C Compiler
+arm-none-eabi-gcc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/stm32f30x_can.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/stm32f30x_can.d" -MT"src/stm32f30x_can.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/stm32f30x_can.o" "../src/stm32f30x_can.c"
+Finished building: ../src/stm32f30x_can.c
+ 
+Building file: ../src/stm32f30x_comp.c
+Invoking: ARM Sourcery Linux GCC C Compiler
+arm-none-eabi-gcc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/stm32f30x_comp.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/stm32f30x_comp.d" -MT"src/stm32f30x_comp.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/stm32f30x_comp.o" "../src/stm32f30x_comp.c"
+Finished building: ../src/stm32f30x_comp.c
+ 
+Building file: ../src/stm32f30x_crc.c
+Invoking: ARM Sourcery Linux GCC C Compiler
+arm-none-eabi-gcc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/stm32f30x_crc.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/stm32f30x_crc.d" -MT"src/stm32f30x_crc.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/stm32f30x_crc.o" "../src/stm32f30x_crc.c"
+Finished building: ../src/stm32f30x_crc.c
+ 
+Building file: ../src/stm32f30x_dac.c
+Invoking: ARM Sourcery Linux GCC C Compiler
+arm-none-eabi-gcc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/stm32f30x_dac.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/stm32f30x_dac.d" -MT"src/stm32f30x_dac.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/stm32f30x_dac.o" "../src/stm32f30x_dac.c"
+Finished building: ../src/stm32f30x_dac.c
+ 
+Building file: ../src/stm32f30x_dbgmcu.c
+Invoking: ARM Sourcery Linux GCC C Compiler
+arm-none-eabi-gcc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/stm32f30x_dbgmcu.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/stm32f30x_dbgmcu.d" -MT"src/stm32f30x_dbgmcu.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/stm32f30x_dbgmcu.o" "../src/stm32f30x_dbgmcu.c"
+Finished building: ../src/stm32f30x_dbgmcu.c
+ 
+Building file: ../src/stm32f30x_dma.c
+Invoking: ARM Sourcery Linux GCC C Compiler
+arm-none-eabi-gcc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/stm32f30x_dma.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/stm32f30x_dma.d" -MT"src/stm32f30x_dma.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/stm32f30x_dma.o" "../src/stm32f30x_dma.c"
+Finished building: ../src/stm32f30x_dma.c
+ 
+Building file: ../src/stm32f30x_exti.c
+Invoking: ARM Sourcery Linux GCC C Compiler
+arm-none-eabi-gcc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/stm32f30x_exti.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/stm32f30x_exti.d" -MT"src/stm32f30x_exti.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/stm32f30x_exti.o" "../src/stm32f30x_exti.c"
+Finished building: ../src/stm32f30x_exti.c
+ 
+Building file: ../src/stm32f30x_flash.c
+Invoking: ARM Sourcery Linux GCC C Compiler
+arm-none-eabi-gcc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/stm32f30x_flash.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/stm32f30x_flash.d" -MT"src/stm32f30x_flash.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/stm32f30x_flash.o" "../src/stm32f30x_flash.c"
+Finished building: ../src/stm32f30x_flash.c
+ 
+Building file: ../src/stm32f30x_gpio.c
+Invoking: ARM Sourcery Linux GCC C Compiler
+arm-none-eabi-gcc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/stm32f30x_gpio.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/stm32f30x_gpio.d" -MT"src/stm32f30x_gpio.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/stm32f30x_gpio.o" "../src/stm32f30x_gpio.c"
+Finished building: ../src/stm32f30x_gpio.c
+ 
+Building file: ../src/stm32f30x_i2c.c
+Invoking: ARM Sourcery Linux GCC C Compiler
+arm-none-eabi-gcc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/stm32f30x_i2c.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/stm32f30x_i2c.d" -MT"src/stm32f30x_i2c.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/stm32f30x_i2c.o" "../src/stm32f30x_i2c.c"
+Finished building: ../src/stm32f30x_i2c.c
+ 
+Building file: ../src/stm32f30x_iwdg.c
+Invoking: ARM Sourcery Linux GCC C Compiler
+arm-none-eabi-gcc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/stm32f30x_iwdg.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/stm32f30x_iwdg.d" -MT"src/stm32f30x_iwdg.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/stm32f30x_iwdg.o" "../src/stm32f30x_iwdg.c"
+Finished building: ../src/stm32f30x_iwdg.c
+ 
+Building file: ../src/stm32f30x_misc.c
+Invoking: ARM Sourcery Linux GCC C Compiler
+arm-none-eabi-gcc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/stm32f30x_misc.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/stm32f30x_misc.d" -MT"src/stm32f30x_misc.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/stm32f30x_misc.o" "../src/stm32f30x_misc.c"
+Finished building: ../src/stm32f30x_misc.c
+ 
+Building file: ../src/stm32f30x_opamp.c
+Invoking: ARM Sourcery Linux GCC C Compiler
+arm-none-eabi-gcc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/stm32f30x_opamp.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/stm32f30x_opamp.d" -MT"src/stm32f30x_opamp.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/stm32f30x_opamp.o" "../src/stm32f30x_opamp.c"
+Finished building: ../src/stm32f30x_opamp.c
+ 
+Building file: ../src/stm32f30x_pwr.c
+Invoking: ARM Sourcery Linux GCC C Compiler
+arm-none-eabi-gcc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/stm32f30x_pwr.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/stm32f30x_pwr.d" -MT"src/stm32f30x_pwr.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/stm32f30x_pwr.o" "../src/stm32f30x_pwr.c"
+Finished building: ../src/stm32f30x_pwr.c
+ 
+Building file: ../src/stm32f30x_rcc.c
+Invoking: ARM Sourcery Linux GCC C Compiler
+arm-none-eabi-gcc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/stm32f30x_rcc.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/stm32f30x_rcc.d" -MT"src/stm32f30x_rcc.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/stm32f30x_rcc.o" "../src/stm32f30x_rcc.c"
+Finished building: ../src/stm32f30x_rcc.c
+ 
+Building file: ../src/stm32f30x_rtc.c
+Invoking: ARM Sourcery Linux GCC C Compiler
+arm-none-eabi-gcc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/stm32f30x_rtc.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/stm32f30x_rtc.d" -MT"src/stm32f30x_rtc.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/stm32f30x_rtc.o" "../src/stm32f30x_rtc.c"
+Finished building: ../src/stm32f30x_rtc.c
+ 
+Building file: ../src/stm32f30x_spi.c
+Invoking: ARM Sourcery Linux GCC C Compiler
+arm-none-eabi-gcc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/stm32f30x_spi.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/stm32f30x_spi.d" -MT"src/stm32f30x_spi.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/stm32f30x_spi.o" "../src/stm32f30x_spi.c"
+Finished building: ../src/stm32f30x_spi.c
+ 
+Building file: ../src/stm32f30x_syscfg.c
+Invoking: ARM Sourcery Linux GCC C Compiler
+arm-none-eabi-gcc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/stm32f30x_syscfg.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/stm32f30x_syscfg.d" -MT"src/stm32f30x_syscfg.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/stm32f30x_syscfg.o" "../src/stm32f30x_syscfg.c"
+Finished building: ../src/stm32f30x_syscfg.c
+ 
+Building file: ../src/stm32f30x_tim.c
+Invoking: ARM Sourcery Linux GCC C Compiler
+arm-none-eabi-gcc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/stm32f30x_tim.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/stm32f30x_tim.d" -MT"src/stm32f30x_tim.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/stm32f30x_tim.o" "../src/stm32f30x_tim.c"
+Finished building: ../src/stm32f30x_tim.c
+ 
+Building file: ../src/stm32f30x_usart.c
+Invoking: ARM Sourcery Linux GCC C Compiler
+arm-none-eabi-gcc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/stm32f30x_usart.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/stm32f30x_usart.d" -MT"src/stm32f30x_usart.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/stm32f30x_usart.o" "../src/stm32f30x_usart.c"
+Finished building: ../src/stm32f30x_usart.c
+ 
+Building file: ../src/stm32f30x_wwdg.c
+Invoking: ARM Sourcery Linux GCC C Compiler
+arm-none-eabi-gcc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/stm32f30x_wwdg.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/stm32f30x_wwdg.d" -MT"src/stm32f30x_wwdg.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/stm32f30x_wwdg.o" "../src/stm32f30x_wwdg.c"
+Finished building: ../src/stm32f30x_wwdg.c
+ 
+Building file: ../src/stm32f3_discovery_l3gd20.c
+Invoking: ARM Sourcery Linux GCC C Compiler
+arm-none-eabi-gcc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/stm32f3_discovery_l3gd20.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/stm32f3_discovery_l3gd20.d" -MT"src/stm32f3_discovery_l3gd20.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/stm32f3_discovery_l3gd20.o" "../src/stm32f3_discovery_l3gd20.c"
+Finished building: ../src/stm32f3_discovery_l3gd20.c
+ 
+Building file: ../src/system_stm32f30x.c
+Invoking: ARM Sourcery Linux GCC C Compiler
+arm-none-eabi-gcc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/system_stm32f30x.o.lst" -c -fmessage-length=0 -MMD -MP -MF"src/system_stm32f30x.d" -MT"src/system_stm32f30x.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/system_stm32f30x.o" "../src/system_stm32f30x.c"
+Finished building: ../src/system_stm32f30x.c
+ 
+Building target: STM32F3x.elf
+Invoking: ARM Sourcery Linux GCC C++ Linker
+arm-none-eabi-g++ -T"/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/linker/STM32F303VC_FLASH.ld" -Xlinker --gc-sections -Wl,-Map,STM32F3x.map -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "STM32F3x.elf"  ./src/debug.o ./src/encoder.o ./src/interrupt_defs.o ./src/main.o ./src/newlib_stubs.o ./src/pwm.o ./src/startup_stm32f30x.o ./src/stm32f30x_adc.o ./src/stm32f30x_can.o ./src/stm32f30x_comp.o ./src/stm32f30x_crc.o ./src/stm32f30x_dac.o ./src/stm32f30x_dbgmcu.o ./src/stm32f30x_dma.o ./src/stm32f30x_exti.o ./src/stm32f30x_flash.o ./src/stm32f30x_gpio.o ./src/stm32f30x_i2c.o ./src/stm32f30x_iwdg.o ./src/stm32f30x_misc.o ./src/stm32f30x_opamp.o ./src/stm32f30x_pwr.o ./src/stm32f30x_rcc.o ./src/stm32f30x_rtc.o ./src/stm32f30x_spi.o ./src/stm32f30x_syscfg.o ./src/stm32f30x_tim.o ./src/stm32f30x_usart.o ./src/stm32f30x_wwdg.o ./src/stm32f3_discovery_l3gd20.o ./src/system_stm32f30x.o   
+Finished building target: STM32F3x.elf
+ 
+Invoking: ARM Sourcery Linux GNU Create Flash Image
+arm-none-eabi-objcopy -O ihex STM32F3x.elf  "STM32F3x.hex"
+Finished building: STM32F3x.hex
+ 
+Invoking: ARM Sourcery Linux GNU Create Listing
+arm-none-eabi-objdump -h -S STM32F3x.elf > "STM32F3x.lst"
+Finished building: STM32F3x.lst
+ 
+Invoking: ARM Sourcery Linux GNU Print Size
+arm-none-eabi-size  --format=berkeley STM32F3x.elf
+   text	   data	    bss	    dec	    hex	filename
+  81552	   2320	    792	  84664	  14ab8	STM32F3x.elf
+Finished building: STM32F3x.siz
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project STM32F3x ****
+
+make all 
+Invoking: ARM Sourcery Linux GNU Print Size
+arm-none-eabi-size  --format=berkeley STM32F3x.elf
+   text	   data	    bss	    dec	    hex	filename
+  81552	   2320	    792	  84664	  14ab8	STM32F3x.elf
+Finished building: STM32F3x.siz
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project STM32F3x ****
+
+make all 
+Invoking: ARM Sourcery Linux GNU Print Size
+arm-none-eabi-size  --format=berkeley STM32F3x.elf
+   text	   data	    bss	    dec	    hex	filename
+  81552	   2320	    792	  84664	  14ab8	STM32F3x.elf
+Finished building: STM32F3x.siz
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project STM32F3x ****
+
+make all 
+Invoking: ARM Sourcery Linux GNU Print Size
+arm-none-eabi-size  --format=berkeley STM32F3x.elf
+   text	   data	    bss	    dec	    hex	filename
+  81552	   2320	    792	  84664	  14ab8	STM32F3x.elf
+Finished building: STM32F3x.siz
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project STM32F3x ****
+
+make all 
+Invoking: ARM Sourcery Linux GNU Print Size
+arm-none-eabi-size  --format=berkeley STM32F3x.elf
+   text	   data	    bss	    dec	    hex	filename
+  81552	   2320	    792	  84664	  14ab8	STM32F3x.elf
+Finished building: STM32F3x.siz
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project STM32F3x ****
+
+make all 
+Invoking: ARM Sourcery Linux GNU Print Size
+arm-none-eabi-size  --format=berkeley STM32F3x.elf
+   text	   data	    bss	    dec	    hex	filename
+  81552	   2320	    792	  84664	  14ab8	STM32F3x.elf
+Finished building: STM32F3x.siz
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project STM32F3x ****
+
+make all 
+Building file: ../src/main.cpp
+Invoking: ARM Sourcery Linux GCC C++ Compiler
+arm-none-eabi-g++ -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/main.o.lst" -fno-exceptions -fno-rtti -c -fmessage-length=0 -MMD -MP -MF"src/main.d" -MT"src/main.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/main.o" "../src/main.cpp"
+../src/main.cpp: In function 'int main()':
+../src/main.cpp:246:6: warning: unused variable 'uv_avgBuf1' [-Wunused-variable]
+../src/main.cpp:247:6: warning: unused variable 'uv_avgBuf2' [-Wunused-variable]
+../src/main.cpp:248:6: warning: unused variable 'uv_iter' [-Wunused-variable]
+../src/main.cpp:250:8: warning: unused variable 'uv1_avg' [-Wunused-variable]
+../src/main.cpp:250:17: warning: unused variable 'uv2_avg' [-Wunused-variable]
+Finished building: ../src/main.cpp
+ 
+Building target: STM32F3x.elf
+Invoking: ARM Sourcery Linux GCC C++ Linker
+arm-none-eabi-g++ -T"/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/linker/STM32F303VC_FLASH.ld" -Xlinker --gc-sections -Wl,-Map,STM32F3x.map -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "STM32F3x.elf"  ./src/debug.o ./src/encoder.o ./src/interrupt_defs.o ./src/main.o ./src/newlib_stubs.o ./src/pwm.o ./src/startup_stm32f30x.o ./src/stm32f30x_adc.o ./src/stm32f30x_can.o ./src/stm32f30x_comp.o ./src/stm32f30x_crc.o ./src/stm32f30x_dac.o ./src/stm32f30x_dbgmcu.o ./src/stm32f30x_dma.o ./src/stm32f30x_exti.o ./src/stm32f30x_flash.o ./src/stm32f30x_gpio.o ./src/stm32f30x_i2c.o ./src/stm32f30x_iwdg.o ./src/stm32f30x_misc.o ./src/stm32f30x_opamp.o ./src/stm32f30x_pwr.o ./src/stm32f30x_rcc.o ./src/stm32f30x_rtc.o ./src/stm32f30x_spi.o ./src/stm32f30x_syscfg.o ./src/stm32f30x_tim.o ./src/stm32f30x_usart.o ./src/stm32f30x_wwdg.o ./src/stm32f3_discovery_l3gd20.o ./src/system_stm32f30x.o   
+Finished building target: STM32F3x.elf
+ 
+Invoking: ARM Sourcery Linux GNU Create Flash Image
+arm-none-eabi-objcopy -O ihex STM32F3x.elf  "STM32F3x.hex"
+Finished building: STM32F3x.hex
+ 
+Invoking: ARM Sourcery Linux GNU Create Listing
+arm-none-eabi-objdump -h -S STM32F3x.elf > "STM32F3x.lst"
+Finished building: STM32F3x.lst
+ 
+Invoking: ARM Sourcery Linux GNU Print Size
+arm-none-eabi-size  --format=berkeley STM32F3x.elf
+   text	   data	    bss	    dec	    hex	filename
+  81096	   2320	    792	  84208	  148f0	STM32F3x.elf
+Finished building: STM32F3x.siz
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project STM32F3x ****
+
+make all 
+Invoking: ARM Sourcery Linux GNU Print Size
+arm-none-eabi-size  --format=berkeley STM32F3x.elf
+   text	   data	    bss	    dec	    hex	filename
+  81096	   2320	    792	  84208	  148f0	STM32F3x.elf
+Finished building: STM32F3x.siz
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project STM32F3x ****
+
+make all 
+Building file: ../src/main.cpp
+Invoking: ARM Sourcery Linux GCC C++ Compiler
+arm-none-eabi-g++ -I/home/aghosh01/git/Trinity2013/STM32F3x/inc -I/home/aghosh01/git/Trinity2013/STM32F3x/inc/Robot -O0 -Wall -Wa,-adhlns="src/main.o.lst" -fno-exceptions -fno-rtti -c -fmessage-length=0 -MMD -MP -MF"src/main.d" -MT"src/main.d" -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "src/main.o" "../src/main.cpp"
+../src/main.cpp: In function 'int main()':
+../src/main.cpp:246:6: warning: unused variable 'uv_avgBuf1' [-Wunused-variable]
+../src/main.cpp:247:6: warning: unused variable 'uv_avgBuf2' [-Wunused-variable]
+../src/main.cpp:248:6: warning: unused variable 'uv_iter' [-Wunused-variable]
+../src/main.cpp:250:8: warning: unused variable 'uv1_avg' [-Wunused-variable]
+../src/main.cpp:250:17: warning: unused variable 'uv2_avg' [-Wunused-variable]
+Finished building: ../src/main.cpp
+ 
+Building target: STM32F3x.elf
+Invoking: ARM Sourcery Linux GCC C++ Linker
+arm-none-eabi-g++ -T"/home/aghosh01/Embedded/stm32_dev_wkspace/STM32F3x/linker/STM32F303VC_FLASH.ld" -Xlinker --gc-sections -Wl,-Map,STM32F3x.map -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -o "STM32F3x.elf"  ./src/debug.o ./src/encoder.o ./src/interrupt_defs.o ./src/main.o ./src/newlib_stubs.o ./src/pwm.o ./src/startup_stm32f30x.o ./src/stm32f30x_adc.o ./src/stm32f30x_can.o ./src/stm32f30x_comp.o ./src/stm32f30x_crc.o ./src/stm32f30x_dac.o ./src/stm32f30x_dbgmcu.o ./src/stm32f30x_dma.o ./src/stm32f30x_exti.o ./src/stm32f30x_flash.o ./src/stm32f30x_gpio.o ./src/stm32f30x_i2c.o ./src/stm32f30x_iwdg.o ./src/stm32f30x_misc.o ./src/stm32f30x_opamp.o ./src/stm32f30x_pwr.o ./src/stm32f30x_rcc.o ./src/stm32f30x_rtc.o ./src/stm32f30x_spi.o ./src/stm32f30x_syscfg.o ./src/stm32f30x_tim.o ./src/stm32f30x_usart.o ./src/stm32f30x_wwdg.o ./src/stm32f3_discovery_l3gd20.o ./src/system_stm32f30x.o   
+Finished building target: STM32F3x.elf
+ 
+Invoking: ARM Sourcery Linux GNU Create Flash Image
+arm-none-eabi-objcopy -O ihex STM32F3x.elf  "STM32F3x.hex"
+Finished building: STM32F3x.hex
+ 
+Invoking: ARM Sourcery Linux GNU Create Listing
+arm-none-eabi-objdump -h -S STM32F3x.elf > "STM32F3x.lst"
+Finished building: STM32F3x.lst
+ 
+Invoking: ARM Sourcery Linux GNU Print Size
+arm-none-eabi-size  --format=berkeley STM32F3x.elf
+   text	   data	    bss	    dec	    hex	filename
+  81096	   2320	    792	  84208	  148f0	STM32F3x.elf
+Finished building: STM32F3x.siz
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project STM32F3x ****
+
+make all 
+Invoking: ARM Sourcery Linux GNU Print Size
+arm-none-eabi-size  --format=berkeley STM32F3x.elf
+   text	   data	    bss	    dec	    hex	filename
+  81096	   2320	    792	  84208	  148f0	STM32F3x.elf
+Finished building: STM32F3x.siz
+ 
+
+**** Build Finished ****

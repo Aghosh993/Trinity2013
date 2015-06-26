@@ -1,0 +1,33 @@
+!SESSION 2013-02-28 03:36:05.542 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.7.0_13
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.linuxtools.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.linuxtools.product
+
+!ENTRY org.eclipse.ui 4 4 2013-02-28 03:36:21.156
+!MESSAGE Plugin org.eclipse.linuxtools.callgraph, extension org.eclipse.ui.perspectiveExtensions, id org.eclipse.linuxtools.callgraph.callgraphview: Attribute 'relative' not defined.  This attribute is required when relationship="stack".
+
+!ENTRY org.eclipse.ui 4 4 2013-02-28 03:36:21.159
+!MESSAGE Unable to process element: view in perspective extension: null
+!SESSION 2015-05-26 12:28:52.480 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.7.0_13
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.linuxtools.product
+Command-line arguments:  -data /home/aghosh01/git/Trinity2013/ -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.linuxtools.product
+
+!ENTRY org.eclipse.cdt.core 1 0 2015-05-26 12:30:01.498
+!MESSAGE Indexed 'STM32F3x' (30 sources, 125 headers) in 4.76 sec: 10,462 declarations; 27,815 references; 0 unresolved inclusions; 0 syntax errors; 2,447 unresolved names (6.01%)
+!SESSION 2015-05-29 21:22:31.504 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.7.0_13
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.linuxtools.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.linuxtools.product
+
+!ENTRY org.eclipse.core.resources 2 10035 2015-05-29 21:22:35.854
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
