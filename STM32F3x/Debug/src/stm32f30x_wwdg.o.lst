@@ -1,28 +1,29 @@
    1              		.syntax unified
    2              		.cpu cortex-m4
    3              		.eabi_attribute 27, 3
-   4              		.fpu fpv4-sp-d16
-   5              		.eabi_attribute 20, 1
-   6              		.eabi_attribute 21, 1
-   7              		.eabi_attribute 23, 3
-   8              		.eabi_attribute 24, 1
-   9              		.eabi_attribute 25, 1
-  10              		.eabi_attribute 26, 1
-  11              		.eabi_attribute 30, 6
-  12              		.eabi_attribute 34, 1
-  13              		.eabi_attribute 18, 4
-  14              		.thumb
-  15              		.file	"stm32f30x_wwdg.c"
-  16              		.text
-  17              	.Ltext0:
-  18              		.cfi_sections	.debug_frame
-  19              		.align	2
-  20              		.global	WWDG_DeInit
-  21              		.thumb
-  22              		.thumb_func
-  24              	WWDG_DeInit:
-  25              	.LFB111:
-  26              		.file 1 "../src/stm32f30x_wwdg.c"
+   4              		.eabi_attribute 28, 1
+   5              		.fpu fpv4-sp-d16
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 6
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.thumb
+  16              		.file	"stm32f30x_wwdg.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.align	2
+  21              		.global	WWDG_DeInit
+  22              		.thumb
+  23              		.thumb_func
+  25              	WWDG_DeInit:
+  26              	.LFB111:
+  27              		.file 1 "../src/stm32f30x_wwdg.c"
    1:../src/stm32f30x_wwdg.c **** /**
    2:../src/stm32f30x_wwdg.c ****   ******************************************************************************
    3:../src/stm32f30x_wwdg.c ****   * @file    stm32f30x_wwdg.c
@@ -157,39 +158,39 @@
  132:../src/stm32f30x_wwdg.c ****   */
  133:../src/stm32f30x_wwdg.c **** void WWDG_DeInit(void)
  134:../src/stm32f30x_wwdg.c **** {
-  27              		.loc 1 134 0
-  28              		.cfi_startproc
-  29              		@ args = 0, pretend = 0, frame = 0
-  30              		@ frame_needed = 1, uses_anonymous_args = 0
-  31 0000 80B5     		push	{r7, lr}
-  32              	.LCFI0:
-  33              		.cfi_def_cfa_offset 8
-  34              		.cfi_offset 7, -8
-  35              		.cfi_offset 14, -4
-  36 0002 00AF     		add	r7, sp, #0
-  37              	.LCFI1:
-  38              		.cfi_def_cfa_register 7
+  28              		.loc 1 134 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32 0000 80B5     		push	{r7, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 7, -8
+  36              		.cfi_offset 14, -4
+  37 0002 00AF     		add	r7, sp, #0
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_register 7
  135:../src/stm32f30x_wwdg.c ****   RCC_APB1PeriphResetCmd(RCC_APB1Periph_WWDG, ENABLE);
-  39              		.loc 1 135 0
-  40 0004 4FF40060 		mov	r0, #2048
-  41 0008 4FF00101 		mov	r1, #1
-  42 000c FFF7FEFF 		bl	RCC_APB1PeriphResetCmd
+  40              		.loc 1 135 0
+  41 0004 4FF40060 		mov	r0, #2048
+  42 0008 4FF00101 		mov	r1, #1
+  43 000c FFF7FEFF 		bl	RCC_APB1PeriphResetCmd
  136:../src/stm32f30x_wwdg.c ****   RCC_APB1PeriphResetCmd(RCC_APB1Periph_WWDG, DISABLE);
-  43              		.loc 1 136 0
-  44 0010 4FF40060 		mov	r0, #2048
-  45 0014 4FF00001 		mov	r1, #0
-  46 0018 FFF7FEFF 		bl	RCC_APB1PeriphResetCmd
+  44              		.loc 1 136 0
+  45 0010 4FF40060 		mov	r0, #2048
+  46 0014 4FF00001 		mov	r1, #0
+  47 0018 FFF7FEFF 		bl	RCC_APB1PeriphResetCmd
  137:../src/stm32f30x_wwdg.c **** }
-  47              		.loc 1 137 0
-  48 001c 80BD     		pop	{r7, pc}
-  49              		.cfi_endproc
-  50              	.LFE111:
-  52 001e 00BF     		.align	2
-  53              		.global	WWDG_SetPrescaler
-  54              		.thumb
-  55              		.thumb_func
-  57              	WWDG_SetPrescaler:
-  58              	.LFB112:
+  48              		.loc 1 137 0
+  49 001c 80BD     		pop	{r7, pc}
+  50              		.cfi_endproc
+  51              	.LFE111:
+  53 001e 00BF     		.align	2
+  54              		.global	WWDG_SetPrescaler
+  55              		.thumb
+  56              		.thumb_func
+  58              	WWDG_SetPrescaler:
+  59              	.LFB112:
  138:../src/stm32f30x_wwdg.c **** 
  139:../src/stm32f30x_wwdg.c **** /**
  140:../src/stm32f30x_wwdg.c ****   * @brief  Sets the WWDG Prescaler.
@@ -203,64 +204,64 @@
  148:../src/stm32f30x_wwdg.c ****   */
  149:../src/stm32f30x_wwdg.c **** void WWDG_SetPrescaler(uint32_t WWDG_Prescaler)
  150:../src/stm32f30x_wwdg.c **** {
-  59              		.loc 1 150 0
-  60              		.cfi_startproc
-  61              		@ args = 0, pretend = 0, frame = 16
-  62              		@ frame_needed = 1, uses_anonymous_args = 0
-  63              		@ link register save eliminated.
-  64 0020 80B4     		push	{r7}
-  65              	.LCFI2:
-  66              		.cfi_def_cfa_offset 4
-  67              		.cfi_offset 7, -4
-  68 0022 85B0     		sub	sp, sp, #20
-  69              	.LCFI3:
-  70              		.cfi_def_cfa_offset 24
-  71 0024 00AF     		add	r7, sp, #0
-  72              	.LCFI4:
-  73              		.cfi_def_cfa_register 7
-  74 0026 7860     		str	r0, [r7, #4]
+  60              		.loc 1 150 0
+  61              		.cfi_startproc
+  62              		@ args = 0, pretend = 0, frame = 16
+  63              		@ frame_needed = 1, uses_anonymous_args = 0
+  64              		@ link register save eliminated.
+  65 0020 80B4     		push	{r7}
+  66              	.LCFI2:
+  67              		.cfi_def_cfa_offset 4
+  68              		.cfi_offset 7, -4
+  69 0022 85B0     		sub	sp, sp, #20
+  70              	.LCFI3:
+  71              		.cfi_def_cfa_offset 24
+  72 0024 00AF     		add	r7, sp, #0
+  73              	.LCFI4:
+  74              		.cfi_def_cfa_register 7
+  75 0026 7860     		str	r0, [r7, #4]
  151:../src/stm32f30x_wwdg.c ****   uint32_t tmpreg = 0;
-  75              		.loc 1 151 0
-  76 0028 4FF00003 		mov	r3, #0
-  77 002c FB60     		str	r3, [r7, #12]
+  76              		.loc 1 151 0
+  77 0028 4FF00003 		mov	r3, #0
+  78 002c FB60     		str	r3, [r7, #12]
  152:../src/stm32f30x_wwdg.c ****   /* Check the parameters */
  153:../src/stm32f30x_wwdg.c ****   assert_param(IS_WWDG_PRESCALER(WWDG_Prescaler));
  154:../src/stm32f30x_wwdg.c ****   /* Clear WDGTB[1:0] bits */
  155:../src/stm32f30x_wwdg.c ****   tmpreg = WWDG->CFR & CFR_WDGTB_MASK;
-  78              		.loc 1 155 0
-  79 002e 4FF43053 		mov	r3, #11264
-  80 0032 C4F20003 		movt	r3, 16384
-  81 0036 5B68     		ldr	r3, [r3, #4]
-  82 0038 23F4C073 		bic	r3, r3, #384
-  83 003c FB60     		str	r3, [r7, #12]
+  79              		.loc 1 155 0
+  80 002e 4FF43053 		mov	r3, #11264
+  81 0032 C4F20003 		movt	r3, 16384
+  82 0036 5B68     		ldr	r3, [r3, #4]
+  83 0038 23F4C073 		bic	r3, r3, #384
+  84 003c FB60     		str	r3, [r7, #12]
  156:../src/stm32f30x_wwdg.c ****   /* Set WDGTB[1:0] bits according to WWDG_Prescaler value */
  157:../src/stm32f30x_wwdg.c ****   tmpreg |= WWDG_Prescaler;
-  84              		.loc 1 157 0
-  85 003e FA68     		ldr	r2, [r7, #12]
-  86 0040 7B68     		ldr	r3, [r7, #4]
-  87 0042 1343     		orrs	r3, r3, r2
-  88 0044 FB60     		str	r3, [r7, #12]
+  85              		.loc 1 157 0
+  86 003e FA68     		ldr	r2, [r7, #12]
+  87 0040 7B68     		ldr	r3, [r7, #4]
+  88 0042 1343     		orrs	r3, r3, r2
+  89 0044 FB60     		str	r3, [r7, #12]
  158:../src/stm32f30x_wwdg.c ****   /* Store the new value */
  159:../src/stm32f30x_wwdg.c ****   WWDG->CFR = tmpreg;
-  89              		.loc 1 159 0
-  90 0046 4FF43053 		mov	r3, #11264
-  91 004a C4F20003 		movt	r3, 16384
-  92 004e FA68     		ldr	r2, [r7, #12]
-  93 0050 5A60     		str	r2, [r3, #4]
+  90              		.loc 1 159 0
+  91 0046 4FF43053 		mov	r3, #11264
+  92 004a C4F20003 		movt	r3, 16384
+  93 004e FA68     		ldr	r2, [r7, #12]
+  94 0050 5A60     		str	r2, [r3, #4]
  160:../src/stm32f30x_wwdg.c **** }
-  94              		.loc 1 160 0
-  95 0052 07F11407 		add	r7, r7, #20
-  96 0056 BD46     		mov	sp, r7
-  97 0058 80BC     		pop	{r7}
-  98 005a 7047     		bx	lr
-  99              		.cfi_endproc
- 100              	.LFE112:
- 102              		.align	2
- 103              		.global	WWDG_SetWindowValue
- 104              		.thumb
- 105              		.thumb_func
- 107              	WWDG_SetWindowValue:
- 108              	.LFB113:
+  95              		.loc 1 160 0
+  96 0052 07F11407 		add	r7, r7, #20
+  97 0056 BD46     		mov	sp, r7
+  98 0058 80BC     		pop	{r7}
+  99 005a 7047     		bx	lr
+ 100              		.cfi_endproc
+ 101              	.LFE112:
+ 103              		.align	2
+ 104              		.global	WWDG_SetWindowValue
+ 105              		.thumb
+ 106              		.thumb_func
+ 108              	WWDG_SetWindowValue:
+ 109              	.LFB113:
  161:../src/stm32f30x_wwdg.c **** 
  162:../src/stm32f30x_wwdg.c **** /**
  163:../src/stm32f30x_wwdg.c ****   * @brief  Sets the WWDG window value.
@@ -270,70 +271,70 @@
  167:../src/stm32f30x_wwdg.c ****   */
  168:../src/stm32f30x_wwdg.c **** void WWDG_SetWindowValue(uint8_t WindowValue)
  169:../src/stm32f30x_wwdg.c **** {
- 109              		.loc 1 169 0
- 110              		.cfi_startproc
- 111              		@ args = 0, pretend = 0, frame = 16
- 112              		@ frame_needed = 1, uses_anonymous_args = 0
- 113              		@ link register save eliminated.
- 114 005c 80B4     		push	{r7}
- 115              	.LCFI5:
- 116              		.cfi_def_cfa_offset 4
- 117              		.cfi_offset 7, -4
- 118 005e 85B0     		sub	sp, sp, #20
- 119              	.LCFI6:
- 120              		.cfi_def_cfa_offset 24
- 121 0060 00AF     		add	r7, sp, #0
- 122              	.LCFI7:
- 123              		.cfi_def_cfa_register 7
- 124 0062 0346     		mov	r3, r0
- 125 0064 FB71     		strb	r3, [r7, #7]
+ 110              		.loc 1 169 0
+ 111              		.cfi_startproc
+ 112              		@ args = 0, pretend = 0, frame = 16
+ 113              		@ frame_needed = 1, uses_anonymous_args = 0
+ 114              		@ link register save eliminated.
+ 115 005c 80B4     		push	{r7}
+ 116              	.LCFI5:
+ 117              		.cfi_def_cfa_offset 4
+ 118              		.cfi_offset 7, -4
+ 119 005e 85B0     		sub	sp, sp, #20
+ 120              	.LCFI6:
+ 121              		.cfi_def_cfa_offset 24
+ 122 0060 00AF     		add	r7, sp, #0
+ 123              	.LCFI7:
+ 124              		.cfi_def_cfa_register 7
+ 125 0062 0346     		mov	r3, r0
+ 126 0064 FB71     		strb	r3, [r7, #7]
  170:../src/stm32f30x_wwdg.c ****   __IO uint32_t tmpreg = 0;
- 126              		.loc 1 170 0
- 127 0066 4FF00003 		mov	r3, #0
- 128 006a FB60     		str	r3, [r7, #12]
+ 127              		.loc 1 170 0
+ 128 0066 4FF00003 		mov	r3, #0
+ 129 006a FB60     		str	r3, [r7, #12]
  171:../src/stm32f30x_wwdg.c **** 
  172:../src/stm32f30x_wwdg.c ****   /* Check the parameters */
  173:../src/stm32f30x_wwdg.c ****   assert_param(IS_WWDG_WINDOW_VALUE(WindowValue));
  174:../src/stm32f30x_wwdg.c ****   /* Clear W[6:0] bits */
  175:../src/stm32f30x_wwdg.c **** 
  176:../src/stm32f30x_wwdg.c ****   tmpreg = WWDG->CFR & CFR_W_MASK;
- 129              		.loc 1 176 0
- 130 006c 4FF43053 		mov	r3, #11264
- 131 0070 C4F20003 		movt	r3, 16384
- 132 0074 5B68     		ldr	r3, [r3, #4]
- 133 0076 23F07F03 		bic	r3, r3, #127
- 134 007a FB60     		str	r3, [r7, #12]
+ 130              		.loc 1 176 0
+ 131 006c 4FF43053 		mov	r3, #11264
+ 132 0070 C4F20003 		movt	r3, 16384
+ 133 0074 5B68     		ldr	r3, [r3, #4]
+ 134 0076 23F07F03 		bic	r3, r3, #127
+ 135 007a FB60     		str	r3, [r7, #12]
  177:../src/stm32f30x_wwdg.c **** 
  178:../src/stm32f30x_wwdg.c ****   /* Set W[6:0] bits according to WindowValue value */
  179:../src/stm32f30x_wwdg.c ****   tmpreg |= WindowValue & (uint32_t) BIT_MASK;
- 135              		.loc 1 179 0
- 136 007c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
- 137 007e 03F07F02 		and	r2, r3, #127
- 138 0082 FB68     		ldr	r3, [r7, #12]
- 139 0084 1343     		orrs	r3, r3, r2
- 140 0086 FB60     		str	r3, [r7, #12]
+ 136              		.loc 1 179 0
+ 137 007c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 138 007e 03F07F02 		and	r2, r3, #127
+ 139 0082 FB68     		ldr	r3, [r7, #12]
+ 140 0084 1343     		orrs	r3, r3, r2
+ 141 0086 FB60     		str	r3, [r7, #12]
  180:../src/stm32f30x_wwdg.c **** 
  181:../src/stm32f30x_wwdg.c ****   /* Store the new value */
  182:../src/stm32f30x_wwdg.c ****   WWDG->CFR = tmpreg;
- 141              		.loc 1 182 0
- 142 0088 4FF43053 		mov	r3, #11264
- 143 008c C4F20003 		movt	r3, 16384
- 144 0090 FA68     		ldr	r2, [r7, #12]
- 145 0092 5A60     		str	r2, [r3, #4]
+ 142              		.loc 1 182 0
+ 143 0088 4FF43053 		mov	r3, #11264
+ 144 008c C4F20003 		movt	r3, 16384
+ 145 0090 FA68     		ldr	r2, [r7, #12]
+ 146 0092 5A60     		str	r2, [r3, #4]
  183:../src/stm32f30x_wwdg.c **** }
- 146              		.loc 1 183 0
- 147 0094 07F11407 		add	r7, r7, #20
- 148 0098 BD46     		mov	sp, r7
- 149 009a 80BC     		pop	{r7}
- 150 009c 7047     		bx	lr
- 151              		.cfi_endproc
- 152              	.LFE113:
- 154 009e 00BF     		.align	2
- 155              		.global	WWDG_EnableIT
- 156              		.thumb
- 157              		.thumb_func
- 159              	WWDG_EnableIT:
- 160              	.LFB114:
+ 147              		.loc 1 183 0
+ 148 0094 07F11407 		add	r7, r7, #20
+ 149 0098 BD46     		mov	sp, r7
+ 150 009a 80BC     		pop	{r7}
+ 151 009c 7047     		bx	lr
+ 152              		.cfi_endproc
+ 153              	.LFE113:
+ 155 009e 00BF     		.align	2
+ 156              		.global	WWDG_EnableIT
+ 157              		.thumb
+ 158              		.thumb_func
+ 160              	WWDG_EnableIT:
+ 161              	.LFB114:
  184:../src/stm32f30x_wwdg.c **** 
  185:../src/stm32f30x_wwdg.c **** /**
  186:../src/stm32f30x_wwdg.c ****   * @brief  Enables the WWDG Early Wakeup interrupt(EWI).
@@ -343,40 +344,40 @@
  190:../src/stm32f30x_wwdg.c ****   */
  191:../src/stm32f30x_wwdg.c **** void WWDG_EnableIT(void)
  192:../src/stm32f30x_wwdg.c **** {
- 161              		.loc 1 192 0
- 162              		.cfi_startproc
- 163              		@ args = 0, pretend = 0, frame = 0
- 164              		@ frame_needed = 1, uses_anonymous_args = 0
- 165              		@ link register save eliminated.
- 166 00a0 80B4     		push	{r7}
- 167              	.LCFI8:
- 168              		.cfi_def_cfa_offset 4
- 169              		.cfi_offset 7, -4
- 170 00a2 00AF     		add	r7, sp, #0
- 171              	.LCFI9:
- 172              		.cfi_def_cfa_register 7
+ 162              		.loc 1 192 0
+ 163              		.cfi_startproc
+ 164              		@ args = 0, pretend = 0, frame = 0
+ 165              		@ frame_needed = 1, uses_anonymous_args = 0
+ 166              		@ link register save eliminated.
+ 167 00a0 80B4     		push	{r7}
+ 168              	.LCFI8:
+ 169              		.cfi_def_cfa_offset 4
+ 170              		.cfi_offset 7, -4
+ 171 00a2 00AF     		add	r7, sp, #0
+ 172              	.LCFI9:
+ 173              		.cfi_def_cfa_register 7
  193:../src/stm32f30x_wwdg.c ****   WWDG->CFR |= WWDG_CFR_EWI;
- 173              		.loc 1 193 0
- 174 00a4 4FF43053 		mov	r3, #11264
- 175 00a8 C4F20003 		movt	r3, 16384
- 176 00ac 4FF43052 		mov	r2, #11264
- 177 00b0 C4F20002 		movt	r2, 16384
- 178 00b4 5268     		ldr	r2, [r2, #4]
- 179 00b6 42F40072 		orr	r2, r2, #512
- 180 00ba 5A60     		str	r2, [r3, #4]
+ 174              		.loc 1 193 0
+ 175 00a4 4FF43053 		mov	r3, #11264
+ 176 00a8 C4F20003 		movt	r3, 16384
+ 177 00ac 4FF43052 		mov	r2, #11264
+ 178 00b0 C4F20002 		movt	r2, 16384
+ 179 00b4 5268     		ldr	r2, [r2, #4]
+ 180 00b6 42F40072 		orr	r2, r2, #512
+ 181 00ba 5A60     		str	r2, [r3, #4]
  194:../src/stm32f30x_wwdg.c **** }
- 181              		.loc 1 194 0
- 182 00bc BD46     		mov	sp, r7
- 183 00be 80BC     		pop	{r7}
- 184 00c0 7047     		bx	lr
- 185              		.cfi_endproc
- 186              	.LFE114:
- 188 00c2 00BF     		.align	2
- 189              		.global	WWDG_SetCounter
- 190              		.thumb
- 191              		.thumb_func
- 193              	WWDG_SetCounter:
- 194              	.LFB115:
+ 182              		.loc 1 194 0
+ 183 00bc BD46     		mov	sp, r7
+ 184 00be 80BC     		pop	{r7}
+ 185 00c0 7047     		bx	lr
+ 186              		.cfi_endproc
+ 187              	.LFE114:
+ 189 00c2 00BF     		.align	2
+ 190              		.global	WWDG_SetCounter
+ 191              		.thumb
+ 192              		.thumb_func
+ 194              	WWDG_SetCounter:
+ 195              	.LFB115:
  195:../src/stm32f30x_wwdg.c **** 
  196:../src/stm32f30x_wwdg.c **** /**
  197:../src/stm32f30x_wwdg.c ****   * @brief  Sets the WWDG counter value.
@@ -387,48 +388,48 @@
  202:../src/stm32f30x_wwdg.c ****   */
  203:../src/stm32f30x_wwdg.c **** void WWDG_SetCounter(uint8_t Counter)
  204:../src/stm32f30x_wwdg.c **** {
- 195              		.loc 1 204 0
- 196              		.cfi_startproc
- 197              		@ args = 0, pretend = 0, frame = 8
- 198              		@ frame_needed = 1, uses_anonymous_args = 0
- 199              		@ link register save eliminated.
- 200 00c4 80B4     		push	{r7}
- 201              	.LCFI10:
- 202              		.cfi_def_cfa_offset 4
- 203              		.cfi_offset 7, -4
- 204 00c6 83B0     		sub	sp, sp, #12
- 205              	.LCFI11:
- 206              		.cfi_def_cfa_offset 16
- 207 00c8 00AF     		add	r7, sp, #0
- 208              	.LCFI12:
- 209              		.cfi_def_cfa_register 7
- 210 00ca 0346     		mov	r3, r0
- 211 00cc FB71     		strb	r3, [r7, #7]
+ 196              		.loc 1 204 0
+ 197              		.cfi_startproc
+ 198              		@ args = 0, pretend = 0, frame = 8
+ 199              		@ frame_needed = 1, uses_anonymous_args = 0
+ 200              		@ link register save eliminated.
+ 201 00c4 80B4     		push	{r7}
+ 202              	.LCFI10:
+ 203              		.cfi_def_cfa_offset 4
+ 204              		.cfi_offset 7, -4
+ 205 00c6 83B0     		sub	sp, sp, #12
+ 206              	.LCFI11:
+ 207              		.cfi_def_cfa_offset 16
+ 208 00c8 00AF     		add	r7, sp, #0
+ 209              	.LCFI12:
+ 210              		.cfi_def_cfa_register 7
+ 211 00ca 0346     		mov	r3, r0
+ 212 00cc FB71     		strb	r3, [r7, #7]
  205:../src/stm32f30x_wwdg.c ****   /* Check the parameters */
  206:../src/stm32f30x_wwdg.c ****   assert_param(IS_WWDG_COUNTER(Counter));
  207:../src/stm32f30x_wwdg.c ****   /* Write to T[6:0] bits to configure the counter value, no need to do
  208:../src/stm32f30x_wwdg.c ****      a read-modify-write; writing a 0 to WDGA bit does nothing */
  209:../src/stm32f30x_wwdg.c ****   WWDG->CR = Counter & BIT_MASK;
- 212              		.loc 1 209 0
- 213 00ce 4FF43053 		mov	r3, #11264
- 214 00d2 C4F20003 		movt	r3, 16384
- 215 00d6 FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
- 216 00d8 02F07F02 		and	r2, r2, #127
- 217 00dc 1A60     		str	r2, [r3, #0]
+ 213              		.loc 1 209 0
+ 214 00ce 4FF43053 		mov	r3, #11264
+ 215 00d2 C4F20003 		movt	r3, 16384
+ 216 00d6 FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
+ 217 00d8 02F07F02 		and	r2, r2, #127
+ 218 00dc 1A60     		str	r2, [r3, #0]
  210:../src/stm32f30x_wwdg.c **** }
- 218              		.loc 1 210 0
- 219 00de 07F10C07 		add	r7, r7, #12
- 220 00e2 BD46     		mov	sp, r7
- 221 00e4 80BC     		pop	{r7}
- 222 00e6 7047     		bx	lr
- 223              		.cfi_endproc
- 224              	.LFE115:
- 226              		.align	2
- 227              		.global	WWDG_Enable
- 228              		.thumb
- 229              		.thumb_func
- 231              	WWDG_Enable:
- 232              	.LFB116:
+ 219              		.loc 1 210 0
+ 220 00de 07F10C07 		add	r7, r7, #12
+ 221 00e2 BD46     		mov	sp, r7
+ 222 00e4 80BC     		pop	{r7}
+ 223 00e6 7047     		bx	lr
+ 224              		.cfi_endproc
+ 225              	.LFE115:
+ 227              		.align	2
+ 228              		.global	WWDG_Enable
+ 229              		.thumb
+ 230              		.thumb_func
+ 232              	WWDG_Enable:
+ 233              	.LFB116:
  211:../src/stm32f30x_wwdg.c **** 
  212:../src/stm32f30x_wwdg.c **** /**
  213:../src/stm32f30x_wwdg.c ****   * @}
@@ -455,47 +456,47 @@
  234:../src/stm32f30x_wwdg.c ****   */
  235:../src/stm32f30x_wwdg.c **** void WWDG_Enable(uint8_t Counter)
  236:../src/stm32f30x_wwdg.c **** {
- 233              		.loc 1 236 0
- 234              		.cfi_startproc
- 235              		@ args = 0, pretend = 0, frame = 8
- 236              		@ frame_needed = 1, uses_anonymous_args = 0
- 237              		@ link register save eliminated.
- 238 00e8 80B4     		push	{r7}
- 239              	.LCFI13:
- 240              		.cfi_def_cfa_offset 4
- 241              		.cfi_offset 7, -4
- 242 00ea 83B0     		sub	sp, sp, #12
- 243              	.LCFI14:
- 244              		.cfi_def_cfa_offset 16
- 245 00ec 00AF     		add	r7, sp, #0
- 246              	.LCFI15:
- 247              		.cfi_def_cfa_register 7
- 248 00ee 0346     		mov	r3, r0
- 249 00f0 FB71     		strb	r3, [r7, #7]
+ 234              		.loc 1 236 0
+ 235              		.cfi_startproc
+ 236              		@ args = 0, pretend = 0, frame = 8
+ 237              		@ frame_needed = 1, uses_anonymous_args = 0
+ 238              		@ link register save eliminated.
+ 239 00e8 80B4     		push	{r7}
+ 240              	.LCFI13:
+ 241              		.cfi_def_cfa_offset 4
+ 242              		.cfi_offset 7, -4
+ 243 00ea 83B0     		sub	sp, sp, #12
+ 244              	.LCFI14:
+ 245              		.cfi_def_cfa_offset 16
+ 246 00ec 00AF     		add	r7, sp, #0
+ 247              	.LCFI15:
+ 248              		.cfi_def_cfa_register 7
+ 249 00ee 0346     		mov	r3, r0
+ 250 00f0 FB71     		strb	r3, [r7, #7]
  237:../src/stm32f30x_wwdg.c ****   /* Check the parameters */
  238:../src/stm32f30x_wwdg.c ****   assert_param(IS_WWDG_COUNTER(Counter));
  239:../src/stm32f30x_wwdg.c ****   WWDG->CR = WWDG_CR_WDGA | Counter;
- 250              		.loc 1 239 0
- 251 00f2 4FF43053 		mov	r3, #11264
- 252 00f6 C4F20003 		movt	r3, 16384
- 253 00fa FA79     		ldrb	r2, [r7, #7]
- 254 00fc 62F07F02 		orn	r2, r2, #127
- 255 0100 D2B2     		uxtb	r2, r2
- 256 0102 1A60     		str	r2, [r3, #0]
+ 251              		.loc 1 239 0
+ 252 00f2 4FF43053 		mov	r3, #11264
+ 253 00f6 C4F20003 		movt	r3, 16384
+ 254 00fa FA79     		ldrb	r2, [r7, #7]
+ 255 00fc 62F07F02 		orn	r2, r2, #127
+ 256 0100 D2B2     		uxtb	r2, r2
+ 257 0102 1A60     		str	r2, [r3, #0]
  240:../src/stm32f30x_wwdg.c **** }
- 257              		.loc 1 240 0
- 258 0104 07F10C07 		add	r7, r7, #12
- 259 0108 BD46     		mov	sp, r7
- 260 010a 80BC     		pop	{r7}
- 261 010c 7047     		bx	lr
- 262              		.cfi_endproc
- 263              	.LFE116:
- 265 010e 00BF     		.align	2
- 266              		.global	WWDG_GetFlagStatus
- 267              		.thumb
- 268              		.thumb_func
- 270              	WWDG_GetFlagStatus:
- 271              	.LFB117:
+ 258              		.loc 1 240 0
+ 259 0104 07F10C07 		add	r7, r7, #12
+ 260 0108 BD46     		mov	sp, r7
+ 261 010a 80BC     		pop	{r7}
+ 262 010c 7047     		bx	lr
+ 263              		.cfi_endproc
+ 264              	.LFE116:
+ 266 010e 00BF     		.align	2
+ 267              		.global	WWDG_GetFlagStatus
+ 268              		.thumb
+ 269              		.thumb_func
+ 271              	WWDG_GetFlagStatus:
+ 272              	.LFB117:
  241:../src/stm32f30x_wwdg.c **** 
  242:../src/stm32f30x_wwdg.c **** /**
  243:../src/stm32f30x_wwdg.c ****   * @}
@@ -520,67 +521,67 @@
  262:../src/stm32f30x_wwdg.c ****   */
  263:../src/stm32f30x_wwdg.c **** FlagStatus WWDG_GetFlagStatus(void)
  264:../src/stm32f30x_wwdg.c **** {
- 272              		.loc 1 264 0
- 273              		.cfi_startproc
- 274              		@ args = 0, pretend = 0, frame = 8
- 275              		@ frame_needed = 1, uses_anonymous_args = 0
- 276              		@ link register save eliminated.
- 277 0110 80B4     		push	{r7}
- 278              	.LCFI16:
- 279              		.cfi_def_cfa_offset 4
- 280              		.cfi_offset 7, -4
- 281 0112 83B0     		sub	sp, sp, #12
- 282              	.LCFI17:
- 283              		.cfi_def_cfa_offset 16
- 284 0114 00AF     		add	r7, sp, #0
- 285              	.LCFI18:
- 286              		.cfi_def_cfa_register 7
+ 273              		.loc 1 264 0
+ 274              		.cfi_startproc
+ 275              		@ args = 0, pretend = 0, frame = 8
+ 276              		@ frame_needed = 1, uses_anonymous_args = 0
+ 277              		@ link register save eliminated.
+ 278 0110 80B4     		push	{r7}
+ 279              	.LCFI16:
+ 280              		.cfi_def_cfa_offset 4
+ 281              		.cfi_offset 7, -4
+ 282 0112 83B0     		sub	sp, sp, #12
+ 283              	.LCFI17:
+ 284              		.cfi_def_cfa_offset 16
+ 285 0114 00AF     		add	r7, sp, #0
+ 286              	.LCFI18:
+ 287              		.cfi_def_cfa_register 7
  265:../src/stm32f30x_wwdg.c ****   FlagStatus bitstatus = RESET;
- 287              		.loc 1 265 0
- 288 0116 4FF00003 		mov	r3, #0
- 289 011a FB71     		strb	r3, [r7, #7]
+ 288              		.loc 1 265 0
+ 289 0116 4FF00003 		mov	r3, #0
+ 290 011a FB71     		strb	r3, [r7, #7]
  266:../src/stm32f30x_wwdg.c ****     
  267:../src/stm32f30x_wwdg.c ****   if ((WWDG->SR) != (uint32_t)RESET)
- 290              		.loc 1 267 0
- 291 011c 4FF43053 		mov	r3, #11264
- 292 0120 C4F20003 		movt	r3, 16384
- 293 0124 9B68     		ldr	r3, [r3, #8]
- 294 0126 002B     		cmp	r3, #0
- 295 0128 03D0     		beq	.L8
+ 291              		.loc 1 267 0
+ 292 011c 4FF43053 		mov	r3, #11264
+ 293 0120 C4F20003 		movt	r3, 16384
+ 294 0124 9B68     		ldr	r3, [r3, #8]
+ 295 0126 002B     		cmp	r3, #0
+ 296 0128 03D0     		beq	.L8
  268:../src/stm32f30x_wwdg.c ****   {
  269:../src/stm32f30x_wwdg.c ****     bitstatus = SET;
- 296              		.loc 1 269 0
- 297 012a 4FF00103 		mov	r3, #1
- 298 012e FB71     		strb	r3, [r7, #7]
- 299 0130 02E0     		b	.L9
- 300              	.L8:
+ 297              		.loc 1 269 0
+ 298 012a 4FF00103 		mov	r3, #1
+ 299 012e FB71     		strb	r3, [r7, #7]
+ 300 0130 02E0     		b	.L9
+ 301              	.L8:
  270:../src/stm32f30x_wwdg.c ****   }
  271:../src/stm32f30x_wwdg.c ****   else
  272:../src/stm32f30x_wwdg.c ****   {
  273:../src/stm32f30x_wwdg.c ****     bitstatus = RESET;
- 301              		.loc 1 273 0
- 302 0132 4FF00003 		mov	r3, #0
- 303 0136 FB71     		strb	r3, [r7, #7]
- 304              	.L9:
+ 302              		.loc 1 273 0
+ 303 0132 4FF00003 		mov	r3, #0
+ 304 0136 FB71     		strb	r3, [r7, #7]
+ 305              	.L9:
  274:../src/stm32f30x_wwdg.c ****   }
  275:../src/stm32f30x_wwdg.c ****   return bitstatus;
- 305              		.loc 1 275 0
- 306 0138 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 306              		.loc 1 275 0
+ 307 0138 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
  276:../src/stm32f30x_wwdg.c **** }
- 307              		.loc 1 276 0
- 308 013a 1846     		mov	r0, r3
- 309 013c 07F10C07 		add	r7, r7, #12
- 310 0140 BD46     		mov	sp, r7
- 311 0142 80BC     		pop	{r7}
- 312 0144 7047     		bx	lr
- 313              		.cfi_endproc
- 314              	.LFE117:
- 316 0146 00BF     		.align	2
- 317              		.global	WWDG_ClearFlag
- 318              		.thumb
- 319              		.thumb_func
- 321              	WWDG_ClearFlag:
- 322              	.LFB118:
+ 308              		.loc 1 276 0
+ 309 013a 1846     		mov	r0, r3
+ 310 013c 07F10C07 		add	r7, r7, #12
+ 311 0140 BD46     		mov	sp, r7
+ 312 0142 80BC     		pop	{r7}
+ 313 0144 7047     		bx	lr
+ 314              		.cfi_endproc
+ 315              	.LFE117:
+ 317 0146 00BF     		.align	2
+ 318              		.global	WWDG_ClearFlag
+ 319              		.thumb
+ 320              		.thumb_func
+ 322              	WWDG_ClearFlag:
+ 323              	.LFB118:
  277:../src/stm32f30x_wwdg.c **** 
  278:../src/stm32f30x_wwdg.c **** /**
  279:../src/stm32f30x_wwdg.c ****   * @brief  Clears Early Wakeup interrupt flag.
@@ -589,48 +590,48 @@
  282:../src/stm32f30x_wwdg.c ****   */
  283:../src/stm32f30x_wwdg.c **** void WWDG_ClearFlag(void)
  284:../src/stm32f30x_wwdg.c **** {
- 323              		.loc 1 284 0
- 324              		.cfi_startproc
- 325              		@ args = 0, pretend = 0, frame = 0
- 326              		@ frame_needed = 1, uses_anonymous_args = 0
- 327              		@ link register save eliminated.
- 328 0148 80B4     		push	{r7}
- 329              	.LCFI19:
- 330              		.cfi_def_cfa_offset 4
- 331              		.cfi_offset 7, -4
- 332 014a 00AF     		add	r7, sp, #0
- 333              	.LCFI20:
- 334              		.cfi_def_cfa_register 7
+ 324              		.loc 1 284 0
+ 325              		.cfi_startproc
+ 326              		@ args = 0, pretend = 0, frame = 0
+ 327              		@ frame_needed = 1, uses_anonymous_args = 0
+ 328              		@ link register save eliminated.
+ 329 0148 80B4     		push	{r7}
+ 330              	.LCFI19:
+ 331              		.cfi_def_cfa_offset 4
+ 332              		.cfi_offset 7, -4
+ 333 014a 00AF     		add	r7, sp, #0
+ 334              	.LCFI20:
+ 335              		.cfi_def_cfa_register 7
  285:../src/stm32f30x_wwdg.c ****   WWDG->SR = (uint32_t)RESET;
- 335              		.loc 1 285 0
- 336 014c 4FF43053 		mov	r3, #11264
- 337 0150 C4F20003 		movt	r3, 16384
- 338 0154 4FF00002 		mov	r2, #0
- 339 0158 9A60     		str	r2, [r3, #8]
+ 336              		.loc 1 285 0
+ 337 014c 4FF43053 		mov	r3, #11264
+ 338 0150 C4F20003 		movt	r3, 16384
+ 339 0154 4FF00002 		mov	r2, #0
+ 340 0158 9A60     		str	r2, [r3, #8]
  286:../src/stm32f30x_wwdg.c **** }
- 340              		.loc 1 286 0
- 341 015a BD46     		mov	sp, r7
- 342 015c 80BC     		pop	{r7}
- 343 015e 7047     		bx	lr
- 344              		.cfi_endproc
- 345              	.LFE118:
- 347              	.Letext0:
- 348              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
- 349              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
- 350              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
+ 341              		.loc 1 286 0
+ 342 015a BD46     		mov	sp, r7
+ 343 015c 80BC     		pop	{r7}
+ 344 015e 7047     		bx	lr
+ 345              		.cfi_endproc
+ 346              	.LFE118:
+ 348              	.Letext0:
+ 349              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
+ 350              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
+ 351              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32f30x_wwdg.c
-     /tmp/cc8U9I2h.s:19     .text:00000000 $t
-     /tmp/cc8U9I2h.s:24     .text:00000000 WWDG_DeInit
-     /tmp/cc8U9I2h.s:57     .text:00000020 WWDG_SetPrescaler
-     /tmp/cc8U9I2h.s:107    .text:0000005c WWDG_SetWindowValue
-     /tmp/cc8U9I2h.s:159    .text:000000a0 WWDG_EnableIT
-     /tmp/cc8U9I2h.s:193    .text:000000c4 WWDG_SetCounter
-     /tmp/cc8U9I2h.s:231    .text:000000e8 WWDG_Enable
-     /tmp/cc8U9I2h.s:270    .text:00000110 WWDG_GetFlagStatus
-     /tmp/cc8U9I2h.s:321    .text:00000148 WWDG_ClearFlag
+     /tmp/cc9XXowj.s:20     .text:00000000 $t
+     /tmp/cc9XXowj.s:25     .text:00000000 WWDG_DeInit
+     /tmp/cc9XXowj.s:58     .text:00000020 WWDG_SetPrescaler
+     /tmp/cc9XXowj.s:108    .text:0000005c WWDG_SetWindowValue
+     /tmp/cc9XXowj.s:160    .text:000000a0 WWDG_EnableIT
+     /tmp/cc9XXowj.s:194    .text:000000c4 WWDG_SetCounter
+     /tmp/cc9XXowj.s:232    .text:000000e8 WWDG_Enable
+     /tmp/cc9XXowj.s:271    .text:00000110 WWDG_GetFlagStatus
+     /tmp/cc9XXowj.s:322    .text:00000148 WWDG_ClearFlag
                      .debug_frame:00000010 $d
-                           .group:00000000 wm4.1.323dce8664331a0daf4a2675e107c70c
+                           .group:00000000 wm4.1.743cd71370ebc432b539c5dba7924ecc
                            .group:00000000 wm4.stm32f30x.h.56.6f19c65e98e3319a61449cb2b2455af5
                            .group:00000000 wm4.core_cm4.h.32.1434cd257ff5806b1b03cd32ab0641e9
                            .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05

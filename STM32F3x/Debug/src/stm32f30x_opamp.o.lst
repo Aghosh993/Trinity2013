@@ -1,28 +1,29 @@
    1              		.syntax unified
    2              		.cpu cortex-m4
    3              		.eabi_attribute 27, 3
-   4              		.fpu fpv4-sp-d16
-   5              		.eabi_attribute 20, 1
-   6              		.eabi_attribute 21, 1
-   7              		.eabi_attribute 23, 3
-   8              		.eabi_attribute 24, 1
-   9              		.eabi_attribute 25, 1
-  10              		.eabi_attribute 26, 1
-  11              		.eabi_attribute 30, 6
-  12              		.eabi_attribute 34, 1
-  13              		.eabi_attribute 18, 4
-  14              		.thumb
-  15              		.file	"stm32f30x_opamp.c"
-  16              		.text
-  17              	.Ltext0:
-  18              		.cfi_sections	.debug_frame
-  19              		.align	2
-  20              		.global	OPAMP_DeInit
-  21              		.thumb
-  22              		.thumb_func
-  24              	OPAMP_DeInit:
-  25              	.LFB111:
-  26              		.file 1 "../src/stm32f30x_opamp.c"
+   4              		.eabi_attribute 28, 1
+   5              		.fpu fpv4-sp-d16
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 6
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.thumb
+  16              		.file	"stm32f30x_opamp.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.align	2
+  21              		.global	OPAMP_DeInit
+  22              		.thumb
+  23              		.thumb_func
+  25              	OPAMP_DeInit:
+  26              	.LFB111:
+  27              		.file 1 "../src/stm32f30x_opamp.c"
    1:../src/stm32f30x_opamp.c **** /**
    2:../src/stm32f30x_opamp.c ****   ******************************************************************************
    3:../src/stm32f30x_opamp.c ****   * @file    stm32f30x_opamp.c
@@ -168,45 +169,45 @@
  143:../src/stm32f30x_opamp.c ****   */
  144:../src/stm32f30x_opamp.c **** void OPAMP_DeInit(uint32_t OPAMP_Selection)
  145:../src/stm32f30x_opamp.c **** {
-  27              		.loc 1 145 0
-  28              		.cfi_startproc
-  29              		@ args = 0, pretend = 0, frame = 8
-  30              		@ frame_needed = 1, uses_anonymous_args = 0
-  31              		@ link register save eliminated.
-  32 0000 80B4     		push	{r7}
-  33              	.LCFI0:
-  34              		.cfi_def_cfa_offset 4
-  35              		.cfi_offset 7, -4
-  36 0002 83B0     		sub	sp, sp, #12
-  37              	.LCFI1:
-  38              		.cfi_def_cfa_offset 16
-  39 0004 00AF     		add	r7, sp, #0
-  40              	.LCFI2:
-  41              		.cfi_def_cfa_register 7
-  42 0006 7860     		str	r0, [r7, #4]
+  28              		.loc 1 145 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 8
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33 0000 80B4     		push	{r7}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 4
+  36              		.cfi_offset 7, -4
+  37 0002 83B0     		sub	sp, sp, #12
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_offset 16
+  40 0004 00AF     		add	r7, sp, #0
+  41              	.LCFI2:
+  42              		.cfi_def_cfa_register 7
+  43 0006 7860     		str	r0, [r7, #4]
  146:../src/stm32f30x_opamp.c ****   /*!< Set OPAMP_CSR register to reset value */
  147:../src/stm32f30x_opamp.c ****   *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) = ((uint32_t)0x00000000);
-  43              		.loc 1 147 0
-  44 0008 7A68     		ldr	r2, [r7, #4]
-  45 000a 4FF03803 		mov	r3, #56
-  46 000e C4F20103 		movt	r3, 16385
-  47 0012 D318     		adds	r3, r2, r3
-  48 0014 4FF00002 		mov	r2, #0
-  49 0018 1A60     		str	r2, [r3, #0]
+  44              		.loc 1 147 0
+  45 0008 7A68     		ldr	r2, [r7, #4]
+  46 000a 4FF03803 		mov	r3, #56
+  47 000e C4F20103 		movt	r3, 16385
+  48 0012 D318     		adds	r3, r2, r3
+  49 0014 4FF00002 		mov	r2, #0
+  50 0018 1A60     		str	r2, [r3, #0]
  148:../src/stm32f30x_opamp.c **** }
-  50              		.loc 1 148 0
-  51 001a 07F10C07 		add	r7, r7, #12
-  52 001e BD46     		mov	sp, r7
-  53 0020 80BC     		pop	{r7}
-  54 0022 7047     		bx	lr
-  55              		.cfi_endproc
-  56              	.LFE111:
-  58              		.align	2
-  59              		.global	OPAMP_Init
-  60              		.thumb
-  61              		.thumb_func
-  63              	OPAMP_Init:
-  64              	.LFB112:
+  51              		.loc 1 148 0
+  52 001a 07F10C07 		add	r7, r7, #12
+  53 001e BD46     		mov	sp, r7
+  54 0020 80BC     		pop	{r7}
+  55 0022 7047     		bx	lr
+  56              		.cfi_endproc
+  57              	.LFE111:
+  59              		.align	2
+  60              		.global	OPAMP_Init
+  61              		.thumb
+  62              		.thumb_func
+  64              	OPAMP_Init:
+  65              	.LFB112:
  149:../src/stm32f30x_opamp.c **** 
  150:../src/stm32f30x_opamp.c **** /**
  151:../src/stm32f30x_opamp.c ****   * @brief  Initializes the OPAMP peripheral according to the specified parameters
@@ -224,27 +225,27 @@
  163:../src/stm32f30x_opamp.c ****   */
  164:../src/stm32f30x_opamp.c **** void OPAMP_Init(uint32_t OPAMP_Selection, OPAMP_InitTypeDef* OPAMP_InitStruct)
  165:../src/stm32f30x_opamp.c **** {
-  65              		.loc 1 165 0
-  66              		.cfi_startproc
-  67              		@ args = 0, pretend = 0, frame = 16
-  68              		@ frame_needed = 1, uses_anonymous_args = 0
-  69              		@ link register save eliminated.
-  70 0024 80B4     		push	{r7}
-  71              	.LCFI3:
-  72              		.cfi_def_cfa_offset 4
-  73              		.cfi_offset 7, -4
-  74 0026 85B0     		sub	sp, sp, #20
-  75              	.LCFI4:
-  76              		.cfi_def_cfa_offset 24
-  77 0028 00AF     		add	r7, sp, #0
-  78              	.LCFI5:
-  79              		.cfi_def_cfa_register 7
-  80 002a 7860     		str	r0, [r7, #4]
-  81 002c 3960     		str	r1, [r7, #0]
+  66              		.loc 1 165 0
+  67              		.cfi_startproc
+  68              		@ args = 0, pretend = 0, frame = 16
+  69              		@ frame_needed = 1, uses_anonymous_args = 0
+  70              		@ link register save eliminated.
+  71 0024 80B4     		push	{r7}
+  72              	.LCFI3:
+  73              		.cfi_def_cfa_offset 4
+  74              		.cfi_offset 7, -4
+  75 0026 85B0     		sub	sp, sp, #20
+  76              	.LCFI4:
+  77              		.cfi_def_cfa_offset 24
+  78 0028 00AF     		add	r7, sp, #0
+  79              	.LCFI5:
+  80              		.cfi_def_cfa_register 7
+  81 002a 7860     		str	r0, [r7, #4]
+  82 002c 3960     		str	r1, [r7, #0]
  166:../src/stm32f30x_opamp.c ****   uint32_t tmpreg = 0;
-  82              		.loc 1 166 0
-  83 002e 4FF00003 		mov	r3, #0
-  84 0032 FB60     		str	r3, [r7, #12]
+  83              		.loc 1 166 0
+  84 002e 4FF00003 		mov	r3, #0
+  85 0032 FB60     		str	r3, [r7, #12]
  167:../src/stm32f30x_opamp.c **** 
  168:../src/stm32f30x_opamp.c ****   /* Check the parameters */
  169:../src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
@@ -253,56 +254,56 @@
  172:../src/stm32f30x_opamp.c **** 
  173:../src/stm32f30x_opamp.c ****   /*!< Get the OPAMPx_CSR register value */
  174:../src/stm32f30x_opamp.c ****   tmpreg = *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection);
-  85              		.loc 1 174 0
-  86 0034 7A68     		ldr	r2, [r7, #4]
-  87 0036 4FF03803 		mov	r3, #56
-  88 003a C4F20103 		movt	r3, 16385
-  89 003e D318     		adds	r3, r2, r3
-  90 0040 1B68     		ldr	r3, [r3, #0]
-  91 0042 FB60     		str	r3, [r7, #12]
+  86              		.loc 1 174 0
+  87 0034 7A68     		ldr	r2, [r7, #4]
+  88 0036 4FF03803 		mov	r3, #56
+  89 003a C4F20103 		movt	r3, 16385
+  90 003e D318     		adds	r3, r2, r3
+  91 0040 1B68     		ldr	r3, [r3, #0]
+  92 0042 FB60     		str	r3, [r7, #12]
  175:../src/stm32f30x_opamp.c **** 
  176:../src/stm32f30x_opamp.c ****   /*!< Clear the inverting and non inverting bits selection bits */
  177:../src/stm32f30x_opamp.c ****   tmpreg &= (uint32_t) (OPAMP_CSR_DEFAULT_MASK);
-  92              		.loc 1 177 0
-  93 0044 FB68     		ldr	r3, [r7, #12]
-  94 0046 23F06C03 		bic	r3, r3, #108
-  95 004a FB60     		str	r3, [r7, #12]
+  93              		.loc 1 177 0
+  94 0044 FB68     		ldr	r3, [r7, #12]
+  95 0046 23F06C03 		bic	r3, r3, #108
+  96 004a FB60     		str	r3, [r7, #12]
  178:../src/stm32f30x_opamp.c **** 
  179:../src/stm32f30x_opamp.c ****   /*!< Configure OPAMP: inverting and non inverting inputs */
  180:../src/stm32f30x_opamp.c ****   tmpreg |= (uint32_t)(OPAMP_InitStruct->OPAMP_InvertingInput | OPAMP_InitStruct->OPAMP_NonInvertin
-  96              		.loc 1 180 0
-  97 004c 3B68     		ldr	r3, [r7, #0]
-  98 004e 1A68     		ldr	r2, [r3, #0]
-  99 0050 3B68     		ldr	r3, [r7, #0]
- 100 0052 5B68     		ldr	r3, [r3, #4]
- 101 0054 1343     		orrs	r3, r3, r2
- 102 0056 FA68     		ldr	r2, [r7, #12]
- 103 0058 1343     		orrs	r3, r3, r2
- 104 005a FB60     		str	r3, [r7, #12]
+  97              		.loc 1 180 0
+  98 004c 3B68     		ldr	r3, [r7, #0]
+  99 004e 1A68     		ldr	r2, [r3, #0]
+ 100 0050 3B68     		ldr	r3, [r7, #0]
+ 101 0052 5B68     		ldr	r3, [r3, #4]
+ 102 0054 1343     		orrs	r3, r3, r2
+ 103 0056 FA68     		ldr	r2, [r7, #12]
+ 104 0058 1343     		orrs	r3, r3, r2
+ 105 005a FB60     		str	r3, [r7, #12]
  181:../src/stm32f30x_opamp.c **** 
  182:../src/stm32f30x_opamp.c ****   /*!< Write to OPAMPx_CSR register */
  183:../src/stm32f30x_opamp.c ****   *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) = tmpreg;
- 105              		.loc 1 183 0
- 106 005c 7A68     		ldr	r2, [r7, #4]
- 107 005e 4FF03803 		mov	r3, #56
- 108 0062 C4F20103 		movt	r3, 16385
- 109 0066 D318     		adds	r3, r2, r3
- 110 0068 FA68     		ldr	r2, [r7, #12]
- 111 006a 1A60     		str	r2, [r3, #0]
+ 106              		.loc 1 183 0
+ 107 005c 7A68     		ldr	r2, [r7, #4]
+ 108 005e 4FF03803 		mov	r3, #56
+ 109 0062 C4F20103 		movt	r3, 16385
+ 110 0066 D318     		adds	r3, r2, r3
+ 111 0068 FA68     		ldr	r2, [r7, #12]
+ 112 006a 1A60     		str	r2, [r3, #0]
  184:../src/stm32f30x_opamp.c **** }
- 112              		.loc 1 184 0
- 113 006c 07F11407 		add	r7, r7, #20
- 114 0070 BD46     		mov	sp, r7
- 115 0072 80BC     		pop	{r7}
- 116 0074 7047     		bx	lr
- 117              		.cfi_endproc
- 118              	.LFE112:
- 120 0076 00BF     		.align	2
- 121              		.global	OPAMP_StructInit
- 122              		.thumb
- 123              		.thumb_func
- 125              	OPAMP_StructInit:
- 126              	.LFB113:
+ 113              		.loc 1 184 0
+ 114 006c 07F11407 		add	r7, r7, #20
+ 115 0070 BD46     		mov	sp, r7
+ 116 0072 80BC     		pop	{r7}
+ 117 0074 7047     		bx	lr
+ 118              		.cfi_endproc
+ 119              	.LFE112:
+ 121 0076 00BF     		.align	2
+ 122              		.global	OPAMP_StructInit
+ 123              		.thumb
+ 124              		.thumb_func
+ 126              	OPAMP_StructInit:
+ 127              	.LFB113:
  185:../src/stm32f30x_opamp.c **** 
  186:../src/stm32f30x_opamp.c **** /**
  187:../src/stm32f30x_opamp.c ****   * @brief  Fills each OPAMP_InitStruct member with its default value.
@@ -312,46 +313,46 @@
  191:../src/stm32f30x_opamp.c ****   */
  192:../src/stm32f30x_opamp.c **** void OPAMP_StructInit(OPAMP_InitTypeDef* OPAMP_InitStruct)
  193:../src/stm32f30x_opamp.c **** {
- 127              		.loc 1 193 0
- 128              		.cfi_startproc
- 129              		@ args = 0, pretend = 0, frame = 8
- 130              		@ frame_needed = 1, uses_anonymous_args = 0
- 131              		@ link register save eliminated.
- 132 0078 80B4     		push	{r7}
- 133              	.LCFI6:
- 134              		.cfi_def_cfa_offset 4
- 135              		.cfi_offset 7, -4
- 136 007a 83B0     		sub	sp, sp, #12
- 137              	.LCFI7:
- 138              		.cfi_def_cfa_offset 16
- 139 007c 00AF     		add	r7, sp, #0
- 140              	.LCFI8:
- 141              		.cfi_def_cfa_register 7
- 142 007e 7860     		str	r0, [r7, #4]
+ 128              		.loc 1 193 0
+ 129              		.cfi_startproc
+ 130              		@ args = 0, pretend = 0, frame = 8
+ 131              		@ frame_needed = 1, uses_anonymous_args = 0
+ 132              		@ link register save eliminated.
+ 133 0078 80B4     		push	{r7}
+ 134              	.LCFI6:
+ 135              		.cfi_def_cfa_offset 4
+ 136              		.cfi_offset 7, -4
+ 137 007a 83B0     		sub	sp, sp, #12
+ 138              	.LCFI7:
+ 139              		.cfi_def_cfa_offset 16
+ 140 007c 00AF     		add	r7, sp, #0
+ 141              	.LCFI8:
+ 142              		.cfi_def_cfa_register 7
+ 143 007e 7860     		str	r0, [r7, #4]
  194:../src/stm32f30x_opamp.c ****   OPAMP_InitStruct->OPAMP_NonInvertingInput = OPAMP_NonInvertingInput_IO1;
- 143              		.loc 1 194 0
- 144 0080 7B68     		ldr	r3, [r7, #4]
- 145 0082 4FF00002 		mov	r2, #0
- 146 0086 5A60     		str	r2, [r3, #4]
+ 144              		.loc 1 194 0
+ 145 0080 7B68     		ldr	r3, [r7, #4]
+ 146 0082 4FF00002 		mov	r2, #0
+ 147 0086 5A60     		str	r2, [r3, #4]
  195:../src/stm32f30x_opamp.c ****   OPAMP_InitStruct->OPAMP_InvertingInput = OPAMP_InvertingInput_IO1;
- 147              		.loc 1 195 0
- 148 0088 7B68     		ldr	r3, [r7, #4]
- 149 008a 4FF00002 		mov	r2, #0
- 150 008e 1A60     		str	r2, [r3, #0]
+ 148              		.loc 1 195 0
+ 149 0088 7B68     		ldr	r3, [r7, #4]
+ 150 008a 4FF00002 		mov	r2, #0
+ 151 008e 1A60     		str	r2, [r3, #0]
  196:../src/stm32f30x_opamp.c **** }
- 151              		.loc 1 196 0
- 152 0090 07F10C07 		add	r7, r7, #12
- 153 0094 BD46     		mov	sp, r7
- 154 0096 80BC     		pop	{r7}
- 155 0098 7047     		bx	lr
- 156              		.cfi_endproc
- 157              	.LFE113:
- 159 009a 00BF     		.align	2
- 160              		.global	OPAMP_PGAConfig
- 161              		.thumb
- 162              		.thumb_func
- 164              	OPAMP_PGAConfig:
- 165              	.LFB114:
+ 152              		.loc 1 196 0
+ 153 0090 07F10C07 		add	r7, r7, #12
+ 154 0094 BD46     		mov	sp, r7
+ 155 0096 80BC     		pop	{r7}
+ 156 0098 7047     		bx	lr
+ 157              		.cfi_endproc
+ 158              	.LFE113:
+ 160 009a 00BF     		.align	2
+ 161              		.global	OPAMP_PGAConfig
+ 162              		.thumb
+ 163              		.thumb_func
+ 165              	OPAMP_PGAConfig:
+ 166              	.LFB114:
  197:../src/stm32f30x_opamp.c **** 
  198:../src/stm32f30x_opamp.c **** /**
  199:../src/stm32f30x_opamp.c ****   * @brief  Configure the feedback resistor gain.
@@ -366,24 +367,24 @@
  208:../src/stm32f30x_opamp.c ****   */
  209:../src/stm32f30x_opamp.c **** void OPAMP_PGAConfig(uint32_t OPAMP_Selection, uint32_t OPAMP_PGAGain, uint32_t OPAMP_PGAConnect)
  210:../src/stm32f30x_opamp.c **** {
- 166              		.loc 1 210 0
- 167              		.cfi_startproc
- 168              		@ args = 0, pretend = 0, frame = 16
- 169              		@ frame_needed = 1, uses_anonymous_args = 0
- 170              		@ link register save eliminated.
- 171 009c 80B4     		push	{r7}
- 172              	.LCFI9:
- 173              		.cfi_def_cfa_offset 4
- 174              		.cfi_offset 7, -4
- 175 009e 85B0     		sub	sp, sp, #20
- 176              	.LCFI10:
- 177              		.cfi_def_cfa_offset 24
- 178 00a0 00AF     		add	r7, sp, #0
- 179              	.LCFI11:
- 180              		.cfi_def_cfa_register 7
- 181 00a2 F860     		str	r0, [r7, #12]
- 182 00a4 B960     		str	r1, [r7, #8]
- 183 00a6 7A60     		str	r2, [r7, #4]
+ 167              		.loc 1 210 0
+ 168              		.cfi_startproc
+ 169              		@ args = 0, pretend = 0, frame = 16
+ 170              		@ frame_needed = 1, uses_anonymous_args = 0
+ 171              		@ link register save eliminated.
+ 172 009c 80B4     		push	{r7}
+ 173              	.LCFI9:
+ 174              		.cfi_def_cfa_offset 4
+ 175              		.cfi_offset 7, -4
+ 176 009e 85B0     		sub	sp, sp, #20
+ 177              	.LCFI10:
+ 178              		.cfi_def_cfa_offset 24
+ 179 00a0 00AF     		add	r7, sp, #0
+ 180              	.LCFI11:
+ 181              		.cfi_def_cfa_register 7
+ 182 00a2 F860     		str	r0, [r7, #12]
+ 183 00a4 B960     		str	r1, [r7, #8]
+ 184 00a6 7A60     		str	r2, [r7, #4]
  211:../src/stm32f30x_opamp.c ****   /* Check the parameters */
  212:../src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
  213:../src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_PGAGAIN(OPAMP_PGAGain));
@@ -391,52 +392,52 @@
  215:../src/stm32f30x_opamp.c **** 
  216:../src/stm32f30x_opamp.c ****   /* Reset the configuration bits */
  217:../src/stm32f30x_opamp.c ****   *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) &= (uint32_t)(~OPAMP_CSR_PGGAIN);
- 184              		.loc 1 217 0
- 185 00a8 FA68     		ldr	r2, [r7, #12]
- 186 00aa 4FF03803 		mov	r3, #56
- 187 00ae C4F20103 		movt	r3, 16385
- 188 00b2 D318     		adds	r3, r2, r3
- 189 00b4 1A46     		mov	r2, r3
- 190 00b6 F968     		ldr	r1, [r7, #12]
- 191 00b8 4FF03803 		mov	r3, #56
- 192 00bc C4F20103 		movt	r3, 16385
- 193 00c0 CB18     		adds	r3, r1, r3
- 194 00c2 1B68     		ldr	r3, [r3, #0]
- 195 00c4 23F47033 		bic	r3, r3, #245760
- 196 00c8 1360     		str	r3, [r2, #0]
+ 185              		.loc 1 217 0
+ 186 00a8 FA68     		ldr	r2, [r7, #12]
+ 187 00aa 4FF03803 		mov	r3, #56
+ 188 00ae C4F20103 		movt	r3, 16385
+ 189 00b2 D318     		adds	r3, r2, r3
+ 190 00b4 1A46     		mov	r2, r3
+ 191 00b6 F968     		ldr	r1, [r7, #12]
+ 192 00b8 4FF03803 		mov	r3, #56
+ 193 00bc C4F20103 		movt	r3, 16385
+ 194 00c0 CB18     		adds	r3, r1, r3
+ 195 00c2 1B68     		ldr	r3, [r3, #0]
+ 196 00c4 23F47033 		bic	r3, r3, #245760
+ 197 00c8 1360     		str	r3, [r2, #0]
  218:../src/stm32f30x_opamp.c **** 
  219:../src/stm32f30x_opamp.c ****   /* Set the new configuration */
  220:../src/stm32f30x_opamp.c ****   *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) |= (uint32_t) (OPAMP_PGAGain | OPAMP_PGAConnect
- 197              		.loc 1 220 0
- 198 00ca FA68     		ldr	r2, [r7, #12]
- 199 00cc 4FF03803 		mov	r3, #56
- 200 00d0 C4F20103 		movt	r3, 16385
- 201 00d4 D318     		adds	r3, r2, r3
- 202 00d6 1A46     		mov	r2, r3
- 203 00d8 F968     		ldr	r1, [r7, #12]
- 204 00da 4FF03803 		mov	r3, #56
- 205 00de C4F20103 		movt	r3, 16385
- 206 00e2 CB18     		adds	r3, r1, r3
- 207 00e4 1968     		ldr	r1, [r3, #0]
- 208 00e6 B868     		ldr	r0, [r7, #8]
- 209 00e8 7B68     		ldr	r3, [r7, #4]
- 210 00ea 0343     		orrs	r3, r3, r0
- 211 00ec 0B43     		orrs	r3, r3, r1
- 212 00ee 1360     		str	r3, [r2, #0]
+ 198              		.loc 1 220 0
+ 199 00ca FA68     		ldr	r2, [r7, #12]
+ 200 00cc 4FF03803 		mov	r3, #56
+ 201 00d0 C4F20103 		movt	r3, 16385
+ 202 00d4 D318     		adds	r3, r2, r3
+ 203 00d6 1A46     		mov	r2, r3
+ 204 00d8 F968     		ldr	r1, [r7, #12]
+ 205 00da 4FF03803 		mov	r3, #56
+ 206 00de C4F20103 		movt	r3, 16385
+ 207 00e2 CB18     		adds	r3, r1, r3
+ 208 00e4 1968     		ldr	r1, [r3, #0]
+ 209 00e6 B868     		ldr	r0, [r7, #8]
+ 210 00e8 7B68     		ldr	r3, [r7, #4]
+ 211 00ea 0343     		orrs	r3, r3, r0
+ 212 00ec 0B43     		orrs	r3, r3, r1
+ 213 00ee 1360     		str	r3, [r2, #0]
  221:../src/stm32f30x_opamp.c **** }
- 213              		.loc 1 221 0
- 214 00f0 07F11407 		add	r7, r7, #20
- 215 00f4 BD46     		mov	sp, r7
- 216 00f6 80BC     		pop	{r7}
- 217 00f8 7047     		bx	lr
- 218              		.cfi_endproc
- 219              	.LFE114:
- 221 00fa 00BF     		.align	2
- 222              		.global	OPAMP_VrefConfig
- 223              		.thumb
- 224              		.thumb_func
- 226              	OPAMP_VrefConfig:
- 227              	.LFB115:
+ 214              		.loc 1 221 0
+ 215 00f0 07F11407 		add	r7, r7, #20
+ 216 00f4 BD46     		mov	sp, r7
+ 217 00f6 80BC     		pop	{r7}
+ 218 00f8 7047     		bx	lr
+ 219              		.cfi_endproc
+ 220              	.LFE114:
+ 222 00fa 00BF     		.align	2
+ 223              		.global	OPAMP_VrefConfig
+ 224              		.thumb
+ 225              		.thumb_func
+ 227              	OPAMP_VrefConfig:
+ 228              	.LFB115:
  222:../src/stm32f30x_opamp.c **** 
  223:../src/stm32f30x_opamp.c **** /**
  224:../src/stm32f30x_opamp.c ****   * @brief  Configure the OPAMP's internal reference.
@@ -456,27 +457,27 @@
  238:../src/stm32f30x_opamp.c ****   */
  239:../src/stm32f30x_opamp.c **** void OPAMP_VrefConfig(uint32_t OPAMP_Selection, uint32_t OPAMP_Vref)
  240:../src/stm32f30x_opamp.c **** {
- 228              		.loc 1 240 0
- 229              		.cfi_startproc
- 230              		@ args = 0, pretend = 0, frame = 16
- 231              		@ frame_needed = 1, uses_anonymous_args = 0
- 232              		@ link register save eliminated.
- 233 00fc 80B4     		push	{r7}
- 234              	.LCFI12:
- 235              		.cfi_def_cfa_offset 4
- 236              		.cfi_offset 7, -4
- 237 00fe 85B0     		sub	sp, sp, #20
- 238              	.LCFI13:
- 239              		.cfi_def_cfa_offset 24
- 240 0100 00AF     		add	r7, sp, #0
- 241              	.LCFI14:
- 242              		.cfi_def_cfa_register 7
- 243 0102 7860     		str	r0, [r7, #4]
- 244 0104 3960     		str	r1, [r7, #0]
+ 229              		.loc 1 240 0
+ 230              		.cfi_startproc
+ 231              		@ args = 0, pretend = 0, frame = 16
+ 232              		@ frame_needed = 1, uses_anonymous_args = 0
+ 233              		@ link register save eliminated.
+ 234 00fc 80B4     		push	{r7}
+ 235              	.LCFI12:
+ 236              		.cfi_def_cfa_offset 4
+ 237              		.cfi_offset 7, -4
+ 238 00fe 85B0     		sub	sp, sp, #20
+ 239              	.LCFI13:
+ 240              		.cfi_def_cfa_offset 24
+ 241 0100 00AF     		add	r7, sp, #0
+ 242              	.LCFI14:
+ 243              		.cfi_def_cfa_register 7
+ 244 0102 7860     		str	r0, [r7, #4]
+ 245 0104 3960     		str	r1, [r7, #0]
  241:../src/stm32f30x_opamp.c ****   uint32_t tmpreg = 0;
- 245              		.loc 1 241 0
- 246 0106 4FF00003 		mov	r3, #0
- 247 010a FB60     		str	r3, [r7, #12]
+ 246              		.loc 1 241 0
+ 247 0106 4FF00003 		mov	r3, #0
+ 248 010a FB60     		str	r3, [r7, #12]
  242:../src/stm32f30x_opamp.c **** 
  243:../src/stm32f30x_opamp.c ****   /* Check the parameters */
  244:../src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
@@ -484,52 +485,52 @@
  246:../src/stm32f30x_opamp.c **** 
  247:../src/stm32f30x_opamp.c ****   /*!< Get the OPAMPx_CSR register value */
  248:../src/stm32f30x_opamp.c ****   tmpreg = *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection);
- 248              		.loc 1 248 0
- 249 010c 7A68     		ldr	r2, [r7, #4]
- 250 010e 4FF03803 		mov	r3, #56
- 251 0112 C4F20103 		movt	r3, 16385
- 252 0116 D318     		adds	r3, r2, r3
- 253 0118 1B68     		ldr	r3, [r3, #0]
- 254 011a FB60     		str	r3, [r7, #12]
+ 249              		.loc 1 248 0
+ 250 010c 7A68     		ldr	r2, [r7, #4]
+ 251 010e 4FF03803 		mov	r3, #56
+ 252 0112 C4F20103 		movt	r3, 16385
+ 253 0116 D318     		adds	r3, r2, r3
+ 254 0118 1B68     		ldr	r3, [r3, #0]
+ 255 011a FB60     		str	r3, [r7, #12]
  249:../src/stm32f30x_opamp.c **** 
  250:../src/stm32f30x_opamp.c ****   /*!< Clear the CALSEL bits */
  251:../src/stm32f30x_opamp.c ****   tmpreg &= (uint32_t) (~OPAMP_CSR_CALSEL);
- 255              		.loc 1 251 0
- 256 011c FB68     		ldr	r3, [r7, #12]
- 257 011e 23F44053 		bic	r3, r3, #12288
- 258 0122 FB60     		str	r3, [r7, #12]
+ 256              		.loc 1 251 0
+ 257 011c FB68     		ldr	r3, [r7, #12]
+ 258 011e 23F44053 		bic	r3, r3, #12288
+ 259 0122 FB60     		str	r3, [r7, #12]
  252:../src/stm32f30x_opamp.c **** 
  253:../src/stm32f30x_opamp.c ****   /*!< Configure OPAMP reference */
  254:../src/stm32f30x_opamp.c ****   tmpreg |= (uint32_t)(OPAMP_Vref);
- 259              		.loc 1 254 0
- 260 0124 FA68     		ldr	r2, [r7, #12]
- 261 0126 3B68     		ldr	r3, [r7, #0]
- 262 0128 1343     		orrs	r3, r3, r2
- 263 012a FB60     		str	r3, [r7, #12]
+ 260              		.loc 1 254 0
+ 261 0124 FA68     		ldr	r2, [r7, #12]
+ 262 0126 3B68     		ldr	r3, [r7, #0]
+ 263 0128 1343     		orrs	r3, r3, r2
+ 264 012a FB60     		str	r3, [r7, #12]
  255:../src/stm32f30x_opamp.c **** 
  256:../src/stm32f30x_opamp.c ****   /*!< Write to OPAMPx_CSR register */
  257:../src/stm32f30x_opamp.c ****   *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) = tmpreg;
- 264              		.loc 1 257 0
- 265 012c 7A68     		ldr	r2, [r7, #4]
- 266 012e 4FF03803 		mov	r3, #56
- 267 0132 C4F20103 		movt	r3, 16385
- 268 0136 D318     		adds	r3, r2, r3
- 269 0138 FA68     		ldr	r2, [r7, #12]
- 270 013a 1A60     		str	r2, [r3, #0]
+ 265              		.loc 1 257 0
+ 266 012c 7A68     		ldr	r2, [r7, #4]
+ 267 012e 4FF03803 		mov	r3, #56
+ 268 0132 C4F20103 		movt	r3, 16385
+ 269 0136 D318     		adds	r3, r2, r3
+ 270 0138 FA68     		ldr	r2, [r7, #12]
+ 271 013a 1A60     		str	r2, [r3, #0]
  258:../src/stm32f30x_opamp.c **** }
- 271              		.loc 1 258 0
- 272 013c 07F11407 		add	r7, r7, #20
- 273 0140 BD46     		mov	sp, r7
- 274 0142 80BC     		pop	{r7}
- 275 0144 7047     		bx	lr
- 276              		.cfi_endproc
- 277              	.LFE115:
- 279 0146 00BF     		.align	2
- 280              		.global	OPAMP_VrefConnectNonInvertingInput
- 281              		.thumb
- 282              		.thumb_func
- 284              	OPAMP_VrefConnectNonInvertingInput:
- 285              	.LFB116:
+ 272              		.loc 1 258 0
+ 273 013c 07F11407 		add	r7, r7, #20
+ 274 0140 BD46     		mov	sp, r7
+ 275 0142 80BC     		pop	{r7}
+ 276 0144 7047     		bx	lr
+ 277              		.cfi_endproc
+ 278              	.LFE115:
+ 280 0146 00BF     		.align	2
+ 281              		.global	OPAMP_VrefConnectNonInvertingInput
+ 282              		.thumb
+ 283              		.thumb_func
+ 285              	OPAMP_VrefConnectNonInvertingInput:
+ 286              	.LFB116:
  259:../src/stm32f30x_opamp.c **** 
  260:../src/stm32f30x_opamp.c **** /**
  261:../src/stm32f30x_opamp.c ****   * @brief  Connnect the internal reference to the OPAMP's non inverting input.
@@ -544,85 +545,85 @@
  270:../src/stm32f30x_opamp.c ****   */
  271:../src/stm32f30x_opamp.c **** void OPAMP_VrefConnectNonInvertingInput(uint32_t OPAMP_Selection, FunctionalState NewState)
  272:../src/stm32f30x_opamp.c **** {
- 286              		.loc 1 272 0
- 287              		.cfi_startproc
- 288              		@ args = 0, pretend = 0, frame = 8
- 289              		@ frame_needed = 1, uses_anonymous_args = 0
- 290              		@ link register save eliminated.
- 291 0148 80B4     		push	{r7}
- 292              	.LCFI15:
- 293              		.cfi_def_cfa_offset 4
- 294              		.cfi_offset 7, -4
- 295 014a 83B0     		sub	sp, sp, #12
- 296              	.LCFI16:
- 297              		.cfi_def_cfa_offset 16
- 298 014c 00AF     		add	r7, sp, #0
- 299              	.LCFI17:
- 300              		.cfi_def_cfa_register 7
- 301 014e 7860     		str	r0, [r7, #4]
- 302 0150 0B46     		mov	r3, r1
- 303 0152 FB70     		strb	r3, [r7, #3]
+ 287              		.loc 1 272 0
+ 288              		.cfi_startproc
+ 289              		@ args = 0, pretend = 0, frame = 8
+ 290              		@ frame_needed = 1, uses_anonymous_args = 0
+ 291              		@ link register save eliminated.
+ 292 0148 80B4     		push	{r7}
+ 293              	.LCFI15:
+ 294              		.cfi_def_cfa_offset 4
+ 295              		.cfi_offset 7, -4
+ 296 014a 83B0     		sub	sp, sp, #12
+ 297              	.LCFI16:
+ 298              		.cfi_def_cfa_offset 16
+ 299 014c 00AF     		add	r7, sp, #0
+ 300              	.LCFI17:
+ 301              		.cfi_def_cfa_register 7
+ 302 014e 7860     		str	r0, [r7, #4]
+ 303 0150 0B46     		mov	r3, r1
+ 304 0152 FB70     		strb	r3, [r7, #3]
  273:../src/stm32f30x_opamp.c ****   /* Check the parameters */
  274:../src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
  275:../src/stm32f30x_opamp.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
  276:../src/stm32f30x_opamp.c **** 
  277:../src/stm32f30x_opamp.c ****   if (NewState != DISABLE)
- 304              		.loc 1 277 0
- 305 0154 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
- 306 0156 002B     		cmp	r3, #0
- 307 0158 11D0     		beq	.L7
+ 305              		.loc 1 277 0
+ 306 0154 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 307 0156 002B     		cmp	r3, #0
+ 308 0158 11D0     		beq	.L7
  278:../src/stm32f30x_opamp.c ****   {
  279:../src/stm32f30x_opamp.c ****     /* Connnect the internal reference to the OPAMP's non inverting input */
  280:../src/stm32f30x_opamp.c ****     *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) |= (uint32_t) (OPAMP_CSR_FORCEVP);
- 308              		.loc 1 280 0
- 309 015a 7A68     		ldr	r2, [r7, #4]
- 310 015c 4FF03803 		mov	r3, #56
- 311 0160 C4F20103 		movt	r3, 16385
- 312 0164 D318     		adds	r3, r2, r3
- 313 0166 1A46     		mov	r2, r3
- 314 0168 7968     		ldr	r1, [r7, #4]
- 315 016a 4FF03803 		mov	r3, #56
- 316 016e C4F20103 		movt	r3, 16385
- 317 0172 CB18     		adds	r3, r1, r3
- 318 0174 1B68     		ldr	r3, [r3, #0]
- 319 0176 43F00203 		orr	r3, r3, #2
- 320 017a 1360     		str	r3, [r2, #0]
- 321 017c 10E0     		b	.L6
- 322              	.L7:
+ 309              		.loc 1 280 0
+ 310 015a 7A68     		ldr	r2, [r7, #4]
+ 311 015c 4FF03803 		mov	r3, #56
+ 312 0160 C4F20103 		movt	r3, 16385
+ 313 0164 D318     		adds	r3, r2, r3
+ 314 0166 1A46     		mov	r2, r3
+ 315 0168 7968     		ldr	r1, [r7, #4]
+ 316 016a 4FF03803 		mov	r3, #56
+ 317 016e C4F20103 		movt	r3, 16385
+ 318 0172 CB18     		adds	r3, r1, r3
+ 319 0174 1B68     		ldr	r3, [r3, #0]
+ 320 0176 43F00203 		orr	r3, r3, #2
+ 321 017a 1360     		str	r3, [r2, #0]
+ 322 017c 10E0     		b	.L6
+ 323              	.L7:
  281:../src/stm32f30x_opamp.c ****   }
  282:../src/stm32f30x_opamp.c ****   else
  283:../src/stm32f30x_opamp.c ****   {
  284:../src/stm32f30x_opamp.c ****     /* Disconnnect the internal reference to the OPAMP's non inverting input */
  285:../src/stm32f30x_opamp.c ****     *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) &= (uint32_t)(~OPAMP_CSR_FORCEVP);
- 323              		.loc 1 285 0
- 324 017e 7A68     		ldr	r2, [r7, #4]
- 325 0180 4FF03803 		mov	r3, #56
- 326 0184 C4F20103 		movt	r3, 16385
- 327 0188 D318     		adds	r3, r2, r3
- 328 018a 1A46     		mov	r2, r3
- 329 018c 7968     		ldr	r1, [r7, #4]
- 330 018e 4FF03803 		mov	r3, #56
- 331 0192 C4F20103 		movt	r3, 16385
- 332 0196 CB18     		adds	r3, r1, r3
- 333 0198 1B68     		ldr	r3, [r3, #0]
- 334 019a 23F00203 		bic	r3, r3, #2
- 335 019e 1360     		str	r3, [r2, #0]
- 336              	.L6:
+ 324              		.loc 1 285 0
+ 325 017e 7A68     		ldr	r2, [r7, #4]
+ 326 0180 4FF03803 		mov	r3, #56
+ 327 0184 C4F20103 		movt	r3, 16385
+ 328 0188 D318     		adds	r3, r2, r3
+ 329 018a 1A46     		mov	r2, r3
+ 330 018c 7968     		ldr	r1, [r7, #4]
+ 331 018e 4FF03803 		mov	r3, #56
+ 332 0192 C4F20103 		movt	r3, 16385
+ 333 0196 CB18     		adds	r3, r1, r3
+ 334 0198 1B68     		ldr	r3, [r3, #0]
+ 335 019a 23F00203 		bic	r3, r3, #2
+ 336 019e 1360     		str	r3, [r2, #0]
+ 337              	.L6:
  286:../src/stm32f30x_opamp.c ****   }
  287:../src/stm32f30x_opamp.c **** }
- 337              		.loc 1 287 0
- 338 01a0 07F10C07 		add	r7, r7, #12
- 339 01a4 BD46     		mov	sp, r7
- 340 01a6 80BC     		pop	{r7}
- 341 01a8 7047     		bx	lr
- 342              		.cfi_endproc
- 343              	.LFE116:
- 345 01aa 00BF     		.align	2
- 346              		.global	OPAMP_VrefConnectADCCmd
- 347              		.thumb
- 348              		.thumb_func
- 350              	OPAMP_VrefConnectADCCmd:
- 351              	.LFB117:
+ 338              		.loc 1 287 0
+ 339 01a0 07F10C07 		add	r7, r7, #12
+ 340 01a4 BD46     		mov	sp, r7
+ 341 01a6 80BC     		pop	{r7}
+ 342 01a8 7047     		bx	lr
+ 343              		.cfi_endproc
+ 344              	.LFE116:
+ 346 01aa 00BF     		.align	2
+ 347              		.global	OPAMP_VrefConnectADCCmd
+ 348              		.thumb
+ 349              		.thumb_func
+ 351              	OPAMP_VrefConnectADCCmd:
+ 352              	.LFB117:
  288:../src/stm32f30x_opamp.c **** 
  289:../src/stm32f30x_opamp.c **** /**
  290:../src/stm32f30x_opamp.c ****   * @brief  Enables or disables connecting the OPAMP's internal reference to ADC.
@@ -634,85 +635,85 @@
  296:../src/stm32f30x_opamp.c ****   */
  297:../src/stm32f30x_opamp.c **** void OPAMP_VrefConnectADCCmd(uint32_t OPAMP_Selection, FunctionalState NewState)
  298:../src/stm32f30x_opamp.c **** {
- 352              		.loc 1 298 0
- 353              		.cfi_startproc
- 354              		@ args = 0, pretend = 0, frame = 8
- 355              		@ frame_needed = 1, uses_anonymous_args = 0
- 356              		@ link register save eliminated.
- 357 01ac 80B4     		push	{r7}
- 358              	.LCFI18:
- 359              		.cfi_def_cfa_offset 4
- 360              		.cfi_offset 7, -4
- 361 01ae 83B0     		sub	sp, sp, #12
- 362              	.LCFI19:
- 363              		.cfi_def_cfa_offset 16
- 364 01b0 00AF     		add	r7, sp, #0
- 365              	.LCFI20:
- 366              		.cfi_def_cfa_register 7
- 367 01b2 7860     		str	r0, [r7, #4]
- 368 01b4 0B46     		mov	r3, r1
- 369 01b6 FB70     		strb	r3, [r7, #3]
+ 353              		.loc 1 298 0
+ 354              		.cfi_startproc
+ 355              		@ args = 0, pretend = 0, frame = 8
+ 356              		@ frame_needed = 1, uses_anonymous_args = 0
+ 357              		@ link register save eliminated.
+ 358 01ac 80B4     		push	{r7}
+ 359              	.LCFI18:
+ 360              		.cfi_def_cfa_offset 4
+ 361              		.cfi_offset 7, -4
+ 362 01ae 83B0     		sub	sp, sp, #12
+ 363              	.LCFI19:
+ 364              		.cfi_def_cfa_offset 16
+ 365 01b0 00AF     		add	r7, sp, #0
+ 366              	.LCFI20:
+ 367              		.cfi_def_cfa_register 7
+ 368 01b2 7860     		str	r0, [r7, #4]
+ 369 01b4 0B46     		mov	r3, r1
+ 370 01b6 FB70     		strb	r3, [r7, #3]
  299:../src/stm32f30x_opamp.c ****   /* Check the parameters */
  300:../src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
  301:../src/stm32f30x_opamp.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
  302:../src/stm32f30x_opamp.c **** 
  303:../src/stm32f30x_opamp.c ****   if (NewState != DISABLE)
- 370              		.loc 1 303 0
- 371 01b8 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
- 372 01ba 002B     		cmp	r3, #0
- 373 01bc 11D0     		beq	.L10
+ 371              		.loc 1 303 0
+ 372 01b8 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 373 01ba 002B     		cmp	r3, #0
+ 374 01bc 11D0     		beq	.L10
  304:../src/stm32f30x_opamp.c ****   {
  305:../src/stm32f30x_opamp.c ****     /* Enable output internal reference */
  306:../src/stm32f30x_opamp.c ****     *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) |= (uint32_t) (OPAMP_CSR_TSTREF);
- 374              		.loc 1 306 0
- 375 01be 7A68     		ldr	r2, [r7, #4]
- 376 01c0 4FF03803 		mov	r3, #56
- 377 01c4 C4F20103 		movt	r3, 16385
- 378 01c8 D318     		adds	r3, r2, r3
- 379 01ca 1A46     		mov	r2, r3
- 380 01cc 7968     		ldr	r1, [r7, #4]
- 381 01ce 4FF03803 		mov	r3, #56
- 382 01d2 C4F20103 		movt	r3, 16385
- 383 01d6 CB18     		adds	r3, r1, r3
- 384 01d8 1B68     		ldr	r3, [r3, #0]
- 385 01da 43F00053 		orr	r3, r3, #536870912
- 386 01de 1360     		str	r3, [r2, #0]
- 387 01e0 10E0     		b	.L9
- 388              	.L10:
+ 375              		.loc 1 306 0
+ 376 01be 7A68     		ldr	r2, [r7, #4]
+ 377 01c0 4FF03803 		mov	r3, #56
+ 378 01c4 C4F20103 		movt	r3, 16385
+ 379 01c8 D318     		adds	r3, r2, r3
+ 380 01ca 1A46     		mov	r2, r3
+ 381 01cc 7968     		ldr	r1, [r7, #4]
+ 382 01ce 4FF03803 		mov	r3, #56
+ 383 01d2 C4F20103 		movt	r3, 16385
+ 384 01d6 CB18     		adds	r3, r1, r3
+ 385 01d8 1B68     		ldr	r3, [r3, #0]
+ 386 01da 43F00053 		orr	r3, r3, #536870912
+ 387 01de 1360     		str	r3, [r2, #0]
+ 388 01e0 10E0     		b	.L9
+ 389              	.L10:
  307:../src/stm32f30x_opamp.c ****   }
  308:../src/stm32f30x_opamp.c ****   else
  309:../src/stm32f30x_opamp.c ****   {
  310:../src/stm32f30x_opamp.c ****     /* Disable output internal reference */
  311:../src/stm32f30x_opamp.c ****     *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) &= (uint32_t)(~OPAMP_CSR_TSTREF);
- 389              		.loc 1 311 0
- 390 01e2 7A68     		ldr	r2, [r7, #4]
- 391 01e4 4FF03803 		mov	r3, #56
- 392 01e8 C4F20103 		movt	r3, 16385
- 393 01ec D318     		adds	r3, r2, r3
- 394 01ee 1A46     		mov	r2, r3
- 395 01f0 7968     		ldr	r1, [r7, #4]
- 396 01f2 4FF03803 		mov	r3, #56
- 397 01f6 C4F20103 		movt	r3, 16385
- 398 01fa CB18     		adds	r3, r1, r3
- 399 01fc 1B68     		ldr	r3, [r3, #0]
- 400 01fe 23F00053 		bic	r3, r3, #536870912
- 401 0202 1360     		str	r3, [r2, #0]
- 402              	.L9:
+ 390              		.loc 1 311 0
+ 391 01e2 7A68     		ldr	r2, [r7, #4]
+ 392 01e4 4FF03803 		mov	r3, #56
+ 393 01e8 C4F20103 		movt	r3, 16385
+ 394 01ec D318     		adds	r3, r2, r3
+ 395 01ee 1A46     		mov	r2, r3
+ 396 01f0 7968     		ldr	r1, [r7, #4]
+ 397 01f2 4FF03803 		mov	r3, #56
+ 398 01f6 C4F20103 		movt	r3, 16385
+ 399 01fa CB18     		adds	r3, r1, r3
+ 400 01fc 1B68     		ldr	r3, [r3, #0]
+ 401 01fe 23F00053 		bic	r3, r3, #536870912
+ 402 0202 1360     		str	r3, [r2, #0]
+ 403              	.L9:
  312:../src/stm32f30x_opamp.c ****   }
  313:../src/stm32f30x_opamp.c **** }
- 403              		.loc 1 313 0
- 404 0204 07F10C07 		add	r7, r7, #12
- 405 0208 BD46     		mov	sp, r7
- 406 020a 80BC     		pop	{r7}
- 407 020c 7047     		bx	lr
- 408              		.cfi_endproc
- 409              	.LFE117:
- 411 020e 00BF     		.align	2
- 412              		.global	OPAMP_TimerControlledMuxConfig
- 413              		.thumb
- 414              		.thumb_func
- 416              	OPAMP_TimerControlledMuxConfig:
- 417              	.LFB118:
+ 404              		.loc 1 313 0
+ 405 0204 07F10C07 		add	r7, r7, #12
+ 406 0208 BD46     		mov	sp, r7
+ 407 020a 80BC     		pop	{r7}
+ 408 020c 7047     		bx	lr
+ 409              		.cfi_endproc
+ 410              	.LFE117:
+ 412 020e 00BF     		.align	2
+ 413              		.global	OPAMP_TimerControlledMuxConfig
+ 414              		.thumb
+ 415              		.thumb_func
+ 417              	OPAMP_TimerControlledMuxConfig:
+ 418              	.LFB118:
  314:../src/stm32f30x_opamp.c **** 
  315:../src/stm32f30x_opamp.c **** /**
  316:../src/stm32f30x_opamp.c ****   * @brief  Configure the OPAMP peripheral (secondary inputs) for timer-controlled
@@ -732,27 +733,27 @@
  330:../src/stm32f30x_opamp.c ****   */
  331:../src/stm32f30x_opamp.c **** void OPAMP_TimerControlledMuxConfig(uint32_t OPAMP_Selection, OPAMP_InitTypeDef* OPAMP_InitStruct)
  332:../src/stm32f30x_opamp.c **** {
- 418              		.loc 1 332 0
- 419              		.cfi_startproc
- 420              		@ args = 0, pretend = 0, frame = 16
- 421              		@ frame_needed = 1, uses_anonymous_args = 0
- 422              		@ link register save eliminated.
- 423 0210 80B4     		push	{r7}
- 424              	.LCFI21:
- 425              		.cfi_def_cfa_offset 4
- 426              		.cfi_offset 7, -4
- 427 0212 85B0     		sub	sp, sp, #20
- 428              	.LCFI22:
- 429              		.cfi_def_cfa_offset 24
- 430 0214 00AF     		add	r7, sp, #0
- 431              	.LCFI23:
- 432              		.cfi_def_cfa_register 7
- 433 0216 7860     		str	r0, [r7, #4]
- 434 0218 3960     		str	r1, [r7, #0]
+ 419              		.loc 1 332 0
+ 420              		.cfi_startproc
+ 421              		@ args = 0, pretend = 0, frame = 16
+ 422              		@ frame_needed = 1, uses_anonymous_args = 0
+ 423              		@ link register save eliminated.
+ 424 0210 80B4     		push	{r7}
+ 425              	.LCFI21:
+ 426              		.cfi_def_cfa_offset 4
+ 427              		.cfi_offset 7, -4
+ 428 0212 85B0     		sub	sp, sp, #20
+ 429              	.LCFI22:
+ 430              		.cfi_def_cfa_offset 24
+ 431 0214 00AF     		add	r7, sp, #0
+ 432              	.LCFI23:
+ 433              		.cfi_def_cfa_register 7
+ 434 0216 7860     		str	r0, [r7, #4]
+ 435 0218 3960     		str	r1, [r7, #0]
  333:../src/stm32f30x_opamp.c ****   uint32_t tmpreg = 0;
- 435              		.loc 1 333 0
- 436 021a 4FF00003 		mov	r3, #0
- 437 021e FB60     		str	r3, [r7, #12]
+ 436              		.loc 1 333 0
+ 437 021a 4FF00003 		mov	r3, #0
+ 438 021e FB60     		str	r3, [r7, #12]
  334:../src/stm32f30x_opamp.c **** 
  335:../src/stm32f30x_opamp.c ****   /* Check the parameters */
  336:../src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
@@ -761,58 +762,58 @@
  339:../src/stm32f30x_opamp.c **** 
  340:../src/stm32f30x_opamp.c ****   /*!< Get the OPAMPx_CSR register value */
  341:../src/stm32f30x_opamp.c ****   tmpreg = *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection);
- 438              		.loc 1 341 0
- 439 0220 7A68     		ldr	r2, [r7, #4]
- 440 0222 4FF03803 		mov	r3, #56
- 441 0226 C4F20103 		movt	r3, 16385
- 442 022a D318     		adds	r3, r2, r3
- 443 022c 1B68     		ldr	r3, [r3, #0]
- 444 022e FB60     		str	r3, [r7, #12]
+ 439              		.loc 1 341 0
+ 440 0220 7A68     		ldr	r2, [r7, #4]
+ 441 0222 4FF03803 		mov	r3, #56
+ 442 0226 C4F20103 		movt	r3, 16385
+ 443 022a D318     		adds	r3, r2, r3
+ 444 022c 1B68     		ldr	r3, [r3, #0]
+ 445 022e FB60     		str	r3, [r7, #12]
  342:../src/stm32f30x_opamp.c **** 
  343:../src/stm32f30x_opamp.c ****   /*!< Clear the secondary inverting bit, secondary non inverting bit and TCMEN bits */
  344:../src/stm32f30x_opamp.c ****   tmpreg &= (uint32_t) (OPAMP_CSR_TIMERMUX_MASK);
- 445              		.loc 1 344 0
- 446 0230 FB68     		ldr	r3, [r7, #12]
- 447 0232 23F4E063 		bic	r3, r3, #1792
- 448 0236 FB60     		str	r3, [r7, #12]
+ 446              		.loc 1 344 0
+ 447 0230 FB68     		ldr	r3, [r7, #12]
+ 448 0232 23F4E063 		bic	r3, r3, #1792
+ 449 0236 FB60     		str	r3, [r7, #12]
  345:../src/stm32f30x_opamp.c **** 
  346:../src/stm32f30x_opamp.c ****   /*!< Configure OPAMP: secondary inverting and non inverting inputs */
  347:../src/stm32f30x_opamp.c ****   tmpreg |= (uint32_t)((uint32_t)(OPAMP_InitStruct->OPAMP_InvertingInput<<3) | (uint32_t)(OPAMP_Ini
- 449              		.loc 1 347 0
- 450 0238 3B68     		ldr	r3, [r7, #0]
- 451 023a 1B68     		ldr	r3, [r3, #0]
- 452 023c 4FEAC302 		lsl	r2, r3, #3
- 453 0240 3B68     		ldr	r3, [r7, #0]
- 454 0242 5B68     		ldr	r3, [r3, #4]
- 455 0244 4FEAC313 		lsl	r3, r3, #7
- 456 0248 1343     		orrs	r3, r3, r2
- 457 024a FA68     		ldr	r2, [r7, #12]
- 458 024c 1343     		orrs	r3, r3, r2
- 459 024e FB60     		str	r3, [r7, #12]
+ 450              		.loc 1 347 0
+ 451 0238 3B68     		ldr	r3, [r7, #0]
+ 452 023a 1B68     		ldr	r3, [r3, #0]
+ 453 023c 4FEAC302 		lsl	r2, r3, #3
+ 454 0240 3B68     		ldr	r3, [r7, #0]
+ 455 0242 5B68     		ldr	r3, [r3, #4]
+ 456 0244 4FEAC313 		lsl	r3, r3, #7
+ 457 0248 1343     		orrs	r3, r3, r2
+ 458 024a FA68     		ldr	r2, [r7, #12]
+ 459 024c 1343     		orrs	r3, r3, r2
+ 460 024e FB60     		str	r3, [r7, #12]
  348:../src/stm32f30x_opamp.c **** 
  349:../src/stm32f30x_opamp.c ****   /*!< Write to OPAMPx_CSR register */
  350:../src/stm32f30x_opamp.c ****   *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) = tmpreg;
- 460              		.loc 1 350 0
- 461 0250 7A68     		ldr	r2, [r7, #4]
- 462 0252 4FF03803 		mov	r3, #56
- 463 0256 C4F20103 		movt	r3, 16385
- 464 025a D318     		adds	r3, r2, r3
- 465 025c FA68     		ldr	r2, [r7, #12]
- 466 025e 1A60     		str	r2, [r3, #0]
+ 461              		.loc 1 350 0
+ 462 0250 7A68     		ldr	r2, [r7, #4]
+ 463 0252 4FF03803 		mov	r3, #56
+ 464 0256 C4F20103 		movt	r3, 16385
+ 465 025a D318     		adds	r3, r2, r3
+ 466 025c FA68     		ldr	r2, [r7, #12]
+ 467 025e 1A60     		str	r2, [r3, #0]
  351:../src/stm32f30x_opamp.c **** }
- 467              		.loc 1 351 0
- 468 0260 07F11407 		add	r7, r7, #20
- 469 0264 BD46     		mov	sp, r7
- 470 0266 80BC     		pop	{r7}
- 471 0268 7047     		bx	lr
- 472              		.cfi_endproc
- 473              	.LFE118:
- 475 026a 00BF     		.align	2
- 476              		.global	OPAMP_TimerControlledMuxCmd
- 477              		.thumb
- 478              		.thumb_func
- 480              	OPAMP_TimerControlledMuxCmd:
- 481              	.LFB119:
+ 468              		.loc 1 351 0
+ 469 0260 07F11407 		add	r7, r7, #20
+ 470 0264 BD46     		mov	sp, r7
+ 471 0266 80BC     		pop	{r7}
+ 472 0268 7047     		bx	lr
+ 473              		.cfi_endproc
+ 474              	.LFE118:
+ 476 026a 00BF     		.align	2
+ 477              		.global	OPAMP_TimerControlledMuxCmd
+ 478              		.thumb
+ 479              		.thumb_func
+ 481              	OPAMP_TimerControlledMuxCmd:
+ 482              	.LFB119:
  352:../src/stm32f30x_opamp.c **** 
  353:../src/stm32f30x_opamp.c **** /**
  354:../src/stm32f30x_opamp.c ****   * @brief  Enable or disable the timer-controlled mux mode.
@@ -827,85 +828,85 @@
  363:../src/stm32f30x_opamp.c ****   */
  364:../src/stm32f30x_opamp.c **** void OPAMP_TimerControlledMuxCmd(uint32_t OPAMP_Selection, FunctionalState NewState)
  365:../src/stm32f30x_opamp.c **** {
- 482              		.loc 1 365 0
- 483              		.cfi_startproc
- 484              		@ args = 0, pretend = 0, frame = 8
- 485              		@ frame_needed = 1, uses_anonymous_args = 0
- 486              		@ link register save eliminated.
- 487 026c 80B4     		push	{r7}
- 488              	.LCFI24:
- 489              		.cfi_def_cfa_offset 4
- 490              		.cfi_offset 7, -4
- 491 026e 83B0     		sub	sp, sp, #12
- 492              	.LCFI25:
- 493              		.cfi_def_cfa_offset 16
- 494 0270 00AF     		add	r7, sp, #0
- 495              	.LCFI26:
- 496              		.cfi_def_cfa_register 7
- 497 0272 7860     		str	r0, [r7, #4]
- 498 0274 0B46     		mov	r3, r1
- 499 0276 FB70     		strb	r3, [r7, #3]
+ 483              		.loc 1 365 0
+ 484              		.cfi_startproc
+ 485              		@ args = 0, pretend = 0, frame = 8
+ 486              		@ frame_needed = 1, uses_anonymous_args = 0
+ 487              		@ link register save eliminated.
+ 488 026c 80B4     		push	{r7}
+ 489              	.LCFI24:
+ 490              		.cfi_def_cfa_offset 4
+ 491              		.cfi_offset 7, -4
+ 492 026e 83B0     		sub	sp, sp, #12
+ 493              	.LCFI25:
+ 494              		.cfi_def_cfa_offset 16
+ 495 0270 00AF     		add	r7, sp, #0
+ 496              	.LCFI26:
+ 497              		.cfi_def_cfa_register 7
+ 498 0272 7860     		str	r0, [r7, #4]
+ 499 0274 0B46     		mov	r3, r1
+ 500 0276 FB70     		strb	r3, [r7, #3]
  366:../src/stm32f30x_opamp.c ****   /* Check the parameters */
  367:../src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
  368:../src/stm32f30x_opamp.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
  369:../src/stm32f30x_opamp.c **** 
  370:../src/stm32f30x_opamp.c ****   if (NewState != DISABLE)
- 500              		.loc 1 370 0
- 501 0278 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
- 502 027a 002B     		cmp	r3, #0
- 503 027c 11D0     		beq	.L14
+ 501              		.loc 1 370 0
+ 502 0278 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 503 027a 002B     		cmp	r3, #0
+ 504 027c 11D0     		beq	.L14
  371:../src/stm32f30x_opamp.c ****   {
  372:../src/stm32f30x_opamp.c ****     /* Enable the timer-controlled Mux mode */
  373:../src/stm32f30x_opamp.c ****     *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) |= (uint32_t) (OPAMP_CSR_TCMEN);
- 504              		.loc 1 373 0
- 505 027e 7A68     		ldr	r2, [r7, #4]
- 506 0280 4FF03803 		mov	r3, #56
- 507 0284 C4F20103 		movt	r3, 16385
- 508 0288 D318     		adds	r3, r2, r3
- 509 028a 1A46     		mov	r2, r3
- 510 028c 7968     		ldr	r1, [r7, #4]
- 511 028e 4FF03803 		mov	r3, #56
- 512 0292 C4F20103 		movt	r3, 16385
- 513 0296 CB18     		adds	r3, r1, r3
- 514 0298 1B68     		ldr	r3, [r3, #0]
- 515 029a 43F08003 		orr	r3, r3, #128
- 516 029e 1360     		str	r3, [r2, #0]
- 517 02a0 10E0     		b	.L13
- 518              	.L14:
+ 505              		.loc 1 373 0
+ 506 027e 7A68     		ldr	r2, [r7, #4]
+ 507 0280 4FF03803 		mov	r3, #56
+ 508 0284 C4F20103 		movt	r3, 16385
+ 509 0288 D318     		adds	r3, r2, r3
+ 510 028a 1A46     		mov	r2, r3
+ 511 028c 7968     		ldr	r1, [r7, #4]
+ 512 028e 4FF03803 		mov	r3, #56
+ 513 0292 C4F20103 		movt	r3, 16385
+ 514 0296 CB18     		adds	r3, r1, r3
+ 515 0298 1B68     		ldr	r3, [r3, #0]
+ 516 029a 43F08003 		orr	r3, r3, #128
+ 517 029e 1360     		str	r3, [r2, #0]
+ 518 02a0 10E0     		b	.L13
+ 519              	.L14:
  374:../src/stm32f30x_opamp.c ****   }
  375:../src/stm32f30x_opamp.c ****   else
  376:../src/stm32f30x_opamp.c ****   {
  377:../src/stm32f30x_opamp.c ****     /* Disable the timer-controlled Mux mode */
  378:../src/stm32f30x_opamp.c ****     *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) &= (uint32_t)(~OPAMP_CSR_TCMEN);
- 519              		.loc 1 378 0
- 520 02a2 7A68     		ldr	r2, [r7, #4]
- 521 02a4 4FF03803 		mov	r3, #56
- 522 02a8 C4F20103 		movt	r3, 16385
- 523 02ac D318     		adds	r3, r2, r3
- 524 02ae 1A46     		mov	r2, r3
- 525 02b0 7968     		ldr	r1, [r7, #4]
- 526 02b2 4FF03803 		mov	r3, #56
- 527 02b6 C4F20103 		movt	r3, 16385
- 528 02ba CB18     		adds	r3, r1, r3
- 529 02bc 1B68     		ldr	r3, [r3, #0]
- 530 02be 23F08003 		bic	r3, r3, #128
- 531 02c2 1360     		str	r3, [r2, #0]
- 532              	.L13:
+ 520              		.loc 1 378 0
+ 521 02a2 7A68     		ldr	r2, [r7, #4]
+ 522 02a4 4FF03803 		mov	r3, #56
+ 523 02a8 C4F20103 		movt	r3, 16385
+ 524 02ac D318     		adds	r3, r2, r3
+ 525 02ae 1A46     		mov	r2, r3
+ 526 02b0 7968     		ldr	r1, [r7, #4]
+ 527 02b2 4FF03803 		mov	r3, #56
+ 528 02b6 C4F20103 		movt	r3, 16385
+ 529 02ba CB18     		adds	r3, r1, r3
+ 530 02bc 1B68     		ldr	r3, [r3, #0]
+ 531 02be 23F08003 		bic	r3, r3, #128
+ 532 02c2 1360     		str	r3, [r2, #0]
+ 533              	.L13:
  379:../src/stm32f30x_opamp.c ****   }
  380:../src/stm32f30x_opamp.c **** }
- 533              		.loc 1 380 0
- 534 02c4 07F10C07 		add	r7, r7, #12
- 535 02c8 BD46     		mov	sp, r7
- 536 02ca 80BC     		pop	{r7}
- 537 02cc 7047     		bx	lr
- 538              		.cfi_endproc
- 539              	.LFE119:
- 541 02ce 00BF     		.align	2
- 542              		.global	OPAMP_Cmd
- 543              		.thumb
- 544              		.thumb_func
- 546              	OPAMP_Cmd:
- 547              	.LFB120:
+ 534              		.loc 1 380 0
+ 535 02c4 07F10C07 		add	r7, r7, #12
+ 536 02c8 BD46     		mov	sp, r7
+ 537 02ca 80BC     		pop	{r7}
+ 538 02cc 7047     		bx	lr
+ 539              		.cfi_endproc
+ 540              	.LFE119:
+ 542 02ce 00BF     		.align	2
+ 543              		.global	OPAMP_Cmd
+ 544              		.thumb
+ 545              		.thumb_func
+ 547              	OPAMP_Cmd:
+ 548              	.LFB120:
  381:../src/stm32f30x_opamp.c **** 
  382:../src/stm32f30x_opamp.c **** /**
  383:../src/stm32f30x_opamp.c ****   * @brief  Enable or disable the OPAMP peripheral.
@@ -920,85 +921,85 @@
  392:../src/stm32f30x_opamp.c ****   */
  393:../src/stm32f30x_opamp.c **** void OPAMP_Cmd(uint32_t OPAMP_Selection, FunctionalState NewState)
  394:../src/stm32f30x_opamp.c **** {
- 548              		.loc 1 394 0
- 549              		.cfi_startproc
- 550              		@ args = 0, pretend = 0, frame = 8
- 551              		@ frame_needed = 1, uses_anonymous_args = 0
- 552              		@ link register save eliminated.
- 553 02d0 80B4     		push	{r7}
- 554              	.LCFI27:
- 555              		.cfi_def_cfa_offset 4
- 556              		.cfi_offset 7, -4
- 557 02d2 83B0     		sub	sp, sp, #12
- 558              	.LCFI28:
- 559              		.cfi_def_cfa_offset 16
- 560 02d4 00AF     		add	r7, sp, #0
- 561              	.LCFI29:
- 562              		.cfi_def_cfa_register 7
- 563 02d6 7860     		str	r0, [r7, #4]
- 564 02d8 0B46     		mov	r3, r1
- 565 02da FB70     		strb	r3, [r7, #3]
+ 549              		.loc 1 394 0
+ 550              		.cfi_startproc
+ 551              		@ args = 0, pretend = 0, frame = 8
+ 552              		@ frame_needed = 1, uses_anonymous_args = 0
+ 553              		@ link register save eliminated.
+ 554 02d0 80B4     		push	{r7}
+ 555              	.LCFI27:
+ 556              		.cfi_def_cfa_offset 4
+ 557              		.cfi_offset 7, -4
+ 558 02d2 83B0     		sub	sp, sp, #12
+ 559              	.LCFI28:
+ 560              		.cfi_def_cfa_offset 16
+ 561 02d4 00AF     		add	r7, sp, #0
+ 562              	.LCFI29:
+ 563              		.cfi_def_cfa_register 7
+ 564 02d6 7860     		str	r0, [r7, #4]
+ 565 02d8 0B46     		mov	r3, r1
+ 566 02da FB70     		strb	r3, [r7, #3]
  395:../src/stm32f30x_opamp.c ****   /* Check the parameters */
  396:../src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
  397:../src/stm32f30x_opamp.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
  398:../src/stm32f30x_opamp.c **** 
  399:../src/stm32f30x_opamp.c ****   if (NewState != DISABLE)
- 566              		.loc 1 399 0
- 567 02dc FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
- 568 02de 002B     		cmp	r3, #0
- 569 02e0 11D0     		beq	.L17
+ 567              		.loc 1 399 0
+ 568 02dc FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 569 02de 002B     		cmp	r3, #0
+ 570 02e0 11D0     		beq	.L17
  400:../src/stm32f30x_opamp.c ****   {
  401:../src/stm32f30x_opamp.c ****     /* Enable the selected OPAMPx peripheral */
  402:../src/stm32f30x_opamp.c ****     *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) |= (uint32_t) (OPAMP_CSR_OPAMPxEN);
- 570              		.loc 1 402 0
- 571 02e2 7A68     		ldr	r2, [r7, #4]
- 572 02e4 4FF03803 		mov	r3, #56
- 573 02e8 C4F20103 		movt	r3, 16385
- 574 02ec D318     		adds	r3, r2, r3
- 575 02ee 1A46     		mov	r2, r3
- 576 02f0 7968     		ldr	r1, [r7, #4]
- 577 02f2 4FF03803 		mov	r3, #56
- 578 02f6 C4F20103 		movt	r3, 16385
- 579 02fa CB18     		adds	r3, r1, r3
- 580 02fc 1B68     		ldr	r3, [r3, #0]
- 581 02fe 43F00103 		orr	r3, r3, #1
- 582 0302 1360     		str	r3, [r2, #0]
- 583 0304 10E0     		b	.L16
- 584              	.L17:
+ 571              		.loc 1 402 0
+ 572 02e2 7A68     		ldr	r2, [r7, #4]
+ 573 02e4 4FF03803 		mov	r3, #56
+ 574 02e8 C4F20103 		movt	r3, 16385
+ 575 02ec D318     		adds	r3, r2, r3
+ 576 02ee 1A46     		mov	r2, r3
+ 577 02f0 7968     		ldr	r1, [r7, #4]
+ 578 02f2 4FF03803 		mov	r3, #56
+ 579 02f6 C4F20103 		movt	r3, 16385
+ 580 02fa CB18     		adds	r3, r1, r3
+ 581 02fc 1B68     		ldr	r3, [r3, #0]
+ 582 02fe 43F00103 		orr	r3, r3, #1
+ 583 0302 1360     		str	r3, [r2, #0]
+ 584 0304 10E0     		b	.L16
+ 585              	.L17:
  403:../src/stm32f30x_opamp.c ****   }
  404:../src/stm32f30x_opamp.c ****   else
  405:../src/stm32f30x_opamp.c ****   {
  406:../src/stm32f30x_opamp.c ****     /* Disable the selected OPAMPx peripheral */
  407:../src/stm32f30x_opamp.c ****     *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) &= (uint32_t)(~OPAMP_CSR_OPAMPxEN);
- 585              		.loc 1 407 0
- 586 0306 7A68     		ldr	r2, [r7, #4]
- 587 0308 4FF03803 		mov	r3, #56
- 588 030c C4F20103 		movt	r3, 16385
- 589 0310 D318     		adds	r3, r2, r3
- 590 0312 1A46     		mov	r2, r3
- 591 0314 7968     		ldr	r1, [r7, #4]
- 592 0316 4FF03803 		mov	r3, #56
- 593 031a C4F20103 		movt	r3, 16385
- 594 031e CB18     		adds	r3, r1, r3
- 595 0320 1B68     		ldr	r3, [r3, #0]
- 596 0322 23F00103 		bic	r3, r3, #1
- 597 0326 1360     		str	r3, [r2, #0]
- 598              	.L16:
+ 586              		.loc 1 407 0
+ 587 0306 7A68     		ldr	r2, [r7, #4]
+ 588 0308 4FF03803 		mov	r3, #56
+ 589 030c C4F20103 		movt	r3, 16385
+ 590 0310 D318     		adds	r3, r2, r3
+ 591 0312 1A46     		mov	r2, r3
+ 592 0314 7968     		ldr	r1, [r7, #4]
+ 593 0316 4FF03803 		mov	r3, #56
+ 594 031a C4F20103 		movt	r3, 16385
+ 595 031e CB18     		adds	r3, r1, r3
+ 596 0320 1B68     		ldr	r3, [r3, #0]
+ 597 0322 23F00103 		bic	r3, r3, #1
+ 598 0326 1360     		str	r3, [r2, #0]
+ 599              	.L16:
  408:../src/stm32f30x_opamp.c ****   }
  409:../src/stm32f30x_opamp.c **** }
- 599              		.loc 1 409 0
- 600 0328 07F10C07 		add	r7, r7, #12
- 601 032c BD46     		mov	sp, r7
- 602 032e 80BC     		pop	{r7}
- 603 0330 7047     		bx	lr
- 604              		.cfi_endproc
- 605              	.LFE120:
- 607 0332 00BF     		.align	2
- 608              		.global	OPAMP_GetOutputLevel
- 609              		.thumb
- 610              		.thumb_func
- 612              	OPAMP_GetOutputLevel:
- 613              	.LFB121:
+ 600              		.loc 1 409 0
+ 601 0328 07F10C07 		add	r7, r7, #12
+ 602 032c BD46     		mov	sp, r7
+ 603 032e 80BC     		pop	{r7}
+ 604 0330 7047     		bx	lr
+ 605              		.cfi_endproc
+ 606              	.LFE120:
+ 608 0332 00BF     		.align	2
+ 609              		.global	OPAMP_GetOutputLevel
+ 610              		.thumb
+ 611              		.thumb_func
+ 613              	OPAMP_GetOutputLevel:
+ 614              	.LFB121:
  410:../src/stm32f30x_opamp.c **** 
  411:../src/stm32f30x_opamp.c **** /**
  412:../src/stm32f30x_opamp.c ****   * @brief  Return the output level (high or low) during calibration of the selected OPAMP. 
@@ -1015,77 +1016,77 @@
  423:../src/stm32f30x_opamp.c ****   */
  424:../src/stm32f30x_opamp.c **** uint32_t OPAMP_GetOutputLevel(uint32_t OPAMP_Selection)
  425:../src/stm32f30x_opamp.c **** {
- 614              		.loc 1 425 0
- 615              		.cfi_startproc
- 616              		@ args = 0, pretend = 0, frame = 16
- 617              		@ frame_needed = 1, uses_anonymous_args = 0
- 618              		@ link register save eliminated.
- 619 0334 80B4     		push	{r7}
- 620              	.LCFI30:
- 621              		.cfi_def_cfa_offset 4
- 622              		.cfi_offset 7, -4
- 623 0336 85B0     		sub	sp, sp, #20
- 624              	.LCFI31:
- 625              		.cfi_def_cfa_offset 24
- 626 0338 00AF     		add	r7, sp, #0
- 627              	.LCFI32:
- 628              		.cfi_def_cfa_register 7
- 629 033a 7860     		str	r0, [r7, #4]
+ 615              		.loc 1 425 0
+ 616              		.cfi_startproc
+ 617              		@ args = 0, pretend = 0, frame = 16
+ 618              		@ frame_needed = 1, uses_anonymous_args = 0
+ 619              		@ link register save eliminated.
+ 620 0334 80B4     		push	{r7}
+ 621              	.LCFI30:
+ 622              		.cfi_def_cfa_offset 4
+ 623              		.cfi_offset 7, -4
+ 624 0336 85B0     		sub	sp, sp, #20
+ 625              	.LCFI31:
+ 626              		.cfi_def_cfa_offset 24
+ 627 0338 00AF     		add	r7, sp, #0
+ 628              	.LCFI32:
+ 629              		.cfi_def_cfa_register 7
+ 630 033a 7860     		str	r0, [r7, #4]
  426:../src/stm32f30x_opamp.c ****   uint32_t opampout = 0x0;
- 630              		.loc 1 426 0
- 631 033c 4FF00003 		mov	r3, #0
- 632 0340 FB60     		str	r3, [r7, #12]
+ 631              		.loc 1 426 0
+ 632 033c 4FF00003 		mov	r3, #0
+ 633 0340 FB60     		str	r3, [r7, #12]
  427:../src/stm32f30x_opamp.c **** 
  428:../src/stm32f30x_opamp.c ****   /* Check the parameters */
  429:../src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
  430:../src/stm32f30x_opamp.c **** 
  431:../src/stm32f30x_opamp.c ****   /* Check if selected OPAMP output is high */
  432:../src/stm32f30x_opamp.c ****   if ((*(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) & (OPAMP_CSR_OUTCAL)) != 0)
- 633              		.loc 1 432 0
- 634 0342 7A68     		ldr	r2, [r7, #4]
- 635 0344 4FF03803 		mov	r3, #56
- 636 0348 C4F20103 		movt	r3, 16385
- 637 034c D318     		adds	r3, r2, r3
- 638 034e 1B68     		ldr	r3, [r3, #0]
- 639 0350 03F08043 		and	r3, r3, #1073741824
- 640 0354 002B     		cmp	r3, #0
- 641 0356 03D0     		beq	.L20
+ 634              		.loc 1 432 0
+ 635 0342 7A68     		ldr	r2, [r7, #4]
+ 636 0344 4FF03803 		mov	r3, #56
+ 637 0348 C4F20103 		movt	r3, 16385
+ 638 034c D318     		adds	r3, r2, r3
+ 639 034e 1B68     		ldr	r3, [r3, #0]
+ 640 0350 03F08043 		and	r3, r3, #1073741824
+ 641 0354 002B     		cmp	r3, #0
+ 642 0356 03D0     		beq	.L20
  433:../src/stm32f30x_opamp.c ****   {
  434:../src/stm32f30x_opamp.c ****     opampout = OPAMP_OutputLevel_High;
- 642              		.loc 1 434 0
- 643 0358 4FF08043 		mov	r3, #1073741824
- 644 035c FB60     		str	r3, [r7, #12]
- 645 035e 02E0     		b	.L21
- 646              	.L20:
+ 643              		.loc 1 434 0
+ 644 0358 4FF08043 		mov	r3, #1073741824
+ 645 035c FB60     		str	r3, [r7, #12]
+ 646 035e 02E0     		b	.L21
+ 647              	.L20:
  435:../src/stm32f30x_opamp.c ****   }
  436:../src/stm32f30x_opamp.c ****   else
  437:../src/stm32f30x_opamp.c ****   {
  438:../src/stm32f30x_opamp.c ****     opampout = OPAMP_OutputLevel_Low;
- 647              		.loc 1 438 0
- 648 0360 4FF00003 		mov	r3, #0
- 649 0364 FB60     		str	r3, [r7, #12]
- 650              	.L21:
+ 648              		.loc 1 438 0
+ 649 0360 4FF00003 		mov	r3, #0
+ 650 0364 FB60     		str	r3, [r7, #12]
+ 651              	.L21:
  439:../src/stm32f30x_opamp.c ****   }
  440:../src/stm32f30x_opamp.c **** 
  441:../src/stm32f30x_opamp.c ****   /* Return the OPAMP output level */
  442:../src/stm32f30x_opamp.c ****   return (uint32_t)(opampout);
- 651              		.loc 1 442 0
- 652 0366 FB68     		ldr	r3, [r7, #12]
+ 652              		.loc 1 442 0
+ 653 0366 FB68     		ldr	r3, [r7, #12]
  443:../src/stm32f30x_opamp.c **** }
- 653              		.loc 1 443 0
- 654 0368 1846     		mov	r0, r3
- 655 036a 07F11407 		add	r7, r7, #20
- 656 036e BD46     		mov	sp, r7
- 657 0370 80BC     		pop	{r7}
- 658 0372 7047     		bx	lr
- 659              		.cfi_endproc
- 660              	.LFE121:
- 662              		.align	2
- 663              		.global	OPAMP_OffsetTrimModeSelect
- 664              		.thumb
- 665              		.thumb_func
- 667              	OPAMP_OffsetTrimModeSelect:
- 668              	.LFB122:
+ 654              		.loc 1 443 0
+ 655 0368 1846     		mov	r0, r3
+ 656 036a 07F11407 		add	r7, r7, #20
+ 657 036e BD46     		mov	sp, r7
+ 658 0370 80BC     		pop	{r7}
+ 659 0372 7047     		bx	lr
+ 660              		.cfi_endproc
+ 661              	.LFE121:
+ 663              		.align	2
+ 664              		.global	OPAMP_OffsetTrimModeSelect
+ 665              		.thumb
+ 666              		.thumb_func
+ 668              	OPAMP_OffsetTrimModeSelect:
+ 669              	.LFB122:
  444:../src/stm32f30x_opamp.c **** 
  445:../src/stm32f30x_opamp.c **** /**
  446:../src/stm32f30x_opamp.c ****   * @brief  Select the trimming mode.
@@ -1102,73 +1103,73 @@
  457:../src/stm32f30x_opamp.c ****   */
  458:../src/stm32f30x_opamp.c **** void OPAMP_OffsetTrimModeSelect(uint32_t OPAMP_Selection, uint32_t OPAMP_Trimming)
  459:../src/stm32f30x_opamp.c **** {
- 669              		.loc 1 459 0
- 670              		.cfi_startproc
- 671              		@ args = 0, pretend = 0, frame = 8
- 672              		@ frame_needed = 1, uses_anonymous_args = 0
- 673              		@ link register save eliminated.
- 674 0374 80B4     		push	{r7}
- 675              	.LCFI33:
- 676              		.cfi_def_cfa_offset 4
- 677              		.cfi_offset 7, -4
- 678 0376 83B0     		sub	sp, sp, #12
- 679              	.LCFI34:
- 680              		.cfi_def_cfa_offset 16
- 681 0378 00AF     		add	r7, sp, #0
- 682              	.LCFI35:
- 683              		.cfi_def_cfa_register 7
- 684 037a 7860     		str	r0, [r7, #4]
- 685 037c 3960     		str	r1, [r7, #0]
+ 670              		.loc 1 459 0
+ 671              		.cfi_startproc
+ 672              		@ args = 0, pretend = 0, frame = 8
+ 673              		@ frame_needed = 1, uses_anonymous_args = 0
+ 674              		@ link register save eliminated.
+ 675 0374 80B4     		push	{r7}
+ 676              	.LCFI33:
+ 677              		.cfi_def_cfa_offset 4
+ 678              		.cfi_offset 7, -4
+ 679 0376 83B0     		sub	sp, sp, #12
+ 680              	.LCFI34:
+ 681              		.cfi_def_cfa_offset 16
+ 682 0378 00AF     		add	r7, sp, #0
+ 683              	.LCFI35:
+ 684              		.cfi_def_cfa_register 7
+ 685 037a 7860     		str	r0, [r7, #4]
+ 686 037c 3960     		str	r1, [r7, #0]
  460:../src/stm32f30x_opamp.c ****   /* Check the parameters */
  461:../src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
  462:../src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_TRIMMING(OPAMP_Trimming));
  463:../src/stm32f30x_opamp.c **** 
  464:../src/stm32f30x_opamp.c ****   /* Reset USERTRIM bit */
  465:../src/stm32f30x_opamp.c ****   *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) &= (~(uint32_t) (OPAMP_CSR_USERTRIM));
- 686              		.loc 1 465 0
- 687 037e 7A68     		ldr	r2, [r7, #4]
- 688 0380 4FF03803 		mov	r3, #56
- 689 0384 C4F20103 		movt	r3, 16385
- 690 0388 D318     		adds	r3, r2, r3
- 691 038a 1A46     		mov	r2, r3
- 692 038c 7968     		ldr	r1, [r7, #4]
- 693 038e 4FF03803 		mov	r3, #56
- 694 0392 C4F20103 		movt	r3, 16385
- 695 0396 CB18     		adds	r3, r1, r3
- 696 0398 1B68     		ldr	r3, [r3, #0]
- 697 039a 23F48023 		bic	r3, r3, #262144
- 698 039e 1360     		str	r3, [r2, #0]
+ 687              		.loc 1 465 0
+ 688 037e 7A68     		ldr	r2, [r7, #4]
+ 689 0380 4FF03803 		mov	r3, #56
+ 690 0384 C4F20103 		movt	r3, 16385
+ 691 0388 D318     		adds	r3, r2, r3
+ 692 038a 1A46     		mov	r2, r3
+ 693 038c 7968     		ldr	r1, [r7, #4]
+ 694 038e 4FF03803 		mov	r3, #56
+ 695 0392 C4F20103 		movt	r3, 16385
+ 696 0396 CB18     		adds	r3, r1, r3
+ 697 0398 1B68     		ldr	r3, [r3, #0]
+ 698 039a 23F48023 		bic	r3, r3, #262144
+ 699 039e 1360     		str	r3, [r2, #0]
  466:../src/stm32f30x_opamp.c **** 
  467:../src/stm32f30x_opamp.c ****   /* Select trimming mode */
  468:../src/stm32f30x_opamp.c ****   *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) |= OPAMP_Trimming;
- 699              		.loc 1 468 0
- 700 03a0 7A68     		ldr	r2, [r7, #4]
- 701 03a2 4FF03803 		mov	r3, #56
- 702 03a6 C4F20103 		movt	r3, 16385
- 703 03aa D318     		adds	r3, r2, r3
- 704 03ac 1A46     		mov	r2, r3
- 705 03ae 7968     		ldr	r1, [r7, #4]
- 706 03b0 4FF03803 		mov	r3, #56
- 707 03b4 C4F20103 		movt	r3, 16385
- 708 03b8 CB18     		adds	r3, r1, r3
- 709 03ba 1968     		ldr	r1, [r3, #0]
- 710 03bc 3B68     		ldr	r3, [r7, #0]
- 711 03be 0B43     		orrs	r3, r3, r1
- 712 03c0 1360     		str	r3, [r2, #0]
+ 700              		.loc 1 468 0
+ 701 03a0 7A68     		ldr	r2, [r7, #4]
+ 702 03a2 4FF03803 		mov	r3, #56
+ 703 03a6 C4F20103 		movt	r3, 16385
+ 704 03aa D318     		adds	r3, r2, r3
+ 705 03ac 1A46     		mov	r2, r3
+ 706 03ae 7968     		ldr	r1, [r7, #4]
+ 707 03b0 4FF03803 		mov	r3, #56
+ 708 03b4 C4F20103 		movt	r3, 16385
+ 709 03b8 CB18     		adds	r3, r1, r3
+ 710 03ba 1968     		ldr	r1, [r3, #0]
+ 711 03bc 3B68     		ldr	r3, [r7, #0]
+ 712 03be 0B43     		orrs	r3, r3, r1
+ 713 03c0 1360     		str	r3, [r2, #0]
  469:../src/stm32f30x_opamp.c **** }
- 713              		.loc 1 469 0
- 714 03c2 07F10C07 		add	r7, r7, #12
- 715 03c6 BD46     		mov	sp, r7
- 716 03c8 80BC     		pop	{r7}
- 717 03ca 7047     		bx	lr
- 718              		.cfi_endproc
- 719              	.LFE122:
- 721              		.align	2
- 722              		.global	OPAMP_OffsetTrimConfig
- 723              		.thumb
- 724              		.thumb_func
- 726              	OPAMP_OffsetTrimConfig:
- 727              	.LFB123:
+ 714              		.loc 1 469 0
+ 715 03c2 07F10C07 		add	r7, r7, #12
+ 716 03c6 BD46     		mov	sp, r7
+ 717 03c8 80BC     		pop	{r7}
+ 718 03ca 7047     		bx	lr
+ 719              		.cfi_endproc
+ 720              	.LFE122:
+ 722              		.align	2
+ 723              		.global	OPAMP_OffsetTrimConfig
+ 724              		.thumb
+ 725              		.thumb_func
+ 727              	OPAMP_OffsetTrimConfig:
+ 728              	.LFB123:
  470:../src/stm32f30x_opamp.c **** 
  471:../src/stm32f30x_opamp.c **** /**
  472:../src/stm32f30x_opamp.c ****   * @brief  Configure the trimming value of the OPAMP.
@@ -1185,28 +1186,28 @@
  483:../src/stm32f30x_opamp.c ****   */
  484:../src/stm32f30x_opamp.c **** void OPAMP_OffsetTrimConfig(uint32_t OPAMP_Selection, uint32_t OPAMP_Input, uint32_t OPAMP_TrimValu
  485:../src/stm32f30x_opamp.c **** {
- 728              		.loc 1 485 0
- 729              		.cfi_startproc
- 730              		@ args = 0, pretend = 0, frame = 24
- 731              		@ frame_needed = 1, uses_anonymous_args = 0
- 732              		@ link register save eliminated.
- 733 03cc 80B4     		push	{r7}
- 734              	.LCFI36:
- 735              		.cfi_def_cfa_offset 4
- 736              		.cfi_offset 7, -4
- 737 03ce 87B0     		sub	sp, sp, #28
- 738              	.LCFI37:
- 739              		.cfi_def_cfa_offset 32
- 740 03d0 00AF     		add	r7, sp, #0
- 741              	.LCFI38:
- 742              		.cfi_def_cfa_register 7
- 743 03d2 F860     		str	r0, [r7, #12]
- 744 03d4 B960     		str	r1, [r7, #8]
- 745 03d6 7A60     		str	r2, [r7, #4]
+ 729              		.loc 1 485 0
+ 730              		.cfi_startproc
+ 731              		@ args = 0, pretend = 0, frame = 24
+ 732              		@ frame_needed = 1, uses_anonymous_args = 0
+ 733              		@ link register save eliminated.
+ 734 03cc 80B4     		push	{r7}
+ 735              	.LCFI36:
+ 736              		.cfi_def_cfa_offset 4
+ 737              		.cfi_offset 7, -4
+ 738 03ce 87B0     		sub	sp, sp, #28
+ 739              	.LCFI37:
+ 740              		.cfi_def_cfa_offset 32
+ 741 03d0 00AF     		add	r7, sp, #0
+ 742              	.LCFI38:
+ 743              		.cfi_def_cfa_register 7
+ 744 03d2 F860     		str	r0, [r7, #12]
+ 745 03d4 B960     		str	r1, [r7, #8]
+ 746 03d6 7A60     		str	r2, [r7, #4]
  486:../src/stm32f30x_opamp.c ****   uint32_t tmpreg = 0;
- 746              		.loc 1 486 0
- 747 03d8 4FF00003 		mov	r3, #0
- 748 03dc 7B61     		str	r3, [r7, #20]
+ 747              		.loc 1 486 0
+ 748 03d8 4FF00003 		mov	r3, #0
+ 749 03dc 7B61     		str	r3, [r7, #20]
  487:../src/stm32f30x_opamp.c **** 
  488:../src/stm32f30x_opamp.c ****   /* Check the parameters */
  489:../src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
@@ -1215,58 +1216,58 @@
  492:../src/stm32f30x_opamp.c **** 
  493:../src/stm32f30x_opamp.c ****   /*!< Get the OPAMPx_CSR register value */
  494:../src/stm32f30x_opamp.c ****   tmpreg = *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection);
- 749              		.loc 1 494 0
- 750 03de FA68     		ldr	r2, [r7, #12]
- 751 03e0 4FF03803 		mov	r3, #56
- 752 03e4 C4F20103 		movt	r3, 16385
- 753 03e8 D318     		adds	r3, r2, r3
- 754 03ea 1B68     		ldr	r3, [r3, #0]
- 755 03ec 7B61     		str	r3, [r7, #20]
+ 750              		.loc 1 494 0
+ 751 03de FA68     		ldr	r2, [r7, #12]
+ 752 03e0 4FF03803 		mov	r3, #56
+ 753 03e4 C4F20103 		movt	r3, 16385
+ 754 03e8 D318     		adds	r3, r2, r3
+ 755 03ea 1B68     		ldr	r3, [r3, #0]
+ 756 03ec 7B61     		str	r3, [r7, #20]
  495:../src/stm32f30x_opamp.c **** 
  496:../src/stm32f30x_opamp.c ****   /*!< Clear the trimming bits */
  497:../src/stm32f30x_opamp.c ****   tmpreg &= ((uint32_t)~(OPAMP_CSR_TRIMMING_MASK<<OPAMP_Input));
- 756              		.loc 1 497 0
- 757 03ee BB68     		ldr	r3, [r7, #8]
- 758 03f0 4FF01F02 		mov	r2, #31
- 759 03f4 02FA03F3 		lsl	r3, r2, r3
- 760 03f8 6FEA0303 		mvn	r3, r3
- 761 03fc 7A69     		ldr	r2, [r7, #20]
- 762 03fe 1340     		ands	r3, r3, r2
- 763 0400 7B61     		str	r3, [r7, #20]
+ 757              		.loc 1 497 0
+ 758 03ee BB68     		ldr	r3, [r7, #8]
+ 759 03f0 4FF01F02 		mov	r2, #31
+ 760 03f4 02FA03F3 		lsl	r3, r2, r3
+ 761 03f8 6FEA0303 		mvn	r3, r3
+ 762 03fc 7A69     		ldr	r2, [r7, #20]
+ 763 03fe 1340     		ands	r3, r3, r2
+ 764 0400 7B61     		str	r3, [r7, #20]
  498:../src/stm32f30x_opamp.c **** 
  499:../src/stm32f30x_opamp.c ****   /*!< Configure the new trimming value */
  500:../src/stm32f30x_opamp.c ****   tmpreg |= (uint32_t)(OPAMP_TrimValue<<OPAMP_Input);
- 764              		.loc 1 500 0
- 765 0402 BB68     		ldr	r3, [r7, #8]
- 766 0404 7A68     		ldr	r2, [r7, #4]
- 767 0406 02FA03F3 		lsl	r3, r2, r3
- 768 040a 7A69     		ldr	r2, [r7, #20]
- 769 040c 1343     		orrs	r3, r3, r2
- 770 040e 7B61     		str	r3, [r7, #20]
+ 765              		.loc 1 500 0
+ 766 0402 BB68     		ldr	r3, [r7, #8]
+ 767 0404 7A68     		ldr	r2, [r7, #4]
+ 768 0406 02FA03F3 		lsl	r3, r2, r3
+ 769 040a 7A69     		ldr	r2, [r7, #20]
+ 770 040c 1343     		orrs	r3, r3, r2
+ 771 040e 7B61     		str	r3, [r7, #20]
  501:../src/stm32f30x_opamp.c **** 
  502:../src/stm32f30x_opamp.c ****   /*!< Write to OPAMPx_CSR register */
  503:../src/stm32f30x_opamp.c ****   *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) = tmpreg;
- 771              		.loc 1 503 0
- 772 0410 FA68     		ldr	r2, [r7, #12]
- 773 0412 4FF03803 		mov	r3, #56
- 774 0416 C4F20103 		movt	r3, 16385
- 775 041a D318     		adds	r3, r2, r3
- 776 041c 7A69     		ldr	r2, [r7, #20]
- 777 041e 1A60     		str	r2, [r3, #0]
+ 772              		.loc 1 503 0
+ 773 0410 FA68     		ldr	r2, [r7, #12]
+ 774 0412 4FF03803 		mov	r3, #56
+ 775 0416 C4F20103 		movt	r3, 16385
+ 776 041a D318     		adds	r3, r2, r3
+ 777 041c 7A69     		ldr	r2, [r7, #20]
+ 778 041e 1A60     		str	r2, [r3, #0]
  504:../src/stm32f30x_opamp.c **** }
- 778              		.loc 1 504 0
- 779 0420 07F11C07 		add	r7, r7, #28
- 780 0424 BD46     		mov	sp, r7
- 781 0426 80BC     		pop	{r7}
- 782 0428 7047     		bx	lr
- 783              		.cfi_endproc
- 784              	.LFE123:
- 786 042a 00BF     		.align	2
- 787              		.global	OPAMP_StartCalibration
- 788              		.thumb
- 789              		.thumb_func
- 791              	OPAMP_StartCalibration:
- 792              	.LFB124:
+ 779              		.loc 1 504 0
+ 780 0420 07F11C07 		add	r7, r7, #28
+ 781 0424 BD46     		mov	sp, r7
+ 782 0426 80BC     		pop	{r7}
+ 783 0428 7047     		bx	lr
+ 784              		.cfi_endproc
+ 785              	.LFE123:
+ 787 042a 00BF     		.align	2
+ 788              		.global	OPAMP_StartCalibration
+ 789              		.thumb
+ 790              		.thumb_func
+ 792              	OPAMP_StartCalibration:
+ 793              	.LFB124:
  505:../src/stm32f30x_opamp.c **** 
  506:../src/stm32f30x_opamp.c **** /**
  507:../src/stm32f30x_opamp.c ****   * @brief  Start or stop the calibration of selected OPAMP peripheral.
@@ -1281,85 +1282,85 @@
  516:../src/stm32f30x_opamp.c ****   */
  517:../src/stm32f30x_opamp.c **** void OPAMP_StartCalibration(uint32_t OPAMP_Selection, FunctionalState NewState)
  518:../src/stm32f30x_opamp.c **** {
- 793              		.loc 1 518 0
- 794              		.cfi_startproc
- 795              		@ args = 0, pretend = 0, frame = 8
- 796              		@ frame_needed = 1, uses_anonymous_args = 0
- 797              		@ link register save eliminated.
- 798 042c 80B4     		push	{r7}
- 799              	.LCFI39:
- 800              		.cfi_def_cfa_offset 4
- 801              		.cfi_offset 7, -4
- 802 042e 83B0     		sub	sp, sp, #12
- 803              	.LCFI40:
- 804              		.cfi_def_cfa_offset 16
- 805 0430 00AF     		add	r7, sp, #0
- 806              	.LCFI41:
- 807              		.cfi_def_cfa_register 7
- 808 0432 7860     		str	r0, [r7, #4]
- 809 0434 0B46     		mov	r3, r1
- 810 0436 FB70     		strb	r3, [r7, #3]
+ 794              		.loc 1 518 0
+ 795              		.cfi_startproc
+ 796              		@ args = 0, pretend = 0, frame = 8
+ 797              		@ frame_needed = 1, uses_anonymous_args = 0
+ 798              		@ link register save eliminated.
+ 799 042c 80B4     		push	{r7}
+ 800              	.LCFI39:
+ 801              		.cfi_def_cfa_offset 4
+ 802              		.cfi_offset 7, -4
+ 803 042e 83B0     		sub	sp, sp, #12
+ 804              	.LCFI40:
+ 805              		.cfi_def_cfa_offset 16
+ 806 0430 00AF     		add	r7, sp, #0
+ 807              	.LCFI41:
+ 808              		.cfi_def_cfa_register 7
+ 809 0432 7860     		str	r0, [r7, #4]
+ 810 0434 0B46     		mov	r3, r1
+ 811 0436 FB70     		strb	r3, [r7, #3]
  519:../src/stm32f30x_opamp.c ****   /* Check the parameters */
  520:../src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
  521:../src/stm32f30x_opamp.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
  522:../src/stm32f30x_opamp.c **** 
  523:../src/stm32f30x_opamp.c ****   if (NewState != DISABLE)
- 811              		.loc 1 523 0
- 812 0438 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
- 813 043a 002B     		cmp	r3, #0
- 814 043c 11D0     		beq	.L26
+ 812              		.loc 1 523 0
+ 813 0438 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 814 043a 002B     		cmp	r3, #0
+ 815 043c 11D0     		beq	.L26
  524:../src/stm32f30x_opamp.c ****   {
  525:../src/stm32f30x_opamp.c ****     /* Start the OPAMPx calibration */
  526:../src/stm32f30x_opamp.c ****     *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) |= (uint32_t) (OPAMP_CSR_CALON);
- 815              		.loc 1 526 0
- 816 043e 7A68     		ldr	r2, [r7, #4]
- 817 0440 4FF03803 		mov	r3, #56
- 818 0444 C4F20103 		movt	r3, 16385
- 819 0448 D318     		adds	r3, r2, r3
- 820 044a 1A46     		mov	r2, r3
- 821 044c 7968     		ldr	r1, [r7, #4]
- 822 044e 4FF03803 		mov	r3, #56
- 823 0452 C4F20103 		movt	r3, 16385
- 824 0456 CB18     		adds	r3, r1, r3
- 825 0458 1B68     		ldr	r3, [r3, #0]
- 826 045a 43F40063 		orr	r3, r3, #2048
- 827 045e 1360     		str	r3, [r2, #0]
- 828 0460 10E0     		b	.L25
- 829              	.L26:
+ 816              		.loc 1 526 0
+ 817 043e 7A68     		ldr	r2, [r7, #4]
+ 818 0440 4FF03803 		mov	r3, #56
+ 819 0444 C4F20103 		movt	r3, 16385
+ 820 0448 D318     		adds	r3, r2, r3
+ 821 044a 1A46     		mov	r2, r3
+ 822 044c 7968     		ldr	r1, [r7, #4]
+ 823 044e 4FF03803 		mov	r3, #56
+ 824 0452 C4F20103 		movt	r3, 16385
+ 825 0456 CB18     		adds	r3, r1, r3
+ 826 0458 1B68     		ldr	r3, [r3, #0]
+ 827 045a 43F40063 		orr	r3, r3, #2048
+ 828 045e 1360     		str	r3, [r2, #0]
+ 829 0460 10E0     		b	.L25
+ 830              	.L26:
  527:../src/stm32f30x_opamp.c ****   }
  528:../src/stm32f30x_opamp.c ****   else
  529:../src/stm32f30x_opamp.c ****   {
  530:../src/stm32f30x_opamp.c ****     /* Stop the OPAMPx calibration */
  531:../src/stm32f30x_opamp.c ****     *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) &= (uint32_t)(~OPAMP_CSR_CALON);
- 830              		.loc 1 531 0
- 831 0462 7A68     		ldr	r2, [r7, #4]
- 832 0464 4FF03803 		mov	r3, #56
- 833 0468 C4F20103 		movt	r3, 16385
- 834 046c D318     		adds	r3, r2, r3
- 835 046e 1A46     		mov	r2, r3
- 836 0470 7968     		ldr	r1, [r7, #4]
- 837 0472 4FF03803 		mov	r3, #56
- 838 0476 C4F20103 		movt	r3, 16385
- 839 047a CB18     		adds	r3, r1, r3
- 840 047c 1B68     		ldr	r3, [r3, #0]
- 841 047e 23F40063 		bic	r3, r3, #2048
- 842 0482 1360     		str	r3, [r2, #0]
- 843              	.L25:
+ 831              		.loc 1 531 0
+ 832 0462 7A68     		ldr	r2, [r7, #4]
+ 833 0464 4FF03803 		mov	r3, #56
+ 834 0468 C4F20103 		movt	r3, 16385
+ 835 046c D318     		adds	r3, r2, r3
+ 836 046e 1A46     		mov	r2, r3
+ 837 0470 7968     		ldr	r1, [r7, #4]
+ 838 0472 4FF03803 		mov	r3, #56
+ 839 0476 C4F20103 		movt	r3, 16385
+ 840 047a CB18     		adds	r3, r1, r3
+ 841 047c 1B68     		ldr	r3, [r3, #0]
+ 842 047e 23F40063 		bic	r3, r3, #2048
+ 843 0482 1360     		str	r3, [r2, #0]
+ 844              	.L25:
  532:../src/stm32f30x_opamp.c ****   }
  533:../src/stm32f30x_opamp.c **** }
- 844              		.loc 1 533 0
- 845 0484 07F10C07 		add	r7, r7, #12
- 846 0488 BD46     		mov	sp, r7
- 847 048a 80BC     		pop	{r7}
- 848 048c 7047     		bx	lr
- 849              		.cfi_endproc
- 850              	.LFE124:
- 852 048e 00BF     		.align	2
- 853              		.global	OPAMP_LockConfig
- 854              		.thumb
- 855              		.thumb_func
- 857              	OPAMP_LockConfig:
- 858              	.LFB125:
+ 845              		.loc 1 533 0
+ 846 0484 07F10C07 		add	r7, r7, #12
+ 847 0488 BD46     		mov	sp, r7
+ 848 048a 80BC     		pop	{r7}
+ 849 048c 7047     		bx	lr
+ 850              		.cfi_endproc
+ 851              	.LFE124:
+ 853 048e 00BF     		.align	2
+ 854              		.global	OPAMP_LockConfig
+ 855              		.thumb
+ 856              		.thumb_func
+ 858              	OPAMP_LockConfig:
+ 859              	.LFB125:
  534:../src/stm32f30x_opamp.c **** 
  535:../src/stm32f30x_opamp.c **** /**
  536:../src/stm32f30x_opamp.c ****   * @}
@@ -1390,73 +1391,73 @@
  561:../src/stm32f30x_opamp.c ****   */
  562:../src/stm32f30x_opamp.c **** void OPAMP_LockConfig(uint32_t OPAMP_Selection)
  563:../src/stm32f30x_opamp.c **** {
- 859              		.loc 1 563 0
- 860              		.cfi_startproc
- 861              		@ args = 0, pretend = 0, frame = 8
- 862              		@ frame_needed = 1, uses_anonymous_args = 0
- 863              		@ link register save eliminated.
- 864 0490 80B4     		push	{r7}
- 865              	.LCFI42:
- 866              		.cfi_def_cfa_offset 4
- 867              		.cfi_offset 7, -4
- 868 0492 83B0     		sub	sp, sp, #12
- 869              	.LCFI43:
- 870              		.cfi_def_cfa_offset 16
- 871 0494 00AF     		add	r7, sp, #0
- 872              	.LCFI44:
- 873              		.cfi_def_cfa_register 7
- 874 0496 7860     		str	r0, [r7, #4]
+ 860              		.loc 1 563 0
+ 861              		.cfi_startproc
+ 862              		@ args = 0, pretend = 0, frame = 8
+ 863              		@ frame_needed = 1, uses_anonymous_args = 0
+ 864              		@ link register save eliminated.
+ 865 0490 80B4     		push	{r7}
+ 866              	.LCFI42:
+ 867              		.cfi_def_cfa_offset 4
+ 868              		.cfi_offset 7, -4
+ 869 0492 83B0     		sub	sp, sp, #12
+ 870              	.LCFI43:
+ 871              		.cfi_def_cfa_offset 16
+ 872 0494 00AF     		add	r7, sp, #0
+ 873              	.LCFI44:
+ 874              		.cfi_def_cfa_register 7
+ 875 0496 7860     		str	r0, [r7, #4]
  564:../src/stm32f30x_opamp.c ****   /* Check the parameter */
  565:../src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
  566:../src/stm32f30x_opamp.c **** 
  567:../src/stm32f30x_opamp.c ****   /* Set the lock bit corresponding to selected OPAMP */
  568:../src/stm32f30x_opamp.c ****   *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) |= (uint32_t) (OPAMP_CSR_LOCK);
- 875              		.loc 1 568 0
- 876 0498 7A68     		ldr	r2, [r7, #4]
- 877 049a 4FF03803 		mov	r3, #56
- 878 049e C4F20103 		movt	r3, 16385
- 879 04a2 D318     		adds	r3, r2, r3
- 880 04a4 1A46     		mov	r2, r3
- 881 04a6 7968     		ldr	r1, [r7, #4]
- 882 04a8 4FF03803 		mov	r3, #56
- 883 04ac C4F20103 		movt	r3, 16385
- 884 04b0 CB18     		adds	r3, r1, r3
- 885 04b2 1B68     		ldr	r3, [r3, #0]
- 886 04b4 43F00043 		orr	r3, r3, #-2147483648
- 887 04b8 1360     		str	r3, [r2, #0]
+ 876              		.loc 1 568 0
+ 877 0498 7A68     		ldr	r2, [r7, #4]
+ 878 049a 4FF03803 		mov	r3, #56
+ 879 049e C4F20103 		movt	r3, 16385
+ 880 04a2 D318     		adds	r3, r2, r3
+ 881 04a4 1A46     		mov	r2, r3
+ 882 04a6 7968     		ldr	r1, [r7, #4]
+ 883 04a8 4FF03803 		mov	r3, #56
+ 884 04ac C4F20103 		movt	r3, 16385
+ 885 04b0 CB18     		adds	r3, r1, r3
+ 886 04b2 1B68     		ldr	r3, [r3, #0]
+ 887 04b4 43F00043 		orr	r3, r3, #-2147483648
+ 888 04b8 1360     		str	r3, [r2, #0]
  569:../src/stm32f30x_opamp.c **** }
- 888              		.loc 1 569 0
- 889 04ba 07F10C07 		add	r7, r7, #12
- 890 04be BD46     		mov	sp, r7
- 891 04c0 80BC     		pop	{r7}
- 892 04c2 7047     		bx	lr
- 893              		.cfi_endproc
- 894              	.LFE125:
- 896              	.Letext0:
- 897              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
- 898              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
- 899              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_opamp.h"
- 900              		.file 5 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
+ 889              		.loc 1 569 0
+ 890 04ba 07F10C07 		add	r7, r7, #12
+ 891 04be BD46     		mov	sp, r7
+ 892 04c0 80BC     		pop	{r7}
+ 893 04c2 7047     		bx	lr
+ 894              		.cfi_endproc
+ 895              	.LFE125:
+ 897              	.Letext0:
+ 898              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
+ 899              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
+ 900              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_opamp.h"
+ 901              		.file 5 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32f30x_opamp.c
-     /tmp/ccq3UYBw.s:19     .text:00000000 $t
-     /tmp/ccq3UYBw.s:24     .text:00000000 OPAMP_DeInit
-     /tmp/ccq3UYBw.s:63     .text:00000024 OPAMP_Init
-     /tmp/ccq3UYBw.s:125    .text:00000078 OPAMP_StructInit
-     /tmp/ccq3UYBw.s:164    .text:0000009c OPAMP_PGAConfig
-     /tmp/ccq3UYBw.s:226    .text:000000fc OPAMP_VrefConfig
-     /tmp/ccq3UYBw.s:284    .text:00000148 OPAMP_VrefConnectNonInvertingInput
-     /tmp/ccq3UYBw.s:350    .text:000001ac OPAMP_VrefConnectADCCmd
-     /tmp/ccq3UYBw.s:416    .text:00000210 OPAMP_TimerControlledMuxConfig
-     /tmp/ccq3UYBw.s:480    .text:0000026c OPAMP_TimerControlledMuxCmd
-     /tmp/ccq3UYBw.s:546    .text:000002d0 OPAMP_Cmd
-     /tmp/ccq3UYBw.s:612    .text:00000334 OPAMP_GetOutputLevel
-     /tmp/ccq3UYBw.s:667    .text:00000374 OPAMP_OffsetTrimModeSelect
-     /tmp/ccq3UYBw.s:726    .text:000003cc OPAMP_OffsetTrimConfig
-     /tmp/ccq3UYBw.s:791    .text:0000042c OPAMP_StartCalibration
-     /tmp/ccq3UYBw.s:857    .text:00000490 OPAMP_LockConfig
+     /tmp/cc3TSclK.s:20     .text:00000000 $t
+     /tmp/cc3TSclK.s:25     .text:00000000 OPAMP_DeInit
+     /tmp/cc3TSclK.s:64     .text:00000024 OPAMP_Init
+     /tmp/cc3TSclK.s:126    .text:00000078 OPAMP_StructInit
+     /tmp/cc3TSclK.s:165    .text:0000009c OPAMP_PGAConfig
+     /tmp/cc3TSclK.s:227    .text:000000fc OPAMP_VrefConfig
+     /tmp/cc3TSclK.s:285    .text:00000148 OPAMP_VrefConnectNonInvertingInput
+     /tmp/cc3TSclK.s:351    .text:000001ac OPAMP_VrefConnectADCCmd
+     /tmp/cc3TSclK.s:417    .text:00000210 OPAMP_TimerControlledMuxConfig
+     /tmp/cc3TSclK.s:481    .text:0000026c OPAMP_TimerControlledMuxCmd
+     /tmp/cc3TSclK.s:547    .text:000002d0 OPAMP_Cmd
+     /tmp/cc3TSclK.s:613    .text:00000334 OPAMP_GetOutputLevel
+     /tmp/cc3TSclK.s:668    .text:00000374 OPAMP_OffsetTrimModeSelect
+     /tmp/cc3TSclK.s:727    .text:000003cc OPAMP_OffsetTrimConfig
+     /tmp/cc3TSclK.s:792    .text:0000042c OPAMP_StartCalibration
+     /tmp/cc3TSclK.s:858    .text:00000490 OPAMP_LockConfig
                      .debug_frame:00000010 $d
-                           .group:00000000 wm4.1.323dce8664331a0daf4a2675e107c70c
+                           .group:00000000 wm4.1.743cd71370ebc432b539c5dba7924ecc
                            .group:00000000 wm4.stm32f30x.h.56.6f19c65e98e3319a61449cb2b2455af5
                            .group:00000000 wm4.core_cm4.h.32.1434cd257ff5806b1b03cd32ab0641e9
                            .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05

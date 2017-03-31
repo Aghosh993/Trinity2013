@@ -1,28 +1,29 @@
    1              		.syntax unified
    2              		.cpu cortex-m4
    3              		.eabi_attribute 27, 3
-   4              		.fpu fpv4-sp-d16
-   5              		.eabi_attribute 20, 1
-   6              		.eabi_attribute 21, 1
-   7              		.eabi_attribute 23, 3
-   8              		.eabi_attribute 24, 1
-   9              		.eabi_attribute 25, 1
-  10              		.eabi_attribute 26, 1
-  11              		.eabi_attribute 30, 6
-  12              		.eabi_attribute 34, 1
-  13              		.eabi_attribute 18, 4
-  14              		.thumb
-  15              		.file	"stm32f30x_comp.c"
-  16              		.text
-  17              	.Ltext0:
-  18              		.cfi_sections	.debug_frame
-  19              		.align	2
-  20              		.global	COMP_DeInit
-  21              		.thumb
-  22              		.thumb_func
-  24              	COMP_DeInit:
-  25              	.LFB111:
-  26              		.file 1 "../src/stm32f30x_comp.c"
+   4              		.eabi_attribute 28, 1
+   5              		.fpu fpv4-sp-d16
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 6
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.thumb
+  16              		.file	"stm32f30x_comp.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.align	2
+  21              		.global	COMP_DeInit
+  22              		.thumb
+  23              		.thumb_func
+  25              	COMP_DeInit:
+  26              	.LFB111:
+  27              		.file 1 "../src/stm32f30x_comp.c"
    1:../src/stm32f30x_comp.c **** /**
    2:../src/stm32f30x_comp.c ****   ******************************************************************************
    3:../src/stm32f30x_comp.c ****   * @file    stm32f30x_comp.c
@@ -237,45 +238,45 @@
  212:../src/stm32f30x_comp.c ****   */
  213:../src/stm32f30x_comp.c **** void COMP_DeInit(uint32_t COMP_Selection)
  214:../src/stm32f30x_comp.c **** {
-  27              		.loc 1 214 0
-  28              		.cfi_startproc
-  29              		@ args = 0, pretend = 0, frame = 8
-  30              		@ frame_needed = 1, uses_anonymous_args = 0
-  31              		@ link register save eliminated.
-  32 0000 80B4     		push	{r7}
-  33              	.LCFI0:
-  34              		.cfi_def_cfa_offset 4
-  35              		.cfi_offset 7, -4
-  36 0002 83B0     		sub	sp, sp, #12
-  37              	.LCFI1:
-  38              		.cfi_def_cfa_offset 16
-  39 0004 00AF     		add	r7, sp, #0
-  40              	.LCFI2:
-  41              		.cfi_def_cfa_register 7
-  42 0006 7860     		str	r0, [r7, #4]
+  28              		.loc 1 214 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 8
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33 0000 80B4     		push	{r7}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 4
+  36              		.cfi_offset 7, -4
+  37 0002 83B0     		sub	sp, sp, #12
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_offset 16
+  40 0004 00AF     		add	r7, sp, #0
+  41              	.LCFI2:
+  42              		.cfi_def_cfa_register 7
+  43 0006 7860     		str	r0, [r7, #4]
  215:../src/stm32f30x_comp.c ****   /*!< Set COMP_CSR register to reset value */
  216:../src/stm32f30x_comp.c ****   *(__IO uint32_t *) (COMP_BASE + COMP_Selection) = ((uint32_t)0x00000000);
-  43              		.loc 1 216 0
-  44 0008 7A68     		ldr	r2, [r7, #4]
-  45 000a 4FF01C03 		mov	r3, #28
-  46 000e C4F20103 		movt	r3, 16385
-  47 0012 D318     		adds	r3, r2, r3
-  48 0014 4FF00002 		mov	r2, #0
-  49 0018 1A60     		str	r2, [r3, #0]
+  44              		.loc 1 216 0
+  45 0008 7A68     		ldr	r2, [r7, #4]
+  46 000a 4FF01C03 		mov	r3, #28
+  47 000e C4F20103 		movt	r3, 16385
+  48 0012 D318     		adds	r3, r2, r3
+  49 0014 4FF00002 		mov	r2, #0
+  50 0018 1A60     		str	r2, [r3, #0]
  217:../src/stm32f30x_comp.c **** }
-  50              		.loc 1 217 0
-  51 001a 07F10C07 		add	r7, r7, #12
-  52 001e BD46     		mov	sp, r7
-  53 0020 80BC     		pop	{r7}
-  54 0022 7047     		bx	lr
-  55              		.cfi_endproc
-  56              	.LFE111:
-  58              		.align	2
-  59              		.global	COMP_Init
-  60              		.thumb
-  61              		.thumb_func
-  63              	COMP_Init:
-  64              	.LFB112:
+  51              		.loc 1 217 0
+  52 001a 07F10C07 		add	r7, r7, #12
+  53 001e BD46     		mov	sp, r7
+  54 0020 80BC     		pop	{r7}
+  55 0022 7047     		bx	lr
+  56              		.cfi_endproc
+  57              	.LFE111:
+  59              		.align	2
+  60              		.global	COMP_Init
+  61              		.thumb
+  62              		.thumb_func
+  64              	COMP_Init:
+  65              	.LFB112:
  218:../src/stm32f30x_comp.c **** 
  219:../src/stm32f30x_comp.c **** /**
  220:../src/stm32f30x_comp.c ****   * @brief  Initializes the COMP peripheral according to the specified parameters
@@ -301,27 +302,27 @@
  240:../src/stm32f30x_comp.c ****   */
  241:../src/stm32f30x_comp.c **** void COMP_Init(uint32_t COMP_Selection, COMP_InitTypeDef* COMP_InitStruct)
  242:../src/stm32f30x_comp.c **** {
-  65              		.loc 1 242 0
-  66              		.cfi_startproc
-  67              		@ args = 0, pretend = 0, frame = 16
-  68              		@ frame_needed = 1, uses_anonymous_args = 0
-  69              		@ link register save eliminated.
-  70 0024 80B4     		push	{r7}
-  71              	.LCFI3:
-  72              		.cfi_def_cfa_offset 4
-  73              		.cfi_offset 7, -4
-  74 0026 85B0     		sub	sp, sp, #20
-  75              	.LCFI4:
-  76              		.cfi_def_cfa_offset 24
-  77 0028 00AF     		add	r7, sp, #0
-  78              	.LCFI5:
-  79              		.cfi_def_cfa_register 7
-  80 002a 7860     		str	r0, [r7, #4]
-  81 002c 3960     		str	r1, [r7, #0]
+  66              		.loc 1 242 0
+  67              		.cfi_startproc
+  68              		@ args = 0, pretend = 0, frame = 16
+  69              		@ frame_needed = 1, uses_anonymous_args = 0
+  70              		@ link register save eliminated.
+  71 0024 80B4     		push	{r7}
+  72              	.LCFI3:
+  73              		.cfi_def_cfa_offset 4
+  74              		.cfi_offset 7, -4
+  75 0026 85B0     		sub	sp, sp, #20
+  76              	.LCFI4:
+  77              		.cfi_def_cfa_offset 24
+  78 0028 00AF     		add	r7, sp, #0
+  79              	.LCFI5:
+  80              		.cfi_def_cfa_register 7
+  81 002a 7860     		str	r0, [r7, #4]
+  82 002c 3960     		str	r1, [r7, #0]
  243:../src/stm32f30x_comp.c ****   uint32_t tmpreg = 0;
-  82              		.loc 1 243 0
-  83 002e 4FF00003 		mov	r3, #0
-  84 0032 FB60     		str	r3, [r7, #12]
+  83              		.loc 1 243 0
+  84 002e 4FF00003 		mov	r3, #0
+  85 0032 FB60     		str	r3, [r7, #12]
  244:../src/stm32f30x_comp.c **** 
  245:../src/stm32f30x_comp.c ****   /* Check the parameters */
  246:../src/stm32f30x_comp.c ****   assert_param(IS_COMP_ALL_PERIPH(COMP_Selection));
@@ -335,20 +336,20 @@
  254:../src/stm32f30x_comp.c **** 
  255:../src/stm32f30x_comp.c ****   /*!< Get the COMPx_CSR register value */
  256:../src/stm32f30x_comp.c ****   tmpreg = *(__IO uint32_t *) (COMP_BASE + COMP_Selection);
-  85              		.loc 1 256 0
-  86 0034 7A68     		ldr	r2, [r7, #4]
-  87 0036 4FF01C03 		mov	r3, #28
-  88 003a C4F20103 		movt	r3, 16385
-  89 003e D318     		adds	r3, r2, r3
-  90 0040 1B68     		ldr	r3, [r3, #0]
-  91 0042 FB60     		str	r3, [r7, #12]
+  86              		.loc 1 256 0
+  87 0034 7A68     		ldr	r2, [r7, #4]
+  88 0036 4FF01C03 		mov	r3, #28
+  89 003a C4F20103 		movt	r3, 16385
+  90 003e D318     		adds	r3, r2, r3
+  91 0040 1B68     		ldr	r3, [r3, #0]
+  92 0042 FB60     		str	r3, [r7, #12]
  257:../src/stm32f30x_comp.c **** 
  258:../src/stm32f30x_comp.c ****   /*!< Clear the COMP1SW1, COMPxINSEL, COMPxOUTSEL, COMPxPOL, COMPxHYST and COMPxMODE bits */
  259:../src/stm32f30x_comp.c ****   tmpreg &= (uint32_t) (COMP_CSR_CLEAR_MASK);
-  92              		.loc 1 259 0
-  93 0044 FB68     		ldr	r3, [r7, #12]
-  94 0046 03F00303 		and	r3, r3, #3
-  95 004a FB60     		str	r3, [r7, #12]
+  93              		.loc 1 259 0
+  94 0044 FB68     		ldr	r3, [r7, #12]
+  95 0046 03F00303 		and	r3, r3, #3
+  96 004a FB60     		str	r3, [r7, #12]
  260:../src/stm32f30x_comp.c **** 
  261:../src/stm32f30x_comp.c ****   /*!< Configure COMP: inverting input, output redirection, hysteresis value and power mode */
  262:../src/stm32f30x_comp.c ****   /*!< Set COMPxINSEL bits according to COMP_InitStruct->COMP_InvertingInput value */
@@ -359,66 +360,66 @@
  267:../src/stm32f30x_comp.c ****   /*!< Set COMPxHYST bits according to COMP_InitStruct->COMP_Hysteresis value */
  268:../src/stm32f30x_comp.c ****   /*!< Set COMPxMODE bits according to COMP_InitStruct->COMP_Mode value */
  269:../src/stm32f30x_comp.c ****   tmpreg |= (uint32_t)(COMP_InitStruct->COMP_InvertingInput | COMP_InitStruct->COMP_NonInvertingInp
-  96              		.loc 1 269 0
-  97 004c 3B68     		ldr	r3, [r7, #0]
-  98 004e 1A68     		ldr	r2, [r3, #0]
-  99 0050 3B68     		ldr	r3, [r7, #0]
- 100 0052 5B68     		ldr	r3, [r3, #4]
- 101 0054 1A43     		orrs	r2, r2, r3
+  97              		.loc 1 269 0
+  98 004c 3B68     		ldr	r3, [r7, #0]
+  99 004e 1A68     		ldr	r2, [r3, #0]
+ 100 0050 3B68     		ldr	r3, [r7, #0]
+ 101 0052 5B68     		ldr	r3, [r3, #4]
+ 102 0054 1A43     		orrs	r2, r2, r3
  270:../src/stm32f30x_comp.c ****                         COMP_InitStruct->COMP_Output | COMP_InitStruct->COMP_OutputPol | COMP_InitS
- 102              		.loc 1 270 0
- 103 0056 3B68     		ldr	r3, [r7, #0]
- 104 0058 9B68     		ldr	r3, [r3, #8]
+ 103              		.loc 1 270 0
+ 104 0056 3B68     		ldr	r3, [r7, #0]
+ 105 0058 9B68     		ldr	r3, [r3, #8]
  269:../src/stm32f30x_comp.c ****   tmpreg |= (uint32_t)(COMP_InitStruct->COMP_InvertingInput | COMP_InitStruct->COMP_NonInvertingInp
- 105              		.loc 1 269 0
- 106 005a 1A43     		orrs	r2, r2, r3
- 107              		.loc 1 270 0
- 108 005c 3B68     		ldr	r3, [r7, #0]
- 109 005e 1B69     		ldr	r3, [r3, #16]
- 110 0060 1A43     		orrs	r2, r2, r3
- 111 0062 3B68     		ldr	r3, [r7, #0]
- 112 0064 DB68     		ldr	r3, [r3, #12]
- 113 0066 1A43     		orrs	r2, r2, r3
+ 106              		.loc 1 269 0
+ 107 005a 1A43     		orrs	r2, r2, r3
+ 108              		.loc 1 270 0
+ 109 005c 3B68     		ldr	r3, [r7, #0]
+ 110 005e 1B69     		ldr	r3, [r3, #16]
+ 111 0060 1A43     		orrs	r2, r2, r3
+ 112 0062 3B68     		ldr	r3, [r7, #0]
+ 113 0064 DB68     		ldr	r3, [r3, #12]
+ 114 0066 1A43     		orrs	r2, r2, r3
  271:../src/stm32f30x_comp.c ****                         COMP_InitStruct->COMP_Hysteresis | COMP_InitStruct->COMP_Mode);
- 114              		.loc 1 271 0
- 115 0068 3B68     		ldr	r3, [r7, #0]
- 116 006a 5B69     		ldr	r3, [r3, #20]
+ 115              		.loc 1 271 0
+ 116 0068 3B68     		ldr	r3, [r7, #0]
+ 117 006a 5B69     		ldr	r3, [r3, #20]
  270:../src/stm32f30x_comp.c ****                         COMP_InitStruct->COMP_Output | COMP_InitStruct->COMP_OutputPol | COMP_InitS
- 117              		.loc 1 270 0
- 118 006c 1A43     		orrs	r2, r2, r3
- 119              		.loc 1 271 0
- 120 006e 3B68     		ldr	r3, [r7, #0]
- 121 0070 9B69     		ldr	r3, [r3, #24]
+ 118              		.loc 1 270 0
+ 119 006c 1A43     		orrs	r2, r2, r3
+ 120              		.loc 1 271 0
+ 121 006e 3B68     		ldr	r3, [r7, #0]
+ 122 0070 9B69     		ldr	r3, [r3, #24]
  269:../src/stm32f30x_comp.c ****   tmpreg |= (uint32_t)(COMP_InitStruct->COMP_InvertingInput | COMP_InitStruct->COMP_NonInvertingInp
- 122              		.loc 1 269 0
- 123 0072 1343     		orrs	r3, r3, r2
- 124 0074 FA68     		ldr	r2, [r7, #12]
- 125 0076 1343     		orrs	r3, r3, r2
- 126 0078 FB60     		str	r3, [r7, #12]
+ 123              		.loc 1 269 0
+ 124 0072 1343     		orrs	r3, r3, r2
+ 125 0074 FA68     		ldr	r2, [r7, #12]
+ 126 0076 1343     		orrs	r3, r3, r2
+ 127 0078 FB60     		str	r3, [r7, #12]
  272:../src/stm32f30x_comp.c **** 
  273:../src/stm32f30x_comp.c ****   /*!< Write to COMPx_CSR register */
  274:../src/stm32f30x_comp.c ****   *(__IO uint32_t *) (COMP_BASE + COMP_Selection) = tmpreg;
- 127              		.loc 1 274 0
- 128 007a 7A68     		ldr	r2, [r7, #4]
- 129 007c 4FF01C03 		mov	r3, #28
- 130 0080 C4F20103 		movt	r3, 16385
- 131 0084 D318     		adds	r3, r2, r3
- 132 0086 FA68     		ldr	r2, [r7, #12]
- 133 0088 1A60     		str	r2, [r3, #0]
+ 128              		.loc 1 274 0
+ 129 007a 7A68     		ldr	r2, [r7, #4]
+ 130 007c 4FF01C03 		mov	r3, #28
+ 131 0080 C4F20103 		movt	r3, 16385
+ 132 0084 D318     		adds	r3, r2, r3
+ 133 0086 FA68     		ldr	r2, [r7, #12]
+ 134 0088 1A60     		str	r2, [r3, #0]
  275:../src/stm32f30x_comp.c **** }
- 134              		.loc 1 275 0
- 135 008a 07F11407 		add	r7, r7, #20
- 136 008e BD46     		mov	sp, r7
- 137 0090 80BC     		pop	{r7}
- 138 0092 7047     		bx	lr
- 139              		.cfi_endproc
- 140              	.LFE112:
- 142              		.align	2
- 143              		.global	COMP_StructInit
- 144              		.thumb
- 145              		.thumb_func
- 147              	COMP_StructInit:
- 148              	.LFB113:
+ 135              		.loc 1 275 0
+ 136 008a 07F11407 		add	r7, r7, #20
+ 137 008e BD46     		mov	sp, r7
+ 138 0090 80BC     		pop	{r7}
+ 139 0092 7047     		bx	lr
+ 140              		.cfi_endproc
+ 141              	.LFE112:
+ 143              		.align	2
+ 144              		.global	COMP_StructInit
+ 145              		.thumb
+ 146              		.thumb_func
+ 148              	COMP_StructInit:
+ 149              	.LFB113:
  276:../src/stm32f30x_comp.c **** 
  277:../src/stm32f30x_comp.c **** /**
  278:../src/stm32f30x_comp.c ****   * @brief  Fills each COMP_InitStruct member with its default value.
@@ -428,71 +429,71 @@
  282:../src/stm32f30x_comp.c ****   */
  283:../src/stm32f30x_comp.c **** void COMP_StructInit(COMP_InitTypeDef* COMP_InitStruct)
  284:../src/stm32f30x_comp.c **** {
- 149              		.loc 1 284 0
- 150              		.cfi_startproc
- 151              		@ args = 0, pretend = 0, frame = 8
- 152              		@ frame_needed = 1, uses_anonymous_args = 0
- 153              		@ link register save eliminated.
- 154 0094 80B4     		push	{r7}
- 155              	.LCFI6:
- 156              		.cfi_def_cfa_offset 4
- 157              		.cfi_offset 7, -4
- 158 0096 83B0     		sub	sp, sp, #12
- 159              	.LCFI7:
- 160              		.cfi_def_cfa_offset 16
- 161 0098 00AF     		add	r7, sp, #0
- 162              	.LCFI8:
- 163              		.cfi_def_cfa_register 7
- 164 009a 7860     		str	r0, [r7, #4]
+ 150              		.loc 1 284 0
+ 151              		.cfi_startproc
+ 152              		@ args = 0, pretend = 0, frame = 8
+ 153              		@ frame_needed = 1, uses_anonymous_args = 0
+ 154              		@ link register save eliminated.
+ 155 0094 80B4     		push	{r7}
+ 156              	.LCFI6:
+ 157              		.cfi_def_cfa_offset 4
+ 158              		.cfi_offset 7, -4
+ 159 0096 83B0     		sub	sp, sp, #12
+ 160              	.LCFI7:
+ 161              		.cfi_def_cfa_offset 16
+ 162 0098 00AF     		add	r7, sp, #0
+ 163              	.LCFI8:
+ 164              		.cfi_def_cfa_register 7
+ 165 009a 7860     		str	r0, [r7, #4]
  285:../src/stm32f30x_comp.c ****   COMP_InitStruct->COMP_InvertingInput = COMP_InvertingInput_1_4VREFINT;
- 165              		.loc 1 285 0
- 166 009c 7B68     		ldr	r3, [r7, #4]
- 167 009e 4FF00002 		mov	r2, #0
- 168 00a2 1A60     		str	r2, [r3, #0]
+ 166              		.loc 1 285 0
+ 167 009c 7B68     		ldr	r3, [r7, #4]
+ 168 009e 4FF00002 		mov	r2, #0
+ 169 00a2 1A60     		str	r2, [r3, #0]
  286:../src/stm32f30x_comp.c ****   COMP_InitStruct->COMP_NonInvertingInput = COMP_NonInvertingInput_IO1;
- 169              		.loc 1 286 0
- 170 00a4 7B68     		ldr	r3, [r7, #4]
- 171 00a6 4FF00002 		mov	r2, #0
- 172 00aa 5A60     		str	r2, [r3, #4]
+ 170              		.loc 1 286 0
+ 171 00a4 7B68     		ldr	r3, [r7, #4]
+ 172 00a6 4FF00002 		mov	r2, #0
+ 173 00aa 5A60     		str	r2, [r3, #4]
  287:../src/stm32f30x_comp.c ****   COMP_InitStruct->COMP_Output = COMP_Output_None;
- 173              		.loc 1 287 0
- 174 00ac 7B68     		ldr	r3, [r7, #4]
- 175 00ae 4FF00002 		mov	r2, #0
- 176 00b2 9A60     		str	r2, [r3, #8]
+ 174              		.loc 1 287 0
+ 175 00ac 7B68     		ldr	r3, [r7, #4]
+ 176 00ae 4FF00002 		mov	r2, #0
+ 177 00b2 9A60     		str	r2, [r3, #8]
  288:../src/stm32f30x_comp.c ****   COMP_InitStruct->COMP_BlankingSrce = COMP_BlankingSrce_None;
- 177              		.loc 1 288 0
- 178 00b4 7B68     		ldr	r3, [r7, #4]
- 179 00b6 4FF00002 		mov	r2, #0
- 180 00ba DA60     		str	r2, [r3, #12]
+ 178              		.loc 1 288 0
+ 179 00b4 7B68     		ldr	r3, [r7, #4]
+ 180 00b6 4FF00002 		mov	r2, #0
+ 181 00ba DA60     		str	r2, [r3, #12]
  289:../src/stm32f30x_comp.c ****   COMP_InitStruct->COMP_OutputPol = COMP_OutputPol_NonInverted;
- 181              		.loc 1 289 0
- 182 00bc 7B68     		ldr	r3, [r7, #4]
- 183 00be 4FF00002 		mov	r2, #0
- 184 00c2 1A61     		str	r2, [r3, #16]
+ 182              		.loc 1 289 0
+ 183 00bc 7B68     		ldr	r3, [r7, #4]
+ 184 00be 4FF00002 		mov	r2, #0
+ 185 00c2 1A61     		str	r2, [r3, #16]
  290:../src/stm32f30x_comp.c ****   COMP_InitStruct->COMP_Hysteresis = COMP_Hysteresis_No;
- 185              		.loc 1 290 0
- 186 00c4 7B68     		ldr	r3, [r7, #4]
- 187 00c6 4FF00002 		mov	r2, #0
- 188 00ca 5A61     		str	r2, [r3, #20]
+ 186              		.loc 1 290 0
+ 187 00c4 7B68     		ldr	r3, [r7, #4]
+ 188 00c6 4FF00002 		mov	r2, #0
+ 189 00ca 5A61     		str	r2, [r3, #20]
  291:../src/stm32f30x_comp.c ****   COMP_InitStruct->COMP_Mode = COMP_Mode_UltraLowPower;
- 189              		.loc 1 291 0
- 190 00cc 7B68     		ldr	r3, [r7, #4]
- 191 00ce 4FF00C02 		mov	r2, #12
- 192 00d2 9A61     		str	r2, [r3, #24]
+ 190              		.loc 1 291 0
+ 191 00cc 7B68     		ldr	r3, [r7, #4]
+ 192 00ce 4FF00C02 		mov	r2, #12
+ 193 00d2 9A61     		str	r2, [r3, #24]
  292:../src/stm32f30x_comp.c **** }
- 193              		.loc 1 292 0
- 194 00d4 07F10C07 		add	r7, r7, #12
- 195 00d8 BD46     		mov	sp, r7
- 196 00da 80BC     		pop	{r7}
- 197 00dc 7047     		bx	lr
- 198              		.cfi_endproc
- 199              	.LFE113:
- 201 00de 00BF     		.align	2
- 202              		.global	COMP_Cmd
- 203              		.thumb
- 204              		.thumb_func
- 206              	COMP_Cmd:
- 207              	.LFB114:
+ 194              		.loc 1 292 0
+ 195 00d4 07F10C07 		add	r7, r7, #12
+ 196 00d8 BD46     		mov	sp, r7
+ 197 00da 80BC     		pop	{r7}
+ 198 00dc 7047     		bx	lr
+ 199              		.cfi_endproc
+ 200              	.LFE113:
+ 202 00de 00BF     		.align	2
+ 203              		.global	COMP_Cmd
+ 204              		.thumb
+ 205              		.thumb_func
+ 207              	COMP_Cmd:
+ 208              	.LFB114:
  293:../src/stm32f30x_comp.c **** 
  294:../src/stm32f30x_comp.c **** /**
  295:../src/stm32f30x_comp.c ****   * @brief  Enable or disable the COMP peripheral.
@@ -512,85 +513,85 @@
  309:../src/stm32f30x_comp.c ****   */
  310:../src/stm32f30x_comp.c **** void COMP_Cmd(uint32_t COMP_Selection, FunctionalState NewState)
  311:../src/stm32f30x_comp.c **** {
- 208              		.loc 1 311 0
- 209              		.cfi_startproc
- 210              		@ args = 0, pretend = 0, frame = 8
- 211              		@ frame_needed = 1, uses_anonymous_args = 0
- 212              		@ link register save eliminated.
- 213 00e0 80B4     		push	{r7}
- 214              	.LCFI9:
- 215              		.cfi_def_cfa_offset 4
- 216              		.cfi_offset 7, -4
- 217 00e2 83B0     		sub	sp, sp, #12
- 218              	.LCFI10:
- 219              		.cfi_def_cfa_offset 16
- 220 00e4 00AF     		add	r7, sp, #0
- 221              	.LCFI11:
- 222              		.cfi_def_cfa_register 7
- 223 00e6 7860     		str	r0, [r7, #4]
- 224 00e8 0B46     		mov	r3, r1
- 225 00ea FB70     		strb	r3, [r7, #3]
+ 209              		.loc 1 311 0
+ 210              		.cfi_startproc
+ 211              		@ args = 0, pretend = 0, frame = 8
+ 212              		@ frame_needed = 1, uses_anonymous_args = 0
+ 213              		@ link register save eliminated.
+ 214 00e0 80B4     		push	{r7}
+ 215              	.LCFI9:
+ 216              		.cfi_def_cfa_offset 4
+ 217              		.cfi_offset 7, -4
+ 218 00e2 83B0     		sub	sp, sp, #12
+ 219              	.LCFI10:
+ 220              		.cfi_def_cfa_offset 16
+ 221 00e4 00AF     		add	r7, sp, #0
+ 222              	.LCFI11:
+ 223              		.cfi_def_cfa_register 7
+ 224 00e6 7860     		str	r0, [r7, #4]
+ 225 00e8 0B46     		mov	r3, r1
+ 226 00ea FB70     		strb	r3, [r7, #3]
  312:../src/stm32f30x_comp.c ****   /* Check the parameters */
  313:../src/stm32f30x_comp.c ****   assert_param(IS_COMP_ALL_PERIPH(COMP_Selection));
  314:../src/stm32f30x_comp.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
  315:../src/stm32f30x_comp.c **** 
  316:../src/stm32f30x_comp.c ****   if (NewState != DISABLE)
- 226              		.loc 1 316 0
- 227 00ec FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
- 228 00ee 002B     		cmp	r3, #0
- 229 00f0 11D0     		beq	.L5
+ 227              		.loc 1 316 0
+ 228 00ec FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 229 00ee 002B     		cmp	r3, #0
+ 230 00f0 11D0     		beq	.L5
  317:../src/stm32f30x_comp.c ****   {
  318:../src/stm32f30x_comp.c ****     /* Enable the selected COMPx peripheral */
  319:../src/stm32f30x_comp.c ****     *(__IO uint32_t *) (COMP_BASE + COMP_Selection) |= (uint32_t) (COMP_CSR_COMPxEN);
- 230              		.loc 1 319 0
- 231 00f2 7A68     		ldr	r2, [r7, #4]
- 232 00f4 4FF01C03 		mov	r3, #28
- 233 00f8 C4F20103 		movt	r3, 16385
- 234 00fc D318     		adds	r3, r2, r3
- 235 00fe 1A46     		mov	r2, r3
- 236 0100 7968     		ldr	r1, [r7, #4]
- 237 0102 4FF01C03 		mov	r3, #28
- 238 0106 C4F20103 		movt	r3, 16385
- 239 010a CB18     		adds	r3, r1, r3
- 240 010c 1B68     		ldr	r3, [r3, #0]
- 241 010e 43F00103 		orr	r3, r3, #1
- 242 0112 1360     		str	r3, [r2, #0]
- 243 0114 10E0     		b	.L4
- 244              	.L5:
+ 231              		.loc 1 319 0
+ 232 00f2 7A68     		ldr	r2, [r7, #4]
+ 233 00f4 4FF01C03 		mov	r3, #28
+ 234 00f8 C4F20103 		movt	r3, 16385
+ 235 00fc D318     		adds	r3, r2, r3
+ 236 00fe 1A46     		mov	r2, r3
+ 237 0100 7968     		ldr	r1, [r7, #4]
+ 238 0102 4FF01C03 		mov	r3, #28
+ 239 0106 C4F20103 		movt	r3, 16385
+ 240 010a CB18     		adds	r3, r1, r3
+ 241 010c 1B68     		ldr	r3, [r3, #0]
+ 242 010e 43F00103 		orr	r3, r3, #1
+ 243 0112 1360     		str	r3, [r2, #0]
+ 244 0114 10E0     		b	.L4
+ 245              	.L5:
  320:../src/stm32f30x_comp.c ****   }
  321:../src/stm32f30x_comp.c ****   else
  322:../src/stm32f30x_comp.c ****   {
  323:../src/stm32f30x_comp.c ****     /* Disable the selected COMP peripheral  */
  324:../src/stm32f30x_comp.c ****     *(__IO uint32_t *) (COMP_BASE + COMP_Selection) &= (uint32_t)(~COMP_CSR_COMPxEN);
- 245              		.loc 1 324 0
- 246 0116 7A68     		ldr	r2, [r7, #4]
- 247 0118 4FF01C03 		mov	r3, #28
- 248 011c C4F20103 		movt	r3, 16385
- 249 0120 D318     		adds	r3, r2, r3
- 250 0122 1A46     		mov	r2, r3
- 251 0124 7968     		ldr	r1, [r7, #4]
- 252 0126 4FF01C03 		mov	r3, #28
- 253 012a C4F20103 		movt	r3, 16385
- 254 012e CB18     		adds	r3, r1, r3
- 255 0130 1B68     		ldr	r3, [r3, #0]
- 256 0132 23F00103 		bic	r3, r3, #1
- 257 0136 1360     		str	r3, [r2, #0]
- 258              	.L4:
+ 246              		.loc 1 324 0
+ 247 0116 7A68     		ldr	r2, [r7, #4]
+ 248 0118 4FF01C03 		mov	r3, #28
+ 249 011c C4F20103 		movt	r3, 16385
+ 250 0120 D318     		adds	r3, r2, r3
+ 251 0122 1A46     		mov	r2, r3
+ 252 0124 7968     		ldr	r1, [r7, #4]
+ 253 0126 4FF01C03 		mov	r3, #28
+ 254 012a C4F20103 		movt	r3, 16385
+ 255 012e CB18     		adds	r3, r1, r3
+ 256 0130 1B68     		ldr	r3, [r3, #0]
+ 257 0132 23F00103 		bic	r3, r3, #1
+ 258 0136 1360     		str	r3, [r2, #0]
+ 259              	.L4:
  325:../src/stm32f30x_comp.c ****   }
  326:../src/stm32f30x_comp.c **** }
- 259              		.loc 1 326 0
- 260 0138 07F10C07 		add	r7, r7, #12
- 261 013c BD46     		mov	sp, r7
- 262 013e 80BC     		pop	{r7}
- 263 0140 7047     		bx	lr
- 264              		.cfi_endproc
- 265              	.LFE114:
- 267 0142 00BF     		.align	2
- 268              		.global	COMP_SwitchCmd
- 269              		.thumb
- 270              		.thumb_func
- 272              	COMP_SwitchCmd:
- 273              	.LFB115:
+ 260              		.loc 1 326 0
+ 261 0138 07F10C07 		add	r7, r7, #12
+ 262 013c BD46     		mov	sp, r7
+ 263 013e 80BC     		pop	{r7}
+ 264 0140 7047     		bx	lr
+ 265              		.cfi_endproc
+ 266              	.LFE114:
+ 268 0142 00BF     		.align	2
+ 269              		.global	COMP_SwitchCmd
+ 270              		.thumb
+ 271              		.thumb_func
+ 273              	COMP_SwitchCmd:
+ 274              	.LFB115:
  327:../src/stm32f30x_comp.c **** 
  328:../src/stm32f30x_comp.c **** /**
  329:../src/stm32f30x_comp.c ****   * @brief  Close or Open the SW1 switch.
@@ -606,84 +607,84 @@
  339:../src/stm32f30x_comp.c ****   */
  340:../src/stm32f30x_comp.c **** void COMP_SwitchCmd(uint32_t COMP_Selection, FunctionalState NewState)
  341:../src/stm32f30x_comp.c **** {
- 274              		.loc 1 341 0
- 275              		.cfi_startproc
- 276              		@ args = 0, pretend = 0, frame = 8
- 277              		@ frame_needed = 1, uses_anonymous_args = 0
- 278              		@ link register save eliminated.
- 279 0144 80B4     		push	{r7}
- 280              	.LCFI12:
- 281              		.cfi_def_cfa_offset 4
- 282              		.cfi_offset 7, -4
- 283 0146 83B0     		sub	sp, sp, #12
- 284              	.LCFI13:
- 285              		.cfi_def_cfa_offset 16
- 286 0148 00AF     		add	r7, sp, #0
- 287              	.LCFI14:
- 288              		.cfi_def_cfa_register 7
- 289 014a 7860     		str	r0, [r7, #4]
- 290 014c 0B46     		mov	r3, r1
- 291 014e FB70     		strb	r3, [r7, #3]
+ 275              		.loc 1 341 0
+ 276              		.cfi_startproc
+ 277              		@ args = 0, pretend = 0, frame = 8
+ 278              		@ frame_needed = 1, uses_anonymous_args = 0
+ 279              		@ link register save eliminated.
+ 280 0144 80B4     		push	{r7}
+ 281              	.LCFI12:
+ 282              		.cfi_def_cfa_offset 4
+ 283              		.cfi_offset 7, -4
+ 284 0146 83B0     		sub	sp, sp, #12
+ 285              	.LCFI13:
+ 286              		.cfi_def_cfa_offset 16
+ 287 0148 00AF     		add	r7, sp, #0
+ 288              	.LCFI14:
+ 289              		.cfi_def_cfa_register 7
+ 290 014a 7860     		str	r0, [r7, #4]
+ 291 014c 0B46     		mov	r3, r1
+ 292 014e FB70     		strb	r3, [r7, #3]
  342:../src/stm32f30x_comp.c ****   /* Check the parameter */
  343:../src/stm32f30x_comp.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
  344:../src/stm32f30x_comp.c **** 
  345:../src/stm32f30x_comp.c ****   if (NewState != DISABLE)
- 292              		.loc 1 345 0
- 293 0150 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
- 294 0152 002B     		cmp	r3, #0
- 295 0154 11D0     		beq	.L8
+ 293              		.loc 1 345 0
+ 294 0150 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 295 0152 002B     		cmp	r3, #0
+ 296 0154 11D0     		beq	.L8
  346:../src/stm32f30x_comp.c ****   {
  347:../src/stm32f30x_comp.c ****     /* Close SW1 switch */
  348:../src/stm32f30x_comp.c ****     *(__IO uint32_t *) (COMP_BASE + COMP_Selection) |= (uint32_t) (COMP_CSR_COMP1SW1);
- 296              		.loc 1 348 0
- 297 0156 7A68     		ldr	r2, [r7, #4]
- 298 0158 4FF01C03 		mov	r3, #28
- 299 015c C4F20103 		movt	r3, 16385
- 300 0160 D318     		adds	r3, r2, r3
- 301 0162 1A46     		mov	r2, r3
- 302 0164 7968     		ldr	r1, [r7, #4]
- 303 0166 4FF01C03 		mov	r3, #28
- 304 016a C4F20103 		movt	r3, 16385
- 305 016e CB18     		adds	r3, r1, r3
- 306 0170 1B68     		ldr	r3, [r3, #0]
- 307 0172 43F00203 		orr	r3, r3, #2
- 308 0176 1360     		str	r3, [r2, #0]
- 309 0178 10E0     		b	.L7
- 310              	.L8:
+ 297              		.loc 1 348 0
+ 298 0156 7A68     		ldr	r2, [r7, #4]
+ 299 0158 4FF01C03 		mov	r3, #28
+ 300 015c C4F20103 		movt	r3, 16385
+ 301 0160 D318     		adds	r3, r2, r3
+ 302 0162 1A46     		mov	r2, r3
+ 303 0164 7968     		ldr	r1, [r7, #4]
+ 304 0166 4FF01C03 		mov	r3, #28
+ 305 016a C4F20103 		movt	r3, 16385
+ 306 016e CB18     		adds	r3, r1, r3
+ 307 0170 1B68     		ldr	r3, [r3, #0]
+ 308 0172 43F00203 		orr	r3, r3, #2
+ 309 0176 1360     		str	r3, [r2, #0]
+ 310 0178 10E0     		b	.L7
+ 311              	.L8:
  349:../src/stm32f30x_comp.c ****   }
  350:../src/stm32f30x_comp.c ****   else
  351:../src/stm32f30x_comp.c ****   {
  352:../src/stm32f30x_comp.c ****     /* Open SW1 switch */
  353:../src/stm32f30x_comp.c ****     *(__IO uint32_t *) (COMP_BASE + COMP_Selection) &= (uint32_t)(~COMP_CSR_COMP1SW1);
- 311              		.loc 1 353 0
- 312 017a 7A68     		ldr	r2, [r7, #4]
- 313 017c 4FF01C03 		mov	r3, #28
- 314 0180 C4F20103 		movt	r3, 16385
- 315 0184 D318     		adds	r3, r2, r3
- 316 0186 1A46     		mov	r2, r3
- 317 0188 7968     		ldr	r1, [r7, #4]
- 318 018a 4FF01C03 		mov	r3, #28
- 319 018e C4F20103 		movt	r3, 16385
- 320 0192 CB18     		adds	r3, r1, r3
- 321 0194 1B68     		ldr	r3, [r3, #0]
- 322 0196 23F00203 		bic	r3, r3, #2
- 323 019a 1360     		str	r3, [r2, #0]
- 324              	.L7:
+ 312              		.loc 1 353 0
+ 313 017a 7A68     		ldr	r2, [r7, #4]
+ 314 017c 4FF01C03 		mov	r3, #28
+ 315 0180 C4F20103 		movt	r3, 16385
+ 316 0184 D318     		adds	r3, r2, r3
+ 317 0186 1A46     		mov	r2, r3
+ 318 0188 7968     		ldr	r1, [r7, #4]
+ 319 018a 4FF01C03 		mov	r3, #28
+ 320 018e C4F20103 		movt	r3, 16385
+ 321 0192 CB18     		adds	r3, r1, r3
+ 322 0194 1B68     		ldr	r3, [r3, #0]
+ 323 0196 23F00203 		bic	r3, r3, #2
+ 324 019a 1360     		str	r3, [r2, #0]
+ 325              	.L7:
  354:../src/stm32f30x_comp.c ****   }
  355:../src/stm32f30x_comp.c **** }
- 325              		.loc 1 355 0
- 326 019c 07F10C07 		add	r7, r7, #12
- 327 01a0 BD46     		mov	sp, r7
- 328 01a2 80BC     		pop	{r7}
- 329 01a4 7047     		bx	lr
- 330              		.cfi_endproc
- 331              	.LFE115:
- 333 01a6 00BF     		.align	2
- 334              		.global	COMP_GetOutputLevel
- 335              		.thumb
- 336              		.thumb_func
- 338              	COMP_GetOutputLevel:
- 339              	.LFB116:
+ 326              		.loc 1 355 0
+ 327 019c 07F10C07 		add	r7, r7, #12
+ 328 01a0 BD46     		mov	sp, r7
+ 329 01a2 80BC     		pop	{r7}
+ 330 01a4 7047     		bx	lr
+ 331              		.cfi_endproc
+ 332              	.LFE115:
+ 334 01a6 00BF     		.align	2
+ 335              		.global	COMP_GetOutputLevel
+ 336              		.thumb
+ 337              		.thumb_func
+ 339              	COMP_GetOutputLevel:
+ 340              	.LFB116:
  356:../src/stm32f30x_comp.c **** 
  357:../src/stm32f30x_comp.c **** /**
  358:../src/stm32f30x_comp.c ****   * @brief  Return the output level (high or low) of the selected comparator. 
@@ -706,77 +707,77 @@
  375:../src/stm32f30x_comp.c ****   */
  376:../src/stm32f30x_comp.c **** uint32_t COMP_GetOutputLevel(uint32_t COMP_Selection)
  377:../src/stm32f30x_comp.c **** {
- 340              		.loc 1 377 0
- 341              		.cfi_startproc
- 342              		@ args = 0, pretend = 0, frame = 16
- 343              		@ frame_needed = 1, uses_anonymous_args = 0
- 344              		@ link register save eliminated.
- 345 01a8 80B4     		push	{r7}
- 346              	.LCFI15:
- 347              		.cfi_def_cfa_offset 4
- 348              		.cfi_offset 7, -4
- 349 01aa 85B0     		sub	sp, sp, #20
- 350              	.LCFI16:
- 351              		.cfi_def_cfa_offset 24
- 352 01ac 00AF     		add	r7, sp, #0
- 353              	.LCFI17:
- 354              		.cfi_def_cfa_register 7
- 355 01ae 7860     		str	r0, [r7, #4]
+ 341              		.loc 1 377 0
+ 342              		.cfi_startproc
+ 343              		@ args = 0, pretend = 0, frame = 16
+ 344              		@ frame_needed = 1, uses_anonymous_args = 0
+ 345              		@ link register save eliminated.
+ 346 01a8 80B4     		push	{r7}
+ 347              	.LCFI15:
+ 348              		.cfi_def_cfa_offset 4
+ 349              		.cfi_offset 7, -4
+ 350 01aa 85B0     		sub	sp, sp, #20
+ 351              	.LCFI16:
+ 352              		.cfi_def_cfa_offset 24
+ 353 01ac 00AF     		add	r7, sp, #0
+ 354              	.LCFI17:
+ 355              		.cfi_def_cfa_register 7
+ 356 01ae 7860     		str	r0, [r7, #4]
  378:../src/stm32f30x_comp.c ****   uint32_t compout = 0x0;
- 356              		.loc 1 378 0
- 357 01b0 4FF00003 		mov	r3, #0
- 358 01b4 FB60     		str	r3, [r7, #12]
+ 357              		.loc 1 378 0
+ 358 01b0 4FF00003 		mov	r3, #0
+ 359 01b4 FB60     		str	r3, [r7, #12]
  379:../src/stm32f30x_comp.c **** 
  380:../src/stm32f30x_comp.c ****   /* Check the parameters */
  381:../src/stm32f30x_comp.c ****   assert_param(IS_COMP_ALL_PERIPH(COMP_Selection));
  382:../src/stm32f30x_comp.c **** 
  383:../src/stm32f30x_comp.c ****   /* Check if selected comparator output is high */
  384:../src/stm32f30x_comp.c ****   if ((*(__IO uint32_t *) (COMP_BASE + COMP_Selection) & (COMP_CSR_COMPxOUT)) != 0)
- 359              		.loc 1 384 0
- 360 01b6 7A68     		ldr	r2, [r7, #4]
- 361 01b8 4FF01C03 		mov	r3, #28
- 362 01bc C4F20103 		movt	r3, 16385
- 363 01c0 D318     		adds	r3, r2, r3
- 364 01c2 1B68     		ldr	r3, [r3, #0]
- 365 01c4 03F08043 		and	r3, r3, #1073741824
- 366 01c8 002B     		cmp	r3, #0
- 367 01ca 03D0     		beq	.L11
+ 360              		.loc 1 384 0
+ 361 01b6 7A68     		ldr	r2, [r7, #4]
+ 362 01b8 4FF01C03 		mov	r3, #28
+ 363 01bc C4F20103 		movt	r3, 16385
+ 364 01c0 D318     		adds	r3, r2, r3
+ 365 01c2 1B68     		ldr	r3, [r3, #0]
+ 366 01c4 03F08043 		and	r3, r3, #1073741824
+ 367 01c8 002B     		cmp	r3, #0
+ 368 01ca 03D0     		beq	.L11
  385:../src/stm32f30x_comp.c ****   {
  386:../src/stm32f30x_comp.c ****     compout = COMP_OutputLevel_High;
- 368              		.loc 1 386 0
- 369 01cc 4FF08043 		mov	r3, #1073741824
- 370 01d0 FB60     		str	r3, [r7, #12]
- 371 01d2 02E0     		b	.L12
- 372              	.L11:
+ 369              		.loc 1 386 0
+ 370 01cc 4FF08043 		mov	r3, #1073741824
+ 371 01d0 FB60     		str	r3, [r7, #12]
+ 372 01d2 02E0     		b	.L12
+ 373              	.L11:
  387:../src/stm32f30x_comp.c ****   }
  388:../src/stm32f30x_comp.c ****   else
  389:../src/stm32f30x_comp.c ****   {
  390:../src/stm32f30x_comp.c ****     compout = COMP_OutputLevel_Low;
- 373              		.loc 1 390 0
- 374 01d4 4FF00003 		mov	r3, #0
- 375 01d8 FB60     		str	r3, [r7, #12]
- 376              	.L12:
+ 374              		.loc 1 390 0
+ 375 01d4 4FF00003 		mov	r3, #0
+ 376 01d8 FB60     		str	r3, [r7, #12]
+ 377              	.L12:
  391:../src/stm32f30x_comp.c ****   }
  392:../src/stm32f30x_comp.c **** 
  393:../src/stm32f30x_comp.c ****   /* Return the comparator output level */
  394:../src/stm32f30x_comp.c ****   return (uint32_t)(compout);
- 377              		.loc 1 394 0
- 378 01da FB68     		ldr	r3, [r7, #12]
+ 378              		.loc 1 394 0
+ 379 01da FB68     		ldr	r3, [r7, #12]
  395:../src/stm32f30x_comp.c **** }
- 379              		.loc 1 395 0
- 380 01dc 1846     		mov	r0, r3
- 381 01de 07F11407 		add	r7, r7, #20
- 382 01e2 BD46     		mov	sp, r7
- 383 01e4 80BC     		pop	{r7}
- 384 01e6 7047     		bx	lr
- 385              		.cfi_endproc
- 386              	.LFE116:
- 388              		.align	2
- 389              		.global	COMP_WindowCmd
- 390              		.thumb
- 391              		.thumb_func
- 393              	COMP_WindowCmd:
- 394              	.LFB117:
+ 380              		.loc 1 395 0
+ 381 01dc 1846     		mov	r0, r3
+ 382 01de 07F11407 		add	r7, r7, #20
+ 383 01e2 BD46     		mov	sp, r7
+ 384 01e4 80BC     		pop	{r7}
+ 385 01e6 7047     		bx	lr
+ 386              		.cfi_endproc
+ 387              	.LFE116:
+ 389              		.align	2
+ 390              		.global	COMP_WindowCmd
+ 391              		.thumb
+ 392              		.thumb_func
+ 394              	COMP_WindowCmd:
+ 395              	.LFB117:
  396:../src/stm32f30x_comp.c **** 
  397:../src/stm32f30x_comp.c **** /**
  398:../src/stm32f30x_comp.c ****   * @}
@@ -816,85 +817,85 @@
  432:../src/stm32f30x_comp.c ****   */
  433:../src/stm32f30x_comp.c **** void COMP_WindowCmd(uint32_t COMP_Selection, FunctionalState NewState)
  434:../src/stm32f30x_comp.c **** {
- 395              		.loc 1 434 0
- 396              		.cfi_startproc
- 397              		@ args = 0, pretend = 0, frame = 8
- 398              		@ frame_needed = 1, uses_anonymous_args = 0
- 399              		@ link register save eliminated.
- 400 01e8 80B4     		push	{r7}
- 401              	.LCFI18:
- 402              		.cfi_def_cfa_offset 4
- 403              		.cfi_offset 7, -4
- 404 01ea 83B0     		sub	sp, sp, #12
- 405              	.LCFI19:
- 406              		.cfi_def_cfa_offset 16
- 407 01ec 00AF     		add	r7, sp, #0
- 408              	.LCFI20:
- 409              		.cfi_def_cfa_register 7
- 410 01ee 7860     		str	r0, [r7, #4]
- 411 01f0 0B46     		mov	r3, r1
- 412 01f2 FB70     		strb	r3, [r7, #3]
+ 396              		.loc 1 434 0
+ 397              		.cfi_startproc
+ 398              		@ args = 0, pretend = 0, frame = 8
+ 399              		@ frame_needed = 1, uses_anonymous_args = 0
+ 400              		@ link register save eliminated.
+ 401 01e8 80B4     		push	{r7}
+ 402              	.LCFI18:
+ 403              		.cfi_def_cfa_offset 4
+ 404              		.cfi_offset 7, -4
+ 405 01ea 83B0     		sub	sp, sp, #12
+ 406              	.LCFI19:
+ 407              		.cfi_def_cfa_offset 16
+ 408 01ec 00AF     		add	r7, sp, #0
+ 409              	.LCFI20:
+ 410              		.cfi_def_cfa_register 7
+ 411 01ee 7860     		str	r0, [r7, #4]
+ 412 01f0 0B46     		mov	r3, r1
+ 413 01f2 FB70     		strb	r3, [r7, #3]
  435:../src/stm32f30x_comp.c ****   /* Check the parameters */
  436:../src/stm32f30x_comp.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
  437:../src/stm32f30x_comp.c ****   assert_param(IS_COMP_WINDOW(COMP_Selection));
  438:../src/stm32f30x_comp.c ****   
  439:../src/stm32f30x_comp.c ****   if (NewState != DISABLE)
- 413              		.loc 1 439 0
- 414 01f4 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
- 415 01f6 002B     		cmp	r3, #0
- 416 01f8 11D0     		beq	.L15
+ 414              		.loc 1 439 0
+ 415 01f4 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 416 01f6 002B     		cmp	r3, #0
+ 417 01f8 11D0     		beq	.L15
  440:../src/stm32f30x_comp.c ****   {
  441:../src/stm32f30x_comp.c ****     /* Enable the window mode */
  442:../src/stm32f30x_comp.c ****     *(__IO uint32_t *) (COMP_BASE + COMP_Selection) |= (uint32_t) COMP_CSR_COMPxWNDWEN;
- 417              		.loc 1 442 0
- 418 01fa 7A68     		ldr	r2, [r7, #4]
- 419 01fc 4FF01C03 		mov	r3, #28
- 420 0200 C4F20103 		movt	r3, 16385
- 421 0204 D318     		adds	r3, r2, r3
- 422 0206 1A46     		mov	r2, r3
- 423 0208 7968     		ldr	r1, [r7, #4]
- 424 020a 4FF01C03 		mov	r3, #28
- 425 020e C4F20103 		movt	r3, 16385
- 426 0212 CB18     		adds	r3, r1, r3
- 427 0214 1B68     		ldr	r3, [r3, #0]
- 428 0216 43F40073 		orr	r3, r3, #512
- 429 021a 1360     		str	r3, [r2, #0]
- 430 021c 10E0     		b	.L14
- 431              	.L15:
+ 418              		.loc 1 442 0
+ 419 01fa 7A68     		ldr	r2, [r7, #4]
+ 420 01fc 4FF01C03 		mov	r3, #28
+ 421 0200 C4F20103 		movt	r3, 16385
+ 422 0204 D318     		adds	r3, r2, r3
+ 423 0206 1A46     		mov	r2, r3
+ 424 0208 7968     		ldr	r1, [r7, #4]
+ 425 020a 4FF01C03 		mov	r3, #28
+ 426 020e C4F20103 		movt	r3, 16385
+ 427 0212 CB18     		adds	r3, r1, r3
+ 428 0214 1B68     		ldr	r3, [r3, #0]
+ 429 0216 43F40073 		orr	r3, r3, #512
+ 430 021a 1360     		str	r3, [r2, #0]
+ 431 021c 10E0     		b	.L14
+ 432              	.L15:
  443:../src/stm32f30x_comp.c ****   }
  444:../src/stm32f30x_comp.c ****   else
  445:../src/stm32f30x_comp.c ****   {
  446:../src/stm32f30x_comp.c ****     /* Disable the window mode */
  447:../src/stm32f30x_comp.c ****     *(__IO uint32_t *) (COMP_BASE + COMP_Selection) &= (uint32_t)(~COMP_CSR_COMPxWNDWEN);
- 432              		.loc 1 447 0
- 433 021e 7A68     		ldr	r2, [r7, #4]
- 434 0220 4FF01C03 		mov	r3, #28
- 435 0224 C4F20103 		movt	r3, 16385
- 436 0228 D318     		adds	r3, r2, r3
- 437 022a 1A46     		mov	r2, r3
- 438 022c 7968     		ldr	r1, [r7, #4]
- 439 022e 4FF01C03 		mov	r3, #28
- 440 0232 C4F20103 		movt	r3, 16385
- 441 0236 CB18     		adds	r3, r1, r3
- 442 0238 1B68     		ldr	r3, [r3, #0]
- 443 023a 23F40073 		bic	r3, r3, #512
- 444 023e 1360     		str	r3, [r2, #0]
- 445              	.L14:
+ 433              		.loc 1 447 0
+ 434 021e 7A68     		ldr	r2, [r7, #4]
+ 435 0220 4FF01C03 		mov	r3, #28
+ 436 0224 C4F20103 		movt	r3, 16385
+ 437 0228 D318     		adds	r3, r2, r3
+ 438 022a 1A46     		mov	r2, r3
+ 439 022c 7968     		ldr	r1, [r7, #4]
+ 440 022e 4FF01C03 		mov	r3, #28
+ 441 0232 C4F20103 		movt	r3, 16385
+ 442 0236 CB18     		adds	r3, r1, r3
+ 443 0238 1B68     		ldr	r3, [r3, #0]
+ 444 023a 23F40073 		bic	r3, r3, #512
+ 445 023e 1360     		str	r3, [r2, #0]
+ 446              	.L14:
  448:../src/stm32f30x_comp.c ****   }
  449:../src/stm32f30x_comp.c **** }
- 446              		.loc 1 449 0
- 447 0240 07F10C07 		add	r7, r7, #12
- 448 0244 BD46     		mov	sp, r7
- 449 0246 80BC     		pop	{r7}
- 450 0248 7047     		bx	lr
- 451              		.cfi_endproc
- 452              	.LFE117:
- 454 024a 00BF     		.align	2
- 455              		.global	COMP_LockConfig
- 456              		.thumb
- 457              		.thumb_func
- 459              	COMP_LockConfig:
- 460              	.LFB118:
+ 447              		.loc 1 449 0
+ 448 0240 07F10C07 		add	r7, r7, #12
+ 449 0244 BD46     		mov	sp, r7
+ 450 0246 80BC     		pop	{r7}
+ 451 0248 7047     		bx	lr
+ 452              		.cfi_endproc
+ 453              	.LFE117:
+ 455 024a 00BF     		.align	2
+ 456              		.global	COMP_LockConfig
+ 457              		.thumb
+ 458              		.thumb_func
+ 460              	COMP_LockConfig:
+ 461              	.LFB118:
  450:../src/stm32f30x_comp.c **** 
  451:../src/stm32f30x_comp.c **** /**
  452:../src/stm32f30x_comp.c ****   * @}
@@ -925,66 +926,66 @@
  477:../src/stm32f30x_comp.c ****   */
  478:../src/stm32f30x_comp.c **** void COMP_LockConfig(uint32_t COMP_Selection)
  479:../src/stm32f30x_comp.c **** {
- 461              		.loc 1 479 0
- 462              		.cfi_startproc
- 463              		@ args = 0, pretend = 0, frame = 8
- 464              		@ frame_needed = 1, uses_anonymous_args = 0
- 465              		@ link register save eliminated.
- 466 024c 80B4     		push	{r7}
- 467              	.LCFI21:
- 468              		.cfi_def_cfa_offset 4
- 469              		.cfi_offset 7, -4
- 470 024e 83B0     		sub	sp, sp, #12
- 471              	.LCFI22:
- 472              		.cfi_def_cfa_offset 16
- 473 0250 00AF     		add	r7, sp, #0
- 474              	.LCFI23:
- 475              		.cfi_def_cfa_register 7
- 476 0252 7860     		str	r0, [r7, #4]
+ 462              		.loc 1 479 0
+ 463              		.cfi_startproc
+ 464              		@ args = 0, pretend = 0, frame = 8
+ 465              		@ frame_needed = 1, uses_anonymous_args = 0
+ 466              		@ link register save eliminated.
+ 467 024c 80B4     		push	{r7}
+ 468              	.LCFI21:
+ 469              		.cfi_def_cfa_offset 4
+ 470              		.cfi_offset 7, -4
+ 471 024e 83B0     		sub	sp, sp, #12
+ 472              	.LCFI22:
+ 473              		.cfi_def_cfa_offset 16
+ 474 0250 00AF     		add	r7, sp, #0
+ 475              	.LCFI23:
+ 476              		.cfi_def_cfa_register 7
+ 477 0252 7860     		str	r0, [r7, #4]
  480:../src/stm32f30x_comp.c ****   /* Check the parameter */
  481:../src/stm32f30x_comp.c ****   assert_param(IS_COMP_ALL_PERIPH(COMP_Selection));
  482:../src/stm32f30x_comp.c **** 
  483:../src/stm32f30x_comp.c ****   /* Set the lock bit corresponding to selected comparator */
  484:../src/stm32f30x_comp.c ****   *(__IO uint32_t *) (COMP_BASE + COMP_Selection) |= (uint32_t) (COMP_CSR_COMPxLOCK);
- 477              		.loc 1 484 0
- 478 0254 7A68     		ldr	r2, [r7, #4]
- 479 0256 4FF01C03 		mov	r3, #28
- 480 025a C4F20103 		movt	r3, 16385
- 481 025e D318     		adds	r3, r2, r3
- 482 0260 1A46     		mov	r2, r3
- 483 0262 7968     		ldr	r1, [r7, #4]
- 484 0264 4FF01C03 		mov	r3, #28
- 485 0268 C4F20103 		movt	r3, 16385
- 486 026c CB18     		adds	r3, r1, r3
- 487 026e 1B68     		ldr	r3, [r3, #0]
- 488 0270 43F00043 		orr	r3, r3, #-2147483648
- 489 0274 1360     		str	r3, [r2, #0]
+ 478              		.loc 1 484 0
+ 479 0254 7A68     		ldr	r2, [r7, #4]
+ 480 0256 4FF01C03 		mov	r3, #28
+ 481 025a C4F20103 		movt	r3, 16385
+ 482 025e D318     		adds	r3, r2, r3
+ 483 0260 1A46     		mov	r2, r3
+ 484 0262 7968     		ldr	r1, [r7, #4]
+ 485 0264 4FF01C03 		mov	r3, #28
+ 486 0268 C4F20103 		movt	r3, 16385
+ 487 026c CB18     		adds	r3, r1, r3
+ 488 026e 1B68     		ldr	r3, [r3, #0]
+ 489 0270 43F00043 		orr	r3, r3, #-2147483648
+ 490 0274 1360     		str	r3, [r2, #0]
  485:../src/stm32f30x_comp.c **** }
- 490              		.loc 1 485 0
- 491 0276 07F10C07 		add	r7, r7, #12
- 492 027a BD46     		mov	sp, r7
- 493 027c 80BC     		pop	{r7}
- 494 027e 7047     		bx	lr
- 495              		.cfi_endproc
- 496              	.LFE118:
- 498              	.Letext0:
- 499              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
- 500              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
- 501              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_comp.h"
- 502              		.file 5 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
+ 491              		.loc 1 485 0
+ 492 0276 07F10C07 		add	r7, r7, #12
+ 493 027a BD46     		mov	sp, r7
+ 494 027c 80BC     		pop	{r7}
+ 495 027e 7047     		bx	lr
+ 496              		.cfi_endproc
+ 497              	.LFE118:
+ 499              	.Letext0:
+ 500              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
+ 501              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
+ 502              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_comp.h"
+ 503              		.file 5 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32f30x_comp.c
-     /tmp/cc45vgyk.s:19     .text:00000000 $t
-     /tmp/cc45vgyk.s:24     .text:00000000 COMP_DeInit
-     /tmp/cc45vgyk.s:63     .text:00000024 COMP_Init
-     /tmp/cc45vgyk.s:147    .text:00000094 COMP_StructInit
-     /tmp/cc45vgyk.s:206    .text:000000e0 COMP_Cmd
-     /tmp/cc45vgyk.s:272    .text:00000144 COMP_SwitchCmd
-     /tmp/cc45vgyk.s:338    .text:000001a8 COMP_GetOutputLevel
-     /tmp/cc45vgyk.s:393    .text:000001e8 COMP_WindowCmd
-     /tmp/cc45vgyk.s:459    .text:0000024c COMP_LockConfig
+     /tmp/ccbwP5TN.s:20     .text:00000000 $t
+     /tmp/ccbwP5TN.s:25     .text:00000000 COMP_DeInit
+     /tmp/ccbwP5TN.s:64     .text:00000024 COMP_Init
+     /tmp/ccbwP5TN.s:148    .text:00000094 COMP_StructInit
+     /tmp/ccbwP5TN.s:207    .text:000000e0 COMP_Cmd
+     /tmp/ccbwP5TN.s:273    .text:00000144 COMP_SwitchCmd
+     /tmp/ccbwP5TN.s:339    .text:000001a8 COMP_GetOutputLevel
+     /tmp/ccbwP5TN.s:394    .text:000001e8 COMP_WindowCmd
+     /tmp/ccbwP5TN.s:460    .text:0000024c COMP_LockConfig
                      .debug_frame:00000010 $d
-                           .group:00000000 wm4.1.323dce8664331a0daf4a2675e107c70c
+                           .group:00000000 wm4.1.743cd71370ebc432b539c5dba7924ecc
                            .group:00000000 wm4.stm32f30x.h.56.6f19c65e98e3319a61449cb2b2455af5
                            .group:00000000 wm4.core_cm4.h.32.1434cd257ff5806b1b03cd32ab0641e9
                            .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05

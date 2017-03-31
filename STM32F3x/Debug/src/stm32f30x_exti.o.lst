@@ -1,28 +1,29 @@
    1              		.syntax unified
    2              		.cpu cortex-m4
    3              		.eabi_attribute 27, 3
-   4              		.fpu fpv4-sp-d16
-   5              		.eabi_attribute 20, 1
-   6              		.eabi_attribute 21, 1
-   7              		.eabi_attribute 23, 3
-   8              		.eabi_attribute 24, 1
-   9              		.eabi_attribute 25, 1
-  10              		.eabi_attribute 26, 1
-  11              		.eabi_attribute 30, 6
-  12              		.eabi_attribute 34, 1
-  13              		.eabi_attribute 18, 4
-  14              		.thumb
-  15              		.file	"stm32f30x_exti.c"
-  16              		.text
-  17              	.Ltext0:
-  18              		.cfi_sections	.debug_frame
-  19              		.align	2
-  20              		.global	EXTI_DeInit
-  21              		.thumb
-  22              		.thumb_func
-  24              	EXTI_DeInit:
-  25              	.LFB111:
-  26              		.file 1 "../src/stm32f30x_exti.c"
+   4              		.eabi_attribute 28, 1
+   5              		.fpu fpv4-sp-d16
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 6
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.thumb
+  16              		.file	"stm32f30x_exti.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.align	2
+  21              		.global	EXTI_DeInit
+  22              		.thumb
+  23              		.thumb_func
+  25              	EXTI_DeInit:
+  26              	.LFB111:
+  27              		.file 1 "../src/stm32f30x_exti.c"
    1:../src/stm32f30x_exti.c **** /**
    2:../src/stm32f30x_exti.c ****   ******************************************************************************
    3:../src/stm32f30x_exti.c ****   * @file    stm32f30x_exti.c
@@ -148,103 +149,103 @@
  123:../src/stm32f30x_exti.c ****   */
  124:../src/stm32f30x_exti.c **** void EXTI_DeInit(void)
  125:../src/stm32f30x_exti.c **** {
-  27              		.loc 1 125 0
-  28              		.cfi_startproc
-  29              		@ args = 0, pretend = 0, frame = 0
-  30              		@ frame_needed = 1, uses_anonymous_args = 0
-  31              		@ link register save eliminated.
-  32 0000 80B4     		push	{r7}
-  33              	.LCFI0:
-  34              		.cfi_def_cfa_offset 4
-  35              		.cfi_offset 7, -4
-  36 0002 00AF     		add	r7, sp, #0
-  37              	.LCFI1:
-  38              		.cfi_def_cfa_register 7
+  28              		.loc 1 125 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33 0000 80B4     		push	{r7}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 4
+  36              		.cfi_offset 7, -4
+  37 0002 00AF     		add	r7, sp, #0
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_register 7
  126:../src/stm32f30x_exti.c ****   EXTI->IMR    = 0x1F800000;
-  39              		.loc 1 126 0
-  40 0004 4FF48063 		mov	r3, #1024
-  41 0008 C4F20103 		movt	r3, 16385
-  42 000c 4FF0FC52 		mov	r2, #528482304
-  43 0010 1A60     		str	r2, [r3, #0]
+  40              		.loc 1 126 0
+  41 0004 4FF48063 		mov	r3, #1024
+  42 0008 C4F20103 		movt	r3, 16385
+  43 000c 4FF0FC52 		mov	r2, #528482304
+  44 0010 1A60     		str	r2, [r3, #0]
  127:../src/stm32f30x_exti.c ****   EXTI->EMR    = 0x00000000;
-  44              		.loc 1 127 0
-  45 0012 4FF48063 		mov	r3, #1024
-  46 0016 C4F20103 		movt	r3, 16385
-  47 001a 4FF00002 		mov	r2, #0
-  48 001e 5A60     		str	r2, [r3, #4]
+  45              		.loc 1 127 0
+  46 0012 4FF48063 		mov	r3, #1024
+  47 0016 C4F20103 		movt	r3, 16385
+  48 001a 4FF00002 		mov	r2, #0
+  49 001e 5A60     		str	r2, [r3, #4]
  128:../src/stm32f30x_exti.c ****   EXTI->RTSR   = 0x00000000;
-  49              		.loc 1 128 0
-  50 0020 4FF48063 		mov	r3, #1024
-  51 0024 C4F20103 		movt	r3, 16385
-  52 0028 4FF00002 		mov	r2, #0
-  53 002c 9A60     		str	r2, [r3, #8]
+  50              		.loc 1 128 0
+  51 0020 4FF48063 		mov	r3, #1024
+  52 0024 C4F20103 		movt	r3, 16385
+  53 0028 4FF00002 		mov	r2, #0
+  54 002c 9A60     		str	r2, [r3, #8]
  129:../src/stm32f30x_exti.c ****   EXTI->FTSR   = 0x00000000;
-  54              		.loc 1 129 0
-  55 002e 4FF48063 		mov	r3, #1024
-  56 0032 C4F20103 		movt	r3, 16385
-  57 0036 4FF00002 		mov	r2, #0
-  58 003a DA60     		str	r2, [r3, #12]
+  55              		.loc 1 129 0
+  56 002e 4FF48063 		mov	r3, #1024
+  57 0032 C4F20103 		movt	r3, 16385
+  58 0036 4FF00002 		mov	r2, #0
+  59 003a DA60     		str	r2, [r3, #12]
  130:../src/stm32f30x_exti.c ****   EXTI->SWIER  = 0x00000000;
-  59              		.loc 1 130 0
-  60 003c 4FF48063 		mov	r3, #1024
-  61 0040 C4F20103 		movt	r3, 16385
-  62 0044 4FF00002 		mov	r2, #0
-  63 0048 1A61     		str	r2, [r3, #16]
+  60              		.loc 1 130 0
+  61 003c 4FF48063 		mov	r3, #1024
+  62 0040 C4F20103 		movt	r3, 16385
+  63 0044 4FF00002 		mov	r2, #0
+  64 0048 1A61     		str	r2, [r3, #16]
  131:../src/stm32f30x_exti.c ****   EXTI->PR     = 0xE07FFFFF;
-  64              		.loc 1 131 0
-  65 004a 4FF48063 		mov	r3, #1024
-  66 004e C4F20103 		movt	r3, 16385
-  67 0052 6FF0FC52 		mvn	r2, #528482304
-  68 0056 5A61     		str	r2, [r3, #20]
+  65              		.loc 1 131 0
+  66 004a 4FF48063 		mov	r3, #1024
+  67 004e C4F20103 		movt	r3, 16385
+  68 0052 6FF0FC52 		mvn	r2, #528482304
+  69 0056 5A61     		str	r2, [r3, #20]
  132:../src/stm32f30x_exti.c ****   EXTI->IMR2   = 0x0000000C;
-  69              		.loc 1 132 0
-  70 0058 4FF48063 		mov	r3, #1024
-  71 005c C4F20103 		movt	r3, 16385
-  72 0060 4FF00C02 		mov	r2, #12
-  73 0064 1A62     		str	r2, [r3, #32]
+  70              		.loc 1 132 0
+  71 0058 4FF48063 		mov	r3, #1024
+  72 005c C4F20103 		movt	r3, 16385
+  73 0060 4FF00C02 		mov	r2, #12
+  74 0064 1A62     		str	r2, [r3, #32]
  133:../src/stm32f30x_exti.c ****   EXTI->EMR2   = 0x00000000;
-  74              		.loc 1 133 0
-  75 0066 4FF48063 		mov	r3, #1024
-  76 006a C4F20103 		movt	r3, 16385
-  77 006e 4FF00002 		mov	r2, #0
-  78 0072 5A62     		str	r2, [r3, #36]
+  75              		.loc 1 133 0
+  76 0066 4FF48063 		mov	r3, #1024
+  77 006a C4F20103 		movt	r3, 16385
+  78 006e 4FF00002 		mov	r2, #0
+  79 0072 5A62     		str	r2, [r3, #36]
  134:../src/stm32f30x_exti.c ****   EXTI->RTSR2  = 0x00000000;
-  79              		.loc 1 134 0
-  80 0074 4FF48063 		mov	r3, #1024
-  81 0078 C4F20103 		movt	r3, 16385
-  82 007c 4FF00002 		mov	r2, #0
-  83 0080 9A62     		str	r2, [r3, #40]
+  80              		.loc 1 134 0
+  81 0074 4FF48063 		mov	r3, #1024
+  82 0078 C4F20103 		movt	r3, 16385
+  83 007c 4FF00002 		mov	r2, #0
+  84 0080 9A62     		str	r2, [r3, #40]
  135:../src/stm32f30x_exti.c ****   EXTI->FTSR2  = 0x00000000;
-  84              		.loc 1 135 0
-  85 0082 4FF48063 		mov	r3, #1024
-  86 0086 C4F20103 		movt	r3, 16385
-  87 008a 4FF00002 		mov	r2, #0
-  88 008e DA62     		str	r2, [r3, #44]
+  85              		.loc 1 135 0
+  86 0082 4FF48063 		mov	r3, #1024
+  87 0086 C4F20103 		movt	r3, 16385
+  88 008a 4FF00002 		mov	r2, #0
+  89 008e DA62     		str	r2, [r3, #44]
  136:../src/stm32f30x_exti.c ****   EXTI->SWIER2 = 0x00000000;
-  89              		.loc 1 136 0
-  90 0090 4FF48063 		mov	r3, #1024
-  91 0094 C4F20103 		movt	r3, 16385
-  92 0098 4FF00002 		mov	r2, #0
-  93 009c 1A63     		str	r2, [r3, #48]
+  90              		.loc 1 136 0
+  91 0090 4FF48063 		mov	r3, #1024
+  92 0094 C4F20103 		movt	r3, 16385
+  93 0098 4FF00002 		mov	r2, #0
+  94 009c 1A63     		str	r2, [r3, #48]
  137:../src/stm32f30x_exti.c ****   EXTI->PR2    = 0x00000003;
-  94              		.loc 1 137 0
-  95 009e 4FF48063 		mov	r3, #1024
-  96 00a2 C4F20103 		movt	r3, 16385
-  97 00a6 4FF00302 		mov	r2, #3
-  98 00aa 5A63     		str	r2, [r3, #52]
+  95              		.loc 1 137 0
+  96 009e 4FF48063 		mov	r3, #1024
+  97 00a2 C4F20103 		movt	r3, 16385
+  98 00a6 4FF00302 		mov	r2, #3
+  99 00aa 5A63     		str	r2, [r3, #52]
  138:../src/stm32f30x_exti.c **** }
-  99              		.loc 1 138 0
- 100 00ac BD46     		mov	sp, r7
- 101 00ae 80BC     		pop	{r7}
- 102 00b0 7047     		bx	lr
- 103              		.cfi_endproc
- 104              	.LFE111:
- 106 00b2 00BF     		.align	2
- 107              		.global	EXTI_Init
- 108              		.thumb
- 109              		.thumb_func
- 111              	EXTI_Init:
- 112              	.LFB112:
+ 100              		.loc 1 138 0
+ 101 00ac BD46     		mov	sp, r7
+ 102 00ae 80BC     		pop	{r7}
+ 103 00b0 7047     		bx	lr
+ 104              		.cfi_endproc
+ 105              	.LFE111:
+ 107 00b2 00BF     		.align	2
+ 108              		.global	EXTI_Init
+ 109              		.thumb
+ 110              		.thumb_func
+ 112              	EXTI_Init:
+ 113              	.LFB112:
  139:../src/stm32f30x_exti.c **** 
  140:../src/stm32f30x_exti.c **** /**
  141:../src/stm32f30x_exti.c ****   * @brief  Initializes the EXTI peripheral according to the specified
@@ -262,26 +263,26 @@
  153:../src/stm32f30x_exti.c **** 
  154:../src/stm32f30x_exti.c **** void EXTI_Init(EXTI_InitTypeDef* EXTI_InitStruct)
  155:../src/stm32f30x_exti.c **** {
- 113              		.loc 1 155 0
- 114              		.cfi_startproc
- 115              		@ args = 0, pretend = 0, frame = 16
- 116              		@ frame_needed = 1, uses_anonymous_args = 0
- 117              		@ link register save eliminated.
- 118 00b4 80B4     		push	{r7}
- 119              	.LCFI2:
- 120              		.cfi_def_cfa_offset 4
- 121              		.cfi_offset 7, -4
- 122 00b6 85B0     		sub	sp, sp, #20
- 123              	.LCFI3:
- 124              		.cfi_def_cfa_offset 24
- 125 00b8 00AF     		add	r7, sp, #0
- 126              	.LCFI4:
- 127              		.cfi_def_cfa_register 7
- 128 00ba 7860     		str	r0, [r7, #4]
+ 114              		.loc 1 155 0
+ 115              		.cfi_startproc
+ 116              		@ args = 0, pretend = 0, frame = 16
+ 117              		@ frame_needed = 1, uses_anonymous_args = 0
+ 118              		@ link register save eliminated.
+ 119 00b4 80B4     		push	{r7}
+ 120              	.LCFI2:
+ 121              		.cfi_def_cfa_offset 4
+ 122              		.cfi_offset 7, -4
+ 123 00b6 85B0     		sub	sp, sp, #20
+ 124              	.LCFI3:
+ 125              		.cfi_def_cfa_offset 24
+ 126 00b8 00AF     		add	r7, sp, #0
+ 127              	.LCFI4:
+ 128              		.cfi_def_cfa_register 7
+ 129 00ba 7860     		str	r0, [r7, #4]
  156:../src/stm32f30x_exti.c ****   uint32_t tmp = 0;
- 129              		.loc 1 156 0
- 130 00bc 4FF00003 		mov	r3, #0
- 131 00c0 FB60     		str	r3, [r7, #12]
+ 130              		.loc 1 156 0
+ 131 00bc 4FF00003 		mov	r3, #0
+ 132 00c0 FB60     		str	r3, [r7, #12]
  157:../src/stm32f30x_exti.c **** 
  158:../src/stm32f30x_exti.c ****   /* Check the parameters */
  159:../src/stm32f30x_exti.c ****   assert_param(IS_EXTI_MODE(EXTI_InitStruct->EXTI_Mode));
@@ -290,299 +291,299 @@
  162:../src/stm32f30x_exti.c ****   assert_param(IS_FUNCTIONAL_STATE(EXTI_InitStruct->EXTI_LineCmd));
  163:../src/stm32f30x_exti.c **** 
  164:../src/stm32f30x_exti.c ****   tmp = (uint32_t)EXTI_BASE;
- 132              		.loc 1 164 0
- 133 00c2 4FF48063 		mov	r3, #1024
- 134 00c6 C4F20103 		movt	r3, 16385
- 135 00ca FB60     		str	r3, [r7, #12]
+ 133              		.loc 1 164 0
+ 134 00c2 4FF48063 		mov	r3, #1024
+ 135 00c6 C4F20103 		movt	r3, 16385
+ 136 00ca FB60     		str	r3, [r7, #12]
  165:../src/stm32f30x_exti.c ****       
  166:../src/stm32f30x_exti.c ****   if (EXTI_InitStruct->EXTI_LineCmd != DISABLE)
- 136              		.loc 1 166 0
- 137 00cc 7B68     		ldr	r3, [r7, #4]
- 138 00ce 9B79     		ldrb	r3, [r3, #6]	@ zero_extendqisi2
- 139 00d0 002B     		cmp	r3, #0
- 140 00d2 00F01181 		beq	.L3
+ 137              		.loc 1 166 0
+ 138 00cc 7B68     		ldr	r3, [r7, #4]
+ 139 00ce 9B79     		ldrb	r3, [r3, #6]	@ zero_extendqisi2
+ 140 00d0 002B     		cmp	r3, #0
+ 141 00d2 00F01181 		beq	.L3
  167:../src/stm32f30x_exti.c ****   {
  168:../src/stm32f30x_exti.c ****     /* Clear EXTI line configuration */   
  169:../src/stm32f30x_exti.c ****     *(__IO uint32_t *) (((uint32_t) &(EXTI->IMR)) + ((EXTI_InitStruct->EXTI_Line) >> 5 ) * 0x20) &=
- 141              		.loc 1 169 0
- 142 00d6 7B68     		ldr	r3, [r7, #4]
- 143 00d8 1B68     		ldr	r3, [r3, #0]
- 144 00da 4FEA5313 		lsr	r3, r3, #5
- 145 00de 03F10073 		add	r3, r3, #33554432
- 146 00e2 03F50263 		add	r3, r3, #2080
- 147 00e6 4FEA4313 		lsl	r3, r3, #5
- 148 00ea 1A46     		mov	r2, r3
- 149 00ec 7B68     		ldr	r3, [r7, #4]
- 150 00ee 1B68     		ldr	r3, [r3, #0]
- 151 00f0 4FEA5313 		lsr	r3, r3, #5
- 152 00f4 03F10073 		add	r3, r3, #33554432
- 153 00f8 03F50263 		add	r3, r3, #2080
- 154 00fc 4FEA4313 		lsl	r3, r3, #5
- 155 0100 1968     		ldr	r1, [r3, #0]
- 156 0102 7B68     		ldr	r3, [r7, #4]
- 157 0104 1B68     		ldr	r3, [r3, #0]
- 158 0106 03F01F03 		and	r3, r3, #31
- 159 010a 4FF00100 		mov	r0, #1
- 160 010e 00FA03F3 		lsl	r3, r0, r3
- 161 0112 6FEA0303 		mvn	r3, r3
- 162 0116 0B40     		ands	r3, r3, r1
- 163 0118 1360     		str	r3, [r2, #0]
+ 142              		.loc 1 169 0
+ 143 00d6 7B68     		ldr	r3, [r7, #4]
+ 144 00d8 1B68     		ldr	r3, [r3, #0]
+ 145 00da 4FEA5313 		lsr	r3, r3, #5
+ 146 00de 03F10073 		add	r3, r3, #33554432
+ 147 00e2 03F50263 		add	r3, r3, #2080
+ 148 00e6 4FEA4313 		lsl	r3, r3, #5
+ 149 00ea 1A46     		mov	r2, r3
+ 150 00ec 7B68     		ldr	r3, [r7, #4]
+ 151 00ee 1B68     		ldr	r3, [r3, #0]
+ 152 00f0 4FEA5313 		lsr	r3, r3, #5
+ 153 00f4 03F10073 		add	r3, r3, #33554432
+ 154 00f8 03F50263 		add	r3, r3, #2080
+ 155 00fc 4FEA4313 		lsl	r3, r3, #5
+ 156 0100 1968     		ldr	r1, [r3, #0]
+ 157 0102 7B68     		ldr	r3, [r7, #4]
+ 158 0104 1B68     		ldr	r3, [r3, #0]
+ 159 0106 03F01F03 		and	r3, r3, #31
+ 160 010a 4FF00100 		mov	r0, #1
+ 161 010e 00FA03F3 		lsl	r3, r0, r3
+ 162 0112 6FEA0303 		mvn	r3, r3
+ 163 0116 0B40     		ands	r3, r3, r1
+ 164 0118 1360     		str	r3, [r2, #0]
  170:../src/stm32f30x_exti.c ****     *(__IO uint32_t *) (((uint32_t) &(EXTI->EMR)) + ((EXTI_InitStruct->EXTI_Line) >> 5 ) * 0x20) &=
- 164              		.loc 1 170 0
- 165 011a 7B68     		ldr	r3, [r7, #4]
- 166 011c 1B68     		ldr	r3, [r3, #0]
- 167 011e 4FEA5313 		lsr	r3, r3, #5
- 168 0122 4FEA4312 		lsl	r2, r3, #5
- 169 0126 40F20443 		movw	r3, #1028
- 170 012a C4F20103 		movt	r3, 16385
- 171 012e D318     		adds	r3, r2, r3
- 172 0130 1A46     		mov	r2, r3
- 173 0132 7B68     		ldr	r3, [r7, #4]
- 174 0134 1B68     		ldr	r3, [r3, #0]
- 175 0136 4FEA5313 		lsr	r3, r3, #5
- 176 013a 4FEA4311 		lsl	r1, r3, #5
- 177 013e 40F20443 		movw	r3, #1028
- 178 0142 C4F20103 		movt	r3, 16385
- 179 0146 CB18     		adds	r3, r1, r3
- 180 0148 1968     		ldr	r1, [r3, #0]
- 181 014a 7B68     		ldr	r3, [r7, #4]
- 182 014c 1B68     		ldr	r3, [r3, #0]
- 183 014e 03F01F03 		and	r3, r3, #31
- 184 0152 4FF00100 		mov	r0, #1
- 185 0156 00FA03F3 		lsl	r3, r0, r3
- 186 015a 6FEA0303 		mvn	r3, r3
- 187 015e 0B40     		ands	r3, r3, r1
- 188 0160 1360     		str	r3, [r2, #0]
+ 165              		.loc 1 170 0
+ 166 011a 7B68     		ldr	r3, [r7, #4]
+ 167 011c 1B68     		ldr	r3, [r3, #0]
+ 168 011e 4FEA5313 		lsr	r3, r3, #5
+ 169 0122 4FEA4312 		lsl	r2, r3, #5
+ 170 0126 40F20443 		movw	r3, #1028
+ 171 012a C4F20103 		movt	r3, 16385
+ 172 012e D318     		adds	r3, r2, r3
+ 173 0130 1A46     		mov	r2, r3
+ 174 0132 7B68     		ldr	r3, [r7, #4]
+ 175 0134 1B68     		ldr	r3, [r3, #0]
+ 176 0136 4FEA5313 		lsr	r3, r3, #5
+ 177 013a 4FEA4311 		lsl	r1, r3, #5
+ 178 013e 40F20443 		movw	r3, #1028
+ 179 0142 C4F20103 		movt	r3, 16385
+ 180 0146 CB18     		adds	r3, r1, r3
+ 181 0148 1968     		ldr	r1, [r3, #0]
+ 182 014a 7B68     		ldr	r3, [r7, #4]
+ 183 014c 1B68     		ldr	r3, [r3, #0]
+ 184 014e 03F01F03 		and	r3, r3, #31
+ 185 0152 4FF00100 		mov	r0, #1
+ 186 0156 00FA03F3 		lsl	r3, r0, r3
+ 187 015a 6FEA0303 		mvn	r3, r3
+ 188 015e 0B40     		ands	r3, r3, r1
+ 189 0160 1360     		str	r3, [r2, #0]
  171:../src/stm32f30x_exti.c ****      
  172:../src/stm32f30x_exti.c ****     tmp += EXTI_InitStruct->EXTI_Mode + (((EXTI_InitStruct->EXTI_Line) >> 5 ) * 0x20);
- 189              		.loc 1 172 0
- 190 0162 7B68     		ldr	r3, [r7, #4]
- 191 0164 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
- 192 0166 1A46     		mov	r2, r3
- 193 0168 7B68     		ldr	r3, [r7, #4]
- 194 016a 1B68     		ldr	r3, [r3, #0]
- 195 016c 4FEA5313 		lsr	r3, r3, #5
- 196 0170 4FEA4313 		lsl	r3, r3, #5
- 197 0174 D318     		adds	r3, r2, r3
- 198 0176 FA68     		ldr	r2, [r7, #12]
- 199 0178 D318     		adds	r3, r2, r3
- 200 017a FB60     		str	r3, [r7, #12]
+ 190              		.loc 1 172 0
+ 191 0162 7B68     		ldr	r3, [r7, #4]
+ 192 0164 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
+ 193 0166 1A46     		mov	r2, r3
+ 194 0168 7B68     		ldr	r3, [r7, #4]
+ 195 016a 1B68     		ldr	r3, [r3, #0]
+ 196 016c 4FEA5313 		lsr	r3, r3, #5
+ 197 0170 4FEA4313 		lsl	r3, r3, #5
+ 198 0174 D318     		adds	r3, r2, r3
+ 199 0176 FA68     		ldr	r2, [r7, #12]
+ 200 0178 D318     		adds	r3, r2, r3
+ 201 017a FB60     		str	r3, [r7, #12]
  173:../src/stm32f30x_exti.c **** 
  174:../src/stm32f30x_exti.c ****     *(__IO uint32_t *) tmp |= (uint32_t)(1 << (EXTI_InitStruct->EXTI_Line & 0x1F));
- 201              		.loc 1 174 0
- 202 017c FB68     		ldr	r3, [r7, #12]
- 203 017e FA68     		ldr	r2, [r7, #12]
- 204 0180 1168     		ldr	r1, [r2, #0]
- 205 0182 7A68     		ldr	r2, [r7, #4]
- 206 0184 1268     		ldr	r2, [r2, #0]
- 207 0186 02F01F02 		and	r2, r2, #31
- 208 018a 4FF00100 		mov	r0, #1
- 209 018e 00FA02F2 		lsl	r2, r0, r2
- 210 0192 0A43     		orrs	r2, r2, r1
- 211 0194 1A60     		str	r2, [r3, #0]
+ 202              		.loc 1 174 0
+ 203 017c FB68     		ldr	r3, [r7, #12]
+ 204 017e FA68     		ldr	r2, [r7, #12]
+ 205 0180 1168     		ldr	r1, [r2, #0]
+ 206 0182 7A68     		ldr	r2, [r7, #4]
+ 207 0184 1268     		ldr	r2, [r2, #0]
+ 208 0186 02F01F02 		and	r2, r2, #31
+ 209 018a 4FF00100 		mov	r0, #1
+ 210 018e 00FA02F2 		lsl	r2, r0, r2
+ 211 0192 0A43     		orrs	r2, r2, r1
+ 212 0194 1A60     		str	r2, [r3, #0]
  175:../src/stm32f30x_exti.c ****     
  176:../src/stm32f30x_exti.c ****     tmp = (uint32_t)EXTI_BASE;
- 212              		.loc 1 176 0
- 213 0196 4FF48063 		mov	r3, #1024
- 214 019a C4F20103 		movt	r3, 16385
- 215 019e FB60     		str	r3, [r7, #12]
+ 213              		.loc 1 176 0
+ 214 0196 4FF48063 		mov	r3, #1024
+ 215 019a C4F20103 		movt	r3, 16385
+ 216 019e FB60     		str	r3, [r7, #12]
  177:../src/stm32f30x_exti.c **** 
  178:../src/stm32f30x_exti.c ****     /* Clear Rising Falling edge configuration */
  179:../src/stm32f30x_exti.c ****     *(__IO uint32_t *) (((uint32_t) &(EXTI->RTSR)) + ((EXTI_InitStruct->EXTI_Line) >> 5 ) * 0x20) &
- 216              		.loc 1 179 0
- 217 01a0 7B68     		ldr	r3, [r7, #4]
- 218 01a2 1B68     		ldr	r3, [r3, #0]
- 219 01a4 4FEA5313 		lsr	r3, r3, #5
- 220 01a8 4FEA4312 		lsl	r2, r3, #5
- 221 01ac 4FF48163 		mov	r3, #1032
- 222 01b0 C4F20103 		movt	r3, 16385
- 223 01b4 D318     		adds	r3, r2, r3
- 224 01b6 1A46     		mov	r2, r3
- 225 01b8 7B68     		ldr	r3, [r7, #4]
- 226 01ba 1B68     		ldr	r3, [r3, #0]
- 227 01bc 4FEA5313 		lsr	r3, r3, #5
- 228 01c0 4FEA4311 		lsl	r1, r3, #5
- 229 01c4 4FF48163 		mov	r3, #1032
- 230 01c8 C4F20103 		movt	r3, 16385
- 231 01cc CB18     		adds	r3, r1, r3
- 232 01ce 1968     		ldr	r1, [r3, #0]
- 233 01d0 7B68     		ldr	r3, [r7, #4]
- 234 01d2 1B68     		ldr	r3, [r3, #0]
- 235 01d4 03F01F03 		and	r3, r3, #31
- 236 01d8 4FF00100 		mov	r0, #1
- 237 01dc 00FA03F3 		lsl	r3, r0, r3
- 238 01e0 6FEA0303 		mvn	r3, r3
- 239 01e4 0B40     		ands	r3, r3, r1
- 240 01e6 1360     		str	r3, [r2, #0]
+ 217              		.loc 1 179 0
+ 218 01a0 7B68     		ldr	r3, [r7, #4]
+ 219 01a2 1B68     		ldr	r3, [r3, #0]
+ 220 01a4 4FEA5313 		lsr	r3, r3, #5
+ 221 01a8 4FEA4312 		lsl	r2, r3, #5
+ 222 01ac 4FF48163 		mov	r3, #1032
+ 223 01b0 C4F20103 		movt	r3, 16385
+ 224 01b4 D318     		adds	r3, r2, r3
+ 225 01b6 1A46     		mov	r2, r3
+ 226 01b8 7B68     		ldr	r3, [r7, #4]
+ 227 01ba 1B68     		ldr	r3, [r3, #0]
+ 228 01bc 4FEA5313 		lsr	r3, r3, #5
+ 229 01c0 4FEA4311 		lsl	r1, r3, #5
+ 230 01c4 4FF48163 		mov	r3, #1032
+ 231 01c8 C4F20103 		movt	r3, 16385
+ 232 01cc CB18     		adds	r3, r1, r3
+ 233 01ce 1968     		ldr	r1, [r3, #0]
+ 234 01d0 7B68     		ldr	r3, [r7, #4]
+ 235 01d2 1B68     		ldr	r3, [r3, #0]
+ 236 01d4 03F01F03 		and	r3, r3, #31
+ 237 01d8 4FF00100 		mov	r0, #1
+ 238 01dc 00FA03F3 		lsl	r3, r0, r3
+ 239 01e0 6FEA0303 		mvn	r3, r3
+ 240 01e4 0B40     		ands	r3, r3, r1
+ 241 01e6 1360     		str	r3, [r2, #0]
  180:../src/stm32f30x_exti.c ****     *(__IO uint32_t *) (((uint32_t) &(EXTI->FTSR)) + ((EXTI_InitStruct->EXTI_Line) >> 5 ) * 0x20) &
- 241              		.loc 1 180 0
- 242 01e8 7B68     		ldr	r3, [r7, #4]
- 243 01ea 1B68     		ldr	r3, [r3, #0]
- 244 01ec 4FEA5313 		lsr	r3, r3, #5
- 245 01f0 4FEA4312 		lsl	r2, r3, #5
- 246 01f4 40F20C43 		movw	r3, #1036
- 247 01f8 C4F20103 		movt	r3, 16385
- 248 01fc D318     		adds	r3, r2, r3
- 249 01fe 1A46     		mov	r2, r3
- 250 0200 7B68     		ldr	r3, [r7, #4]
- 251 0202 1B68     		ldr	r3, [r3, #0]
- 252 0204 4FEA5313 		lsr	r3, r3, #5
- 253 0208 4FEA4311 		lsl	r1, r3, #5
- 254 020c 40F20C43 		movw	r3, #1036
- 255 0210 C4F20103 		movt	r3, 16385
- 256 0214 CB18     		adds	r3, r1, r3
- 257 0216 1968     		ldr	r1, [r3, #0]
- 258 0218 7B68     		ldr	r3, [r7, #4]
- 259 021a 1B68     		ldr	r3, [r3, #0]
- 260 021c 03F01F03 		and	r3, r3, #31
- 261 0220 4FF00100 		mov	r0, #1
- 262 0224 00FA03F3 		lsl	r3, r0, r3
- 263 0228 6FEA0303 		mvn	r3, r3
- 264 022c 0B40     		ands	r3, r3, r1
- 265 022e 1360     		str	r3, [r2, #0]
+ 242              		.loc 1 180 0
+ 243 01e8 7B68     		ldr	r3, [r7, #4]
+ 244 01ea 1B68     		ldr	r3, [r3, #0]
+ 245 01ec 4FEA5313 		lsr	r3, r3, #5
+ 246 01f0 4FEA4312 		lsl	r2, r3, #5
+ 247 01f4 40F20C43 		movw	r3, #1036
+ 248 01f8 C4F20103 		movt	r3, 16385
+ 249 01fc D318     		adds	r3, r2, r3
+ 250 01fe 1A46     		mov	r2, r3
+ 251 0200 7B68     		ldr	r3, [r7, #4]
+ 252 0202 1B68     		ldr	r3, [r3, #0]
+ 253 0204 4FEA5313 		lsr	r3, r3, #5
+ 254 0208 4FEA4311 		lsl	r1, r3, #5
+ 255 020c 40F20C43 		movw	r3, #1036
+ 256 0210 C4F20103 		movt	r3, 16385
+ 257 0214 CB18     		adds	r3, r1, r3
+ 258 0216 1968     		ldr	r1, [r3, #0]
+ 259 0218 7B68     		ldr	r3, [r7, #4]
+ 260 021a 1B68     		ldr	r3, [r3, #0]
+ 261 021c 03F01F03 		and	r3, r3, #31
+ 262 0220 4FF00100 		mov	r0, #1
+ 263 0224 00FA03F3 		lsl	r3, r0, r3
+ 264 0228 6FEA0303 		mvn	r3, r3
+ 265 022c 0B40     		ands	r3, r3, r1
+ 266 022e 1360     		str	r3, [r2, #0]
  181:../src/stm32f30x_exti.c ****     
  182:../src/stm32f30x_exti.c ****       /* Select the trigger for the selected interrupts */
  183:../src/stm32f30x_exti.c ****     if (EXTI_InitStruct->EXTI_Trigger == EXTI_Trigger_Rising_Falling)
- 266              		.loc 1 183 0
- 267 0230 7B68     		ldr	r3, [r7, #4]
- 268 0232 5B79     		ldrb	r3, [r3, #5]	@ zero_extendqisi2
- 269 0234 102B     		cmp	r3, #16
- 270 0236 44D1     		bne	.L4
+ 267              		.loc 1 183 0
+ 268 0230 7B68     		ldr	r3, [r7, #4]
+ 269 0232 5B79     		ldrb	r3, [r3, #5]	@ zero_extendqisi2
+ 270 0234 102B     		cmp	r3, #16
+ 271 0236 44D1     		bne	.L4
  184:../src/stm32f30x_exti.c ****     {
  185:../src/stm32f30x_exti.c ****       /* Rising Falling edge */
  186:../src/stm32f30x_exti.c ****     *(__IO uint32_t *) (((uint32_t) &(EXTI->RTSR)) + ((EXTI_InitStruct->EXTI_Line) >> 5 ) * 0x20) |
- 271              		.loc 1 186 0
- 272 0238 7B68     		ldr	r3, [r7, #4]
- 273 023a 1B68     		ldr	r3, [r3, #0]
- 274 023c 4FEA5313 		lsr	r3, r3, #5
- 275 0240 4FEA4312 		lsl	r2, r3, #5
- 276 0244 4FF48163 		mov	r3, #1032
- 277 0248 C4F20103 		movt	r3, 16385
- 278 024c D318     		adds	r3, r2, r3
- 279 024e 1A46     		mov	r2, r3
- 280 0250 7B68     		ldr	r3, [r7, #4]
- 281 0252 1B68     		ldr	r3, [r3, #0]
- 282 0254 4FEA5313 		lsr	r3, r3, #5
- 283 0258 4FEA4311 		lsl	r1, r3, #5
- 284 025c 4FF48163 		mov	r3, #1032
- 285 0260 C4F20103 		movt	r3, 16385
- 286 0264 CB18     		adds	r3, r1, r3
- 287 0266 1968     		ldr	r1, [r3, #0]
- 288 0268 7B68     		ldr	r3, [r7, #4]
- 289 026a 1B68     		ldr	r3, [r3, #0]
- 290 026c 03F01F03 		and	r3, r3, #31
- 291 0270 4FF00100 		mov	r0, #1
- 292 0274 00FA03F3 		lsl	r3, r0, r3
- 293 0278 0B43     		orrs	r3, r3, r1
- 294 027a 1360     		str	r3, [r2, #0]
+ 272              		.loc 1 186 0
+ 273 0238 7B68     		ldr	r3, [r7, #4]
+ 274 023a 1B68     		ldr	r3, [r3, #0]
+ 275 023c 4FEA5313 		lsr	r3, r3, #5
+ 276 0240 4FEA4312 		lsl	r2, r3, #5
+ 277 0244 4FF48163 		mov	r3, #1032
+ 278 0248 C4F20103 		movt	r3, 16385
+ 279 024c D318     		adds	r3, r2, r3
+ 280 024e 1A46     		mov	r2, r3
+ 281 0250 7B68     		ldr	r3, [r7, #4]
+ 282 0252 1B68     		ldr	r3, [r3, #0]
+ 283 0254 4FEA5313 		lsr	r3, r3, #5
+ 284 0258 4FEA4311 		lsl	r1, r3, #5
+ 285 025c 4FF48163 		mov	r3, #1032
+ 286 0260 C4F20103 		movt	r3, 16385
+ 287 0264 CB18     		adds	r3, r1, r3
+ 288 0266 1968     		ldr	r1, [r3, #0]
+ 289 0268 7B68     		ldr	r3, [r7, #4]
+ 290 026a 1B68     		ldr	r3, [r3, #0]
+ 291 026c 03F01F03 		and	r3, r3, #31
+ 292 0270 4FF00100 		mov	r0, #1
+ 293 0274 00FA03F3 		lsl	r3, r0, r3
+ 294 0278 0B43     		orrs	r3, r3, r1
+ 295 027a 1360     		str	r3, [r2, #0]
  187:../src/stm32f30x_exti.c ****     *(__IO uint32_t *) (((uint32_t) &(EXTI->FTSR)) + ((EXTI_InitStruct->EXTI_Line) >> 5 ) * 0x20) |
- 295              		.loc 1 187 0
- 296 027c 7B68     		ldr	r3, [r7, #4]
- 297 027e 1B68     		ldr	r3, [r3, #0]
- 298 0280 4FEA5313 		lsr	r3, r3, #5
- 299 0284 4FEA4312 		lsl	r2, r3, #5
- 300 0288 40F20C43 		movw	r3, #1036
- 301 028c C4F20103 		movt	r3, 16385
- 302 0290 D318     		adds	r3, r2, r3
- 303 0292 1A46     		mov	r2, r3
- 304 0294 7B68     		ldr	r3, [r7, #4]
- 305 0296 1B68     		ldr	r3, [r3, #0]
- 306 0298 4FEA5313 		lsr	r3, r3, #5
- 307 029c 4FEA4311 		lsl	r1, r3, #5
- 308 02a0 40F20C43 		movw	r3, #1036
- 309 02a4 C4F20103 		movt	r3, 16385
- 310 02a8 CB18     		adds	r3, r1, r3
- 311 02aa 1968     		ldr	r1, [r3, #0]
- 312 02ac 7B68     		ldr	r3, [r7, #4]
- 313 02ae 1B68     		ldr	r3, [r3, #0]
- 314 02b0 03F01F03 		and	r3, r3, #31
- 315 02b4 4FF00100 		mov	r0, #1
- 316 02b8 00FA03F3 		lsl	r3, r0, r3
- 317 02bc 0B43     		orrs	r3, r3, r1
- 318 02be 1360     		str	r3, [r2, #0]
- 319 02c0 36E0     		b	.L2
- 320              	.L4:
+ 296              		.loc 1 187 0
+ 297 027c 7B68     		ldr	r3, [r7, #4]
+ 298 027e 1B68     		ldr	r3, [r3, #0]
+ 299 0280 4FEA5313 		lsr	r3, r3, #5
+ 300 0284 4FEA4312 		lsl	r2, r3, #5
+ 301 0288 40F20C43 		movw	r3, #1036
+ 302 028c C4F20103 		movt	r3, 16385
+ 303 0290 D318     		adds	r3, r2, r3
+ 304 0292 1A46     		mov	r2, r3
+ 305 0294 7B68     		ldr	r3, [r7, #4]
+ 306 0296 1B68     		ldr	r3, [r3, #0]
+ 307 0298 4FEA5313 		lsr	r3, r3, #5
+ 308 029c 4FEA4311 		lsl	r1, r3, #5
+ 309 02a0 40F20C43 		movw	r3, #1036
+ 310 02a4 C4F20103 		movt	r3, 16385
+ 311 02a8 CB18     		adds	r3, r1, r3
+ 312 02aa 1968     		ldr	r1, [r3, #0]
+ 313 02ac 7B68     		ldr	r3, [r7, #4]
+ 314 02ae 1B68     		ldr	r3, [r3, #0]
+ 315 02b0 03F01F03 		and	r3, r3, #31
+ 316 02b4 4FF00100 		mov	r0, #1
+ 317 02b8 00FA03F3 		lsl	r3, r0, r3
+ 318 02bc 0B43     		orrs	r3, r3, r1
+ 319 02be 1360     		str	r3, [r2, #0]
+ 320 02c0 36E0     		b	.L2
+ 321              	.L4:
  188:../src/stm32f30x_exti.c ****     }
  189:../src/stm32f30x_exti.c ****     else
  190:../src/stm32f30x_exti.c ****     {
  191:../src/stm32f30x_exti.c ****       tmp += EXTI_InitStruct->EXTI_Trigger + (((EXTI_InitStruct->EXTI_Line) >> 5 ) * 0x20);
- 321              		.loc 1 191 0
- 322 02c2 7B68     		ldr	r3, [r7, #4]
- 323 02c4 5B79     		ldrb	r3, [r3, #5]	@ zero_extendqisi2
- 324 02c6 1A46     		mov	r2, r3
- 325 02c8 7B68     		ldr	r3, [r7, #4]
- 326 02ca 1B68     		ldr	r3, [r3, #0]
- 327 02cc 4FEA5313 		lsr	r3, r3, #5
- 328 02d0 4FEA4313 		lsl	r3, r3, #5
- 329 02d4 D318     		adds	r3, r2, r3
- 330 02d6 FA68     		ldr	r2, [r7, #12]
- 331 02d8 D318     		adds	r3, r2, r3
- 332 02da FB60     		str	r3, [r7, #12]
+ 322              		.loc 1 191 0
+ 323 02c2 7B68     		ldr	r3, [r7, #4]
+ 324 02c4 5B79     		ldrb	r3, [r3, #5]	@ zero_extendqisi2
+ 325 02c6 1A46     		mov	r2, r3
+ 326 02c8 7B68     		ldr	r3, [r7, #4]
+ 327 02ca 1B68     		ldr	r3, [r3, #0]
+ 328 02cc 4FEA5313 		lsr	r3, r3, #5
+ 329 02d0 4FEA4313 		lsl	r3, r3, #5
+ 330 02d4 D318     		adds	r3, r2, r3
+ 331 02d6 FA68     		ldr	r2, [r7, #12]
+ 332 02d8 D318     		adds	r3, r2, r3
+ 333 02da FB60     		str	r3, [r7, #12]
  192:../src/stm32f30x_exti.c **** 
  193:../src/stm32f30x_exti.c ****       *(__IO uint32_t *) tmp |= (uint32_t)(1 << (EXTI_InitStruct->EXTI_Line & 0x1F));
- 333              		.loc 1 193 0
- 334 02dc FB68     		ldr	r3, [r7, #12]
- 335 02de FA68     		ldr	r2, [r7, #12]
- 336 02e0 1168     		ldr	r1, [r2, #0]
- 337 02e2 7A68     		ldr	r2, [r7, #4]
- 338 02e4 1268     		ldr	r2, [r2, #0]
- 339 02e6 02F01F02 		and	r2, r2, #31
- 340 02ea 4FF00100 		mov	r0, #1
- 341 02ee 00FA02F2 		lsl	r2, r0, r2
- 342 02f2 0A43     		orrs	r2, r2, r1
- 343 02f4 1A60     		str	r2, [r3, #0]
- 344 02f6 1BE0     		b	.L2
- 345              	.L3:
+ 334              		.loc 1 193 0
+ 335 02dc FB68     		ldr	r3, [r7, #12]
+ 336 02de FA68     		ldr	r2, [r7, #12]
+ 337 02e0 1168     		ldr	r1, [r2, #0]
+ 338 02e2 7A68     		ldr	r2, [r7, #4]
+ 339 02e4 1268     		ldr	r2, [r2, #0]
+ 340 02e6 02F01F02 		and	r2, r2, #31
+ 341 02ea 4FF00100 		mov	r0, #1
+ 342 02ee 00FA02F2 		lsl	r2, r0, r2
+ 343 02f2 0A43     		orrs	r2, r2, r1
+ 344 02f4 1A60     		str	r2, [r3, #0]
+ 345 02f6 1BE0     		b	.L2
+ 346              	.L3:
  194:../src/stm32f30x_exti.c ****     }
  195:../src/stm32f30x_exti.c ****   }
  196:../src/stm32f30x_exti.c ****       
  197:../src/stm32f30x_exti.c ****   else
  198:../src/stm32f30x_exti.c ****   {
  199:../src/stm32f30x_exti.c ****     tmp += EXTI_InitStruct->EXTI_Mode + (((EXTI_InitStruct->EXTI_Line) >> 5 ) * 0x20);
- 346              		.loc 1 199 0
- 347 02f8 7B68     		ldr	r3, [r7, #4]
- 348 02fa 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
- 349 02fc 1A46     		mov	r2, r3
- 350 02fe 7B68     		ldr	r3, [r7, #4]
- 351 0300 1B68     		ldr	r3, [r3, #0]
- 352 0302 4FEA5313 		lsr	r3, r3, #5
- 353 0306 4FEA4313 		lsl	r3, r3, #5
- 354 030a D318     		adds	r3, r2, r3
- 355 030c FA68     		ldr	r2, [r7, #12]
- 356 030e D318     		adds	r3, r2, r3
- 357 0310 FB60     		str	r3, [r7, #12]
+ 347              		.loc 1 199 0
+ 348 02f8 7B68     		ldr	r3, [r7, #4]
+ 349 02fa 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
+ 350 02fc 1A46     		mov	r2, r3
+ 351 02fe 7B68     		ldr	r3, [r7, #4]
+ 352 0300 1B68     		ldr	r3, [r3, #0]
+ 353 0302 4FEA5313 		lsr	r3, r3, #5
+ 354 0306 4FEA4313 		lsl	r3, r3, #5
+ 355 030a D318     		adds	r3, r2, r3
+ 356 030c FA68     		ldr	r2, [r7, #12]
+ 357 030e D318     		adds	r3, r2, r3
+ 358 0310 FB60     		str	r3, [r7, #12]
  200:../src/stm32f30x_exti.c **** 
  201:../src/stm32f30x_exti.c ****     /* Disable the selected external lines */
  202:../src/stm32f30x_exti.c ****     *(__IO uint32_t *) tmp &= ~(uint32_t)(1 << (EXTI_InitStruct->EXTI_Line & 0x1F));
- 358              		.loc 1 202 0
- 359 0312 FB68     		ldr	r3, [r7, #12]
- 360 0314 FA68     		ldr	r2, [r7, #12]
- 361 0316 1168     		ldr	r1, [r2, #0]
- 362 0318 7A68     		ldr	r2, [r7, #4]
- 363 031a 1268     		ldr	r2, [r2, #0]
- 364 031c 02F01F02 		and	r2, r2, #31
- 365 0320 4FF00100 		mov	r0, #1
- 366 0324 00FA02F2 		lsl	r2, r0, r2
- 367 0328 6FEA0202 		mvn	r2, r2
- 368 032c 0A40     		ands	r2, r2, r1
- 369 032e 1A60     		str	r2, [r3, #0]
- 370              	.L2:
+ 359              		.loc 1 202 0
+ 360 0312 FB68     		ldr	r3, [r7, #12]
+ 361 0314 FA68     		ldr	r2, [r7, #12]
+ 362 0316 1168     		ldr	r1, [r2, #0]
+ 363 0318 7A68     		ldr	r2, [r7, #4]
+ 364 031a 1268     		ldr	r2, [r2, #0]
+ 365 031c 02F01F02 		and	r2, r2, #31
+ 366 0320 4FF00100 		mov	r0, #1
+ 367 0324 00FA02F2 		lsl	r2, r0, r2
+ 368 0328 6FEA0202 		mvn	r2, r2
+ 369 032c 0A40     		ands	r2, r2, r1
+ 370 032e 1A60     		str	r2, [r3, #0]
+ 371              	.L2:
  203:../src/stm32f30x_exti.c ****   }
  204:../src/stm32f30x_exti.c ****          
  205:../src/stm32f30x_exti.c **** }
- 371              		.loc 1 205 0
- 372 0330 07F11407 		add	r7, r7, #20
- 373 0334 BD46     		mov	sp, r7
- 374 0336 80BC     		pop	{r7}
- 375 0338 7047     		bx	lr
- 376              		.cfi_endproc
- 377              	.LFE112:
- 379 033a 00BF     		.align	2
- 380              		.global	EXTI_StructInit
- 381              		.thumb
- 382              		.thumb_func
- 384              	EXTI_StructInit:
- 385              	.LFB113:
+ 372              		.loc 1 205 0
+ 373 0330 07F11407 		add	r7, r7, #20
+ 374 0334 BD46     		mov	sp, r7
+ 375 0336 80BC     		pop	{r7}
+ 376 0338 7047     		bx	lr
+ 377              		.cfi_endproc
+ 378              	.LFE112:
+ 380 033a 00BF     		.align	2
+ 381              		.global	EXTI_StructInit
+ 382              		.thumb
+ 383              		.thumb_func
+ 385              	EXTI_StructInit:
+ 386              	.LFB113:
  206:../src/stm32f30x_exti.c **** 
  207:../src/stm32f30x_exti.c **** /**
  208:../src/stm32f30x_exti.c ****   * @brief  Fills each EXTI_InitStruct member with its reset value.
@@ -592,56 +593,56 @@
  212:../src/stm32f30x_exti.c ****   */
  213:../src/stm32f30x_exti.c **** void EXTI_StructInit(EXTI_InitTypeDef* EXTI_InitStruct)
  214:../src/stm32f30x_exti.c **** {
- 386              		.loc 1 214 0
- 387              		.cfi_startproc
- 388              		@ args = 0, pretend = 0, frame = 8
- 389              		@ frame_needed = 1, uses_anonymous_args = 0
- 390              		@ link register save eliminated.
- 391 033c 80B4     		push	{r7}
- 392              	.LCFI5:
- 393              		.cfi_def_cfa_offset 4
- 394              		.cfi_offset 7, -4
- 395 033e 83B0     		sub	sp, sp, #12
- 396              	.LCFI6:
- 397              		.cfi_def_cfa_offset 16
- 398 0340 00AF     		add	r7, sp, #0
- 399              	.LCFI7:
- 400              		.cfi_def_cfa_register 7
- 401 0342 7860     		str	r0, [r7, #4]
+ 387              		.loc 1 214 0
+ 388              		.cfi_startproc
+ 389              		@ args = 0, pretend = 0, frame = 8
+ 390              		@ frame_needed = 1, uses_anonymous_args = 0
+ 391              		@ link register save eliminated.
+ 392 033c 80B4     		push	{r7}
+ 393              	.LCFI5:
+ 394              		.cfi_def_cfa_offset 4
+ 395              		.cfi_offset 7, -4
+ 396 033e 83B0     		sub	sp, sp, #12
+ 397              	.LCFI6:
+ 398              		.cfi_def_cfa_offset 16
+ 399 0340 00AF     		add	r7, sp, #0
+ 400              	.LCFI7:
+ 401              		.cfi_def_cfa_register 7
+ 402 0342 7860     		str	r0, [r7, #4]
  215:../src/stm32f30x_exti.c ****   EXTI_InitStruct->EXTI_Line = EXTI_LINENONE;
- 402              		.loc 1 215 0
- 403 0344 7B68     		ldr	r3, [r7, #4]
- 404 0346 4FF00002 		mov	r2, #0
- 405 034a 1A60     		str	r2, [r3, #0]
+ 403              		.loc 1 215 0
+ 404 0344 7B68     		ldr	r3, [r7, #4]
+ 405 0346 4FF00002 		mov	r2, #0
+ 406 034a 1A60     		str	r2, [r3, #0]
  216:../src/stm32f30x_exti.c ****   EXTI_InitStruct->EXTI_Mode = EXTI_Mode_Interrupt;
- 406              		.loc 1 216 0
- 407 034c 7B68     		ldr	r3, [r7, #4]
- 408 034e 4FF00002 		mov	r2, #0
- 409 0352 1A71     		strb	r2, [r3, #4]
+ 407              		.loc 1 216 0
+ 408 034c 7B68     		ldr	r3, [r7, #4]
+ 409 034e 4FF00002 		mov	r2, #0
+ 410 0352 1A71     		strb	r2, [r3, #4]
  217:../src/stm32f30x_exti.c ****   EXTI_InitStruct->EXTI_Trigger = EXTI_Trigger_Rising_Falling;
- 410              		.loc 1 217 0
- 411 0354 7B68     		ldr	r3, [r7, #4]
- 412 0356 4FF01002 		mov	r2, #16
- 413 035a 5A71     		strb	r2, [r3, #5]
+ 411              		.loc 1 217 0
+ 412 0354 7B68     		ldr	r3, [r7, #4]
+ 413 0356 4FF01002 		mov	r2, #16
+ 414 035a 5A71     		strb	r2, [r3, #5]
  218:../src/stm32f30x_exti.c ****   EXTI_InitStruct->EXTI_LineCmd = DISABLE;
- 414              		.loc 1 218 0
- 415 035c 7B68     		ldr	r3, [r7, #4]
- 416 035e 4FF00002 		mov	r2, #0
- 417 0362 9A71     		strb	r2, [r3, #6]
+ 415              		.loc 1 218 0
+ 416 035c 7B68     		ldr	r3, [r7, #4]
+ 417 035e 4FF00002 		mov	r2, #0
+ 418 0362 9A71     		strb	r2, [r3, #6]
  219:../src/stm32f30x_exti.c **** }
- 418              		.loc 1 219 0
- 419 0364 07F10C07 		add	r7, r7, #12
- 420 0368 BD46     		mov	sp, r7
- 421 036a 80BC     		pop	{r7}
- 422 036c 7047     		bx	lr
- 423              		.cfi_endproc
- 424              	.LFE113:
- 426 036e 00BF     		.align	2
- 427              		.global	EXTI_GenerateSWInterrupt
- 428              		.thumb
- 429              		.thumb_func
- 431              	EXTI_GenerateSWInterrupt:
- 432              	.LFB114:
+ 419              		.loc 1 219 0
+ 420 0364 07F10C07 		add	r7, r7, #12
+ 421 0368 BD46     		mov	sp, r7
+ 422 036a 80BC     		pop	{r7}
+ 423 036c 7047     		bx	lr
+ 424              		.cfi_endproc
+ 425              	.LFE113:
+ 427 036e 00BF     		.align	2
+ 428              		.global	EXTI_GenerateSWInterrupt
+ 429              		.thumb
+ 430              		.thumb_func
+ 432              	EXTI_GenerateSWInterrupt:
+ 433              	.LFB114:
  220:../src/stm32f30x_exti.c **** 
  221:../src/stm32f30x_exti.c **** /**
  222:../src/stm32f30x_exti.c ****   * @brief  Generates a Software interrupt on selected EXTI line.
@@ -652,62 +653,62 @@
  227:../src/stm32f30x_exti.c ****   */
  228:../src/stm32f30x_exti.c **** void EXTI_GenerateSWInterrupt(uint32_t EXTI_Line)
  229:../src/stm32f30x_exti.c **** {
- 433              		.loc 1 229 0
- 434              		.cfi_startproc
- 435              		@ args = 0, pretend = 0, frame = 8
- 436              		@ frame_needed = 1, uses_anonymous_args = 0
- 437              		@ link register save eliminated.
- 438 0370 80B4     		push	{r7}
- 439              	.LCFI8:
- 440              		.cfi_def_cfa_offset 4
- 441              		.cfi_offset 7, -4
- 442 0372 83B0     		sub	sp, sp, #12
- 443              	.LCFI9:
- 444              		.cfi_def_cfa_offset 16
- 445 0374 00AF     		add	r7, sp, #0
- 446              	.LCFI10:
- 447              		.cfi_def_cfa_register 7
- 448 0376 7860     		str	r0, [r7, #4]
+ 434              		.loc 1 229 0
+ 435              		.cfi_startproc
+ 436              		@ args = 0, pretend = 0, frame = 8
+ 437              		@ frame_needed = 1, uses_anonymous_args = 0
+ 438              		@ link register save eliminated.
+ 439 0370 80B4     		push	{r7}
+ 440              	.LCFI8:
+ 441              		.cfi_def_cfa_offset 4
+ 442              		.cfi_offset 7, -4
+ 443 0372 83B0     		sub	sp, sp, #12
+ 444              	.LCFI9:
+ 445              		.cfi_def_cfa_offset 16
+ 446 0374 00AF     		add	r7, sp, #0
+ 447              	.LCFI10:
+ 448              		.cfi_def_cfa_register 7
+ 449 0376 7860     		str	r0, [r7, #4]
  230:../src/stm32f30x_exti.c ****   /* Check the parameters */
  231:../src/stm32f30x_exti.c ****   assert_param(IS_EXTI_LINE_EXT(EXTI_Line));
  232:../src/stm32f30x_exti.c **** 
  233:../src/stm32f30x_exti.c ****   *(__IO uint32_t *) (((uint32_t) &(EXTI->SWIER)) + ((EXTI_Line) >> 5 ) * 0x20) |= (uint32_t)(1 << 
- 449              		.loc 1 233 0
- 450 0378 7B68     		ldr	r3, [r7, #4]
- 451 037a 4FEA5313 		lsr	r3, r3, #5
- 452 037e 4FEA4312 		lsl	r2, r3, #5
- 453 0382 4FF48263 		mov	r3, #1040
- 454 0386 C4F20103 		movt	r3, 16385
- 455 038a D318     		adds	r3, r2, r3
- 456 038c 1A46     		mov	r2, r3
- 457 038e 7B68     		ldr	r3, [r7, #4]
- 458 0390 4FEA5313 		lsr	r3, r3, #5
- 459 0394 4FEA4311 		lsl	r1, r3, #5
- 460 0398 4FF48263 		mov	r3, #1040
- 461 039c C4F20103 		movt	r3, 16385
- 462 03a0 CB18     		adds	r3, r1, r3
- 463 03a2 1968     		ldr	r1, [r3, #0]
- 464 03a4 7B68     		ldr	r3, [r7, #4]
- 465 03a6 03F01F03 		and	r3, r3, #31
- 466 03aa 4FF00100 		mov	r0, #1
- 467 03ae 00FA03F3 		lsl	r3, r0, r3
- 468 03b2 0B43     		orrs	r3, r3, r1
- 469 03b4 1360     		str	r3, [r2, #0]
+ 450              		.loc 1 233 0
+ 451 0378 7B68     		ldr	r3, [r7, #4]
+ 452 037a 4FEA5313 		lsr	r3, r3, #5
+ 453 037e 4FEA4312 		lsl	r2, r3, #5
+ 454 0382 4FF48263 		mov	r3, #1040
+ 455 0386 C4F20103 		movt	r3, 16385
+ 456 038a D318     		adds	r3, r2, r3
+ 457 038c 1A46     		mov	r2, r3
+ 458 038e 7B68     		ldr	r3, [r7, #4]
+ 459 0390 4FEA5313 		lsr	r3, r3, #5
+ 460 0394 4FEA4311 		lsl	r1, r3, #5
+ 461 0398 4FF48263 		mov	r3, #1040
+ 462 039c C4F20103 		movt	r3, 16385
+ 463 03a0 CB18     		adds	r3, r1, r3
+ 464 03a2 1968     		ldr	r1, [r3, #0]
+ 465 03a4 7B68     		ldr	r3, [r7, #4]
+ 466 03a6 03F01F03 		and	r3, r3, #31
+ 467 03aa 4FF00100 		mov	r0, #1
+ 468 03ae 00FA03F3 		lsl	r3, r0, r3
+ 469 03b2 0B43     		orrs	r3, r3, r1
+ 470 03b4 1360     		str	r3, [r2, #0]
  234:../src/stm32f30x_exti.c **** 
  235:../src/stm32f30x_exti.c **** }
- 470              		.loc 1 235 0
- 471 03b6 07F10C07 		add	r7, r7, #12
- 472 03ba BD46     		mov	sp, r7
- 473 03bc 80BC     		pop	{r7}
- 474 03be 7047     		bx	lr
- 475              		.cfi_endproc
- 476              	.LFE114:
- 478              		.align	2
- 479              		.global	EXTI_GetFlagStatus
- 480              		.thumb
- 481              		.thumb_func
- 483              	EXTI_GetFlagStatus:
- 484              	.LFB115:
+ 471              		.loc 1 235 0
+ 472 03b6 07F10C07 		add	r7, r7, #12
+ 473 03ba BD46     		mov	sp, r7
+ 474 03bc 80BC     		pop	{r7}
+ 475 03be 7047     		bx	lr
+ 476              		.cfi_endproc
+ 477              	.LFE114:
+ 479              		.align	2
+ 480              		.global	EXTI_GetFlagStatus
+ 481              		.thumb
+ 482              		.thumb_func
+ 484              	EXTI_GetFlagStatus:
+ 485              	.LFB115:
  236:../src/stm32f30x_exti.c **** 
  237:../src/stm32f30x_exti.c **** /**
  238:../src/stm32f30x_exti.c ****   * @}
@@ -736,80 +737,80 @@
  261:../src/stm32f30x_exti.c ****   */
  262:../src/stm32f30x_exti.c **** FlagStatus EXTI_GetFlagStatus(uint32_t EXTI_Line)
  263:../src/stm32f30x_exti.c **** {
- 485              		.loc 1 263 0
- 486              		.cfi_startproc
- 487              		@ args = 0, pretend = 0, frame = 16
- 488              		@ frame_needed = 1, uses_anonymous_args = 0
- 489              		@ link register save eliminated.
- 490 03c0 80B4     		push	{r7}
- 491              	.LCFI11:
- 492              		.cfi_def_cfa_offset 4
- 493              		.cfi_offset 7, -4
- 494 03c2 85B0     		sub	sp, sp, #20
- 495              	.LCFI12:
- 496              		.cfi_def_cfa_offset 24
- 497 03c4 00AF     		add	r7, sp, #0
- 498              	.LCFI13:
- 499              		.cfi_def_cfa_register 7
- 500 03c6 7860     		str	r0, [r7, #4]
+ 486              		.loc 1 263 0
+ 487              		.cfi_startproc
+ 488              		@ args = 0, pretend = 0, frame = 16
+ 489              		@ frame_needed = 1, uses_anonymous_args = 0
+ 490              		@ link register save eliminated.
+ 491 03c0 80B4     		push	{r7}
+ 492              	.LCFI11:
+ 493              		.cfi_def_cfa_offset 4
+ 494              		.cfi_offset 7, -4
+ 495 03c2 85B0     		sub	sp, sp, #20
+ 496              	.LCFI12:
+ 497              		.cfi_def_cfa_offset 24
+ 498 03c4 00AF     		add	r7, sp, #0
+ 499              	.LCFI13:
+ 500              		.cfi_def_cfa_register 7
+ 501 03c6 7860     		str	r0, [r7, #4]
  264:../src/stm32f30x_exti.c ****   FlagStatus bitstatus = RESET;
- 501              		.loc 1 264 0
- 502 03c8 4FF00003 		mov	r3, #0
- 503 03cc FB73     		strb	r3, [r7, #15]
+ 502              		.loc 1 264 0
+ 503 03c8 4FF00003 		mov	r3, #0
+ 504 03cc FB73     		strb	r3, [r7, #15]
  265:../src/stm32f30x_exti.c ****   
  266:../src/stm32f30x_exti.c ****   /* Check the parameters */
  267:../src/stm32f30x_exti.c ****   assert_param(IS_GET_EXTI_LINE(EXTI_Line));
  268:../src/stm32f30x_exti.c ****    
  269:../src/stm32f30x_exti.c ****   if ((*(__IO uint32_t *) (((uint32_t) &(EXTI->PR)) + ((EXTI_Line) >> 5 ) * 0x20)& (uint32_t)(1 << 
- 504              		.loc 1 269 0
- 505 03ce 7B68     		ldr	r3, [r7, #4]
- 506 03d0 4FEA5313 		lsr	r3, r3, #5
- 507 03d4 4FEA4312 		lsl	r2, r3, #5
- 508 03d8 40F21443 		movw	r3, #1044
- 509 03dc C4F20103 		movt	r3, 16385
- 510 03e0 D318     		adds	r3, r2, r3
- 511 03e2 1A68     		ldr	r2, [r3, #0]
- 512 03e4 7B68     		ldr	r3, [r7, #4]
- 513 03e6 03F01F03 		and	r3, r3, #31
- 514 03ea 4FF00101 		mov	r1, #1
- 515 03ee 01FA03F3 		lsl	r3, r1, r3
- 516 03f2 1340     		ands	r3, r3, r2
- 517 03f4 002B     		cmp	r3, #0
- 518 03f6 03D0     		beq	.L9
+ 505              		.loc 1 269 0
+ 506 03ce 7B68     		ldr	r3, [r7, #4]
+ 507 03d0 4FEA5313 		lsr	r3, r3, #5
+ 508 03d4 4FEA4312 		lsl	r2, r3, #5
+ 509 03d8 40F21443 		movw	r3, #1044
+ 510 03dc C4F20103 		movt	r3, 16385
+ 511 03e0 D318     		adds	r3, r2, r3
+ 512 03e2 1A68     		ldr	r2, [r3, #0]
+ 513 03e4 7B68     		ldr	r3, [r7, #4]
+ 514 03e6 03F01F03 		and	r3, r3, #31
+ 515 03ea 4FF00101 		mov	r1, #1
+ 516 03ee 01FA03F3 		lsl	r3, r1, r3
+ 517 03f2 1340     		ands	r3, r3, r2
+ 518 03f4 002B     		cmp	r3, #0
+ 519 03f6 03D0     		beq	.L9
  270:../src/stm32f30x_exti.c ****   {
  271:../src/stm32f30x_exti.c ****     bitstatus = SET;
- 519              		.loc 1 271 0
- 520 03f8 4FF00103 		mov	r3, #1
- 521 03fc FB73     		strb	r3, [r7, #15]
- 522 03fe 02E0     		b	.L10
- 523              	.L9:
+ 520              		.loc 1 271 0
+ 521 03f8 4FF00103 		mov	r3, #1
+ 522 03fc FB73     		strb	r3, [r7, #15]
+ 523 03fe 02E0     		b	.L10
+ 524              	.L9:
  272:../src/stm32f30x_exti.c ****   }
  273:../src/stm32f30x_exti.c ****   else
  274:../src/stm32f30x_exti.c ****   {
  275:../src/stm32f30x_exti.c ****     bitstatus = RESET;
- 524              		.loc 1 275 0
- 525 0400 4FF00003 		mov	r3, #0
- 526 0404 FB73     		strb	r3, [r7, #15]
- 527              	.L10:
+ 525              		.loc 1 275 0
+ 526 0400 4FF00003 		mov	r3, #0
+ 527 0404 FB73     		strb	r3, [r7, #15]
+ 528              	.L10:
  276:../src/stm32f30x_exti.c ****   }
  277:../src/stm32f30x_exti.c ****   return bitstatus;
- 528              		.loc 1 277 0
- 529 0406 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 529              		.loc 1 277 0
+ 530 0406 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
  278:../src/stm32f30x_exti.c **** }
- 530              		.loc 1 278 0
- 531 0408 1846     		mov	r0, r3
- 532 040a 07F11407 		add	r7, r7, #20
- 533 040e BD46     		mov	sp, r7
- 534 0410 80BC     		pop	{r7}
- 535 0412 7047     		bx	lr
- 536              		.cfi_endproc
- 537              	.LFE115:
- 539              		.align	2
- 540              		.global	EXTI_ClearFlag
- 541              		.thumb
- 542              		.thumb_func
- 544              	EXTI_ClearFlag:
- 545              	.LFB116:
+ 531              		.loc 1 278 0
+ 532 0408 1846     		mov	r0, r3
+ 533 040a 07F11407 		add	r7, r7, #20
+ 534 040e BD46     		mov	sp, r7
+ 535 0410 80BC     		pop	{r7}
+ 536 0412 7047     		bx	lr
+ 537              		.cfi_endproc
+ 538              	.LFE115:
+ 540              		.align	2
+ 541              		.global	EXTI_ClearFlag
+ 542              		.thumb
+ 543              		.thumb_func
+ 545              	EXTI_ClearFlag:
+ 546              	.LFB116:
  279:../src/stm32f30x_exti.c **** 
  280:../src/stm32f30x_exti.c **** /**
  281:../src/stm32f30x_exti.c ****   * @brief  Clears the EXTI's line pending flags.
@@ -819,52 +820,52 @@
  285:../src/stm32f30x_exti.c ****   */
  286:../src/stm32f30x_exti.c **** void EXTI_ClearFlag(uint32_t EXTI_Line)
  287:../src/stm32f30x_exti.c **** {
- 546              		.loc 1 287 0
- 547              		.cfi_startproc
- 548              		@ args = 0, pretend = 0, frame = 8
- 549              		@ frame_needed = 1, uses_anonymous_args = 0
- 550              		@ link register save eliminated.
- 551 0414 80B4     		push	{r7}
- 552              	.LCFI14:
- 553              		.cfi_def_cfa_offset 4
- 554              		.cfi_offset 7, -4
- 555 0416 83B0     		sub	sp, sp, #12
- 556              	.LCFI15:
- 557              		.cfi_def_cfa_offset 16
- 558 0418 00AF     		add	r7, sp, #0
- 559              	.LCFI16:
- 560              		.cfi_def_cfa_register 7
- 561 041a 7860     		str	r0, [r7, #4]
+ 547              		.loc 1 287 0
+ 548              		.cfi_startproc
+ 549              		@ args = 0, pretend = 0, frame = 8
+ 550              		@ frame_needed = 1, uses_anonymous_args = 0
+ 551              		@ link register save eliminated.
+ 552 0414 80B4     		push	{r7}
+ 553              	.LCFI14:
+ 554              		.cfi_def_cfa_offset 4
+ 555              		.cfi_offset 7, -4
+ 556 0416 83B0     		sub	sp, sp, #12
+ 557              	.LCFI15:
+ 558              		.cfi_def_cfa_offset 16
+ 559 0418 00AF     		add	r7, sp, #0
+ 560              	.LCFI16:
+ 561              		.cfi_def_cfa_register 7
+ 562 041a 7860     		str	r0, [r7, #4]
  288:../src/stm32f30x_exti.c ****   /* Check the parameters */
  289:../src/stm32f30x_exti.c ****   assert_param(IS_EXTI_LINE_EXT(EXTI_Line));
  290:../src/stm32f30x_exti.c **** 
  291:../src/stm32f30x_exti.c ****   *(__IO uint32_t *) (((uint32_t) &(EXTI->PR)) + ((EXTI_Line) >> 5 ) * 0x20) = (1 << (EXTI_Line & 0
- 562              		.loc 1 291 0
- 563 041c 7B68     		ldr	r3, [r7, #4]
- 564 041e 4FEA5313 		lsr	r3, r3, #5
- 565 0422 4FEA4312 		lsl	r2, r3, #5
- 566 0426 40F21443 		movw	r3, #1044
- 567 042a C4F20103 		movt	r3, 16385
- 568 042e D318     		adds	r3, r2, r3
- 569 0430 7A68     		ldr	r2, [r7, #4]
- 570 0432 02F01F02 		and	r2, r2, #31
- 571 0436 4FF00101 		mov	r1, #1
- 572 043a 01FA02F2 		lsl	r2, r1, r2
- 573 043e 1A60     		str	r2, [r3, #0]
+ 563              		.loc 1 291 0
+ 564 041c 7B68     		ldr	r3, [r7, #4]
+ 565 041e 4FEA5313 		lsr	r3, r3, #5
+ 566 0422 4FEA4312 		lsl	r2, r3, #5
+ 567 0426 40F21443 		movw	r3, #1044
+ 568 042a C4F20103 		movt	r3, 16385
+ 569 042e D318     		adds	r3, r2, r3
+ 570 0430 7A68     		ldr	r2, [r7, #4]
+ 571 0432 02F01F02 		and	r2, r2, #31
+ 572 0436 4FF00101 		mov	r1, #1
+ 573 043a 01FA02F2 		lsl	r2, r1, r2
+ 574 043e 1A60     		str	r2, [r3, #0]
  292:../src/stm32f30x_exti.c **** }
- 574              		.loc 1 292 0
- 575 0440 07F10C07 		add	r7, r7, #12
- 576 0444 BD46     		mov	sp, r7
- 577 0446 80BC     		pop	{r7}
- 578 0448 7047     		bx	lr
- 579              		.cfi_endproc
- 580              	.LFE116:
- 582 044a 00BF     		.align	2
- 583              		.global	EXTI_GetITStatus
- 584              		.thumb
- 585              		.thumb_func
- 587              	EXTI_GetITStatus:
- 588              	.LFB117:
+ 575              		.loc 1 292 0
+ 576 0440 07F10C07 		add	r7, r7, #12
+ 577 0444 BD46     		mov	sp, r7
+ 578 0446 80BC     		pop	{r7}
+ 579 0448 7047     		bx	lr
+ 580              		.cfi_endproc
+ 581              	.LFE116:
+ 583 044a 00BF     		.align	2
+ 584              		.global	EXTI_GetITStatus
+ 585              		.thumb
+ 586              		.thumb_func
+ 588              	EXTI_GetITStatus:
+ 589              	.LFB117:
  293:../src/stm32f30x_exti.c **** 
  294:../src/stm32f30x_exti.c **** /**
  295:../src/stm32f30x_exti.c ****   * @brief  Checks whether the specified EXTI line is asserted or not.
@@ -874,104 +875,104 @@
  299:../src/stm32f30x_exti.c ****   */
  300:../src/stm32f30x_exti.c **** ITStatus EXTI_GetITStatus(uint32_t EXTI_Line)
  301:../src/stm32f30x_exti.c **** {
- 589              		.loc 1 301 0
- 590              		.cfi_startproc
- 591              		@ args = 0, pretend = 0, frame = 16
- 592              		@ frame_needed = 1, uses_anonymous_args = 0
- 593              		@ link register save eliminated.
- 594 044c 80B4     		push	{r7}
- 595              	.LCFI17:
- 596              		.cfi_def_cfa_offset 4
- 597              		.cfi_offset 7, -4
- 598 044e 85B0     		sub	sp, sp, #20
- 599              	.LCFI18:
- 600              		.cfi_def_cfa_offset 24
- 601 0450 00AF     		add	r7, sp, #0
- 602              	.LCFI19:
- 603              		.cfi_def_cfa_register 7
- 604 0452 7860     		str	r0, [r7, #4]
+ 590              		.loc 1 301 0
+ 591              		.cfi_startproc
+ 592              		@ args = 0, pretend = 0, frame = 16
+ 593              		@ frame_needed = 1, uses_anonymous_args = 0
+ 594              		@ link register save eliminated.
+ 595 044c 80B4     		push	{r7}
+ 596              	.LCFI17:
+ 597              		.cfi_def_cfa_offset 4
+ 598              		.cfi_offset 7, -4
+ 599 044e 85B0     		sub	sp, sp, #20
+ 600              	.LCFI18:
+ 601              		.cfi_def_cfa_offset 24
+ 602 0450 00AF     		add	r7, sp, #0
+ 603              	.LCFI19:
+ 604              		.cfi_def_cfa_register 7
+ 605 0452 7860     		str	r0, [r7, #4]
  302:../src/stm32f30x_exti.c ****   ITStatus bitstatus = RESET;
- 605              		.loc 1 302 0
- 606 0454 4FF00003 		mov	r3, #0
- 607 0458 FB73     		strb	r3, [r7, #15]
+ 606              		.loc 1 302 0
+ 607 0454 4FF00003 		mov	r3, #0
+ 608 0458 FB73     		strb	r3, [r7, #15]
  303:../src/stm32f30x_exti.c ****   uint32_t enablestatus = 0;
- 608              		.loc 1 303 0
- 609 045a 4FF00003 		mov	r3, #0
- 610 045e BB60     		str	r3, [r7, #8]
+ 609              		.loc 1 303 0
+ 610 045a 4FF00003 		mov	r3, #0
+ 611 045e BB60     		str	r3, [r7, #8]
  304:../src/stm32f30x_exti.c ****   
  305:../src/stm32f30x_exti.c ****   /* Check the parameters */
  306:../src/stm32f30x_exti.c ****   assert_param(IS_GET_EXTI_LINE(EXTI_Line));
  307:../src/stm32f30x_exti.c ****   
  308:../src/stm32f30x_exti.c ****   enablestatus =  *(__IO uint32_t *) (((uint32_t) &(EXTI->IMR)) + ((EXTI_Line) >> 5 ) * 0x20) & (ui
- 611              		.loc 1 308 0
- 612 0460 7B68     		ldr	r3, [r7, #4]
- 613 0462 4FEA5313 		lsr	r3, r3, #5
- 614 0466 03F10073 		add	r3, r3, #33554432
- 615 046a 03F50263 		add	r3, r3, #2080
- 616 046e 4FEA4313 		lsl	r3, r3, #5
- 617 0472 1A68     		ldr	r2, [r3, #0]
- 618 0474 7B68     		ldr	r3, [r7, #4]
- 619 0476 03F01F03 		and	r3, r3, #31
- 620 047a 4FF00101 		mov	r1, #1
- 621 047e 01FA03F3 		lsl	r3, r1, r3
- 622 0482 1340     		ands	r3, r3, r2
- 623 0484 BB60     		str	r3, [r7, #8]
+ 612              		.loc 1 308 0
+ 613 0460 7B68     		ldr	r3, [r7, #4]
+ 614 0462 4FEA5313 		lsr	r3, r3, #5
+ 615 0466 03F10073 		add	r3, r3, #33554432
+ 616 046a 03F50263 		add	r3, r3, #2080
+ 617 046e 4FEA4313 		lsl	r3, r3, #5
+ 618 0472 1A68     		ldr	r2, [r3, #0]
+ 619 0474 7B68     		ldr	r3, [r7, #4]
+ 620 0476 03F01F03 		and	r3, r3, #31
+ 621 047a 4FF00101 		mov	r1, #1
+ 622 047e 01FA03F3 		lsl	r3, r1, r3
+ 623 0482 1340     		ands	r3, r3, r2
+ 624 0484 BB60     		str	r3, [r7, #8]
  309:../src/stm32f30x_exti.c ****  
  310:../src/stm32f30x_exti.c ****   if ( (((*(__IO uint32_t *) (((uint32_t) &(EXTI->PR)) + (((EXTI_Line) >> 5 ) * 0x20) )) & (uint32_
- 624              		.loc 1 310 0
- 625 0486 7B68     		ldr	r3, [r7, #4]
- 626 0488 4FEA5313 		lsr	r3, r3, #5
- 627 048c 4FEA4312 		lsl	r2, r3, #5
- 628 0490 40F21443 		movw	r3, #1044
- 629 0494 C4F20103 		movt	r3, 16385
- 630 0498 D318     		adds	r3, r2, r3
- 631 049a 1A68     		ldr	r2, [r3, #0]
- 632 049c 7B68     		ldr	r3, [r7, #4]
- 633 049e 03F01F03 		and	r3, r3, #31
- 634 04a2 4FF00101 		mov	r1, #1
- 635 04a6 01FA03F3 		lsl	r3, r1, r3
- 636 04aa 1340     		ands	r3, r3, r2
- 637 04ac 002B     		cmp	r3, #0
- 638 04ae 06D0     		beq	.L14
- 639              		.loc 1 310 0 is_stmt 0 discriminator 1
- 640 04b0 BB68     		ldr	r3, [r7, #8]
- 641 04b2 002B     		cmp	r3, #0
- 642 04b4 03D0     		beq	.L14
+ 625              		.loc 1 310 0
+ 626 0486 7B68     		ldr	r3, [r7, #4]
+ 627 0488 4FEA5313 		lsr	r3, r3, #5
+ 628 048c 4FEA4312 		lsl	r2, r3, #5
+ 629 0490 40F21443 		movw	r3, #1044
+ 630 0494 C4F20103 		movt	r3, 16385
+ 631 0498 D318     		adds	r3, r2, r3
+ 632 049a 1A68     		ldr	r2, [r3, #0]
+ 633 049c 7B68     		ldr	r3, [r7, #4]
+ 634 049e 03F01F03 		and	r3, r3, #31
+ 635 04a2 4FF00101 		mov	r1, #1
+ 636 04a6 01FA03F3 		lsl	r3, r1, r3
+ 637 04aa 1340     		ands	r3, r3, r2
+ 638 04ac 002B     		cmp	r3, #0
+ 639 04ae 06D0     		beq	.L14
+ 640              		.loc 1 310 0 is_stmt 0 discriminator 1
+ 641 04b0 BB68     		ldr	r3, [r7, #8]
+ 642 04b2 002B     		cmp	r3, #0
+ 643 04b4 03D0     		beq	.L14
  311:../src/stm32f30x_exti.c ****   {
  312:../src/stm32f30x_exti.c ****     bitstatus = SET;
- 643              		.loc 1 312 0 is_stmt 1
- 644 04b6 4FF00103 		mov	r3, #1
- 645 04ba FB73     		strb	r3, [r7, #15]
- 646 04bc 02E0     		b	.L15
- 647              	.L14:
+ 644              		.loc 1 312 0 is_stmt 1
+ 645 04b6 4FF00103 		mov	r3, #1
+ 646 04ba FB73     		strb	r3, [r7, #15]
+ 647 04bc 02E0     		b	.L15
+ 648              	.L14:
  313:../src/stm32f30x_exti.c ****   }
  314:../src/stm32f30x_exti.c ****   else
  315:../src/stm32f30x_exti.c ****   {
  316:../src/stm32f30x_exti.c ****     bitstatus = RESET;
- 648              		.loc 1 316 0
- 649 04be 4FF00003 		mov	r3, #0
- 650 04c2 FB73     		strb	r3, [r7, #15]
- 651              	.L15:
+ 649              		.loc 1 316 0
+ 650 04be 4FF00003 		mov	r3, #0
+ 651 04c2 FB73     		strb	r3, [r7, #15]
+ 652              	.L15:
  317:../src/stm32f30x_exti.c ****   }
  318:../src/stm32f30x_exti.c ****   return bitstatus;
- 652              		.loc 1 318 0
- 653 04c4 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 653              		.loc 1 318 0
+ 654 04c4 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
  319:../src/stm32f30x_exti.c ****   
  320:../src/stm32f30x_exti.c **** }
- 654              		.loc 1 320 0
- 655 04c6 1846     		mov	r0, r3
- 656 04c8 07F11407 		add	r7, r7, #20
- 657 04cc BD46     		mov	sp, r7
- 658 04ce 80BC     		pop	{r7}
- 659 04d0 7047     		bx	lr
- 660              		.cfi_endproc
- 661              	.LFE117:
- 663 04d2 00BF     		.align	2
- 664              		.global	EXTI_ClearITPendingBit
- 665              		.thumb
- 666              		.thumb_func
- 668              	EXTI_ClearITPendingBit:
- 669              	.LFB118:
+ 655              		.loc 1 320 0
+ 656 04c6 1846     		mov	r0, r3
+ 657 04c8 07F11407 		add	r7, r7, #20
+ 658 04cc BD46     		mov	sp, r7
+ 659 04ce 80BC     		pop	{r7}
+ 660 04d0 7047     		bx	lr
+ 661              		.cfi_endproc
+ 662              	.LFE117:
+ 664 04d2 00BF     		.align	2
+ 665              		.global	EXTI_ClearITPendingBit
+ 666              		.thumb
+ 667              		.thumb_func
+ 669              	EXTI_ClearITPendingBit:
+ 670              	.LFB118:
  321:../src/stm32f30x_exti.c **** 
  322:../src/stm32f30x_exti.c **** /**
  323:../src/stm32f30x_exti.c ****   * @brief  Clears the EXTI's line pending bits.
@@ -981,64 +982,64 @@
  327:../src/stm32f30x_exti.c ****   */
  328:../src/stm32f30x_exti.c **** void EXTI_ClearITPendingBit(uint32_t EXTI_Line)
  329:../src/stm32f30x_exti.c **** {
- 670              		.loc 1 329 0
- 671              		.cfi_startproc
- 672              		@ args = 0, pretend = 0, frame = 8
- 673              		@ frame_needed = 1, uses_anonymous_args = 0
- 674              		@ link register save eliminated.
- 675 04d4 80B4     		push	{r7}
- 676              	.LCFI20:
- 677              		.cfi_def_cfa_offset 4
- 678              		.cfi_offset 7, -4
- 679 04d6 83B0     		sub	sp, sp, #12
- 680              	.LCFI21:
- 681              		.cfi_def_cfa_offset 16
- 682 04d8 00AF     		add	r7, sp, #0
- 683              	.LCFI22:
- 684              		.cfi_def_cfa_register 7
- 685 04da 7860     		str	r0, [r7, #4]
+ 671              		.loc 1 329 0
+ 672              		.cfi_startproc
+ 673              		@ args = 0, pretend = 0, frame = 8
+ 674              		@ frame_needed = 1, uses_anonymous_args = 0
+ 675              		@ link register save eliminated.
+ 676 04d4 80B4     		push	{r7}
+ 677              	.LCFI20:
+ 678              		.cfi_def_cfa_offset 4
+ 679              		.cfi_offset 7, -4
+ 680 04d6 83B0     		sub	sp, sp, #12
+ 681              	.LCFI21:
+ 682              		.cfi_def_cfa_offset 16
+ 683 04d8 00AF     		add	r7, sp, #0
+ 684              	.LCFI22:
+ 685              		.cfi_def_cfa_register 7
+ 686 04da 7860     		str	r0, [r7, #4]
  330:../src/stm32f30x_exti.c ****   /* Check the parameters */
  331:../src/stm32f30x_exti.c ****   assert_param(IS_EXTI_LINE_EXT(EXTI_Line));
  332:../src/stm32f30x_exti.c ****   
  333:../src/stm32f30x_exti.c ****   *(__IO uint32_t *) (((uint32_t) &(EXTI->PR)) + ((EXTI_Line) >> 5 ) * 0x20) = (1 << (EXTI_Line & 0
- 686              		.loc 1 333 0
- 687 04dc 7B68     		ldr	r3, [r7, #4]
- 688 04de 4FEA5313 		lsr	r3, r3, #5
- 689 04e2 4FEA4312 		lsl	r2, r3, #5
- 690 04e6 40F21443 		movw	r3, #1044
- 691 04ea C4F20103 		movt	r3, 16385
- 692 04ee D318     		adds	r3, r2, r3
- 693 04f0 7A68     		ldr	r2, [r7, #4]
- 694 04f2 02F01F02 		and	r2, r2, #31
- 695 04f6 4FF00101 		mov	r1, #1
- 696 04fa 01FA02F2 		lsl	r2, r1, r2
- 697 04fe 1A60     		str	r2, [r3, #0]
+ 687              		.loc 1 333 0
+ 688 04dc 7B68     		ldr	r3, [r7, #4]
+ 689 04de 4FEA5313 		lsr	r3, r3, #5
+ 690 04e2 4FEA4312 		lsl	r2, r3, #5
+ 691 04e6 40F21443 		movw	r3, #1044
+ 692 04ea C4F20103 		movt	r3, 16385
+ 693 04ee D318     		adds	r3, r2, r3
+ 694 04f0 7A68     		ldr	r2, [r7, #4]
+ 695 04f2 02F01F02 		and	r2, r2, #31
+ 696 04f6 4FF00101 		mov	r1, #1
+ 697 04fa 01FA02F2 		lsl	r2, r1, r2
+ 698 04fe 1A60     		str	r2, [r3, #0]
  334:../src/stm32f30x_exti.c **** }
- 698              		.loc 1 334 0
- 699 0500 07F10C07 		add	r7, r7, #12
- 700 0504 BD46     		mov	sp, r7
- 701 0506 80BC     		pop	{r7}
- 702 0508 7047     		bx	lr
- 703              		.cfi_endproc
- 704              	.LFE118:
- 706              	.Letext0:
- 707              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
- 708              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
- 709              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_exti.h"
- 710              		.file 5 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
+ 699              		.loc 1 334 0
+ 700 0500 07F10C07 		add	r7, r7, #12
+ 701 0504 BD46     		mov	sp, r7
+ 702 0506 80BC     		pop	{r7}
+ 703 0508 7047     		bx	lr
+ 704              		.cfi_endproc
+ 705              	.LFE118:
+ 707              	.Letext0:
+ 708              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
+ 709              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
+ 710              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_exti.h"
+ 711              		.file 5 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32f30x_exti.c
-     /tmp/ccZaCkEL.s:19     .text:00000000 $t
-     /tmp/ccZaCkEL.s:24     .text:00000000 EXTI_DeInit
-     /tmp/ccZaCkEL.s:111    .text:000000b4 EXTI_Init
-     /tmp/ccZaCkEL.s:384    .text:0000033c EXTI_StructInit
-     /tmp/ccZaCkEL.s:431    .text:00000370 EXTI_GenerateSWInterrupt
-     /tmp/ccZaCkEL.s:483    .text:000003c0 EXTI_GetFlagStatus
-     /tmp/ccZaCkEL.s:544    .text:00000414 EXTI_ClearFlag
-     /tmp/ccZaCkEL.s:587    .text:0000044c EXTI_GetITStatus
-     /tmp/ccZaCkEL.s:668    .text:000004d4 EXTI_ClearITPendingBit
+     /tmp/ccV7juoc.s:20     .text:00000000 $t
+     /tmp/ccV7juoc.s:25     .text:00000000 EXTI_DeInit
+     /tmp/ccV7juoc.s:112    .text:000000b4 EXTI_Init
+     /tmp/ccV7juoc.s:385    .text:0000033c EXTI_StructInit
+     /tmp/ccV7juoc.s:432    .text:00000370 EXTI_GenerateSWInterrupt
+     /tmp/ccV7juoc.s:484    .text:000003c0 EXTI_GetFlagStatus
+     /tmp/ccV7juoc.s:545    .text:00000414 EXTI_ClearFlag
+     /tmp/ccV7juoc.s:588    .text:0000044c EXTI_GetITStatus
+     /tmp/ccV7juoc.s:669    .text:000004d4 EXTI_ClearITPendingBit
                      .debug_frame:00000010 $d
-                           .group:00000000 wm4.1.323dce8664331a0daf4a2675e107c70c
+                           .group:00000000 wm4.1.743cd71370ebc432b539c5dba7924ecc
                            .group:00000000 wm4.stm32f30x.h.56.6f19c65e98e3319a61449cb2b2455af5
                            .group:00000000 wm4.core_cm4.h.32.1434cd257ff5806b1b03cd32ab0641e9
                            .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05

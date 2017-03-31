@@ -44,7 +44,9 @@ extern __IO uint32_t adc2_data[2];
 extern int state;
 
 extern int leds_on;
-extern float match_time_counter, t_firefight_start;
+extern float match_time_counter, t_firefight_start, t_homing_start;
+
+#define HOMING_TIME_LIMIT	8.0f
 
 void update_pid(void);
 
@@ -238,20 +240,20 @@ void update_pid(void);
 		}
 		else if(state == ST_WANDER)
 		{
-			GPIO_Write(GPIOE, led_matrix[6]);					// Two Orange (one's lit via PWM pin for ESC control)
+			GPIO_Write(GPIOE, led_matrix[6] | led_matrix[0]);					// Two Orange (one's lit via PWM pin for ESC control)
 		}
 		else if(state == ST_HOMING)
 		{
-			GPIO_Write(GPIOE, led_matrix[0] | led_matrix[3]);	// Two orange + Two red
+			GPIO_Write(GPIOE, led_matrix[0] | led_matrix[1] | led_matrix[3]);	// Two orange + Two red
 		}
 		else if(state == ST_FIREFIGHT)
 		{
-			GPIO_Write(GPIOE, led_matrix[0] | led_matrix[3] | led_matrix[6]);
+			GPIO_Write(GPIOE, led_matrix[0] | led_matrix[1] | led_matrix[3] | led_matrix[6]);
 		}
 		else if (state == ST_CANDLE_BLOWOUT)
 		{
-			GPIO_Write(GPIOE, led_matrix[6] | led_matrix[0] | led_matrix[1] | led_matrix[2] | led_matrix[3]
-                                            | led_matrix[4] | led_matrix[5]); // All LED's
+			GPIO_Write(GPIOE, led_matrix[0] | led_matrix[1] | led_matrix[2] | led_matrix[3] |
+							  led_matrix[4] | led_matrix[5] | led_matrix[6]); // All LED's
 		}
 		else if (state == ST_DONE)
 		{
@@ -261,22 +263,6 @@ void update_pid(void);
 			{
 				led_iter = 0;
 			}
-			/*
-			if(led_iter == 3)
-			{
-				led_iter = 0;
-				if(leds_on == 0)
-				{
-					GPIO_Write(GPIOE, 0); // All LED's
-				}
-				else
-				{
-					GPIO_Write(GPIOE, led_matrix[6] | led_matrix[0] | led_matrix[1] | led_matrix[2] | led_matrix[3]
-		                                            | led_matrix[4] | led_matrix[5]); // All LED's
-				}
-				leds_on = (leds_on == 1) ? leds_on = 0 : leds_on = 1;
-			}
-			*/
 		}
 	}
 	void ADC1_2_IRQHandler(void)
@@ -371,7 +357,7 @@ void update_pid(void);
 		if(state == ST_HOMING)
 		{
 			err = (float)(1.0) * (float)((int)adcData[0] - (int)adc2_data[2]);
-			if(err > -20 && err < 20)
+			if((err > -20 && err < 20))// || match_time_counter-t_homing_start > HOMING_TIME_LIMIT)
 			{
 				pwm1_output(0.50f);
 				pwm2_output(0.50f);
@@ -380,8 +366,8 @@ void update_pid(void);
 			}
 
 			diff_err = (float)(err-last_err)*((float)DT_ENCODER/(float)1000);
-			integral =0;//+= err * 0.04f;
-			drive_cmd = (((float)(err)/(float)500) + ((float)diff_err/(float)735)); // k_deriv = 944
+			integral += err * 0.00004f;
+			drive_cmd = (((float)(err)/(float)3400) + ((float)diff_err/(float)835)); // k_deriv = 944
 
 			rt = 0.0f;
 			mtr_out = 0.5f;
@@ -423,7 +409,7 @@ void update_pid(void);
 		diff_err = (float)(err-last_err)*((float)DT_ENCODER/(float)1000);
 		drive_cmd = (((float)(err)/(float)2500) + ((float)diff_err/(float)3720)); //1100=diff term
 
-		if(d_front < 0.690 || adc2_data[3] > 1870)//0.69
+		if(d_front < 0.390 || adc2_data[3] > 2000)//1870)//0.69
 		{
 			rt = 0.5f;
 			mtr_out = 0.3f;
@@ -467,43 +453,54 @@ void update_pid(void);
 		}
 		else if(state == ST_CANDLE_BLOWOUT)
 		{
-			err = (float)(1.0) * (float)((int)adcData[0] - (int)adc2_data[2]);
-
-			diff_err = (float)(err-last_err)*((float)DT_ENCODER/(float)1000);
-			integral =0;//+= err * 0.04f;
-			drive_cmd = (((float)(err)/(float)500) + ((float)diff_err/(float)944));
-
-			rt = 0.0f;
-			mtr_out = 0.5f;
-
-			if(drive_cmd > 0.5)
+			if((adc2_data[2] > UV_THRESHOLD || adcData[0] > UV_THRESHOLD))
 			{
-				drive_cmd = 0.5f;
+//				err = (float)(1.0) * (float)((int)adcData[0] - (int)adc2_data[2]);
+//
+//				diff_err = (float)(err-last_err)*((float)DT_ENCODER/(float)1000);
+//				integral =0;//+= err * 0.04f;
+//				drive_cmd = (((float)(err)/(float)500) + ((float)diff_err/(float)944));
+////				drive_cmd = (((float)(err)/(float)350) + ((float)diff_err/(float)944));
+//				rt = 0.0f;
+//				mtr_out = 0.5f;
+//
+//				if(drive_cmd > 0.5)
+//				{
+//					drive_cmd = 0.5f;
+//				}
+//				if(drive_cmd < -0.5)
+//				{
+//					drive_cmd = -0.5f;
+//				}
+//
+//				left = (1-mtr_out) - drive_cmd - rt;
+//				right = mtr_out - drive_cmd - rt;
+//
+//				if(left>1.0)
+//				{
+//					left=1.0;
+//				}
+//				else if(left<0)
+//				{
+//					left=0;//-1.0;
+//				}
+//
+//				if(right>1.0f)
+//				{
+//					right=1.0f;
+//				}
+//				else if(right<0)
+//				{
+//					right=0;
+//				}
+				left = 0.5f;
+				right = 0.5f;
 			}
-			if(drive_cmd < -0.5)
+			else
 			{
-				drive_cmd = -0.5f;
-			}
-
-			left = (1-mtr_out) - drive_cmd - rt;
-			right = mtr_out - drive_cmd - rt;
-
-			if(left>1.0)
-			{
-				left=1.0;
-			}
-			else if(left<0)
-			{
-				left=0;//-1.0;
-			}
-
-			if(right>1.0f)
-			{
-				right=1.0f;
-			}
-			else if(right<0)
-			{
-				right=0;
+				left = 0.5f;
+				right = 0.5f;
+				state = ST_DONE;
 			}
 
 			if(match_time_counter - t_firefight_start > FIREFIGHT_TIMEOUT)

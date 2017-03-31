@@ -1,28 +1,29 @@
    1              		.syntax unified
    2              		.cpu cortex-m4
    3              		.eabi_attribute 27, 3
-   4              		.fpu fpv4-sp-d16
-   5              		.eabi_attribute 20, 1
-   6              		.eabi_attribute 21, 1
-   7              		.eabi_attribute 23, 3
-   8              		.eabi_attribute 24, 1
-   9              		.eabi_attribute 25, 1
-  10              		.eabi_attribute 26, 1
-  11              		.eabi_attribute 30, 6
-  12              		.eabi_attribute 34, 1
-  13              		.eabi_attribute 18, 4
-  14              		.thumb
-  15              		.file	"stm32f30x_syscfg.c"
-  16              		.text
-  17              	.Ltext0:
-  18              		.cfi_sections	.debug_frame
-  19              		.align	2
-  20              		.global	SYSCFG_DeInit
-  21              		.thumb
-  22              		.thumb_func
-  24              	SYSCFG_DeInit:
-  25              	.LFB111:
-  26              		.file 1 "../src/stm32f30x_syscfg.c"
+   4              		.eabi_attribute 28, 1
+   5              		.fpu fpv4-sp-d16
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 6
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.thumb
+  16              		.file	"stm32f30x_syscfg.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.align	2
+  21              		.global	SYSCFG_DeInit
+  22              		.thumb
+  23              		.thumb_func
+  25              	SYSCFG_DeInit:
+  26              	.LFB111:
+  27              		.file 1 "../src/stm32f30x_syscfg.c"
    1:../src/stm32f30x_syscfg.c **** /**
    2:../src/stm32f30x_syscfg.c ****   ******************************************************************************
    3:../src/stm32f30x_syscfg.c ****   * @file    stm32f30x_syscfg.c
@@ -132,90 +133,90 @@
  107:../src/stm32f30x_syscfg.c ****   */
  108:../src/stm32f30x_syscfg.c **** void SYSCFG_DeInit(void)
  109:../src/stm32f30x_syscfg.c **** {
-  27              		.loc 1 109 0
-  28              		.cfi_startproc
-  29              		@ args = 0, pretend = 0, frame = 0
-  30              		@ frame_needed = 1, uses_anonymous_args = 0
-  31              		@ link register save eliminated.
-  32 0000 80B4     		push	{r7}
-  33              	.LCFI0:
-  34              		.cfi_def_cfa_offset 4
-  35              		.cfi_offset 7, -4
-  36 0002 00AF     		add	r7, sp, #0
-  37              	.LCFI1:
-  38              		.cfi_def_cfa_register 7
+  28              		.loc 1 109 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33 0000 80B4     		push	{r7}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 4
+  36              		.cfi_offset 7, -4
+  37 0002 00AF     		add	r7, sp, #0
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_register 7
  110:../src/stm32f30x_syscfg.c ****   /* Reset SYSCFG_CFGR1 register to reset value without affecting MEM_MODE bits */
  111:../src/stm32f30x_syscfg.c ****   SYSCFG->CFGR1 &= SYSCFG_CFGR1_MEM_MODE;
-  39              		.loc 1 111 0
-  40 0004 4FF00003 		mov	r3, #0
-  41 0008 C4F20103 		movt	r3, 16385
-  42 000c 4FF00002 		mov	r2, #0
-  43 0010 C4F20102 		movt	r2, 16385
-  44 0014 1268     		ldr	r2, [r2, #0]
-  45 0016 02F00302 		and	r2, r2, #3
-  46 001a 1A60     		str	r2, [r3, #0]
+  40              		.loc 1 111 0
+  41 0004 4FF00003 		mov	r3, #0
+  42 0008 C4F20103 		movt	r3, 16385
+  43 000c 4FF00002 		mov	r2, #0
+  44 0010 C4F20102 		movt	r2, 16385
+  45 0014 1268     		ldr	r2, [r2, #0]
+  46 0016 02F00302 		and	r2, r2, #3
+  47 001a 1A60     		str	r2, [r3, #0]
  112:../src/stm32f30x_syscfg.c ****   /* Set FPU Interrupt Enable bits to default value */
  113:../src/stm32f30x_syscfg.c ****   SYSCFG->CFGR1 |= 0x7C000000;
-  47              		.loc 1 113 0
-  48 001c 4FF00003 		mov	r3, #0
-  49 0020 C4F20103 		movt	r3, 16385
-  50 0024 4FF00002 		mov	r2, #0
-  51 0028 C4F20102 		movt	r2, 16385
-  52 002c 1268     		ldr	r2, [r2, #0]
-  53 002e 42F0F842 		orr	r2, r2, #2080374784
-  54 0032 1A60     		str	r2, [r3, #0]
+  48              		.loc 1 113 0
+  49 001c 4FF00003 		mov	r3, #0
+  50 0020 C4F20103 		movt	r3, 16385
+  51 0024 4FF00002 		mov	r2, #0
+  52 0028 C4F20102 		movt	r2, 16385
+  53 002c 1268     		ldr	r2, [r2, #0]
+  54 002e 42F0F842 		orr	r2, r2, #2080374784
+  55 0032 1A60     		str	r2, [r3, #0]
  114:../src/stm32f30x_syscfg.c ****   /* Reset RAM Write protection bits to default value */
  115:../src/stm32f30x_syscfg.c ****   SYSCFG->RCR = 0x00000000;
-  55              		.loc 1 115 0
-  56 0034 4FF00003 		mov	r3, #0
-  57 0038 C4F20103 		movt	r3, 16385
-  58 003c 4FF00002 		mov	r2, #0
-  59 0040 5A60     		str	r2, [r3, #4]
+  56              		.loc 1 115 0
+  57 0034 4FF00003 		mov	r3, #0
+  58 0038 C4F20103 		movt	r3, 16385
+  59 003c 4FF00002 		mov	r2, #0
+  60 0040 5A60     		str	r2, [r3, #4]
  116:../src/stm32f30x_syscfg.c ****   /* Set EXTICRx registers to reset value */
  117:../src/stm32f30x_syscfg.c ****   SYSCFG->EXTICR[0] = 0;
-  60              		.loc 1 117 0
-  61 0042 4FF00003 		mov	r3, #0
-  62 0046 C4F20103 		movt	r3, 16385
-  63 004a 4FF00002 		mov	r2, #0
-  64 004e 9A60     		str	r2, [r3, #8]
+  61              		.loc 1 117 0
+  62 0042 4FF00003 		mov	r3, #0
+  63 0046 C4F20103 		movt	r3, 16385
+  64 004a 4FF00002 		mov	r2, #0
+  65 004e 9A60     		str	r2, [r3, #8]
  118:../src/stm32f30x_syscfg.c ****   SYSCFG->EXTICR[1] = 0;
-  65              		.loc 1 118 0
-  66 0050 4FF00003 		mov	r3, #0
-  67 0054 C4F20103 		movt	r3, 16385
-  68 0058 4FF00002 		mov	r2, #0
-  69 005c DA60     		str	r2, [r3, #12]
+  66              		.loc 1 118 0
+  67 0050 4FF00003 		mov	r3, #0
+  68 0054 C4F20103 		movt	r3, 16385
+  69 0058 4FF00002 		mov	r2, #0
+  70 005c DA60     		str	r2, [r3, #12]
  119:../src/stm32f30x_syscfg.c ****   SYSCFG->EXTICR[2] = 0;
-  70              		.loc 1 119 0
-  71 005e 4FF00003 		mov	r3, #0
-  72 0062 C4F20103 		movt	r3, 16385
-  73 0066 4FF00002 		mov	r2, #0
-  74 006a 1A61     		str	r2, [r3, #16]
+  71              		.loc 1 119 0
+  72 005e 4FF00003 		mov	r3, #0
+  73 0062 C4F20103 		movt	r3, 16385
+  74 0066 4FF00002 		mov	r2, #0
+  75 006a 1A61     		str	r2, [r3, #16]
  120:../src/stm32f30x_syscfg.c ****   SYSCFG->EXTICR[3] = 0;
-  75              		.loc 1 120 0
-  76 006c 4FF00003 		mov	r3, #0
-  77 0070 C4F20103 		movt	r3, 16385
-  78 0074 4FF00002 		mov	r2, #0
-  79 0078 5A61     		str	r2, [r3, #20]
+  76              		.loc 1 120 0
+  77 006c 4FF00003 		mov	r3, #0
+  78 0070 C4F20103 		movt	r3, 16385
+  79 0074 4FF00002 		mov	r2, #0
+  80 0078 5A61     		str	r2, [r3, #20]
  121:../src/stm32f30x_syscfg.c ****   /* Set CFGR2 register to reset value */
  122:../src/stm32f30x_syscfg.c ****   SYSCFG->CFGR2 = 0;
-  80              		.loc 1 122 0
-  81 007a 4FF00003 		mov	r3, #0
-  82 007e C4F20103 		movt	r3, 16385
-  83 0082 4FF00002 		mov	r2, #0
-  84 0086 9A61     		str	r2, [r3, #24]
+  81              		.loc 1 122 0
+  82 007a 4FF00003 		mov	r3, #0
+  83 007e C4F20103 		movt	r3, 16385
+  84 0082 4FF00002 		mov	r2, #0
+  85 0086 9A61     		str	r2, [r3, #24]
  123:../src/stm32f30x_syscfg.c **** }
-  85              		.loc 1 123 0
-  86 0088 BD46     		mov	sp, r7
-  87 008a 80BC     		pop	{r7}
-  88 008c 7047     		bx	lr
-  89              		.cfi_endproc
-  90              	.LFE111:
-  92 008e 00BF     		.align	2
-  93              		.global	SYSCFG_MemoryRemapConfig
-  94              		.thumb
-  95              		.thumb_func
-  97              	SYSCFG_MemoryRemapConfig:
-  98              	.LFB112:
+  86              		.loc 1 123 0
+  87 0088 BD46     		mov	sp, r7
+  88 008a 80BC     		pop	{r7}
+  89 008c 7047     		bx	lr
+  90              		.cfi_endproc
+  91              	.LFE111:
+  93 008e 00BF     		.align	2
+  94              		.global	SYSCFG_MemoryRemapConfig
+  95              		.thumb
+  96              		.thumb_func
+  98              	SYSCFG_MemoryRemapConfig:
+  99              	.LFB112:
  124:../src/stm32f30x_syscfg.c **** 
  125:../src/stm32f30x_syscfg.c **** /**
  126:../src/stm32f30x_syscfg.c ****   * @brief  Configures the memory mapping at address 0x00000000.
@@ -228,74 +229,74 @@
  133:../src/stm32f30x_syscfg.c ****   */
  134:../src/stm32f30x_syscfg.c **** void SYSCFG_MemoryRemapConfig(uint32_t SYSCFG_MemoryRemap)
  135:../src/stm32f30x_syscfg.c **** {
-  99              		.loc 1 135 0
- 100              		.cfi_startproc
- 101              		@ args = 0, pretend = 0, frame = 16
- 102              		@ frame_needed = 1, uses_anonymous_args = 0
- 103              		@ link register save eliminated.
- 104 0090 80B4     		push	{r7}
- 105              	.LCFI2:
- 106              		.cfi_def_cfa_offset 4
- 107              		.cfi_offset 7, -4
- 108 0092 85B0     		sub	sp, sp, #20
- 109              	.LCFI3:
- 110              		.cfi_def_cfa_offset 24
- 111 0094 00AF     		add	r7, sp, #0
- 112              	.LCFI4:
- 113              		.cfi_def_cfa_register 7
- 114 0096 7860     		str	r0, [r7, #4]
+ 100              		.loc 1 135 0
+ 101              		.cfi_startproc
+ 102              		@ args = 0, pretend = 0, frame = 16
+ 103              		@ frame_needed = 1, uses_anonymous_args = 0
+ 104              		@ link register save eliminated.
+ 105 0090 80B4     		push	{r7}
+ 106              	.LCFI2:
+ 107              		.cfi_def_cfa_offset 4
+ 108              		.cfi_offset 7, -4
+ 109 0092 85B0     		sub	sp, sp, #20
+ 110              	.LCFI3:
+ 111              		.cfi_def_cfa_offset 24
+ 112 0094 00AF     		add	r7, sp, #0
+ 113              	.LCFI4:
+ 114              		.cfi_def_cfa_register 7
+ 115 0096 7860     		str	r0, [r7, #4]
  136:../src/stm32f30x_syscfg.c ****   uint32_t tmpcfgr1 = 0;
- 115              		.loc 1 136 0
- 116 0098 4FF00003 		mov	r3, #0
- 117 009c FB60     		str	r3, [r7, #12]
+ 116              		.loc 1 136 0
+ 117 0098 4FF00003 		mov	r3, #0
+ 118 009c FB60     		str	r3, [r7, #12]
  137:../src/stm32f30x_syscfg.c **** 
  138:../src/stm32f30x_syscfg.c ****   /* Check the parameter */
  139:../src/stm32f30x_syscfg.c ****   assert_param(IS_SYSCFG_MEMORY_REMAP(SYSCFG_MemoryRemap));
  140:../src/stm32f30x_syscfg.c **** 
  141:../src/stm32f30x_syscfg.c ****   /* Get CFGR1 register value */
  142:../src/stm32f30x_syscfg.c ****   tmpcfgr1 = SYSCFG->CFGR1;
- 118              		.loc 1 142 0
- 119 009e 4FF00003 		mov	r3, #0
- 120 00a2 C4F20103 		movt	r3, 16385
- 121 00a6 1B68     		ldr	r3, [r3, #0]
- 122 00a8 FB60     		str	r3, [r7, #12]
+ 119              		.loc 1 142 0
+ 120 009e 4FF00003 		mov	r3, #0
+ 121 00a2 C4F20103 		movt	r3, 16385
+ 122 00a6 1B68     		ldr	r3, [r3, #0]
+ 123 00a8 FB60     		str	r3, [r7, #12]
  143:../src/stm32f30x_syscfg.c **** 
  144:../src/stm32f30x_syscfg.c ****   /* Clear MEM_MODE bits */
  145:../src/stm32f30x_syscfg.c ****   tmpcfgr1 &= (uint32_t) (~SYSCFG_CFGR1_MEM_MODE);
- 123              		.loc 1 145 0
- 124 00aa FB68     		ldr	r3, [r7, #12]
- 125 00ac 23F00303 		bic	r3, r3, #3
- 126 00b0 FB60     		str	r3, [r7, #12]
+ 124              		.loc 1 145 0
+ 125 00aa FB68     		ldr	r3, [r7, #12]
+ 126 00ac 23F00303 		bic	r3, r3, #3
+ 127 00b0 FB60     		str	r3, [r7, #12]
  146:../src/stm32f30x_syscfg.c **** 
  147:../src/stm32f30x_syscfg.c ****   /* Set the new MEM_MODE bits value */
  148:../src/stm32f30x_syscfg.c ****   tmpcfgr1 |= (uint32_t) SYSCFG_MemoryRemap;
- 127              		.loc 1 148 0
- 128 00b2 FA68     		ldr	r2, [r7, #12]
- 129 00b4 7B68     		ldr	r3, [r7, #4]
- 130 00b6 1343     		orrs	r3, r3, r2
- 131 00b8 FB60     		str	r3, [r7, #12]
+ 128              		.loc 1 148 0
+ 129 00b2 FA68     		ldr	r2, [r7, #12]
+ 130 00b4 7B68     		ldr	r3, [r7, #4]
+ 131 00b6 1343     		orrs	r3, r3, r2
+ 132 00b8 FB60     		str	r3, [r7, #12]
  149:../src/stm32f30x_syscfg.c **** 
  150:../src/stm32f30x_syscfg.c ****   /* Set CFGR1 register with the new memory remap configuration */
  151:../src/stm32f30x_syscfg.c ****   SYSCFG->CFGR1 = tmpcfgr1;
- 132              		.loc 1 151 0
- 133 00ba 4FF00003 		mov	r3, #0
- 134 00be C4F20103 		movt	r3, 16385
- 135 00c2 FA68     		ldr	r2, [r7, #12]
- 136 00c4 1A60     		str	r2, [r3, #0]
+ 133              		.loc 1 151 0
+ 134 00ba 4FF00003 		mov	r3, #0
+ 135 00be C4F20103 		movt	r3, 16385
+ 136 00c2 FA68     		ldr	r2, [r7, #12]
+ 137 00c4 1A60     		str	r2, [r3, #0]
  152:../src/stm32f30x_syscfg.c **** }
- 137              		.loc 1 152 0
- 138 00c6 07F11407 		add	r7, r7, #20
- 139 00ca BD46     		mov	sp, r7
- 140 00cc 80BC     		pop	{r7}
- 141 00ce 7047     		bx	lr
- 142              		.cfi_endproc
- 143              	.LFE112:
- 145              		.align	2
- 146              		.global	SYSCFG_DMAChannelRemapConfig
- 147              		.thumb
- 148              		.thumb_func
- 150              	SYSCFG_DMAChannelRemapConfig:
- 151              	.LFB113:
+ 138              		.loc 1 152 0
+ 139 00c6 07F11407 		add	r7, r7, #20
+ 140 00ca BD46     		mov	sp, r7
+ 141 00cc 80BC     		pop	{r7}
+ 142 00ce 7047     		bx	lr
+ 143              		.cfi_endproc
+ 144              	.LFE112:
+ 146              		.align	2
+ 147              		.global	SYSCFG_DMAChannelRemapConfig
+ 148              		.thumb
+ 149              		.thumb_func
+ 151              	SYSCFG_DMAChannelRemapConfig:
+ 152              	.LFB113:
  153:../src/stm32f30x_syscfg.c **** 
  154:../src/stm32f30x_syscfg.c **** /**
  155:../src/stm32f30x_syscfg.c ****   * @brief  Configures the DMA channels remapping.
@@ -320,78 +321,78 @@
  174:../src/stm32f30x_syscfg.c ****   */
  175:../src/stm32f30x_syscfg.c **** void SYSCFG_DMAChannelRemapConfig(uint32_t SYSCFG_DMARemap, FunctionalState NewState)
  176:../src/stm32f30x_syscfg.c **** {
- 152              		.loc 1 176 0
- 153              		.cfi_startproc
- 154              		@ args = 0, pretend = 0, frame = 8
- 155              		@ frame_needed = 1, uses_anonymous_args = 0
- 156              		@ link register save eliminated.
- 157 00d0 80B4     		push	{r7}
- 158              	.LCFI5:
- 159              		.cfi_def_cfa_offset 4
- 160              		.cfi_offset 7, -4
- 161 00d2 83B0     		sub	sp, sp, #12
- 162              	.LCFI6:
- 163              		.cfi_def_cfa_offset 16
- 164 00d4 00AF     		add	r7, sp, #0
- 165              	.LCFI7:
- 166              		.cfi_def_cfa_register 7
- 167 00d6 7860     		str	r0, [r7, #4]
- 168 00d8 0B46     		mov	r3, r1
- 169 00da FB70     		strb	r3, [r7, #3]
+ 153              		.loc 1 176 0
+ 154              		.cfi_startproc
+ 155              		@ args = 0, pretend = 0, frame = 8
+ 156              		@ frame_needed = 1, uses_anonymous_args = 0
+ 157              		@ link register save eliminated.
+ 158 00d0 80B4     		push	{r7}
+ 159              	.LCFI5:
+ 160              		.cfi_def_cfa_offset 4
+ 161              		.cfi_offset 7, -4
+ 162 00d2 83B0     		sub	sp, sp, #12
+ 163              	.LCFI6:
+ 164              		.cfi_def_cfa_offset 16
+ 165 00d4 00AF     		add	r7, sp, #0
+ 166              	.LCFI7:
+ 167              		.cfi_def_cfa_register 7
+ 168 00d6 7860     		str	r0, [r7, #4]
+ 169 00d8 0B46     		mov	r3, r1
+ 170 00da FB70     		strb	r3, [r7, #3]
  177:../src/stm32f30x_syscfg.c ****   /* Check the parameters */
  178:../src/stm32f30x_syscfg.c ****   assert_param(IS_SYSCFG_DMA_REMAP(SYSCFG_DMARemap));
  179:../src/stm32f30x_syscfg.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
  180:../src/stm32f30x_syscfg.c **** 
  181:../src/stm32f30x_syscfg.c ****   if (NewState != DISABLE)
- 170              		.loc 1 181 0
- 171 00dc FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
- 172 00de 002B     		cmp	r3, #0
- 173 00e0 0CD0     		beq	.L4
+ 171              		.loc 1 181 0
+ 172 00dc FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 173 00de 002B     		cmp	r3, #0
+ 174 00e0 0CD0     		beq	.L4
  182:../src/stm32f30x_syscfg.c ****   {
  183:../src/stm32f30x_syscfg.c ****     /* Remap the DMA channel */
  184:../src/stm32f30x_syscfg.c ****     SYSCFG->CFGR1 |= (uint32_t)SYSCFG_DMARemap;
- 174              		.loc 1 184 0
- 175 00e2 4FF00003 		mov	r3, #0
- 176 00e6 C4F20103 		movt	r3, 16385
- 177 00ea 4FF00002 		mov	r2, #0
- 178 00ee C4F20102 		movt	r2, 16385
- 179 00f2 1168     		ldr	r1, [r2, #0]
- 180 00f4 7A68     		ldr	r2, [r7, #4]
- 181 00f6 0A43     		orrs	r2, r2, r1
- 182 00f8 1A60     		str	r2, [r3, #0]
- 183 00fa 0DE0     		b	.L3
- 184              	.L4:
+ 175              		.loc 1 184 0
+ 176 00e2 4FF00003 		mov	r3, #0
+ 177 00e6 C4F20103 		movt	r3, 16385
+ 178 00ea 4FF00002 		mov	r2, #0
+ 179 00ee C4F20102 		movt	r2, 16385
+ 180 00f2 1168     		ldr	r1, [r2, #0]
+ 181 00f4 7A68     		ldr	r2, [r7, #4]
+ 182 00f6 0A43     		orrs	r2, r2, r1
+ 183 00f8 1A60     		str	r2, [r3, #0]
+ 184 00fa 0DE0     		b	.L3
+ 185              	.L4:
  185:../src/stm32f30x_syscfg.c ****   }
  186:../src/stm32f30x_syscfg.c ****   else
  187:../src/stm32f30x_syscfg.c ****   {
  188:../src/stm32f30x_syscfg.c ****     /* use the default DMA channel mapping */
  189:../src/stm32f30x_syscfg.c ****     SYSCFG->CFGR1 &= (uint32_t)(~SYSCFG_DMARemap);
- 185              		.loc 1 189 0
- 186 00fc 4FF00003 		mov	r3, #0
- 187 0100 C4F20103 		movt	r3, 16385
- 188 0104 4FF00002 		mov	r2, #0
- 189 0108 C4F20102 		movt	r2, 16385
- 190 010c 1168     		ldr	r1, [r2, #0]
- 191 010e 7A68     		ldr	r2, [r7, #4]
- 192 0110 6FEA0202 		mvn	r2, r2
- 193 0114 0A40     		ands	r2, r2, r1
- 194 0116 1A60     		str	r2, [r3, #0]
- 195              	.L3:
+ 186              		.loc 1 189 0
+ 187 00fc 4FF00003 		mov	r3, #0
+ 188 0100 C4F20103 		movt	r3, 16385
+ 189 0104 4FF00002 		mov	r2, #0
+ 190 0108 C4F20102 		movt	r2, 16385
+ 191 010c 1168     		ldr	r1, [r2, #0]
+ 192 010e 7A68     		ldr	r2, [r7, #4]
+ 193 0110 6FEA0202 		mvn	r2, r2
+ 194 0114 0A40     		ands	r2, r2, r1
+ 195 0116 1A60     		str	r2, [r3, #0]
+ 196              	.L3:
  190:../src/stm32f30x_syscfg.c ****   }
  191:../src/stm32f30x_syscfg.c **** }
- 196              		.loc 1 191 0
- 197 0118 07F10C07 		add	r7, r7, #12
- 198 011c BD46     		mov	sp, r7
- 199 011e 80BC     		pop	{r7}
- 200 0120 7047     		bx	lr
- 201              		.cfi_endproc
- 202              	.LFE113:
- 204 0122 00BF     		.align	2
- 205              		.global	SYSCFG_TriggerRemapConfig
- 206              		.thumb
- 207              		.thumb_func
- 209              	SYSCFG_TriggerRemapConfig:
- 210              	.LFB114:
+ 197              		.loc 1 191 0
+ 198 0118 07F10C07 		add	r7, r7, #12
+ 199 011c BD46     		mov	sp, r7
+ 200 011e 80BC     		pop	{r7}
+ 201 0120 7047     		bx	lr
+ 202              		.cfi_endproc
+ 203              	.LFE113:
+ 205 0122 00BF     		.align	2
+ 206              		.global	SYSCFG_TriggerRemapConfig
+ 207              		.thumb
+ 208              		.thumb_func
+ 210              	SYSCFG_TriggerRemapConfig:
+ 211              	.LFB114:
  192:../src/stm32f30x_syscfg.c **** 
  193:../src/stm32f30x_syscfg.c **** /**
  194:../src/stm32f30x_syscfg.c ****   * @brief  Configures the remapping capabilities of DAC/TIM triggers.
@@ -407,78 +408,78 @@
  204:../src/stm32f30x_syscfg.c ****   */
  205:../src/stm32f30x_syscfg.c **** void SYSCFG_TriggerRemapConfig(uint32_t SYSCFG_TriggerRemap, FunctionalState NewState)
  206:../src/stm32f30x_syscfg.c **** {
- 211              		.loc 1 206 0
- 212              		.cfi_startproc
- 213              		@ args = 0, pretend = 0, frame = 8
- 214              		@ frame_needed = 1, uses_anonymous_args = 0
- 215              		@ link register save eliminated.
- 216 0124 80B4     		push	{r7}
- 217              	.LCFI8:
- 218              		.cfi_def_cfa_offset 4
- 219              		.cfi_offset 7, -4
- 220 0126 83B0     		sub	sp, sp, #12
- 221              	.LCFI9:
- 222              		.cfi_def_cfa_offset 16
- 223 0128 00AF     		add	r7, sp, #0
- 224              	.LCFI10:
- 225              		.cfi_def_cfa_register 7
- 226 012a 7860     		str	r0, [r7, #4]
- 227 012c 0B46     		mov	r3, r1
- 228 012e FB70     		strb	r3, [r7, #3]
+ 212              		.loc 1 206 0
+ 213              		.cfi_startproc
+ 214              		@ args = 0, pretend = 0, frame = 8
+ 215              		@ frame_needed = 1, uses_anonymous_args = 0
+ 216              		@ link register save eliminated.
+ 217 0124 80B4     		push	{r7}
+ 218              	.LCFI8:
+ 219              		.cfi_def_cfa_offset 4
+ 220              		.cfi_offset 7, -4
+ 221 0126 83B0     		sub	sp, sp, #12
+ 222              	.LCFI9:
+ 223              		.cfi_def_cfa_offset 16
+ 224 0128 00AF     		add	r7, sp, #0
+ 225              	.LCFI10:
+ 226              		.cfi_def_cfa_register 7
+ 227 012a 7860     		str	r0, [r7, #4]
+ 228 012c 0B46     		mov	r3, r1
+ 229 012e FB70     		strb	r3, [r7, #3]
  207:../src/stm32f30x_syscfg.c ****   /* Check the parameters */
  208:../src/stm32f30x_syscfg.c ****   assert_param(IS_SYSCFG_TRIGGER_REMAP(SYSCFG_TriggerRemap));
  209:../src/stm32f30x_syscfg.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
  210:../src/stm32f30x_syscfg.c **** 
  211:../src/stm32f30x_syscfg.c ****   if (NewState != DISABLE)
- 229              		.loc 1 211 0
- 230 0130 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
- 231 0132 002B     		cmp	r3, #0
- 232 0134 0CD0     		beq	.L7
+ 230              		.loc 1 211 0
+ 231 0130 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 232 0132 002B     		cmp	r3, #0
+ 233 0134 0CD0     		beq	.L7
  212:../src/stm32f30x_syscfg.c ****   {
  213:../src/stm32f30x_syscfg.c ****     /* Remap the trigger */
  214:../src/stm32f30x_syscfg.c ****     SYSCFG->CFGR1 |= (uint32_t)SYSCFG_TriggerRemap;
- 233              		.loc 1 214 0
- 234 0136 4FF00003 		mov	r3, #0
- 235 013a C4F20103 		movt	r3, 16385
- 236 013e 4FF00002 		mov	r2, #0
- 237 0142 C4F20102 		movt	r2, 16385
- 238 0146 1168     		ldr	r1, [r2, #0]
- 239 0148 7A68     		ldr	r2, [r7, #4]
- 240 014a 0A43     		orrs	r2, r2, r1
- 241 014c 1A60     		str	r2, [r3, #0]
- 242 014e 0DE0     		b	.L6
- 243              	.L7:
+ 234              		.loc 1 214 0
+ 235 0136 4FF00003 		mov	r3, #0
+ 236 013a C4F20103 		movt	r3, 16385
+ 237 013e 4FF00002 		mov	r2, #0
+ 238 0142 C4F20102 		movt	r2, 16385
+ 239 0146 1168     		ldr	r1, [r2, #0]
+ 240 0148 7A68     		ldr	r2, [r7, #4]
+ 241 014a 0A43     		orrs	r2, r2, r1
+ 242 014c 1A60     		str	r2, [r3, #0]
+ 243 014e 0DE0     		b	.L6
+ 244              	.L7:
  215:../src/stm32f30x_syscfg.c ****   }
  216:../src/stm32f30x_syscfg.c ****   else
  217:../src/stm32f30x_syscfg.c ****   {
  218:../src/stm32f30x_syscfg.c ****     /* Use the default trigger mapping */
  219:../src/stm32f30x_syscfg.c ****     SYSCFG->CFGR1 &= (uint32_t)(~SYSCFG_TriggerRemap);
- 244              		.loc 1 219 0
- 245 0150 4FF00003 		mov	r3, #0
- 246 0154 C4F20103 		movt	r3, 16385
- 247 0158 4FF00002 		mov	r2, #0
- 248 015c C4F20102 		movt	r2, 16385
- 249 0160 1168     		ldr	r1, [r2, #0]
- 250 0162 7A68     		ldr	r2, [r7, #4]
- 251 0164 6FEA0202 		mvn	r2, r2
- 252 0168 0A40     		ands	r2, r2, r1
- 253 016a 1A60     		str	r2, [r3, #0]
- 254              	.L6:
+ 245              		.loc 1 219 0
+ 246 0150 4FF00003 		mov	r3, #0
+ 247 0154 C4F20103 		movt	r3, 16385
+ 248 0158 4FF00002 		mov	r2, #0
+ 249 015c C4F20102 		movt	r2, 16385
+ 250 0160 1168     		ldr	r1, [r2, #0]
+ 251 0162 7A68     		ldr	r2, [r7, #4]
+ 252 0164 6FEA0202 		mvn	r2, r2
+ 253 0168 0A40     		ands	r2, r2, r1
+ 254 016a 1A60     		str	r2, [r3, #0]
+ 255              	.L6:
  220:../src/stm32f30x_syscfg.c ****   }
  221:../src/stm32f30x_syscfg.c **** }
- 255              		.loc 1 221 0
- 256 016c 07F10C07 		add	r7, r7, #12
- 257 0170 BD46     		mov	sp, r7
- 258 0172 80BC     		pop	{r7}
- 259 0174 7047     		bx	lr
- 260              		.cfi_endproc
- 261              	.LFE114:
- 263 0176 00BF     		.align	2
- 264              		.global	SYSCFG_EncoderRemapConfig
- 265              		.thumb
- 266              		.thumb_func
- 268              	SYSCFG_EncoderRemapConfig:
- 269              	.LFB115:
+ 256              		.loc 1 221 0
+ 257 016c 07F10C07 		add	r7, r7, #12
+ 258 0170 BD46     		mov	sp, r7
+ 259 0172 80BC     		pop	{r7}
+ 260 0174 7047     		bx	lr
+ 261              		.cfi_endproc
+ 262              	.LFE114:
+ 264 0176 00BF     		.align	2
+ 265              		.global	SYSCFG_EncoderRemapConfig
+ 266              		.thumb
+ 267              		.thumb_func
+ 269              	SYSCFG_EncoderRemapConfig:
+ 270              	.LFB115:
  222:../src/stm32f30x_syscfg.c **** 
  223:../src/stm32f30x_syscfg.c **** /**
  224:../src/stm32f30x_syscfg.c ****   * @brief  Configures the remapping capabilities of encoder mode.
@@ -494,61 +495,61 @@
  234:../src/stm32f30x_syscfg.c ****   */
  235:../src/stm32f30x_syscfg.c **** void SYSCFG_EncoderRemapConfig(uint32_t SYSCFG_EncoderRemap)
  236:../src/stm32f30x_syscfg.c **** {
- 270              		.loc 1 236 0
- 271              		.cfi_startproc
- 272              		@ args = 0, pretend = 0, frame = 8
- 273              		@ frame_needed = 1, uses_anonymous_args = 0
- 274              		@ link register save eliminated.
- 275 0178 80B4     		push	{r7}
- 276              	.LCFI11:
- 277              		.cfi_def_cfa_offset 4
- 278              		.cfi_offset 7, -4
- 279 017a 83B0     		sub	sp, sp, #12
- 280              	.LCFI12:
- 281              		.cfi_def_cfa_offset 16
- 282 017c 00AF     		add	r7, sp, #0
- 283              	.LCFI13:
- 284              		.cfi_def_cfa_register 7
- 285 017e 7860     		str	r0, [r7, #4]
+ 271              		.loc 1 236 0
+ 272              		.cfi_startproc
+ 273              		@ args = 0, pretend = 0, frame = 8
+ 274              		@ frame_needed = 1, uses_anonymous_args = 0
+ 275              		@ link register save eliminated.
+ 276 0178 80B4     		push	{r7}
+ 277              	.LCFI11:
+ 278              		.cfi_def_cfa_offset 4
+ 279              		.cfi_offset 7, -4
+ 280 017a 83B0     		sub	sp, sp, #12
+ 281              	.LCFI12:
+ 282              		.cfi_def_cfa_offset 16
+ 283 017c 00AF     		add	r7, sp, #0
+ 284              	.LCFI13:
+ 285              		.cfi_def_cfa_register 7
+ 286 017e 7860     		str	r0, [r7, #4]
  237:../src/stm32f30x_syscfg.c ****   /* Check the parameter */
  238:../src/stm32f30x_syscfg.c ****   assert_param(IS_SYSCFG_ENCODER_REMAP(SYSCFG_EncoderRemap));
  239:../src/stm32f30x_syscfg.c **** 
  240:../src/stm32f30x_syscfg.c ****   /* Reset the encoder mode remapping bits */
  241:../src/stm32f30x_syscfg.c ****   SYSCFG->CFGR1 &= (uint32_t)(~SYSCFG_CFGR1_ENCODER_MODE);
- 286              		.loc 1 241 0
- 287 0180 4FF00003 		mov	r3, #0
- 288 0184 C4F20103 		movt	r3, 16385
- 289 0188 4FF00002 		mov	r2, #0
- 290 018c C4F20102 		movt	r2, 16385
- 291 0190 1268     		ldr	r2, [r2, #0]
- 292 0192 22F44002 		bic	r2, r2, #12582912
- 293 0196 1A60     		str	r2, [r3, #0]
+ 287              		.loc 1 241 0
+ 288 0180 4FF00003 		mov	r3, #0
+ 289 0184 C4F20103 		movt	r3, 16385
+ 290 0188 4FF00002 		mov	r2, #0
+ 291 018c C4F20102 		movt	r2, 16385
+ 292 0190 1268     		ldr	r2, [r2, #0]
+ 293 0192 22F44002 		bic	r2, r2, #12582912
+ 294 0196 1A60     		str	r2, [r3, #0]
  242:../src/stm32f30x_syscfg.c **** 
  243:../src/stm32f30x_syscfg.c ****   /* Set the selected configuration */
  244:../src/stm32f30x_syscfg.c ****   SYSCFG->CFGR1 |= (uint32_t)(SYSCFG_EncoderRemap);
- 294              		.loc 1 244 0
- 295 0198 4FF00003 		mov	r3, #0
- 296 019c C4F20103 		movt	r3, 16385
- 297 01a0 4FF00002 		mov	r2, #0
- 298 01a4 C4F20102 		movt	r2, 16385
- 299 01a8 1168     		ldr	r1, [r2, #0]
- 300 01aa 7A68     		ldr	r2, [r7, #4]
- 301 01ac 0A43     		orrs	r2, r2, r1
- 302 01ae 1A60     		str	r2, [r3, #0]
+ 295              		.loc 1 244 0
+ 296 0198 4FF00003 		mov	r3, #0
+ 297 019c C4F20103 		movt	r3, 16385
+ 298 01a0 4FF00002 		mov	r2, #0
+ 299 01a4 C4F20102 		movt	r2, 16385
+ 300 01a8 1168     		ldr	r1, [r2, #0]
+ 301 01aa 7A68     		ldr	r2, [r7, #4]
+ 302 01ac 0A43     		orrs	r2, r2, r1
+ 303 01ae 1A60     		str	r2, [r3, #0]
  245:../src/stm32f30x_syscfg.c **** }
- 303              		.loc 1 245 0
- 304 01b0 07F10C07 		add	r7, r7, #12
- 305 01b4 BD46     		mov	sp, r7
- 306 01b6 80BC     		pop	{r7}
- 307 01b8 7047     		bx	lr
- 308              		.cfi_endproc
- 309              	.LFE115:
- 311 01ba 00BF     		.align	2
- 312              		.global	SYSCFG_USBInterruptLineRemapCmd
- 313              		.thumb
- 314              		.thumb_func
- 316              	SYSCFG_USBInterruptLineRemapCmd:
- 317              	.LFB116:
+ 304              		.loc 1 245 0
+ 305 01b0 07F10C07 		add	r7, r7, #12
+ 306 01b4 BD46     		mov	sp, r7
+ 307 01b6 80BC     		pop	{r7}
+ 308 01b8 7047     		bx	lr
+ 309              		.cfi_endproc
+ 310              	.LFE115:
+ 312 01ba 00BF     		.align	2
+ 313              		.global	SYSCFG_USBInterruptLineRemapCmd
+ 314              		.thumb
+ 315              		.thumb_func
+ 317              	SYSCFG_USBInterruptLineRemapCmd:
+ 318              	.LFB116:
  246:../src/stm32f30x_syscfg.c **** 
  247:../src/stm32f30x_syscfg.c **** /**
  248:../src/stm32f30x_syscfg.c ****   * @brief  Remaps the USB interrupt lines.
@@ -566,47 +567,47 @@
  260:../src/stm32f30x_syscfg.c ****   */
  261:../src/stm32f30x_syscfg.c **** void SYSCFG_USBInterruptLineRemapCmd(FunctionalState NewState)
  262:../src/stm32f30x_syscfg.c **** {
- 318              		.loc 1 262 0
- 319              		.cfi_startproc
- 320              		@ args = 0, pretend = 0, frame = 8
- 321              		@ frame_needed = 1, uses_anonymous_args = 0
- 322              		@ link register save eliminated.
- 323 01bc 80B4     		push	{r7}
- 324              	.LCFI14:
- 325              		.cfi_def_cfa_offset 4
- 326              		.cfi_offset 7, -4
- 327 01be 83B0     		sub	sp, sp, #12
- 328              	.LCFI15:
- 329              		.cfi_def_cfa_offset 16
- 330 01c0 00AF     		add	r7, sp, #0
- 331              	.LCFI16:
- 332              		.cfi_def_cfa_register 7
- 333 01c2 0346     		mov	r3, r0
- 334 01c4 FB71     		strb	r3, [r7, #7]
+ 319              		.loc 1 262 0
+ 320              		.cfi_startproc
+ 321              		@ args = 0, pretend = 0, frame = 8
+ 322              		@ frame_needed = 1, uses_anonymous_args = 0
+ 323              		@ link register save eliminated.
+ 324 01bc 80B4     		push	{r7}
+ 325              	.LCFI14:
+ 326              		.cfi_def_cfa_offset 4
+ 327              		.cfi_offset 7, -4
+ 328 01be 83B0     		sub	sp, sp, #12
+ 329              	.LCFI15:
+ 330              		.cfi_def_cfa_offset 16
+ 331 01c0 00AF     		add	r7, sp, #0
+ 332              	.LCFI16:
+ 333              		.cfi_def_cfa_register 7
+ 334 01c2 0346     		mov	r3, r0
+ 335 01c4 FB71     		strb	r3, [r7, #7]
  263:../src/stm32f30x_syscfg.c ****   /* Check the parameter */
  264:../src/stm32f30x_syscfg.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
  265:../src/stm32f30x_syscfg.c **** 
  266:../src/stm32f30x_syscfg.c ****   /* Remap the USB interupt lines */
  267:../src/stm32f30x_syscfg.c ****   *(__IO uint32_t *) CFGR1_USBITRMP_BB = (uint32_t)NewState;
- 335              		.loc 1 267 0
- 336 01c6 4FF01403 		mov	r3, #20
- 337 01ca C4F22023 		movt	r3, 16928
- 338 01ce FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
- 339 01d0 1A60     		str	r2, [r3, #0]
+ 336              		.loc 1 267 0
+ 337 01c6 4FF01403 		mov	r3, #20
+ 338 01ca C4F22023 		movt	r3, 16928
+ 339 01ce FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
+ 340 01d0 1A60     		str	r2, [r3, #0]
  268:../src/stm32f30x_syscfg.c **** }
- 340              		.loc 1 268 0
- 341 01d2 07F10C07 		add	r7, r7, #12
- 342 01d6 BD46     		mov	sp, r7
- 343 01d8 80BC     		pop	{r7}
- 344 01da 7047     		bx	lr
- 345              		.cfi_endproc
- 346              	.LFE116:
- 348              		.align	2
- 349              		.global	SYSCFG_I2CFastModePlusConfig
- 350              		.thumb
- 351              		.thumb_func
- 353              	SYSCFG_I2CFastModePlusConfig:
- 354              	.LFB117:
+ 341              		.loc 1 268 0
+ 342 01d2 07F10C07 		add	r7, r7, #12
+ 343 01d6 BD46     		mov	sp, r7
+ 344 01d8 80BC     		pop	{r7}
+ 345 01da 7047     		bx	lr
+ 346              		.cfi_endproc
+ 347              	.LFE116:
+ 349              		.align	2
+ 350              		.global	SYSCFG_I2CFastModePlusConfig
+ 351              		.thumb
+ 352              		.thumb_func
+ 354              	SYSCFG_I2CFastModePlusConfig:
+ 355              	.LFB117:
  269:../src/stm32f30x_syscfg.c **** 
  270:../src/stm32f30x_syscfg.c **** /**
  271:../src/stm32f30x_syscfg.c ****   * @brief  Configures the I2C fast mode plus driving capability.
@@ -633,78 +634,78 @@
  292:../src/stm32f30x_syscfg.c ****   */
  293:../src/stm32f30x_syscfg.c **** void SYSCFG_I2CFastModePlusConfig(uint32_t SYSCFG_I2CFastModePlus, FunctionalState NewState)
  294:../src/stm32f30x_syscfg.c **** {
- 355              		.loc 1 294 0
- 356              		.cfi_startproc
- 357              		@ args = 0, pretend = 0, frame = 8
- 358              		@ frame_needed = 1, uses_anonymous_args = 0
- 359              		@ link register save eliminated.
- 360 01dc 80B4     		push	{r7}
- 361              	.LCFI17:
- 362              		.cfi_def_cfa_offset 4
- 363              		.cfi_offset 7, -4
- 364 01de 83B0     		sub	sp, sp, #12
- 365              	.LCFI18:
- 366              		.cfi_def_cfa_offset 16
- 367 01e0 00AF     		add	r7, sp, #0
- 368              	.LCFI19:
- 369              		.cfi_def_cfa_register 7
- 370 01e2 7860     		str	r0, [r7, #4]
- 371 01e4 0B46     		mov	r3, r1
- 372 01e6 FB70     		strb	r3, [r7, #3]
+ 356              		.loc 1 294 0
+ 357              		.cfi_startproc
+ 358              		@ args = 0, pretend = 0, frame = 8
+ 359              		@ frame_needed = 1, uses_anonymous_args = 0
+ 360              		@ link register save eliminated.
+ 361 01dc 80B4     		push	{r7}
+ 362              	.LCFI17:
+ 363              		.cfi_def_cfa_offset 4
+ 364              		.cfi_offset 7, -4
+ 365 01de 83B0     		sub	sp, sp, #12
+ 366              	.LCFI18:
+ 367              		.cfi_def_cfa_offset 16
+ 368 01e0 00AF     		add	r7, sp, #0
+ 369              	.LCFI19:
+ 370              		.cfi_def_cfa_register 7
+ 371 01e2 7860     		str	r0, [r7, #4]
+ 372 01e4 0B46     		mov	r3, r1
+ 373 01e6 FB70     		strb	r3, [r7, #3]
  295:../src/stm32f30x_syscfg.c ****   /* Check the parameters */
  296:../src/stm32f30x_syscfg.c ****   assert_param(IS_SYSCFG_I2C_FMP(SYSCFG_I2CFastModePlus));
  297:../src/stm32f30x_syscfg.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
  298:../src/stm32f30x_syscfg.c **** 
  299:../src/stm32f30x_syscfg.c ****   if (NewState != DISABLE)
- 373              		.loc 1 299 0
- 374 01e8 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
- 375 01ea 002B     		cmp	r3, #0
- 376 01ec 0CD0     		beq	.L12
+ 374              		.loc 1 299 0
+ 375 01e8 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 376 01ea 002B     		cmp	r3, #0
+ 377 01ec 0CD0     		beq	.L12
  300:../src/stm32f30x_syscfg.c ****   {
  301:../src/stm32f30x_syscfg.c ****     /* Enable fast mode plus driving capability for selected I2C pin */
  302:../src/stm32f30x_syscfg.c ****     SYSCFG->CFGR1 |= (uint32_t)SYSCFG_I2CFastModePlus;
- 377              		.loc 1 302 0
- 378 01ee 4FF00003 		mov	r3, #0
- 379 01f2 C4F20103 		movt	r3, 16385
- 380 01f6 4FF00002 		mov	r2, #0
- 381 01fa C4F20102 		movt	r2, 16385
- 382 01fe 1168     		ldr	r1, [r2, #0]
- 383 0200 7A68     		ldr	r2, [r7, #4]
- 384 0202 0A43     		orrs	r2, r2, r1
- 385 0204 1A60     		str	r2, [r3, #0]
- 386 0206 0DE0     		b	.L11
- 387              	.L12:
+ 378              		.loc 1 302 0
+ 379 01ee 4FF00003 		mov	r3, #0
+ 380 01f2 C4F20103 		movt	r3, 16385
+ 381 01f6 4FF00002 		mov	r2, #0
+ 382 01fa C4F20102 		movt	r2, 16385
+ 383 01fe 1168     		ldr	r1, [r2, #0]
+ 384 0200 7A68     		ldr	r2, [r7, #4]
+ 385 0202 0A43     		orrs	r2, r2, r1
+ 386 0204 1A60     		str	r2, [r3, #0]
+ 387 0206 0DE0     		b	.L11
+ 388              	.L12:
  303:../src/stm32f30x_syscfg.c ****   }
  304:../src/stm32f30x_syscfg.c ****   else
  305:../src/stm32f30x_syscfg.c ****   {
  306:../src/stm32f30x_syscfg.c ****     /* Disable fast mode plus driving capability for selected I2C pin */
  307:../src/stm32f30x_syscfg.c ****     SYSCFG->CFGR1 &= (uint32_t)(~SYSCFG_I2CFastModePlus);
- 388              		.loc 1 307 0
- 389 0208 4FF00003 		mov	r3, #0
- 390 020c C4F20103 		movt	r3, 16385
- 391 0210 4FF00002 		mov	r2, #0
- 392 0214 C4F20102 		movt	r2, 16385
- 393 0218 1168     		ldr	r1, [r2, #0]
- 394 021a 7A68     		ldr	r2, [r7, #4]
- 395 021c 6FEA0202 		mvn	r2, r2
- 396 0220 0A40     		ands	r2, r2, r1
- 397 0222 1A60     		str	r2, [r3, #0]
- 398              	.L11:
+ 389              		.loc 1 307 0
+ 390 0208 4FF00003 		mov	r3, #0
+ 391 020c C4F20103 		movt	r3, 16385
+ 392 0210 4FF00002 		mov	r2, #0
+ 393 0214 C4F20102 		movt	r2, 16385
+ 394 0218 1168     		ldr	r1, [r2, #0]
+ 395 021a 7A68     		ldr	r2, [r7, #4]
+ 396 021c 6FEA0202 		mvn	r2, r2
+ 397 0220 0A40     		ands	r2, r2, r1
+ 398 0222 1A60     		str	r2, [r3, #0]
+ 399              	.L11:
  308:../src/stm32f30x_syscfg.c ****   }
  309:../src/stm32f30x_syscfg.c **** }
- 399              		.loc 1 309 0
- 400 0224 07F10C07 		add	r7, r7, #12
- 401 0228 BD46     		mov	sp, r7
- 402 022a 80BC     		pop	{r7}
- 403 022c 7047     		bx	lr
- 404              		.cfi_endproc
- 405              	.LFE117:
- 407 022e 00BF     		.align	2
- 408              		.global	SYSCFG_ITConfig
- 409              		.thumb
- 410              		.thumb_func
- 412              	SYSCFG_ITConfig:
- 413              	.LFB118:
+ 400              		.loc 1 309 0
+ 401 0224 07F10C07 		add	r7, r7, #12
+ 402 0228 BD46     		mov	sp, r7
+ 403 022a 80BC     		pop	{r7}
+ 404 022c 7047     		bx	lr
+ 405              		.cfi_endproc
+ 406              	.LFE117:
+ 408 022e 00BF     		.align	2
+ 409              		.global	SYSCFG_ITConfig
+ 410              		.thumb
+ 411              		.thumb_func
+ 413              	SYSCFG_ITConfig:
+ 414              	.LFB118:
  310:../src/stm32f30x_syscfg.c **** 
  311:../src/stm32f30x_syscfg.c **** /**
  312:../src/stm32f30x_syscfg.c ****   * @brief  Enables or disables the selected SYSCFG interrupts.
@@ -722,78 +723,78 @@
  324:../src/stm32f30x_syscfg.c ****   */
  325:../src/stm32f30x_syscfg.c **** void SYSCFG_ITConfig(uint32_t SYSCFG_IT, FunctionalState NewState)  
  326:../src/stm32f30x_syscfg.c **** {
- 414              		.loc 1 326 0
- 415              		.cfi_startproc
- 416              		@ args = 0, pretend = 0, frame = 8
- 417              		@ frame_needed = 1, uses_anonymous_args = 0
- 418              		@ link register save eliminated.
- 419 0230 80B4     		push	{r7}
- 420              	.LCFI20:
- 421              		.cfi_def_cfa_offset 4
- 422              		.cfi_offset 7, -4
- 423 0232 83B0     		sub	sp, sp, #12
- 424              	.LCFI21:
- 425              		.cfi_def_cfa_offset 16
- 426 0234 00AF     		add	r7, sp, #0
- 427              	.LCFI22:
- 428              		.cfi_def_cfa_register 7
- 429 0236 7860     		str	r0, [r7, #4]
- 430 0238 0B46     		mov	r3, r1
- 431 023a FB70     		strb	r3, [r7, #3]
+ 415              		.loc 1 326 0
+ 416              		.cfi_startproc
+ 417              		@ args = 0, pretend = 0, frame = 8
+ 418              		@ frame_needed = 1, uses_anonymous_args = 0
+ 419              		@ link register save eliminated.
+ 420 0230 80B4     		push	{r7}
+ 421              	.LCFI20:
+ 422              		.cfi_def_cfa_offset 4
+ 423              		.cfi_offset 7, -4
+ 424 0232 83B0     		sub	sp, sp, #12
+ 425              	.LCFI21:
+ 426              		.cfi_def_cfa_offset 16
+ 427 0234 00AF     		add	r7, sp, #0
+ 428              	.LCFI22:
+ 429              		.cfi_def_cfa_register 7
+ 430 0236 7860     		str	r0, [r7, #4]
+ 431 0238 0B46     		mov	r3, r1
+ 432 023a FB70     		strb	r3, [r7, #3]
  327:../src/stm32f30x_syscfg.c ****   /* Check the parameters */
  328:../src/stm32f30x_syscfg.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
  329:../src/stm32f30x_syscfg.c ****   assert_param(IS_SYSCFG_IT(SYSCFG_IT)); 
  330:../src/stm32f30x_syscfg.c **** 
  331:../src/stm32f30x_syscfg.c ****   if (NewState != DISABLE)
- 432              		.loc 1 331 0
- 433 023c FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
- 434 023e 002B     		cmp	r3, #0
- 435 0240 0CD0     		beq	.L15
+ 433              		.loc 1 331 0
+ 434 023c FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 435 023e 002B     		cmp	r3, #0
+ 436 0240 0CD0     		beq	.L15
  332:../src/stm32f30x_syscfg.c ****   {
  333:../src/stm32f30x_syscfg.c ****     /* Enable the selected SYSCFG interrupts */
  334:../src/stm32f30x_syscfg.c ****     SYSCFG->CFGR1 |= SYSCFG_IT;
- 436              		.loc 1 334 0
- 437 0242 4FF00003 		mov	r3, #0
- 438 0246 C4F20103 		movt	r3, 16385
- 439 024a 4FF00002 		mov	r2, #0
- 440 024e C4F20102 		movt	r2, 16385
- 441 0252 1168     		ldr	r1, [r2, #0]
- 442 0254 7A68     		ldr	r2, [r7, #4]
- 443 0256 0A43     		orrs	r2, r2, r1
- 444 0258 1A60     		str	r2, [r3, #0]
- 445 025a 0DE0     		b	.L14
- 446              	.L15:
+ 437              		.loc 1 334 0
+ 438 0242 4FF00003 		mov	r3, #0
+ 439 0246 C4F20103 		movt	r3, 16385
+ 440 024a 4FF00002 		mov	r2, #0
+ 441 024e C4F20102 		movt	r2, 16385
+ 442 0252 1168     		ldr	r1, [r2, #0]
+ 443 0254 7A68     		ldr	r2, [r7, #4]
+ 444 0256 0A43     		orrs	r2, r2, r1
+ 445 0258 1A60     		str	r2, [r3, #0]
+ 446 025a 0DE0     		b	.L14
+ 447              	.L15:
  335:../src/stm32f30x_syscfg.c ****   }
  336:../src/stm32f30x_syscfg.c ****   else
  337:../src/stm32f30x_syscfg.c ****   {
  338:../src/stm32f30x_syscfg.c ****     /* Disable the selected SYSCFG interrupts */
  339:../src/stm32f30x_syscfg.c ****     SYSCFG->CFGR1 &= ((uint32_t)~SYSCFG_IT);
- 447              		.loc 1 339 0
- 448 025c 4FF00003 		mov	r3, #0
- 449 0260 C4F20103 		movt	r3, 16385
- 450 0264 4FF00002 		mov	r2, #0
- 451 0268 C4F20102 		movt	r2, 16385
- 452 026c 1168     		ldr	r1, [r2, #0]
- 453 026e 7A68     		ldr	r2, [r7, #4]
- 454 0270 6FEA0202 		mvn	r2, r2
- 455 0274 0A40     		ands	r2, r2, r1
- 456 0276 1A60     		str	r2, [r3, #0]
- 457              	.L14:
+ 448              		.loc 1 339 0
+ 449 025c 4FF00003 		mov	r3, #0
+ 450 0260 C4F20103 		movt	r3, 16385
+ 451 0264 4FF00002 		mov	r2, #0
+ 452 0268 C4F20102 		movt	r2, 16385
+ 453 026c 1168     		ldr	r1, [r2, #0]
+ 454 026e 7A68     		ldr	r2, [r7, #4]
+ 455 0270 6FEA0202 		mvn	r2, r2
+ 456 0274 0A40     		ands	r2, r2, r1
+ 457 0276 1A60     		str	r2, [r3, #0]
+ 458              	.L14:
  340:../src/stm32f30x_syscfg.c ****   }
  341:../src/stm32f30x_syscfg.c **** }
- 458              		.loc 1 341 0
- 459 0278 07F10C07 		add	r7, r7, #12
- 460 027c BD46     		mov	sp, r7
- 461 027e 80BC     		pop	{r7}
- 462 0280 7047     		bx	lr
- 463              		.cfi_endproc
- 464              	.LFE118:
- 466 0282 00BF     		.align	2
- 467              		.global	SYSCFG_EXTILineConfig
- 468              		.thumb
- 469              		.thumb_func
- 471              	SYSCFG_EXTILineConfig:
- 472              	.LFB119:
+ 459              		.loc 1 341 0
+ 460 0278 07F10C07 		add	r7, r7, #12
+ 461 027c BD46     		mov	sp, r7
+ 462 027e 80BC     		pop	{r7}
+ 463 0280 7047     		bx	lr
+ 464              		.cfi_endproc
+ 465              	.LFE118:
+ 467 0282 00BF     		.align	2
+ 468              		.global	SYSCFG_EXTILineConfig
+ 469              		.thumb
+ 470              		.thumb_func
+ 472              	SYSCFG_EXTILineConfig:
+ 473              	.LFB119:
  342:../src/stm32f30x_syscfg.c **** 
  343:../src/stm32f30x_syscfg.c **** /**
  344:../src/stm32f30x_syscfg.c ****   * @brief  Selects the GPIO pin used as EXTI Line.
@@ -805,100 +806,100 @@
  350:../src/stm32f30x_syscfg.c ****   */
  351:../src/stm32f30x_syscfg.c **** void SYSCFG_EXTILineConfig(uint8_t EXTI_PortSourceGPIOx, uint8_t EXTI_PinSourcex)
  352:../src/stm32f30x_syscfg.c **** {
- 473              		.loc 1 352 0
- 474              		.cfi_startproc
- 475              		@ args = 0, pretend = 0, frame = 16
- 476              		@ frame_needed = 1, uses_anonymous_args = 0
- 477              		@ link register save eliminated.
- 478 0284 90B4     		push	{r4, r7}
- 479              	.LCFI23:
- 480              		.cfi_def_cfa_offset 8
- 481              		.cfi_offset 4, -8
- 482              		.cfi_offset 7, -4
- 483 0286 84B0     		sub	sp, sp, #16
- 484              	.LCFI24:
- 485              		.cfi_def_cfa_offset 24
- 486 0288 00AF     		add	r7, sp, #0
- 487              	.LCFI25:
- 488              		.cfi_def_cfa_register 7
- 489 028a 0246     		mov	r2, r0
- 490 028c 0B46     		mov	r3, r1
- 491 028e FA71     		strb	r2, [r7, #7]
- 492 0290 BB71     		strb	r3, [r7, #6]
+ 474              		.loc 1 352 0
+ 475              		.cfi_startproc
+ 476              		@ args = 0, pretend = 0, frame = 16
+ 477              		@ frame_needed = 1, uses_anonymous_args = 0
+ 478              		@ link register save eliminated.
+ 479 0284 90B4     		push	{r4, r7}
+ 480              	.LCFI23:
+ 481              		.cfi_def_cfa_offset 8
+ 482              		.cfi_offset 4, -8
+ 483              		.cfi_offset 7, -4
+ 484 0286 84B0     		sub	sp, sp, #16
+ 485              	.LCFI24:
+ 486              		.cfi_def_cfa_offset 24
+ 487 0288 00AF     		add	r7, sp, #0
+ 488              	.LCFI25:
+ 489              		.cfi_def_cfa_register 7
+ 490 028a 0246     		mov	r2, r0
+ 491 028c 0B46     		mov	r3, r1
+ 492 028e FA71     		strb	r2, [r7, #7]
+ 493 0290 BB71     		strb	r3, [r7, #6]
  353:../src/stm32f30x_syscfg.c ****   uint32_t tmp = 0x00;
- 493              		.loc 1 353 0
- 494 0292 4FF00003 		mov	r3, #0
- 495 0296 FB60     		str	r3, [r7, #12]
+ 494              		.loc 1 353 0
+ 495 0292 4FF00003 		mov	r3, #0
+ 496 0296 FB60     		str	r3, [r7, #12]
  354:../src/stm32f30x_syscfg.c **** 
  355:../src/stm32f30x_syscfg.c ****   /* Check the parameters */
  356:../src/stm32f30x_syscfg.c ****   assert_param(IS_EXTI_PORT_SOURCE(EXTI_PortSourceGPIOx));
  357:../src/stm32f30x_syscfg.c ****   assert_param(IS_EXTI_PIN_SOURCE(EXTI_PinSourcex));
  358:../src/stm32f30x_syscfg.c ****   
  359:../src/stm32f30x_syscfg.c ****   tmp = ((uint32_t)0x0F) << (0x04 * (EXTI_PinSourcex & (uint8_t)0x03));
- 496              		.loc 1 359 0
- 497 0298 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
- 498 029a 03F00303 		and	r3, r3, #3
- 499 029e 4FEA8303 		lsl	r3, r3, #2
- 500 02a2 4FF00F02 		mov	r2, #15
- 501 02a6 02FA03F3 		lsl	r3, r2, r3
- 502 02aa FB60     		str	r3, [r7, #12]
+ 497              		.loc 1 359 0
+ 498 0298 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 499 029a 03F00303 		and	r3, r3, #3
+ 500 029e 4FEA8303 		lsl	r3, r3, #2
+ 501 02a2 4FF00F02 		mov	r2, #15
+ 502 02a6 02FA03F3 		lsl	r3, r2, r3
+ 503 02aa FB60     		str	r3, [r7, #12]
  360:../src/stm32f30x_syscfg.c ****   SYSCFG->EXTICR[EXTI_PinSourcex >> 0x02] &= ~tmp;
- 503              		.loc 1 360 0
- 504 02ac 4FF00003 		mov	r3, #0
- 505 02b0 C4F20103 		movt	r3, 16385
- 506 02b4 BA79     		ldrb	r2, [r7, #6]	@ zero_extendqisi2
- 507 02b6 4FEA9202 		lsr	r2, r2, #2
- 508 02ba D2B2     		uxtb	r2, r2
- 509 02bc 1046     		mov	r0, r2
- 510 02be 4FF00002 		mov	r2, #0
- 511 02c2 C4F20102 		movt	r2, 16385
- 512 02c6 B979     		ldrb	r1, [r7, #6]	@ zero_extendqisi2
- 513 02c8 4FEA9101 		lsr	r1, r1, #2
- 514 02cc C9B2     		uxtb	r1, r1
- 515 02ce 01F10201 		add	r1, r1, #2
- 516 02d2 52F82110 		ldr	r1, [r2, r1, lsl #2]
- 517 02d6 FA68     		ldr	r2, [r7, #12]
- 518 02d8 6FEA0202 		mvn	r2, r2
- 519 02dc 1140     		ands	r1, r1, r2
- 520 02de 00F10202 		add	r2, r0, #2
- 521 02e2 43F82210 		str	r1, [r3, r2, lsl #2]
+ 504              		.loc 1 360 0
+ 505 02ac 4FF00003 		mov	r3, #0
+ 506 02b0 C4F20103 		movt	r3, 16385
+ 507 02b4 BA79     		ldrb	r2, [r7, #6]	@ zero_extendqisi2
+ 508 02b6 4FEA9202 		lsr	r2, r2, #2
+ 509 02ba D2B2     		uxtb	r2, r2
+ 510 02bc 1046     		mov	r0, r2
+ 511 02be 4FF00002 		mov	r2, #0
+ 512 02c2 C4F20102 		movt	r2, 16385
+ 513 02c6 B979     		ldrb	r1, [r7, #6]	@ zero_extendqisi2
+ 514 02c8 4FEA9101 		lsr	r1, r1, #2
+ 515 02cc C9B2     		uxtb	r1, r1
+ 516 02ce 01F10201 		add	r1, r1, #2
+ 517 02d2 52F82110 		ldr	r1, [r2, r1, lsl #2]
+ 518 02d6 FA68     		ldr	r2, [r7, #12]
+ 519 02d8 6FEA0202 		mvn	r2, r2
+ 520 02dc 1140     		ands	r1, r1, r2
+ 521 02de 00F10202 		add	r2, r0, #2
+ 522 02e2 43F82210 		str	r1, [r3, r2, lsl #2]
  361:../src/stm32f30x_syscfg.c ****   SYSCFG->EXTICR[EXTI_PinSourcex >> 0x02] |= (((uint32_t)EXTI_PortSourceGPIOx) << (0x04 * (EXTI_Pin
- 522              		.loc 1 361 0
- 523 02e6 4FF00003 		mov	r3, #0
- 524 02ea C4F20103 		movt	r3, 16385
- 525 02ee BA79     		ldrb	r2, [r7, #6]	@ zero_extendqisi2
- 526 02f0 4FEA9202 		lsr	r2, r2, #2
- 527 02f4 D2B2     		uxtb	r2, r2
- 528 02f6 1046     		mov	r0, r2
- 529 02f8 4FF00002 		mov	r2, #0
- 530 02fc C4F20102 		movt	r2, 16385
- 531 0300 B979     		ldrb	r1, [r7, #6]	@ zero_extendqisi2
- 532 0302 4FEA9101 		lsr	r1, r1, #2
- 533 0306 C9B2     		uxtb	r1, r1
- 534 0308 01F10201 		add	r1, r1, #2
- 535 030c 52F82110 		ldr	r1, [r2, r1, lsl #2]
- 536 0310 FC79     		ldrb	r4, [r7, #7]	@ zero_extendqisi2
- 537 0312 BA79     		ldrb	r2, [r7, #6]	@ zero_extendqisi2
- 538 0314 02F00302 		and	r2, r2, #3
- 539 0318 4FEA8202 		lsl	r2, r2, #2
- 540 031c 04FA02F2 		lsl	r2, r4, r2
- 541 0320 1143     		orrs	r1, r1, r2
- 542 0322 00F10202 		add	r2, r0, #2
- 543 0326 43F82210 		str	r1, [r3, r2, lsl #2]
+ 523              		.loc 1 361 0
+ 524 02e6 4FF00003 		mov	r3, #0
+ 525 02ea C4F20103 		movt	r3, 16385
+ 526 02ee BA79     		ldrb	r2, [r7, #6]	@ zero_extendqisi2
+ 527 02f0 4FEA9202 		lsr	r2, r2, #2
+ 528 02f4 D2B2     		uxtb	r2, r2
+ 529 02f6 1046     		mov	r0, r2
+ 530 02f8 4FF00002 		mov	r2, #0
+ 531 02fc C4F20102 		movt	r2, 16385
+ 532 0300 B979     		ldrb	r1, [r7, #6]	@ zero_extendqisi2
+ 533 0302 4FEA9101 		lsr	r1, r1, #2
+ 534 0306 C9B2     		uxtb	r1, r1
+ 535 0308 01F10201 		add	r1, r1, #2
+ 536 030c 52F82110 		ldr	r1, [r2, r1, lsl #2]
+ 537 0310 FC79     		ldrb	r4, [r7, #7]	@ zero_extendqisi2
+ 538 0312 BA79     		ldrb	r2, [r7, #6]	@ zero_extendqisi2
+ 539 0314 02F00302 		and	r2, r2, #3
+ 540 0318 4FEA8202 		lsl	r2, r2, #2
+ 541 031c 04FA02F2 		lsl	r2, r4, r2
+ 542 0320 1143     		orrs	r1, r1, r2
+ 543 0322 00F10202 		add	r2, r0, #2
+ 544 0326 43F82210 		str	r1, [r3, r2, lsl #2]
  362:../src/stm32f30x_syscfg.c **** }
- 544              		.loc 1 362 0
- 545 032a 07F11007 		add	r7, r7, #16
- 546 032e BD46     		mov	sp, r7
- 547 0330 90BC     		pop	{r4, r7}
- 548 0332 7047     		bx	lr
- 549              		.cfi_endproc
- 550              	.LFE119:
- 552              		.align	2
- 553              		.global	SYSCFG_BreakConfig
- 554              		.thumb
- 555              		.thumb_func
- 557              	SYSCFG_BreakConfig:
- 558              	.LFB120:
+ 545              		.loc 1 362 0
+ 546 032a 07F11007 		add	r7, r7, #16
+ 547 032e BD46     		mov	sp, r7
+ 548 0330 90BC     		pop	{r4, r7}
+ 549 0332 7047     		bx	lr
+ 550              		.cfi_endproc
+ 551              	.LFE119:
+ 553              		.align	2
+ 554              		.global	SYSCFG_BreakConfig
+ 555              		.thumb
+ 556              		.thumb_func
+ 558              	SYSCFG_BreakConfig:
+ 559              	.LFB120:
  363:../src/stm32f30x_syscfg.c **** 
  364:../src/stm32f30x_syscfg.c **** /**
  365:../src/stm32f30x_syscfg.c ****   * @brief  Connects the selected parameter to the break input of TIM1.
@@ -913,49 +914,49 @@
  374:../src/stm32f30x_syscfg.c ****   */
  375:../src/stm32f30x_syscfg.c **** void SYSCFG_BreakConfig(uint32_t SYSCFG_Break)
  376:../src/stm32f30x_syscfg.c **** {
- 559              		.loc 1 376 0
- 560              		.cfi_startproc
- 561              		@ args = 0, pretend = 0, frame = 8
- 562              		@ frame_needed = 1, uses_anonymous_args = 0
- 563              		@ link register save eliminated.
- 564 0334 80B4     		push	{r7}
- 565              	.LCFI26:
- 566              		.cfi_def_cfa_offset 4
- 567              		.cfi_offset 7, -4
- 568 0336 83B0     		sub	sp, sp, #12
- 569              	.LCFI27:
- 570              		.cfi_def_cfa_offset 16
- 571 0338 00AF     		add	r7, sp, #0
- 572              	.LCFI28:
- 573              		.cfi_def_cfa_register 7
- 574 033a 7860     		str	r0, [r7, #4]
+ 560              		.loc 1 376 0
+ 561              		.cfi_startproc
+ 562              		@ args = 0, pretend = 0, frame = 8
+ 563              		@ frame_needed = 1, uses_anonymous_args = 0
+ 564              		@ link register save eliminated.
+ 565 0334 80B4     		push	{r7}
+ 566              	.LCFI26:
+ 567              		.cfi_def_cfa_offset 4
+ 568              		.cfi_offset 7, -4
+ 569 0336 83B0     		sub	sp, sp, #12
+ 570              	.LCFI27:
+ 571              		.cfi_def_cfa_offset 16
+ 572 0338 00AF     		add	r7, sp, #0
+ 573              	.LCFI28:
+ 574              		.cfi_def_cfa_register 7
+ 575 033a 7860     		str	r0, [r7, #4]
  377:../src/stm32f30x_syscfg.c ****   /* Check the parameter */
  378:../src/stm32f30x_syscfg.c ****   assert_param(IS_SYSCFG_LOCK_CONFIG(SYSCFG_Break));
  379:../src/stm32f30x_syscfg.c **** 
  380:../src/stm32f30x_syscfg.c ****   SYSCFG->CFGR2 |= (uint32_t) SYSCFG_Break;
- 575              		.loc 1 380 0
- 576 033c 4FF00003 		mov	r3, #0
- 577 0340 C4F20103 		movt	r3, 16385
- 578 0344 4FF00002 		mov	r2, #0
- 579 0348 C4F20102 		movt	r2, 16385
- 580 034c 9169     		ldr	r1, [r2, #24]
- 581 034e 7A68     		ldr	r2, [r7, #4]
- 582 0350 0A43     		orrs	r2, r2, r1
- 583 0352 9A61     		str	r2, [r3, #24]
+ 576              		.loc 1 380 0
+ 577 033c 4FF00003 		mov	r3, #0
+ 578 0340 C4F20103 		movt	r3, 16385
+ 579 0344 4FF00002 		mov	r2, #0
+ 580 0348 C4F20102 		movt	r2, 16385
+ 581 034c 9169     		ldr	r1, [r2, #24]
+ 582 034e 7A68     		ldr	r2, [r7, #4]
+ 583 0350 0A43     		orrs	r2, r2, r1
+ 584 0352 9A61     		str	r2, [r3, #24]
  381:../src/stm32f30x_syscfg.c **** }
- 584              		.loc 1 381 0
- 585 0354 07F10C07 		add	r7, r7, #12
- 586 0358 BD46     		mov	sp, r7
- 587 035a 80BC     		pop	{r7}
- 588 035c 7047     		bx	lr
- 589              		.cfi_endproc
- 590              	.LFE120:
- 592 035e 00BF     		.align	2
- 593              		.global	SYSCFG_BypassParityCheckDisable
- 594              		.thumb
- 595              		.thumb_func
- 597              	SYSCFG_BypassParityCheckDisable:
- 598              	.LFB121:
+ 585              		.loc 1 381 0
+ 586 0354 07F10C07 		add	r7, r7, #12
+ 587 0358 BD46     		mov	sp, r7
+ 588 035a 80BC     		pop	{r7}
+ 589 035c 7047     		bx	lr
+ 590              		.cfi_endproc
+ 591              	.LFE120:
+ 593 035e 00BF     		.align	2
+ 594              		.global	SYSCFG_BypassParityCheckDisable
+ 595              		.thumb
+ 596              		.thumb_func
+ 598              	SYSCFG_BypassParityCheckDisable:
+ 599              	.LFB121:
  382:../src/stm32f30x_syscfg.c **** 
  383:../src/stm32f30x_syscfg.c **** /**
  384:../src/stm32f30x_syscfg.c ****   * @brief  Disables the parity check on RAM.
@@ -966,38 +967,38 @@
  389:../src/stm32f30x_syscfg.c ****   */
  390:../src/stm32f30x_syscfg.c **** void SYSCFG_BypassParityCheckDisable(void)
  391:../src/stm32f30x_syscfg.c **** {
- 599              		.loc 1 391 0
- 600              		.cfi_startproc
- 601              		@ args = 0, pretend = 0, frame = 0
- 602              		@ frame_needed = 1, uses_anonymous_args = 0
- 603              		@ link register save eliminated.
- 604 0360 80B4     		push	{r7}
- 605              	.LCFI29:
- 606              		.cfi_def_cfa_offset 4
- 607              		.cfi_offset 7, -4
- 608 0362 00AF     		add	r7, sp, #0
- 609              	.LCFI30:
- 610              		.cfi_def_cfa_register 7
+ 600              		.loc 1 391 0
+ 601              		.cfi_startproc
+ 602              		@ args = 0, pretend = 0, frame = 0
+ 603              		@ frame_needed = 1, uses_anonymous_args = 0
+ 604              		@ link register save eliminated.
+ 605 0360 80B4     		push	{r7}
+ 606              	.LCFI29:
+ 607              		.cfi_def_cfa_offset 4
+ 608              		.cfi_offset 7, -4
+ 609 0362 00AF     		add	r7, sp, #0
+ 610              	.LCFI30:
+ 611              		.cfi_def_cfa_register 7
  392:../src/stm32f30x_syscfg.c ****   /* Disable the adddress parity check on RAM */
  393:../src/stm32f30x_syscfg.c ****   *(__IO uint32_t *) CFGR1_BYPADDRPAR_BB = (uint32_t)0x00000001;
- 611              		.loc 1 393 0
- 612 0364 4FF44473 		mov	r3, #784
- 613 0368 C4F22023 		movt	r3, 16928
- 614 036c 4FF00102 		mov	r2, #1
- 615 0370 1A60     		str	r2, [r3, #0]
+ 612              		.loc 1 393 0
+ 613 0364 4FF44473 		mov	r3, #784
+ 614 0368 C4F22023 		movt	r3, 16928
+ 615 036c 4FF00102 		mov	r2, #1
+ 616 0370 1A60     		str	r2, [r3, #0]
  394:../src/stm32f30x_syscfg.c **** }
- 616              		.loc 1 394 0
- 617 0372 BD46     		mov	sp, r7
- 618 0374 80BC     		pop	{r7}
- 619 0376 7047     		bx	lr
- 620              		.cfi_endproc
- 621              	.LFE121:
- 623              		.align	2
- 624              		.global	SYSCFG_SRAMWRPEnable
- 625              		.thumb
- 626              		.thumb_func
- 628              	SYSCFG_SRAMWRPEnable:
- 629              	.LFB122:
+ 617              		.loc 1 394 0
+ 618 0372 BD46     		mov	sp, r7
+ 619 0374 80BC     		pop	{r7}
+ 620 0376 7047     		bx	lr
+ 621              		.cfi_endproc
+ 622              	.LFE121:
+ 624              		.align	2
+ 625              		.global	SYSCFG_SRAMWRPEnable
+ 626              		.thumb
+ 627              		.thumb_func
+ 629              	SYSCFG_SRAMWRPEnable:
+ 630              	.LFB122:
  395:../src/stm32f30x_syscfg.c **** 
  396:../src/stm32f30x_syscfg.c **** /**
  397:../src/stm32f30x_syscfg.c ****   * @brief  Enables the ICODE SRAM write protection.
@@ -1008,50 +1009,50 @@
  402:../src/stm32f30x_syscfg.c ****   */
  403:../src/stm32f30x_syscfg.c **** void SYSCFG_SRAMWRPEnable(uint32_t SYSCFG_SRAMWRP)
  404:../src/stm32f30x_syscfg.c **** {
- 630              		.loc 1 404 0
- 631              		.cfi_startproc
- 632              		@ args = 0, pretend = 0, frame = 8
- 633              		@ frame_needed = 1, uses_anonymous_args = 0
- 634              		@ link register save eliminated.
- 635 0378 80B4     		push	{r7}
- 636              	.LCFI31:
- 637              		.cfi_def_cfa_offset 4
- 638              		.cfi_offset 7, -4
- 639 037a 83B0     		sub	sp, sp, #12
- 640              	.LCFI32:
- 641              		.cfi_def_cfa_offset 16
- 642 037c 00AF     		add	r7, sp, #0
- 643              	.LCFI33:
- 644              		.cfi_def_cfa_register 7
- 645 037e 7860     		str	r0, [r7, #4]
+ 631              		.loc 1 404 0
+ 632              		.cfi_startproc
+ 633              		@ args = 0, pretend = 0, frame = 8
+ 634              		@ frame_needed = 1, uses_anonymous_args = 0
+ 635              		@ link register save eliminated.
+ 636 0378 80B4     		push	{r7}
+ 637              	.LCFI31:
+ 638              		.cfi_def_cfa_offset 4
+ 639              		.cfi_offset 7, -4
+ 640 037a 83B0     		sub	sp, sp, #12
+ 641              	.LCFI32:
+ 642              		.cfi_def_cfa_offset 16
+ 643 037c 00AF     		add	r7, sp, #0
+ 644              	.LCFI33:
+ 645              		.cfi_def_cfa_register 7
+ 646 037e 7860     		str	r0, [r7, #4]
  405:../src/stm32f30x_syscfg.c ****   /* Check the parameter */
  406:../src/stm32f30x_syscfg.c ****   assert_param(IS_SYSCFG_PAGE(SYSCFG_SRAMWRP));
  407:../src/stm32f30x_syscfg.c **** 
  408:../src/stm32f30x_syscfg.c ****   /* Enable the write-protection on the selected ICODE SRAM page */
  409:../src/stm32f30x_syscfg.c ****   SYSCFG->RCR |= (uint32_t)SYSCFG_SRAMWRP;
- 646              		.loc 1 409 0
- 647 0380 4FF00003 		mov	r3, #0
- 648 0384 C4F20103 		movt	r3, 16385
- 649 0388 4FF00002 		mov	r2, #0
- 650 038c C4F20102 		movt	r2, 16385
- 651 0390 5168     		ldr	r1, [r2, #4]
- 652 0392 7A68     		ldr	r2, [r7, #4]
- 653 0394 0A43     		orrs	r2, r2, r1
- 654 0396 5A60     		str	r2, [r3, #4]
+ 647              		.loc 1 409 0
+ 648 0380 4FF00003 		mov	r3, #0
+ 649 0384 C4F20103 		movt	r3, 16385
+ 650 0388 4FF00002 		mov	r2, #0
+ 651 038c C4F20102 		movt	r2, 16385
+ 652 0390 5168     		ldr	r1, [r2, #4]
+ 653 0392 7A68     		ldr	r2, [r7, #4]
+ 654 0394 0A43     		orrs	r2, r2, r1
+ 655 0396 5A60     		str	r2, [r3, #4]
  410:../src/stm32f30x_syscfg.c **** }
- 655              		.loc 1 410 0
- 656 0398 07F10C07 		add	r7, r7, #12
- 657 039c BD46     		mov	sp, r7
- 658 039e 80BC     		pop	{r7}
- 659 03a0 7047     		bx	lr
- 660              		.cfi_endproc
- 661              	.LFE122:
- 663 03a2 00BF     		.align	2
- 664              		.global	SYSCFG_GetFlagStatus
- 665              		.thumb
- 666              		.thumb_func
- 668              	SYSCFG_GetFlagStatus:
- 669              	.LFB123:
+ 656              		.loc 1 410 0
+ 657 0398 07F10C07 		add	r7, r7, #12
+ 658 039c BD46     		mov	sp, r7
+ 659 039e 80BC     		pop	{r7}
+ 660 03a0 7047     		bx	lr
+ 661              		.cfi_endproc
+ 662              	.LFE122:
+ 664 03a2 00BF     		.align	2
+ 665              		.global	SYSCFG_GetFlagStatus
+ 666              		.thumb
+ 667              		.thumb_func
+ 669              	SYSCFG_GetFlagStatus:
+ 670              	.LFB123:
  411:../src/stm32f30x_syscfg.c **** 
  412:../src/stm32f30x_syscfg.c **** /**
  413:../src/stm32f30x_syscfg.c ****   * @brief  Checks whether the specified SYSCFG flag is set or not.
@@ -1062,76 +1063,76 @@
  418:../src/stm32f30x_syscfg.c ****   */
  419:../src/stm32f30x_syscfg.c **** FlagStatus SYSCFG_GetFlagStatus(uint32_t SYSCFG_Flag)
  420:../src/stm32f30x_syscfg.c **** {
- 670              		.loc 1 420 0
- 671              		.cfi_startproc
- 672              		@ args = 0, pretend = 0, frame = 16
- 673              		@ frame_needed = 1, uses_anonymous_args = 0
- 674              		@ link register save eliminated.
- 675 03a4 80B4     		push	{r7}
- 676              	.LCFI34:
- 677              		.cfi_def_cfa_offset 4
- 678              		.cfi_offset 7, -4
- 679 03a6 85B0     		sub	sp, sp, #20
- 680              	.LCFI35:
- 681              		.cfi_def_cfa_offset 24
- 682 03a8 00AF     		add	r7, sp, #0
- 683              	.LCFI36:
- 684              		.cfi_def_cfa_register 7
- 685 03aa 7860     		str	r0, [r7, #4]
+ 671              		.loc 1 420 0
+ 672              		.cfi_startproc
+ 673              		@ args = 0, pretend = 0, frame = 16
+ 674              		@ frame_needed = 1, uses_anonymous_args = 0
+ 675              		@ link register save eliminated.
+ 676 03a4 80B4     		push	{r7}
+ 677              	.LCFI34:
+ 678              		.cfi_def_cfa_offset 4
+ 679              		.cfi_offset 7, -4
+ 680 03a6 85B0     		sub	sp, sp, #20
+ 681              	.LCFI35:
+ 682              		.cfi_def_cfa_offset 24
+ 683 03a8 00AF     		add	r7, sp, #0
+ 684              	.LCFI36:
+ 685              		.cfi_def_cfa_register 7
+ 686 03aa 7860     		str	r0, [r7, #4]
  421:../src/stm32f30x_syscfg.c ****   FlagStatus bitstatus = RESET;
- 686              		.loc 1 421 0
- 687 03ac 4FF00003 		mov	r3, #0
- 688 03b0 FB73     		strb	r3, [r7, #15]
+ 687              		.loc 1 421 0
+ 688 03ac 4FF00003 		mov	r3, #0
+ 689 03b0 FB73     		strb	r3, [r7, #15]
  422:../src/stm32f30x_syscfg.c **** 
  423:../src/stm32f30x_syscfg.c ****   /* Check the parameter */
  424:../src/stm32f30x_syscfg.c ****   assert_param(IS_SYSCFG_FLAG(SYSCFG_Flag));
  425:../src/stm32f30x_syscfg.c **** 
  426:../src/stm32f30x_syscfg.c ****   /* Check the status of the specified SPI flag */
  427:../src/stm32f30x_syscfg.c ****   if ((SYSCFG->CFGR2 & SYSCFG_CFGR2_SRAM_PE) != (uint32_t)RESET)
- 689              		.loc 1 427 0
- 690 03b2 4FF00003 		mov	r3, #0
- 691 03b6 C4F20103 		movt	r3, 16385
- 692 03ba 9B69     		ldr	r3, [r3, #24]
- 693 03bc 03F48073 		and	r3, r3, #256
- 694 03c0 002B     		cmp	r3, #0
- 695 03c2 03D0     		beq	.L22
+ 690              		.loc 1 427 0
+ 691 03b2 4FF00003 		mov	r3, #0
+ 692 03b6 C4F20103 		movt	r3, 16385
+ 693 03ba 9B69     		ldr	r3, [r3, #24]
+ 694 03bc 03F48073 		and	r3, r3, #256
+ 695 03c0 002B     		cmp	r3, #0
+ 696 03c2 03D0     		beq	.L22
  428:../src/stm32f30x_syscfg.c ****   {
  429:../src/stm32f30x_syscfg.c ****     /* SYSCFG_Flag is set */
  430:../src/stm32f30x_syscfg.c ****     bitstatus = SET;
- 696              		.loc 1 430 0
- 697 03c4 4FF00103 		mov	r3, #1
- 698 03c8 FB73     		strb	r3, [r7, #15]
- 699 03ca 02E0     		b	.L23
- 700              	.L22:
+ 697              		.loc 1 430 0
+ 698 03c4 4FF00103 		mov	r3, #1
+ 699 03c8 FB73     		strb	r3, [r7, #15]
+ 700 03ca 02E0     		b	.L23
+ 701              	.L22:
  431:../src/stm32f30x_syscfg.c ****   }
  432:../src/stm32f30x_syscfg.c ****   else
  433:../src/stm32f30x_syscfg.c ****   {
  434:../src/stm32f30x_syscfg.c ****     /* SYSCFG_Flag is reset */
  435:../src/stm32f30x_syscfg.c ****     bitstatus = RESET;
- 701              		.loc 1 435 0
- 702 03cc 4FF00003 		mov	r3, #0
- 703 03d0 FB73     		strb	r3, [r7, #15]
- 704              	.L23:
+ 702              		.loc 1 435 0
+ 703 03cc 4FF00003 		mov	r3, #0
+ 704 03d0 FB73     		strb	r3, [r7, #15]
+ 705              	.L23:
  436:../src/stm32f30x_syscfg.c ****   }
  437:../src/stm32f30x_syscfg.c ****   /* Return the SYSCFG_Flag status */
  438:../src/stm32f30x_syscfg.c ****   return  bitstatus;
- 705              		.loc 1 438 0
- 706 03d2 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 706              		.loc 1 438 0
+ 707 03d2 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
  439:../src/stm32f30x_syscfg.c **** }
- 707              		.loc 1 439 0
- 708 03d4 1846     		mov	r0, r3
- 709 03d6 07F11407 		add	r7, r7, #20
- 710 03da BD46     		mov	sp, r7
- 711 03dc 80BC     		pop	{r7}
- 712 03de 7047     		bx	lr
- 713              		.cfi_endproc
- 714              	.LFE123:
- 716              		.align	2
- 717              		.global	SYSCFG_ClearFlag
- 718              		.thumb
- 719              		.thumb_func
- 721              	SYSCFG_ClearFlag:
- 722              	.LFB124:
+ 708              		.loc 1 439 0
+ 709 03d4 1846     		mov	r0, r3
+ 710 03d6 07F11407 		add	r7, r7, #20
+ 711 03da BD46     		mov	sp, r7
+ 712 03dc 80BC     		pop	{r7}
+ 713 03de 7047     		bx	lr
+ 714              		.cfi_endproc
+ 715              	.LFE123:
+ 717              		.align	2
+ 718              		.global	SYSCFG_ClearFlag
+ 719              		.thumb
+ 720              		.thumb_func
+ 722              	SYSCFG_ClearFlag:
+ 723              	.LFB124:
  440:../src/stm32f30x_syscfg.c **** 
  441:../src/stm32f30x_syscfg.c **** /**
  442:../src/stm32f30x_syscfg.c ****   * @brief  Clears the selected SYSCFG flag.
@@ -1142,66 +1143,66 @@
  447:../src/stm32f30x_syscfg.c ****   */
  448:../src/stm32f30x_syscfg.c **** void SYSCFG_ClearFlag(uint32_t SYSCFG_Flag)
  449:../src/stm32f30x_syscfg.c **** {
- 723              		.loc 1 449 0
- 724              		.cfi_startproc
- 725              		@ args = 0, pretend = 0, frame = 8
- 726              		@ frame_needed = 1, uses_anonymous_args = 0
- 727              		@ link register save eliminated.
- 728 03e0 80B4     		push	{r7}
- 729              	.LCFI37:
- 730              		.cfi_def_cfa_offset 4
- 731              		.cfi_offset 7, -4
- 732 03e2 83B0     		sub	sp, sp, #12
- 733              	.LCFI38:
- 734              		.cfi_def_cfa_offset 16
- 735 03e4 00AF     		add	r7, sp, #0
- 736              	.LCFI39:
- 737              		.cfi_def_cfa_register 7
- 738 03e6 7860     		str	r0, [r7, #4]
+ 724              		.loc 1 449 0
+ 725              		.cfi_startproc
+ 726              		@ args = 0, pretend = 0, frame = 8
+ 727              		@ frame_needed = 1, uses_anonymous_args = 0
+ 728              		@ link register save eliminated.
+ 729 03e0 80B4     		push	{r7}
+ 730              	.LCFI37:
+ 731              		.cfi_def_cfa_offset 4
+ 732              		.cfi_offset 7, -4
+ 733 03e2 83B0     		sub	sp, sp, #12
+ 734              	.LCFI38:
+ 735              		.cfi_def_cfa_offset 16
+ 736 03e4 00AF     		add	r7, sp, #0
+ 737              	.LCFI39:
+ 738              		.cfi_def_cfa_register 7
+ 739 03e6 7860     		str	r0, [r7, #4]
  450:../src/stm32f30x_syscfg.c ****   /* Check the parameter */
  451:../src/stm32f30x_syscfg.c ****   assert_param(IS_SYSCFG_FLAG(SYSCFG_Flag));
  452:../src/stm32f30x_syscfg.c **** 
  453:../src/stm32f30x_syscfg.c ****   SYSCFG->CFGR2 |= (uint32_t) SYSCFG_Flag;
- 739              		.loc 1 453 0
- 740 03e8 4FF00003 		mov	r3, #0
- 741 03ec C4F20103 		movt	r3, 16385
- 742 03f0 4FF00002 		mov	r2, #0
- 743 03f4 C4F20102 		movt	r2, 16385
- 744 03f8 9169     		ldr	r1, [r2, #24]
- 745 03fa 7A68     		ldr	r2, [r7, #4]
- 746 03fc 0A43     		orrs	r2, r2, r1
- 747 03fe 9A61     		str	r2, [r3, #24]
+ 740              		.loc 1 453 0
+ 741 03e8 4FF00003 		mov	r3, #0
+ 742 03ec C4F20103 		movt	r3, 16385
+ 743 03f0 4FF00002 		mov	r2, #0
+ 744 03f4 C4F20102 		movt	r2, 16385
+ 745 03f8 9169     		ldr	r1, [r2, #24]
+ 746 03fa 7A68     		ldr	r2, [r7, #4]
+ 747 03fc 0A43     		orrs	r2, r2, r1
+ 748 03fe 9A61     		str	r2, [r3, #24]
  454:../src/stm32f30x_syscfg.c **** }
- 748              		.loc 1 454 0
- 749 0400 07F10C07 		add	r7, r7, #12
- 750 0404 BD46     		mov	sp, r7
- 751 0406 80BC     		pop	{r7}
- 752 0408 7047     		bx	lr
- 753              		.cfi_endproc
- 754              	.LFE124:
- 756              	.Letext0:
- 757              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
- 758              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
- 759              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
+ 749              		.loc 1 454 0
+ 750 0400 07F10C07 		add	r7, r7, #12
+ 751 0404 BD46     		mov	sp, r7
+ 752 0406 80BC     		pop	{r7}
+ 753 0408 7047     		bx	lr
+ 754              		.cfi_endproc
+ 755              	.LFE124:
+ 757              	.Letext0:
+ 758              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
+ 759              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
+ 760              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32f30x_syscfg.c
-     /tmp/ccpSKpW9.s:19     .text:00000000 $t
-     /tmp/ccpSKpW9.s:24     .text:00000000 SYSCFG_DeInit
-     /tmp/ccpSKpW9.s:97     .text:00000090 SYSCFG_MemoryRemapConfig
-     /tmp/ccpSKpW9.s:150    .text:000000d0 SYSCFG_DMAChannelRemapConfig
-     /tmp/ccpSKpW9.s:209    .text:00000124 SYSCFG_TriggerRemapConfig
-     /tmp/ccpSKpW9.s:268    .text:00000178 SYSCFG_EncoderRemapConfig
-     /tmp/ccpSKpW9.s:316    .text:000001bc SYSCFG_USBInterruptLineRemapCmd
-     /tmp/ccpSKpW9.s:353    .text:000001dc SYSCFG_I2CFastModePlusConfig
-     /tmp/ccpSKpW9.s:412    .text:00000230 SYSCFG_ITConfig
-     /tmp/ccpSKpW9.s:471    .text:00000284 SYSCFG_EXTILineConfig
-     /tmp/ccpSKpW9.s:557    .text:00000334 SYSCFG_BreakConfig
-     /tmp/ccpSKpW9.s:597    .text:00000360 SYSCFG_BypassParityCheckDisable
-     /tmp/ccpSKpW9.s:628    .text:00000378 SYSCFG_SRAMWRPEnable
-     /tmp/ccpSKpW9.s:668    .text:000003a4 SYSCFG_GetFlagStatus
-     /tmp/ccpSKpW9.s:721    .text:000003e0 SYSCFG_ClearFlag
+     /tmp/ccKSmkKl.s:20     .text:00000000 $t
+     /tmp/ccKSmkKl.s:25     .text:00000000 SYSCFG_DeInit
+     /tmp/ccKSmkKl.s:98     .text:00000090 SYSCFG_MemoryRemapConfig
+     /tmp/ccKSmkKl.s:151    .text:000000d0 SYSCFG_DMAChannelRemapConfig
+     /tmp/ccKSmkKl.s:210    .text:00000124 SYSCFG_TriggerRemapConfig
+     /tmp/ccKSmkKl.s:269    .text:00000178 SYSCFG_EncoderRemapConfig
+     /tmp/ccKSmkKl.s:317    .text:000001bc SYSCFG_USBInterruptLineRemapCmd
+     /tmp/ccKSmkKl.s:354    .text:000001dc SYSCFG_I2CFastModePlusConfig
+     /tmp/ccKSmkKl.s:413    .text:00000230 SYSCFG_ITConfig
+     /tmp/ccKSmkKl.s:472    .text:00000284 SYSCFG_EXTILineConfig
+     /tmp/ccKSmkKl.s:558    .text:00000334 SYSCFG_BreakConfig
+     /tmp/ccKSmkKl.s:598    .text:00000360 SYSCFG_BypassParityCheckDisable
+     /tmp/ccKSmkKl.s:629    .text:00000378 SYSCFG_SRAMWRPEnable
+     /tmp/ccKSmkKl.s:669    .text:000003a4 SYSCFG_GetFlagStatus
+     /tmp/ccKSmkKl.s:722    .text:000003e0 SYSCFG_ClearFlag
                      .debug_frame:00000010 $d
-                           .group:00000000 wm4.1.323dce8664331a0daf4a2675e107c70c
+                           .group:00000000 wm4.1.743cd71370ebc432b539c5dba7924ecc
                            .group:00000000 wm4.stm32f30x.h.56.6f19c65e98e3319a61449cb2b2455af5
                            .group:00000000 wm4.core_cm4.h.32.1434cd257ff5806b1b03cd32ab0641e9
                            .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05

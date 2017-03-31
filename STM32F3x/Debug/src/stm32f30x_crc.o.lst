@@ -1,28 +1,29 @@
    1              		.syntax unified
    2              		.cpu cortex-m4
    3              		.eabi_attribute 27, 3
-   4              		.fpu fpv4-sp-d16
-   5              		.eabi_attribute 20, 1
-   6              		.eabi_attribute 21, 1
-   7              		.eabi_attribute 23, 3
-   8              		.eabi_attribute 24, 1
-   9              		.eabi_attribute 25, 1
-  10              		.eabi_attribute 26, 1
-  11              		.eabi_attribute 30, 6
-  12              		.eabi_attribute 34, 1
-  13              		.eabi_attribute 18, 4
-  14              		.thumb
-  15              		.file	"stm32f30x_crc.c"
-  16              		.text
-  17              	.Ltext0:
-  18              		.cfi_sections	.debug_frame
-  19              		.align	2
-  20              		.global	CRC_DeInit
-  21              		.thumb
-  22              		.thumb_func
-  24              	CRC_DeInit:
-  25              	.LFB111:
-  26              		.file 1 "../src/stm32f30x_crc.c"
+   4              		.eabi_attribute 28, 1
+   5              		.fpu fpv4-sp-d16
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 6
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.thumb
+  16              		.file	"stm32f30x_crc.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.align	2
+  21              		.global	CRC_DeInit
+  22              		.thumb
+  23              		.thumb_func
+  25              	CRC_DeInit:
+  26              	.LFB111:
+  27              		.file 1 "../src/stm32f30x_crc.c"
    1:../src/stm32f30x_crc.c **** /**
    2:../src/stm32f30x_crc.c ****   ******************************************************************************
    3:../src/stm32f30x_crc.c ****   * @file    stm32f30x_crc.c
@@ -119,67 +120,67 @@
   94:../src/stm32f30x_crc.c ****   */
   95:../src/stm32f30x_crc.c **** void CRC_DeInit(void)
   96:../src/stm32f30x_crc.c **** {
-  27              		.loc 1 96 0
-  28              		.cfi_startproc
-  29              		@ args = 0, pretend = 0, frame = 0
-  30              		@ frame_needed = 1, uses_anonymous_args = 0
-  31              		@ link register save eliminated.
-  32 0000 80B4     		push	{r7}
-  33              	.LCFI0:
-  34              		.cfi_def_cfa_offset 4
-  35              		.cfi_offset 7, -4
-  36 0002 00AF     		add	r7, sp, #0
-  37              	.LCFI1:
-  38              		.cfi_def_cfa_register 7
+  28              		.loc 1 96 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33 0000 80B4     		push	{r7}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 4
+  36              		.cfi_offset 7, -4
+  37 0002 00AF     		add	r7, sp, #0
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_register 7
   97:../src/stm32f30x_crc.c ****   /* Set DR register to reset value */
   98:../src/stm32f30x_crc.c ****   CRC->DR = 0xFFFFFFFF;
-  39              		.loc 1 98 0
-  40 0004 4FF44053 		mov	r3, #12288
-  41 0008 C4F20203 		movt	r3, 16386
-  42 000c 4FF0FF32 		mov	r2, #-1
-  43 0010 1A60     		str	r2, [r3, #0]
+  40              		.loc 1 98 0
+  41 0004 4FF44053 		mov	r3, #12288
+  42 0008 C4F20203 		movt	r3, 16386
+  43 000c 4FF0FF32 		mov	r2, #-1
+  44 0010 1A60     		str	r2, [r3, #0]
   99:../src/stm32f30x_crc.c ****   /* Set the POL register to the reset value: 0x04C11DB7 */
  100:../src/stm32f30x_crc.c ****   CRC->POL = 0x04C11DB7;
-  44              		.loc 1 100 0
-  45 0012 4FF44053 		mov	r3, #12288
-  46 0016 C4F20203 		movt	r3, 16386
-  47 001a 41F6B752 		movw	r2, #7607
-  48 001e C0F2C142 		movt	r2, 1217
-  49 0022 5A61     		str	r2, [r3, #20]
+  45              		.loc 1 100 0
+  46 0012 4FF44053 		mov	r3, #12288
+  47 0016 C4F20203 		movt	r3, 16386
+  48 001a 41F6B752 		movw	r2, #7607
+  49 001e C0F2C142 		movt	r2, 1217
+  50 0022 5A61     		str	r2, [r3, #20]
  101:../src/stm32f30x_crc.c ****   /* Reset IDR register */
  102:../src/stm32f30x_crc.c ****   CRC->IDR = 0x00;
-  50              		.loc 1 102 0
-  51 0024 4FF44053 		mov	r3, #12288
-  52 0028 C4F20203 		movt	r3, 16386
-  53 002c 4FF00002 		mov	r2, #0
-  54 0030 1A71     		strb	r2, [r3, #4]
+  51              		.loc 1 102 0
+  52 0024 4FF44053 		mov	r3, #12288
+  53 0028 C4F20203 		movt	r3, 16386
+  54 002c 4FF00002 		mov	r2, #0
+  55 0030 1A71     		strb	r2, [r3, #4]
  103:../src/stm32f30x_crc.c ****   /* Set INIT register to reset value */
  104:../src/stm32f30x_crc.c ****   CRC->INIT = 0xFFFFFFFF;
-  55              		.loc 1 104 0
-  56 0032 4FF44053 		mov	r3, #12288
-  57 0036 C4F20203 		movt	r3, 16386
-  58 003a 4FF0FF32 		mov	r2, #-1
-  59 003e 1A61     		str	r2, [r3, #16]
+  56              		.loc 1 104 0
+  57 0032 4FF44053 		mov	r3, #12288
+  58 0036 C4F20203 		movt	r3, 16386
+  59 003a 4FF0FF32 		mov	r2, #-1
+  60 003e 1A61     		str	r2, [r3, #16]
  105:../src/stm32f30x_crc.c ****   /* Reset the CRC calculation unit */
  106:../src/stm32f30x_crc.c ****   CRC->CR = CRC_CR_RESET;
-  60              		.loc 1 106 0
-  61 0040 4FF44053 		mov	r3, #12288
-  62 0044 C4F20203 		movt	r3, 16386
-  63 0048 4FF00102 		mov	r2, #1
-  64 004c 9A60     		str	r2, [r3, #8]
+  61              		.loc 1 106 0
+  62 0040 4FF44053 		mov	r3, #12288
+  63 0044 C4F20203 		movt	r3, 16386
+  64 0048 4FF00102 		mov	r2, #1
+  65 004c 9A60     		str	r2, [r3, #8]
  107:../src/stm32f30x_crc.c **** }
-  65              		.loc 1 107 0
-  66 004e BD46     		mov	sp, r7
-  67 0050 80BC     		pop	{r7}
-  68 0052 7047     		bx	lr
-  69              		.cfi_endproc
-  70              	.LFE111:
-  72              		.align	2
-  73              		.global	CRC_ResetDR
-  74              		.thumb
-  75              		.thumb_func
-  77              	CRC_ResetDR:
-  78              	.LFB112:
+  66              		.loc 1 107 0
+  67 004e BD46     		mov	sp, r7
+  68 0050 80BC     		pop	{r7}
+  69 0052 7047     		bx	lr
+  70              		.cfi_endproc
+  71              	.LFE111:
+  73              		.align	2
+  74              		.global	CRC_ResetDR
+  75              		.thumb
+  76              		.thumb_func
+  78              	CRC_ResetDR:
+  79              	.LFB112:
  108:../src/stm32f30x_crc.c **** 
  109:../src/stm32f30x_crc.c **** /**
  110:../src/stm32f30x_crc.c ****   * @brief  Resets the CRC calculation unit and sets INIT register content in DR register.
@@ -188,41 +189,41 @@
  113:../src/stm32f30x_crc.c ****   */
  114:../src/stm32f30x_crc.c **** void CRC_ResetDR(void)
  115:../src/stm32f30x_crc.c **** {
-  79              		.loc 1 115 0
-  80              		.cfi_startproc
-  81              		@ args = 0, pretend = 0, frame = 0
-  82              		@ frame_needed = 1, uses_anonymous_args = 0
-  83              		@ link register save eliminated.
-  84 0054 80B4     		push	{r7}
-  85              	.LCFI2:
-  86              		.cfi_def_cfa_offset 4
-  87              		.cfi_offset 7, -4
-  88 0056 00AF     		add	r7, sp, #0
-  89              	.LCFI3:
-  90              		.cfi_def_cfa_register 7
+  80              		.loc 1 115 0
+  81              		.cfi_startproc
+  82              		@ args = 0, pretend = 0, frame = 0
+  83              		@ frame_needed = 1, uses_anonymous_args = 0
+  84              		@ link register save eliminated.
+  85 0054 80B4     		push	{r7}
+  86              	.LCFI2:
+  87              		.cfi_def_cfa_offset 4
+  88              		.cfi_offset 7, -4
+  89 0056 00AF     		add	r7, sp, #0
+  90              	.LCFI3:
+  91              		.cfi_def_cfa_register 7
  116:../src/stm32f30x_crc.c ****   /* Reset CRC generator */
  117:../src/stm32f30x_crc.c ****   CRC->CR |= CRC_CR_RESET;
-  91              		.loc 1 117 0
-  92 0058 4FF44053 		mov	r3, #12288
-  93 005c C4F20203 		movt	r3, 16386
-  94 0060 4FF44052 		mov	r2, #12288
-  95 0064 C4F20202 		movt	r2, 16386
-  96 0068 9268     		ldr	r2, [r2, #8]
-  97 006a 42F00102 		orr	r2, r2, #1
-  98 006e 9A60     		str	r2, [r3, #8]
+  92              		.loc 1 117 0
+  93 0058 4FF44053 		mov	r3, #12288
+  94 005c C4F20203 		movt	r3, 16386
+  95 0060 4FF44052 		mov	r2, #12288
+  96 0064 C4F20202 		movt	r2, 16386
+  97 0068 9268     		ldr	r2, [r2, #8]
+  98 006a 42F00102 		orr	r2, r2, #1
+  99 006e 9A60     		str	r2, [r3, #8]
  118:../src/stm32f30x_crc.c **** }
-  99              		.loc 1 118 0
- 100 0070 BD46     		mov	sp, r7
- 101 0072 80BC     		pop	{r7}
- 102 0074 7047     		bx	lr
- 103              		.cfi_endproc
- 104              	.LFE112:
- 106 0076 00BF     		.align	2
- 107              		.global	CRC_PolynomialSizeSelect
- 108              		.thumb
- 109              		.thumb_func
- 111              	CRC_PolynomialSizeSelect:
- 112              	.LFB113:
+ 100              		.loc 1 118 0
+ 101 0070 BD46     		mov	sp, r7
+ 102 0072 80BC     		pop	{r7}
+ 103 0074 7047     		bx	lr
+ 104              		.cfi_endproc
+ 105              	.LFE112:
+ 107 0076 00BF     		.align	2
+ 108              		.global	CRC_PolynomialSizeSelect
+ 109              		.thumb
+ 110              		.thumb_func
+ 112              	CRC_PolynomialSizeSelect:
+ 113              	.LFB113:
  119:../src/stm32f30x_crc.c **** 
  120:../src/stm32f30x_crc.c **** /**
  121:../src/stm32f30x_crc.c ****   * @brief  Selects the polynomial size.
@@ -236,73 +237,73 @@
  129:../src/stm32f30x_crc.c ****   */
  130:../src/stm32f30x_crc.c **** void CRC_PolynomialSizeSelect(uint32_t CRC_PolSize)
  131:../src/stm32f30x_crc.c **** {
- 113              		.loc 1 131 0
- 114              		.cfi_startproc
- 115              		@ args = 0, pretend = 0, frame = 16
- 116              		@ frame_needed = 1, uses_anonymous_args = 0
- 117              		@ link register save eliminated.
- 118 0078 80B4     		push	{r7}
- 119              	.LCFI4:
- 120              		.cfi_def_cfa_offset 4
- 121              		.cfi_offset 7, -4
- 122 007a 85B0     		sub	sp, sp, #20
- 123              	.LCFI5:
- 124              		.cfi_def_cfa_offset 24
- 125 007c 00AF     		add	r7, sp, #0
- 126              	.LCFI6:
- 127              		.cfi_def_cfa_register 7
- 128 007e 7860     		str	r0, [r7, #4]
+ 114              		.loc 1 131 0
+ 115              		.cfi_startproc
+ 116              		@ args = 0, pretend = 0, frame = 16
+ 117              		@ frame_needed = 1, uses_anonymous_args = 0
+ 118              		@ link register save eliminated.
+ 119 0078 80B4     		push	{r7}
+ 120              	.LCFI4:
+ 121              		.cfi_def_cfa_offset 4
+ 122              		.cfi_offset 7, -4
+ 123 007a 85B0     		sub	sp, sp, #20
+ 124              	.LCFI5:
+ 125              		.cfi_def_cfa_offset 24
+ 126 007c 00AF     		add	r7, sp, #0
+ 127              	.LCFI6:
+ 128              		.cfi_def_cfa_register 7
+ 129 007e 7860     		str	r0, [r7, #4]
  132:../src/stm32f30x_crc.c ****   uint32_t tmpcr = 0;
- 129              		.loc 1 132 0
- 130 0080 4FF00003 		mov	r3, #0
- 131 0084 FB60     		str	r3, [r7, #12]
+ 130              		.loc 1 132 0
+ 131 0080 4FF00003 		mov	r3, #0
+ 132 0084 FB60     		str	r3, [r7, #12]
  133:../src/stm32f30x_crc.c **** 
  134:../src/stm32f30x_crc.c ****   /* Check the parameter */
  135:../src/stm32f30x_crc.c ****   assert_param(IS_CRC_POL_SIZE(CRC_PolSize));
  136:../src/stm32f30x_crc.c **** 
  137:../src/stm32f30x_crc.c ****   /* Get CR register value */
  138:../src/stm32f30x_crc.c ****   tmpcr = CRC->CR;
- 132              		.loc 1 138 0
- 133 0086 4FF44053 		mov	r3, #12288
- 134 008a C4F20203 		movt	r3, 16386
- 135 008e 9B68     		ldr	r3, [r3, #8]
- 136 0090 FB60     		str	r3, [r7, #12]
+ 133              		.loc 1 138 0
+ 134 0086 4FF44053 		mov	r3, #12288
+ 135 008a C4F20203 		movt	r3, 16386
+ 136 008e 9B68     		ldr	r3, [r3, #8]
+ 137 0090 FB60     		str	r3, [r7, #12]
  139:../src/stm32f30x_crc.c **** 
  140:../src/stm32f30x_crc.c ****   /* Reset POL_SIZE bits */
  141:../src/stm32f30x_crc.c ****   tmpcr &= (uint32_t)~((uint32_t)CRC_CR_POLSIZE);
- 137              		.loc 1 141 0
- 138 0092 FB68     		ldr	r3, [r7, #12]
- 139 0094 23F01803 		bic	r3, r3, #24
- 140 0098 FB60     		str	r3, [r7, #12]
+ 138              		.loc 1 141 0
+ 139 0092 FB68     		ldr	r3, [r7, #12]
+ 140 0094 23F01803 		bic	r3, r3, #24
+ 141 0098 FB60     		str	r3, [r7, #12]
  142:../src/stm32f30x_crc.c ****   /* Set the polynomial size */
  143:../src/stm32f30x_crc.c ****   tmpcr |= (uint32_t)CRC_PolSize;
- 141              		.loc 1 143 0
- 142 009a FA68     		ldr	r2, [r7, #12]
- 143 009c 7B68     		ldr	r3, [r7, #4]
- 144 009e 1343     		orrs	r3, r3, r2
- 145 00a0 FB60     		str	r3, [r7, #12]
+ 142              		.loc 1 143 0
+ 143 009a FA68     		ldr	r2, [r7, #12]
+ 144 009c 7B68     		ldr	r3, [r7, #4]
+ 145 009e 1343     		orrs	r3, r3, r2
+ 146 00a0 FB60     		str	r3, [r7, #12]
  144:../src/stm32f30x_crc.c **** 
  145:../src/stm32f30x_crc.c ****   /* Write to CR register */
  146:../src/stm32f30x_crc.c ****   CRC->CR = (uint32_t)tmpcr;
- 146              		.loc 1 146 0
- 147 00a2 4FF44053 		mov	r3, #12288
- 148 00a6 C4F20203 		movt	r3, 16386
- 149 00aa FA68     		ldr	r2, [r7, #12]
- 150 00ac 9A60     		str	r2, [r3, #8]
+ 147              		.loc 1 146 0
+ 148 00a2 4FF44053 		mov	r3, #12288
+ 149 00a6 C4F20203 		movt	r3, 16386
+ 150 00aa FA68     		ldr	r2, [r7, #12]
+ 151 00ac 9A60     		str	r2, [r3, #8]
  147:../src/stm32f30x_crc.c **** }
- 151              		.loc 1 147 0
- 152 00ae 07F11407 		add	r7, r7, #20
- 153 00b2 BD46     		mov	sp, r7
- 154 00b4 80BC     		pop	{r7}
- 155 00b6 7047     		bx	lr
- 156              		.cfi_endproc
- 157              	.LFE113:
- 159              		.align	2
- 160              		.global	CRC_ReverseInputDataSelect
- 161              		.thumb
- 162              		.thumb_func
- 164              	CRC_ReverseInputDataSelect:
- 165              	.LFB114:
+ 152              		.loc 1 147 0
+ 153 00ae 07F11407 		add	r7, r7, #20
+ 154 00b2 BD46     		mov	sp, r7
+ 155 00b4 80BC     		pop	{r7}
+ 156 00b6 7047     		bx	lr
+ 157              		.cfi_endproc
+ 158              	.LFE113:
+ 160              		.align	2
+ 161              		.global	CRC_ReverseInputDataSelect
+ 162              		.thumb
+ 163              		.thumb_func
+ 165              	CRC_ReverseInputDataSelect:
+ 166              	.LFB114:
  148:../src/stm32f30x_crc.c **** 
  149:../src/stm32f30x_crc.c **** /**
  150:../src/stm32f30x_crc.c ****   * @brief  Selects the reverse operation to be performed on input data.
@@ -316,73 +317,73 @@
  158:../src/stm32f30x_crc.c ****   */
  159:../src/stm32f30x_crc.c **** void CRC_ReverseInputDataSelect(uint32_t CRC_ReverseInputData)
  160:../src/stm32f30x_crc.c **** {
- 166              		.loc 1 160 0
- 167              		.cfi_startproc
- 168              		@ args = 0, pretend = 0, frame = 16
- 169              		@ frame_needed = 1, uses_anonymous_args = 0
- 170              		@ link register save eliminated.
- 171 00b8 80B4     		push	{r7}
- 172              	.LCFI7:
- 173              		.cfi_def_cfa_offset 4
- 174              		.cfi_offset 7, -4
- 175 00ba 85B0     		sub	sp, sp, #20
- 176              	.LCFI8:
- 177              		.cfi_def_cfa_offset 24
- 178 00bc 00AF     		add	r7, sp, #0
- 179              	.LCFI9:
- 180              		.cfi_def_cfa_register 7
- 181 00be 7860     		str	r0, [r7, #4]
+ 167              		.loc 1 160 0
+ 168              		.cfi_startproc
+ 169              		@ args = 0, pretend = 0, frame = 16
+ 170              		@ frame_needed = 1, uses_anonymous_args = 0
+ 171              		@ link register save eliminated.
+ 172 00b8 80B4     		push	{r7}
+ 173              	.LCFI7:
+ 174              		.cfi_def_cfa_offset 4
+ 175              		.cfi_offset 7, -4
+ 176 00ba 85B0     		sub	sp, sp, #20
+ 177              	.LCFI8:
+ 178              		.cfi_def_cfa_offset 24
+ 179 00bc 00AF     		add	r7, sp, #0
+ 180              	.LCFI9:
+ 181              		.cfi_def_cfa_register 7
+ 182 00be 7860     		str	r0, [r7, #4]
  161:../src/stm32f30x_crc.c ****   uint32_t tmpcr = 0;
- 182              		.loc 1 161 0
- 183 00c0 4FF00003 		mov	r3, #0
- 184 00c4 FB60     		str	r3, [r7, #12]
+ 183              		.loc 1 161 0
+ 184 00c0 4FF00003 		mov	r3, #0
+ 185 00c4 FB60     		str	r3, [r7, #12]
  162:../src/stm32f30x_crc.c **** 
  163:../src/stm32f30x_crc.c ****   /* Check the parameter */
  164:../src/stm32f30x_crc.c ****   assert_param(IS_CRC_REVERSE_INPUT_DATA(CRC_ReverseInputData));
  165:../src/stm32f30x_crc.c **** 
  166:../src/stm32f30x_crc.c ****   /* Get CR register value */
  167:../src/stm32f30x_crc.c ****   tmpcr = CRC->CR;
- 185              		.loc 1 167 0
- 186 00c6 4FF44053 		mov	r3, #12288
- 187 00ca C4F20203 		movt	r3, 16386
- 188 00ce 9B68     		ldr	r3, [r3, #8]
- 189 00d0 FB60     		str	r3, [r7, #12]
+ 186              		.loc 1 167 0
+ 187 00c6 4FF44053 		mov	r3, #12288
+ 188 00ca C4F20203 		movt	r3, 16386
+ 189 00ce 9B68     		ldr	r3, [r3, #8]
+ 190 00d0 FB60     		str	r3, [r7, #12]
  168:../src/stm32f30x_crc.c **** 
  169:../src/stm32f30x_crc.c ****   /* Reset REV_IN bits */
  170:../src/stm32f30x_crc.c ****   tmpcr &= (uint32_t)~((uint32_t)CRC_CR_REV_IN);
- 190              		.loc 1 170 0
- 191 00d2 FB68     		ldr	r3, [r7, #12]
- 192 00d4 23F06003 		bic	r3, r3, #96
- 193 00d8 FB60     		str	r3, [r7, #12]
+ 191              		.loc 1 170 0
+ 192 00d2 FB68     		ldr	r3, [r7, #12]
+ 193 00d4 23F06003 		bic	r3, r3, #96
+ 194 00d8 FB60     		str	r3, [r7, #12]
  171:../src/stm32f30x_crc.c ****   /* Set the reverse operation */
  172:../src/stm32f30x_crc.c ****   tmpcr |= (uint32_t)CRC_ReverseInputData;
- 194              		.loc 1 172 0
- 195 00da FA68     		ldr	r2, [r7, #12]
- 196 00dc 7B68     		ldr	r3, [r7, #4]
- 197 00de 1343     		orrs	r3, r3, r2
- 198 00e0 FB60     		str	r3, [r7, #12]
+ 195              		.loc 1 172 0
+ 196 00da FA68     		ldr	r2, [r7, #12]
+ 197 00dc 7B68     		ldr	r3, [r7, #4]
+ 198 00de 1343     		orrs	r3, r3, r2
+ 199 00e0 FB60     		str	r3, [r7, #12]
  173:../src/stm32f30x_crc.c **** 
  174:../src/stm32f30x_crc.c ****   /* Write to CR register */
  175:../src/stm32f30x_crc.c ****   CRC->CR = (uint32_t)tmpcr;
- 199              		.loc 1 175 0
- 200 00e2 4FF44053 		mov	r3, #12288
- 201 00e6 C4F20203 		movt	r3, 16386
- 202 00ea FA68     		ldr	r2, [r7, #12]
- 203 00ec 9A60     		str	r2, [r3, #8]
+ 200              		.loc 1 175 0
+ 201 00e2 4FF44053 		mov	r3, #12288
+ 202 00e6 C4F20203 		movt	r3, 16386
+ 203 00ea FA68     		ldr	r2, [r7, #12]
+ 204 00ec 9A60     		str	r2, [r3, #8]
  176:../src/stm32f30x_crc.c **** }
- 204              		.loc 1 176 0
- 205 00ee 07F11407 		add	r7, r7, #20
- 206 00f2 BD46     		mov	sp, r7
- 207 00f4 80BC     		pop	{r7}
- 208 00f6 7047     		bx	lr
- 209              		.cfi_endproc
- 210              	.LFE114:
- 212              		.align	2
- 213              		.global	CRC_ReverseOutputDataCmd
- 214              		.thumb
- 215              		.thumb_func
- 217              	CRC_ReverseOutputDataCmd:
- 218              	.LFB115:
+ 205              		.loc 1 176 0
+ 206 00ee 07F11407 		add	r7, r7, #20
+ 207 00f2 BD46     		mov	sp, r7
+ 208 00f4 80BC     		pop	{r7}
+ 209 00f6 7047     		bx	lr
+ 210              		.cfi_endproc
+ 211              	.LFE114:
+ 213              		.align	2
+ 214              		.global	CRC_ReverseOutputDataCmd
+ 215              		.thumb
+ 216              		.thumb_func
+ 218              	CRC_ReverseOutputDataCmd:
+ 219              	.LFB115:
  177:../src/stm32f30x_crc.c **** 
  178:../src/stm32f30x_crc.c **** /**
  179:../src/stm32f30x_crc.c ****   * @brief  Enables or disable the reverse operation on output data.
@@ -393,73 +394,73 @@
  184:../src/stm32f30x_crc.c ****   */
  185:../src/stm32f30x_crc.c **** void CRC_ReverseOutputDataCmd(FunctionalState NewState)
  186:../src/stm32f30x_crc.c **** {
- 219              		.loc 1 186 0
- 220              		.cfi_startproc
- 221              		@ args = 0, pretend = 0, frame = 8
- 222              		@ frame_needed = 1, uses_anonymous_args = 0
- 223              		@ link register save eliminated.
- 224 00f8 80B4     		push	{r7}
- 225              	.LCFI10:
- 226              		.cfi_def_cfa_offset 4
- 227              		.cfi_offset 7, -4
- 228 00fa 83B0     		sub	sp, sp, #12
- 229              	.LCFI11:
- 230              		.cfi_def_cfa_offset 16
- 231 00fc 00AF     		add	r7, sp, #0
- 232              	.LCFI12:
- 233              		.cfi_def_cfa_register 7
- 234 00fe 0346     		mov	r3, r0
- 235 0100 FB71     		strb	r3, [r7, #7]
+ 220              		.loc 1 186 0
+ 221              		.cfi_startproc
+ 222              		@ args = 0, pretend = 0, frame = 8
+ 223              		@ frame_needed = 1, uses_anonymous_args = 0
+ 224              		@ link register save eliminated.
+ 225 00f8 80B4     		push	{r7}
+ 226              	.LCFI10:
+ 227              		.cfi_def_cfa_offset 4
+ 228              		.cfi_offset 7, -4
+ 229 00fa 83B0     		sub	sp, sp, #12
+ 230              	.LCFI11:
+ 231              		.cfi_def_cfa_offset 16
+ 232 00fc 00AF     		add	r7, sp, #0
+ 233              	.LCFI12:
+ 234              		.cfi_def_cfa_register 7
+ 235 00fe 0346     		mov	r3, r0
+ 236 0100 FB71     		strb	r3, [r7, #7]
  187:../src/stm32f30x_crc.c ****   /* Check the parameters */
  188:../src/stm32f30x_crc.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
  189:../src/stm32f30x_crc.c **** 
  190:../src/stm32f30x_crc.c ****   if (NewState != DISABLE)
- 236              		.loc 1 190 0
- 237 0102 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
- 238 0104 002B     		cmp	r3, #0
- 239 0106 0CD0     		beq	.L6
+ 237              		.loc 1 190 0
+ 238 0102 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 239 0104 002B     		cmp	r3, #0
+ 240 0106 0CD0     		beq	.L6
  191:../src/stm32f30x_crc.c ****   {
  192:../src/stm32f30x_crc.c ****     /* Enable reverse operation on output data */
  193:../src/stm32f30x_crc.c ****     CRC->CR |= CRC_CR_REV_OUT;
- 240              		.loc 1 193 0
- 241 0108 4FF44053 		mov	r3, #12288
- 242 010c C4F20203 		movt	r3, 16386
- 243 0110 4FF44052 		mov	r2, #12288
- 244 0114 C4F20202 		movt	r2, 16386
- 245 0118 9268     		ldr	r2, [r2, #8]
- 246 011a 42F08002 		orr	r2, r2, #128
- 247 011e 9A60     		str	r2, [r3, #8]
- 248 0120 0BE0     		b	.L5
- 249              	.L6:
+ 241              		.loc 1 193 0
+ 242 0108 4FF44053 		mov	r3, #12288
+ 243 010c C4F20203 		movt	r3, 16386
+ 244 0110 4FF44052 		mov	r2, #12288
+ 245 0114 C4F20202 		movt	r2, 16386
+ 246 0118 9268     		ldr	r2, [r2, #8]
+ 247 011a 42F08002 		orr	r2, r2, #128
+ 248 011e 9A60     		str	r2, [r3, #8]
+ 249 0120 0BE0     		b	.L5
+ 250              	.L6:
  194:../src/stm32f30x_crc.c ****   }
  195:../src/stm32f30x_crc.c ****   else
  196:../src/stm32f30x_crc.c ****   {
  197:../src/stm32f30x_crc.c ****     /* Disable reverse operation on output data */
  198:../src/stm32f30x_crc.c ****     CRC->CR &= (uint32_t)~((uint32_t)CRC_CR_REV_OUT);
- 250              		.loc 1 198 0
- 251 0122 4FF44053 		mov	r3, #12288
- 252 0126 C4F20203 		movt	r3, 16386
- 253 012a 4FF44052 		mov	r2, #12288
- 254 012e C4F20202 		movt	r2, 16386
- 255 0132 9268     		ldr	r2, [r2, #8]
- 256 0134 22F08002 		bic	r2, r2, #128
- 257 0138 9A60     		str	r2, [r3, #8]
- 258              	.L5:
+ 251              		.loc 1 198 0
+ 252 0122 4FF44053 		mov	r3, #12288
+ 253 0126 C4F20203 		movt	r3, 16386
+ 254 012a 4FF44052 		mov	r2, #12288
+ 255 012e C4F20202 		movt	r2, 16386
+ 256 0132 9268     		ldr	r2, [r2, #8]
+ 257 0134 22F08002 		bic	r2, r2, #128
+ 258 0138 9A60     		str	r2, [r3, #8]
+ 259              	.L5:
  199:../src/stm32f30x_crc.c ****   }
  200:../src/stm32f30x_crc.c **** }
- 259              		.loc 1 200 0
- 260 013a 07F10C07 		add	r7, r7, #12
- 261 013e BD46     		mov	sp, r7
- 262 0140 80BC     		pop	{r7}
- 263 0142 7047     		bx	lr
- 264              		.cfi_endproc
- 265              	.LFE115:
- 267              		.align	2
- 268              		.global	CRC_SetInitRegister
- 269              		.thumb
- 270              		.thumb_func
- 272              	CRC_SetInitRegister:
- 273              	.LFB116:
+ 260              		.loc 1 200 0
+ 261 013a 07F10C07 		add	r7, r7, #12
+ 262 013e BD46     		mov	sp, r7
+ 263 0140 80BC     		pop	{r7}
+ 264 0142 7047     		bx	lr
+ 265              		.cfi_endproc
+ 266              	.LFE115:
+ 268              		.align	2
+ 269              		.global	CRC_SetInitRegister
+ 270              		.thumb
+ 271              		.thumb_func
+ 273              	CRC_SetInitRegister:
+ 274              	.LFB116:
  201:../src/stm32f30x_crc.c **** 
  202:../src/stm32f30x_crc.c **** /**
  203:../src/stm32f30x_crc.c ****   * @brief  Initializes the INIT register.
@@ -469,42 +470,42 @@
  207:../src/stm32f30x_crc.c ****   */
  208:../src/stm32f30x_crc.c **** void CRC_SetInitRegister(uint32_t CRC_InitValue)
  209:../src/stm32f30x_crc.c **** {
- 274              		.loc 1 209 0
- 275              		.cfi_startproc
- 276              		@ args = 0, pretend = 0, frame = 8
- 277              		@ frame_needed = 1, uses_anonymous_args = 0
- 278              		@ link register save eliminated.
- 279 0144 80B4     		push	{r7}
- 280              	.LCFI13:
- 281              		.cfi_def_cfa_offset 4
- 282              		.cfi_offset 7, -4
- 283 0146 83B0     		sub	sp, sp, #12
- 284              	.LCFI14:
- 285              		.cfi_def_cfa_offset 16
- 286 0148 00AF     		add	r7, sp, #0
- 287              	.LCFI15:
- 288              		.cfi_def_cfa_register 7
- 289 014a 7860     		str	r0, [r7, #4]
+ 275              		.loc 1 209 0
+ 276              		.cfi_startproc
+ 277              		@ args = 0, pretend = 0, frame = 8
+ 278              		@ frame_needed = 1, uses_anonymous_args = 0
+ 279              		@ link register save eliminated.
+ 280 0144 80B4     		push	{r7}
+ 281              	.LCFI13:
+ 282              		.cfi_def_cfa_offset 4
+ 283              		.cfi_offset 7, -4
+ 284 0146 83B0     		sub	sp, sp, #12
+ 285              	.LCFI14:
+ 286              		.cfi_def_cfa_offset 16
+ 287 0148 00AF     		add	r7, sp, #0
+ 288              	.LCFI15:
+ 289              		.cfi_def_cfa_register 7
+ 290 014a 7860     		str	r0, [r7, #4]
  210:../src/stm32f30x_crc.c ****   CRC->INIT = CRC_InitValue;
- 290              		.loc 1 210 0
- 291 014c 4FF44053 		mov	r3, #12288
- 292 0150 C4F20203 		movt	r3, 16386
- 293 0154 7A68     		ldr	r2, [r7, #4]
- 294 0156 1A61     		str	r2, [r3, #16]
+ 291              		.loc 1 210 0
+ 292 014c 4FF44053 		mov	r3, #12288
+ 293 0150 C4F20203 		movt	r3, 16386
+ 294 0154 7A68     		ldr	r2, [r7, #4]
+ 295 0156 1A61     		str	r2, [r3, #16]
  211:../src/stm32f30x_crc.c **** }
- 295              		.loc 1 211 0
- 296 0158 07F10C07 		add	r7, r7, #12
- 297 015c BD46     		mov	sp, r7
- 298 015e 80BC     		pop	{r7}
- 299 0160 7047     		bx	lr
- 300              		.cfi_endproc
- 301              	.LFE116:
- 303 0162 00BF     		.align	2
- 304              		.global	CRC_SetPolynomial
- 305              		.thumb
- 306              		.thumb_func
- 308              	CRC_SetPolynomial:
- 309              	.LFB117:
+ 296              		.loc 1 211 0
+ 297 0158 07F10C07 		add	r7, r7, #12
+ 298 015c BD46     		mov	sp, r7
+ 299 015e 80BC     		pop	{r7}
+ 300 0160 7047     		bx	lr
+ 301              		.cfi_endproc
+ 302              	.LFE116:
+ 304 0162 00BF     		.align	2
+ 305              		.global	CRC_SetPolynomial
+ 306              		.thumb
+ 307              		.thumb_func
+ 309              	CRC_SetPolynomial:
+ 310              	.LFB117:
  212:../src/stm32f30x_crc.c **** 
  213:../src/stm32f30x_crc.c **** /**
  214:../src/stm32f30x_crc.c ****   * @brief  Initializes the polynomail coefficients.
@@ -513,42 +514,42 @@
  217:../src/stm32f30x_crc.c ****   */
  218:../src/stm32f30x_crc.c **** void CRC_SetPolynomial(uint32_t CRC_Pol)
  219:../src/stm32f30x_crc.c **** {
- 310              		.loc 1 219 0
- 311              		.cfi_startproc
- 312              		@ args = 0, pretend = 0, frame = 8
- 313              		@ frame_needed = 1, uses_anonymous_args = 0
- 314              		@ link register save eliminated.
- 315 0164 80B4     		push	{r7}
- 316              	.LCFI16:
- 317              		.cfi_def_cfa_offset 4
- 318              		.cfi_offset 7, -4
- 319 0166 83B0     		sub	sp, sp, #12
- 320              	.LCFI17:
- 321              		.cfi_def_cfa_offset 16
- 322 0168 00AF     		add	r7, sp, #0
- 323              	.LCFI18:
- 324              		.cfi_def_cfa_register 7
- 325 016a 7860     		str	r0, [r7, #4]
+ 311              		.loc 1 219 0
+ 312              		.cfi_startproc
+ 313              		@ args = 0, pretend = 0, frame = 8
+ 314              		@ frame_needed = 1, uses_anonymous_args = 0
+ 315              		@ link register save eliminated.
+ 316 0164 80B4     		push	{r7}
+ 317              	.LCFI16:
+ 318              		.cfi_def_cfa_offset 4
+ 319              		.cfi_offset 7, -4
+ 320 0166 83B0     		sub	sp, sp, #12
+ 321              	.LCFI17:
+ 322              		.cfi_def_cfa_offset 16
+ 323 0168 00AF     		add	r7, sp, #0
+ 324              	.LCFI18:
+ 325              		.cfi_def_cfa_register 7
+ 326 016a 7860     		str	r0, [r7, #4]
  220:../src/stm32f30x_crc.c ****   CRC->POL = CRC_Pol;
- 326              		.loc 1 220 0
- 327 016c 4FF44053 		mov	r3, #12288
- 328 0170 C4F20203 		movt	r3, 16386
- 329 0174 7A68     		ldr	r2, [r7, #4]
- 330 0176 5A61     		str	r2, [r3, #20]
+ 327              		.loc 1 220 0
+ 328 016c 4FF44053 		mov	r3, #12288
+ 329 0170 C4F20203 		movt	r3, 16386
+ 330 0174 7A68     		ldr	r2, [r7, #4]
+ 331 0176 5A61     		str	r2, [r3, #20]
  221:../src/stm32f30x_crc.c **** }
- 331              		.loc 1 221 0
- 332 0178 07F10C07 		add	r7, r7, #12
- 333 017c BD46     		mov	sp, r7
- 334 017e 80BC     		pop	{r7}
- 335 0180 7047     		bx	lr
- 336              		.cfi_endproc
- 337              	.LFE117:
- 339 0182 00BF     		.align	2
- 340              		.global	CRC_CalcCRC
- 341              		.thumb
- 342              		.thumb_func
- 344              	CRC_CalcCRC:
- 345              	.LFB118:
+ 332              		.loc 1 221 0
+ 333 0178 07F10C07 		add	r7, r7, #12
+ 334 017c BD46     		mov	sp, r7
+ 335 017e 80BC     		pop	{r7}
+ 336 0180 7047     		bx	lr
+ 337              		.cfi_endproc
+ 338              	.LFE117:
+ 340 0182 00BF     		.align	2
+ 341              		.global	CRC_CalcCRC
+ 342              		.thumb
+ 343              		.thumb_func
+ 345              	CRC_CalcCRC:
+ 346              	.LFB118:
  222:../src/stm32f30x_crc.c **** 
  223:../src/stm32f30x_crc.c **** /**
  224:../src/stm32f30x_crc.c ****   * @}
@@ -573,49 +574,49 @@
  243:../src/stm32f30x_crc.c ****   */
  244:../src/stm32f30x_crc.c **** uint32_t CRC_CalcCRC(uint32_t CRC_Data)
  245:../src/stm32f30x_crc.c **** {
- 346              		.loc 1 245 0
- 347              		.cfi_startproc
- 348              		@ args = 0, pretend = 0, frame = 8
- 349              		@ frame_needed = 1, uses_anonymous_args = 0
- 350              		@ link register save eliminated.
- 351 0184 80B4     		push	{r7}
- 352              	.LCFI19:
- 353              		.cfi_def_cfa_offset 4
- 354              		.cfi_offset 7, -4
- 355 0186 83B0     		sub	sp, sp, #12
- 356              	.LCFI20:
- 357              		.cfi_def_cfa_offset 16
- 358 0188 00AF     		add	r7, sp, #0
- 359              	.LCFI21:
- 360              		.cfi_def_cfa_register 7
- 361 018a 7860     		str	r0, [r7, #4]
+ 347              		.loc 1 245 0
+ 348              		.cfi_startproc
+ 349              		@ args = 0, pretend = 0, frame = 8
+ 350              		@ frame_needed = 1, uses_anonymous_args = 0
+ 351              		@ link register save eliminated.
+ 352 0184 80B4     		push	{r7}
+ 353              	.LCFI19:
+ 354              		.cfi_def_cfa_offset 4
+ 355              		.cfi_offset 7, -4
+ 356 0186 83B0     		sub	sp, sp, #12
+ 357              	.LCFI20:
+ 358              		.cfi_def_cfa_offset 16
+ 359 0188 00AF     		add	r7, sp, #0
+ 360              	.LCFI21:
+ 361              		.cfi_def_cfa_register 7
+ 362 018a 7860     		str	r0, [r7, #4]
  246:../src/stm32f30x_crc.c ****   CRC->DR = CRC_Data;
- 362              		.loc 1 246 0
- 363 018c 4FF44053 		mov	r3, #12288
- 364 0190 C4F20203 		movt	r3, 16386
- 365 0194 7A68     		ldr	r2, [r7, #4]
- 366 0196 1A60     		str	r2, [r3, #0]
+ 363              		.loc 1 246 0
+ 364 018c 4FF44053 		mov	r3, #12288
+ 365 0190 C4F20203 		movt	r3, 16386
+ 366 0194 7A68     		ldr	r2, [r7, #4]
+ 367 0196 1A60     		str	r2, [r3, #0]
  247:../src/stm32f30x_crc.c ****   
  248:../src/stm32f30x_crc.c ****   return (CRC->DR);
- 367              		.loc 1 248 0
- 368 0198 4FF44053 		mov	r3, #12288
- 369 019c C4F20203 		movt	r3, 16386
- 370 01a0 1B68     		ldr	r3, [r3, #0]
+ 368              		.loc 1 248 0
+ 369 0198 4FF44053 		mov	r3, #12288
+ 370 019c C4F20203 		movt	r3, 16386
+ 371 01a0 1B68     		ldr	r3, [r3, #0]
  249:../src/stm32f30x_crc.c **** }
- 371              		.loc 1 249 0
- 372 01a2 1846     		mov	r0, r3
- 373 01a4 07F10C07 		add	r7, r7, #12
- 374 01a8 BD46     		mov	sp, r7
- 375 01aa 80BC     		pop	{r7}
- 376 01ac 7047     		bx	lr
- 377              		.cfi_endproc
- 378              	.LFE118:
- 380 01ae 00BF     		.align	2
- 381              		.global	CRC_CalcCRC16bits
- 382              		.thumb
- 383              		.thumb_func
- 385              	CRC_CalcCRC16bits:
- 386              	.LFB119:
+ 372              		.loc 1 249 0
+ 373 01a2 1846     		mov	r0, r3
+ 374 01a4 07F10C07 		add	r7, r7, #12
+ 375 01a8 BD46     		mov	sp, r7
+ 376 01aa 80BC     		pop	{r7}
+ 377 01ac 7047     		bx	lr
+ 378              		.cfi_endproc
+ 379              	.LFE118:
+ 381 01ae 00BF     		.align	2
+ 382              		.global	CRC_CalcCRC16bits
+ 383              		.thumb
+ 384              		.thumb_func
+ 386              	CRC_CalcCRC16bits:
+ 387              	.LFB119:
  250:../src/stm32f30x_crc.c **** 
  251:../src/stm32f30x_crc.c **** /**
  252:../src/stm32f30x_crc.c ****   * @brief  Computes the 16-bit CRC of a given 16-bit data.
@@ -624,50 +625,50 @@
  255:../src/stm32f30x_crc.c ****   */
  256:../src/stm32f30x_crc.c **** uint32_t CRC_CalcCRC16bits(uint16_t CRC_Data)
  257:../src/stm32f30x_crc.c **** {
- 387              		.loc 1 257 0
- 388              		.cfi_startproc
- 389              		@ args = 0, pretend = 0, frame = 8
- 390              		@ frame_needed = 1, uses_anonymous_args = 0
- 391              		@ link register save eliminated.
- 392 01b0 80B4     		push	{r7}
- 393              	.LCFI22:
- 394              		.cfi_def_cfa_offset 4
- 395              		.cfi_offset 7, -4
- 396 01b2 83B0     		sub	sp, sp, #12
- 397              	.LCFI23:
- 398              		.cfi_def_cfa_offset 16
- 399 01b4 00AF     		add	r7, sp, #0
- 400              	.LCFI24:
- 401              		.cfi_def_cfa_register 7
- 402 01b6 0346     		mov	r3, r0
- 403 01b8 FB80     		strh	r3, [r7, #6]	@ movhi
+ 388              		.loc 1 257 0
+ 389              		.cfi_startproc
+ 390              		@ args = 0, pretend = 0, frame = 8
+ 391              		@ frame_needed = 1, uses_anonymous_args = 0
+ 392              		@ link register save eliminated.
+ 393 01b0 80B4     		push	{r7}
+ 394              	.LCFI22:
+ 395              		.cfi_def_cfa_offset 4
+ 396              		.cfi_offset 7, -4
+ 397 01b2 83B0     		sub	sp, sp, #12
+ 398              	.LCFI23:
+ 399              		.cfi_def_cfa_offset 16
+ 400 01b4 00AF     		add	r7, sp, #0
+ 401              	.LCFI24:
+ 402              		.cfi_def_cfa_register 7
+ 403 01b6 0346     		mov	r3, r0
+ 404 01b8 FB80     		strh	r3, [r7, #6]	@ movhi
  258:../src/stm32f30x_crc.c ****   *(uint16_t*)(CRC_BASE) = (uint16_t) CRC_Data;
- 404              		.loc 1 258 0
- 405 01ba 4FF44053 		mov	r3, #12288
- 406 01be C4F20203 		movt	r3, 16386
- 407 01c2 FA88     		ldrh	r2, [r7, #6]	@ movhi
- 408 01c4 1A80     		strh	r2, [r3, #0]	@ movhi
+ 405              		.loc 1 258 0
+ 406 01ba 4FF44053 		mov	r3, #12288
+ 407 01be C4F20203 		movt	r3, 16386
+ 408 01c2 FA88     		ldrh	r2, [r7, #6]	@ movhi
+ 409 01c4 1A80     		strh	r2, [r3, #0]	@ movhi
  259:../src/stm32f30x_crc.c ****   
  260:../src/stm32f30x_crc.c ****   return (CRC->DR);
- 409              		.loc 1 260 0
- 410 01c6 4FF44053 		mov	r3, #12288
- 411 01ca C4F20203 		movt	r3, 16386
- 412 01ce 1B68     		ldr	r3, [r3, #0]
+ 410              		.loc 1 260 0
+ 411 01c6 4FF44053 		mov	r3, #12288
+ 412 01ca C4F20203 		movt	r3, 16386
+ 413 01ce 1B68     		ldr	r3, [r3, #0]
  261:../src/stm32f30x_crc.c **** }
- 413              		.loc 1 261 0
- 414 01d0 1846     		mov	r0, r3
- 415 01d2 07F10C07 		add	r7, r7, #12
- 416 01d6 BD46     		mov	sp, r7
- 417 01d8 80BC     		pop	{r7}
- 418 01da 7047     		bx	lr
- 419              		.cfi_endproc
- 420              	.LFE119:
- 422              		.align	2
- 423              		.global	CRC_CalcCRC8bits
- 424              		.thumb
- 425              		.thumb_func
- 427              	CRC_CalcCRC8bits:
- 428              	.LFB120:
+ 414              		.loc 1 261 0
+ 415 01d0 1846     		mov	r0, r3
+ 416 01d2 07F10C07 		add	r7, r7, #12
+ 417 01d6 BD46     		mov	sp, r7
+ 418 01d8 80BC     		pop	{r7}
+ 419 01da 7047     		bx	lr
+ 420              		.cfi_endproc
+ 421              	.LFE119:
+ 423              		.align	2
+ 424              		.global	CRC_CalcCRC8bits
+ 425              		.thumb
+ 426              		.thumb_func
+ 428              	CRC_CalcCRC8bits:
+ 429              	.LFB120:
  262:../src/stm32f30x_crc.c **** 
  263:../src/stm32f30x_crc.c **** /**
  264:../src/stm32f30x_crc.c ****   * @brief  Computes the 8-bit CRC of a given 8-bit data.
@@ -676,50 +677,50 @@
  267:../src/stm32f30x_crc.c ****   */
  268:../src/stm32f30x_crc.c **** uint32_t CRC_CalcCRC8bits(uint8_t CRC_Data)
  269:../src/stm32f30x_crc.c **** {
- 429              		.loc 1 269 0
- 430              		.cfi_startproc
- 431              		@ args = 0, pretend = 0, frame = 8
- 432              		@ frame_needed = 1, uses_anonymous_args = 0
- 433              		@ link register save eliminated.
- 434 01dc 80B4     		push	{r7}
- 435              	.LCFI25:
- 436              		.cfi_def_cfa_offset 4
- 437              		.cfi_offset 7, -4
- 438 01de 83B0     		sub	sp, sp, #12
- 439              	.LCFI26:
- 440              		.cfi_def_cfa_offset 16
- 441 01e0 00AF     		add	r7, sp, #0
- 442              	.LCFI27:
- 443              		.cfi_def_cfa_register 7
- 444 01e2 0346     		mov	r3, r0
- 445 01e4 FB71     		strb	r3, [r7, #7]
+ 430              		.loc 1 269 0
+ 431              		.cfi_startproc
+ 432              		@ args = 0, pretend = 0, frame = 8
+ 433              		@ frame_needed = 1, uses_anonymous_args = 0
+ 434              		@ link register save eliminated.
+ 435 01dc 80B4     		push	{r7}
+ 436              	.LCFI25:
+ 437              		.cfi_def_cfa_offset 4
+ 438              		.cfi_offset 7, -4
+ 439 01de 83B0     		sub	sp, sp, #12
+ 440              	.LCFI26:
+ 441              		.cfi_def_cfa_offset 16
+ 442 01e0 00AF     		add	r7, sp, #0
+ 443              	.LCFI27:
+ 444              		.cfi_def_cfa_register 7
+ 445 01e2 0346     		mov	r3, r0
+ 446 01e4 FB71     		strb	r3, [r7, #7]
  270:../src/stm32f30x_crc.c ****   *(uint8_t*)(CRC_BASE) = (uint8_t) CRC_Data;
- 446              		.loc 1 270 0
- 447 01e6 4FF44053 		mov	r3, #12288
- 448 01ea C4F20203 		movt	r3, 16386
- 449 01ee FA79     		ldrb	r2, [r7, #7]
- 450 01f0 1A70     		strb	r2, [r3, #0]
+ 447              		.loc 1 270 0
+ 448 01e6 4FF44053 		mov	r3, #12288
+ 449 01ea C4F20203 		movt	r3, 16386
+ 450 01ee FA79     		ldrb	r2, [r7, #7]
+ 451 01f0 1A70     		strb	r2, [r3, #0]
  271:../src/stm32f30x_crc.c **** 
  272:../src/stm32f30x_crc.c ****   return (CRC->DR);
- 451              		.loc 1 272 0
- 452 01f2 4FF44053 		mov	r3, #12288
- 453 01f6 C4F20203 		movt	r3, 16386
- 454 01fa 1B68     		ldr	r3, [r3, #0]
+ 452              		.loc 1 272 0
+ 453 01f2 4FF44053 		mov	r3, #12288
+ 454 01f6 C4F20203 		movt	r3, 16386
+ 455 01fa 1B68     		ldr	r3, [r3, #0]
  273:../src/stm32f30x_crc.c **** }
- 455              		.loc 1 273 0
- 456 01fc 1846     		mov	r0, r3
- 457 01fe 07F10C07 		add	r7, r7, #12
- 458 0202 BD46     		mov	sp, r7
- 459 0204 80BC     		pop	{r7}
- 460 0206 7047     		bx	lr
- 461              		.cfi_endproc
- 462              	.LFE120:
- 464              		.align	2
- 465              		.global	CRC_CalcBlockCRC
- 466              		.thumb
- 467              		.thumb_func
- 469              	CRC_CalcBlockCRC:
- 470              	.LFB121:
+ 456              		.loc 1 273 0
+ 457 01fc 1846     		mov	r0, r3
+ 458 01fe 07F10C07 		add	r7, r7, #12
+ 459 0202 BD46     		mov	sp, r7
+ 460 0204 80BC     		pop	{r7}
+ 461 0206 7047     		bx	lr
+ 462              		.cfi_endproc
+ 463              	.LFE120:
+ 465              		.align	2
+ 466              		.global	CRC_CalcBlockCRC
+ 467              		.thumb
+ 468              		.thumb_func
+ 470              	CRC_CalcBlockCRC:
+ 471              	.LFB121:
  274:../src/stm32f30x_crc.c **** 
  275:../src/stm32f30x_crc.c **** /**
  276:../src/stm32f30x_crc.c ****   * @brief  Computes the 32-bit CRC of a given buffer of data word(32-bit).
@@ -729,78 +730,78 @@
  280:../src/stm32f30x_crc.c ****   */
  281:../src/stm32f30x_crc.c **** uint32_t CRC_CalcBlockCRC(uint32_t pBuffer[], uint32_t BufferLength)
  282:../src/stm32f30x_crc.c **** {
- 471              		.loc 1 282 0
- 472              		.cfi_startproc
- 473              		@ args = 0, pretend = 0, frame = 16
- 474              		@ frame_needed = 1, uses_anonymous_args = 0
- 475              		@ link register save eliminated.
- 476 0208 80B4     		push	{r7}
- 477              	.LCFI28:
- 478              		.cfi_def_cfa_offset 4
- 479              		.cfi_offset 7, -4
- 480 020a 85B0     		sub	sp, sp, #20
- 481              	.LCFI29:
- 482              		.cfi_def_cfa_offset 24
- 483 020c 00AF     		add	r7, sp, #0
- 484              	.LCFI30:
- 485              		.cfi_def_cfa_register 7
- 486 020e 7860     		str	r0, [r7, #4]
- 487 0210 3960     		str	r1, [r7, #0]
+ 472              		.loc 1 282 0
+ 473              		.cfi_startproc
+ 474              		@ args = 0, pretend = 0, frame = 16
+ 475              		@ frame_needed = 1, uses_anonymous_args = 0
+ 476              		@ link register save eliminated.
+ 477 0208 80B4     		push	{r7}
+ 478              	.LCFI28:
+ 479              		.cfi_def_cfa_offset 4
+ 480              		.cfi_offset 7, -4
+ 481 020a 85B0     		sub	sp, sp, #20
+ 482              	.LCFI29:
+ 483              		.cfi_def_cfa_offset 24
+ 484 020c 00AF     		add	r7, sp, #0
+ 485              	.LCFI30:
+ 486              		.cfi_def_cfa_register 7
+ 487 020e 7860     		str	r0, [r7, #4]
+ 488 0210 3960     		str	r1, [r7, #0]
  283:../src/stm32f30x_crc.c ****   uint32_t index = 0;
- 488              		.loc 1 283 0
- 489 0212 4FF00003 		mov	r3, #0
- 490 0216 FB60     		str	r3, [r7, #12]
+ 489              		.loc 1 283 0
+ 490 0212 4FF00003 		mov	r3, #0
+ 491 0216 FB60     		str	r3, [r7, #12]
  284:../src/stm32f30x_crc.c ****   
  285:../src/stm32f30x_crc.c ****   for(index = 0; index < BufferLength; index++)
- 491              		.loc 1 285 0
- 492 0218 4FF00003 		mov	r3, #0
- 493 021c FB60     		str	r3, [r7, #12]
- 494 021e 0EE0     		b	.L17
- 495              	.L18:
+ 492              		.loc 1 285 0
+ 493 0218 4FF00003 		mov	r3, #0
+ 494 021c FB60     		str	r3, [r7, #12]
+ 495 021e 0EE0     		b	.L17
+ 496              	.L18:
  286:../src/stm32f30x_crc.c ****   {
  287:../src/stm32f30x_crc.c ****     CRC->DR = pBuffer[index];
- 496              		.loc 1 287 0 discriminator 2
- 497 0220 4FF44053 		mov	r3, #12288
- 498 0224 C4F20203 		movt	r3, 16386
- 499 0228 FA68     		ldr	r2, [r7, #12]
- 500 022a 4FEA8202 		lsl	r2, r2, #2
- 501 022e 7968     		ldr	r1, [r7, #4]
- 502 0230 8A18     		adds	r2, r1, r2
- 503 0232 1268     		ldr	r2, [r2, #0]
- 504 0234 1A60     		str	r2, [r3, #0]
+ 497              		.loc 1 287 0 discriminator 2
+ 498 0220 4FF44053 		mov	r3, #12288
+ 499 0224 C4F20203 		movt	r3, 16386
+ 500 0228 FA68     		ldr	r2, [r7, #12]
+ 501 022a 4FEA8202 		lsl	r2, r2, #2
+ 502 022e 7968     		ldr	r1, [r7, #4]
+ 503 0230 8A18     		adds	r2, r1, r2
+ 504 0232 1268     		ldr	r2, [r2, #0]
+ 505 0234 1A60     		str	r2, [r3, #0]
  285:../src/stm32f30x_crc.c ****   for(index = 0; index < BufferLength; index++)
- 505              		.loc 1 285 0 discriminator 2
- 506 0236 FB68     		ldr	r3, [r7, #12]
- 507 0238 03F10103 		add	r3, r3, #1
- 508 023c FB60     		str	r3, [r7, #12]
- 509              	.L17:
+ 506              		.loc 1 285 0 discriminator 2
+ 507 0236 FB68     		ldr	r3, [r7, #12]
+ 508 0238 03F10103 		add	r3, r3, #1
+ 509 023c FB60     		str	r3, [r7, #12]
+ 510              	.L17:
  285:../src/stm32f30x_crc.c ****   for(index = 0; index < BufferLength; index++)
- 510              		.loc 1 285 0 is_stmt 0 discriminator 1
- 511 023e FA68     		ldr	r2, [r7, #12]
- 512 0240 3B68     		ldr	r3, [r7, #0]
- 513 0242 9A42     		cmp	r2, r3
- 514 0244 ECD3     		bcc	.L18
+ 511              		.loc 1 285 0 is_stmt 0 discriminator 1
+ 512 023e FA68     		ldr	r2, [r7, #12]
+ 513 0240 3B68     		ldr	r3, [r7, #0]
+ 514 0242 9A42     		cmp	r2, r3
+ 515 0244 ECD3     		bcc	.L18
  288:../src/stm32f30x_crc.c ****   }
  289:../src/stm32f30x_crc.c ****   return (CRC->DR);
- 515              		.loc 1 289 0 is_stmt 1
- 516 0246 4FF44053 		mov	r3, #12288
- 517 024a C4F20203 		movt	r3, 16386
- 518 024e 1B68     		ldr	r3, [r3, #0]
+ 516              		.loc 1 289 0 is_stmt 1
+ 517 0246 4FF44053 		mov	r3, #12288
+ 518 024a C4F20203 		movt	r3, 16386
+ 519 024e 1B68     		ldr	r3, [r3, #0]
  290:../src/stm32f30x_crc.c **** }
- 519              		.loc 1 290 0
- 520 0250 1846     		mov	r0, r3
- 521 0252 07F11407 		add	r7, r7, #20
- 522 0256 BD46     		mov	sp, r7
- 523 0258 80BC     		pop	{r7}
- 524 025a 7047     		bx	lr
- 525              		.cfi_endproc
- 526              	.LFE121:
- 528              		.align	2
- 529              		.global	CRC_GetCRC
- 530              		.thumb
- 531              		.thumb_func
- 533              	CRC_GetCRC:
- 534              	.LFB122:
+ 520              		.loc 1 290 0
+ 521 0250 1846     		mov	r0, r3
+ 522 0252 07F11407 		add	r7, r7, #20
+ 523 0256 BD46     		mov	sp, r7
+ 524 0258 80BC     		pop	{r7}
+ 525 025a 7047     		bx	lr
+ 526              		.cfi_endproc
+ 527              	.LFE121:
+ 529              		.align	2
+ 530              		.global	CRC_GetCRC
+ 531              		.thumb
+ 532              		.thumb_func
+ 534              	CRC_GetCRC:
+ 535              	.LFB122:
  291:../src/stm32f30x_crc.c **** 
  292:../src/stm32f30x_crc.c **** /**
  293:../src/stm32f30x_crc.c ****   * @brief  Returns the current CRC value.
@@ -809,37 +810,37 @@
  296:../src/stm32f30x_crc.c ****   */
  297:../src/stm32f30x_crc.c **** uint32_t CRC_GetCRC(void)
  298:../src/stm32f30x_crc.c **** {
- 535              		.loc 1 298 0
- 536              		.cfi_startproc
- 537              		@ args = 0, pretend = 0, frame = 0
- 538              		@ frame_needed = 1, uses_anonymous_args = 0
- 539              		@ link register save eliminated.
- 540 025c 80B4     		push	{r7}
- 541              	.LCFI31:
- 542              		.cfi_def_cfa_offset 4
- 543              		.cfi_offset 7, -4
- 544 025e 00AF     		add	r7, sp, #0
- 545              	.LCFI32:
- 546              		.cfi_def_cfa_register 7
+ 536              		.loc 1 298 0
+ 537              		.cfi_startproc
+ 538              		@ args = 0, pretend = 0, frame = 0
+ 539              		@ frame_needed = 1, uses_anonymous_args = 0
+ 540              		@ link register save eliminated.
+ 541 025c 80B4     		push	{r7}
+ 542              	.LCFI31:
+ 543              		.cfi_def_cfa_offset 4
+ 544              		.cfi_offset 7, -4
+ 545 025e 00AF     		add	r7, sp, #0
+ 546              	.LCFI32:
+ 547              		.cfi_def_cfa_register 7
  299:../src/stm32f30x_crc.c ****   return (CRC->DR);
- 547              		.loc 1 299 0
- 548 0260 4FF44053 		mov	r3, #12288
- 549 0264 C4F20203 		movt	r3, 16386
- 550 0268 1B68     		ldr	r3, [r3, #0]
+ 548              		.loc 1 299 0
+ 549 0260 4FF44053 		mov	r3, #12288
+ 550 0264 C4F20203 		movt	r3, 16386
+ 551 0268 1B68     		ldr	r3, [r3, #0]
  300:../src/stm32f30x_crc.c **** }
- 551              		.loc 1 300 0
- 552 026a 1846     		mov	r0, r3
- 553 026c BD46     		mov	sp, r7
- 554 026e 80BC     		pop	{r7}
- 555 0270 7047     		bx	lr
- 556              		.cfi_endproc
- 557              	.LFE122:
- 559 0272 00BF     		.align	2
- 560              		.global	CRC_SetIDRegister
- 561              		.thumb
- 562              		.thumb_func
- 564              	CRC_SetIDRegister:
- 565              	.LFB123:
+ 552              		.loc 1 300 0
+ 553 026a 1846     		mov	r0, r3
+ 554 026c BD46     		mov	sp, r7
+ 555 026e 80BC     		pop	{r7}
+ 556 0270 7047     		bx	lr
+ 557              		.cfi_endproc
+ 558              	.LFE122:
+ 560 0272 00BF     		.align	2
+ 561              		.global	CRC_SetIDRegister
+ 562              		.thumb
+ 563              		.thumb_func
+ 565              	CRC_SetIDRegister:
+ 566              	.LFB123:
  301:../src/stm32f30x_crc.c **** 
  302:../src/stm32f30x_crc.c **** /**
  303:../src/stm32f30x_crc.c ****   * @}
@@ -864,43 +865,43 @@
  322:../src/stm32f30x_crc.c ****   */
  323:../src/stm32f30x_crc.c **** void CRC_SetIDRegister(uint8_t CRC_IDValue)
  324:../src/stm32f30x_crc.c **** {
- 566              		.loc 1 324 0
- 567              		.cfi_startproc
- 568              		@ args = 0, pretend = 0, frame = 8
- 569              		@ frame_needed = 1, uses_anonymous_args = 0
- 570              		@ link register save eliminated.
- 571 0274 80B4     		push	{r7}
- 572              	.LCFI33:
- 573              		.cfi_def_cfa_offset 4
- 574              		.cfi_offset 7, -4
- 575 0276 83B0     		sub	sp, sp, #12
- 576              	.LCFI34:
- 577              		.cfi_def_cfa_offset 16
- 578 0278 00AF     		add	r7, sp, #0
- 579              	.LCFI35:
- 580              		.cfi_def_cfa_register 7
- 581 027a 0346     		mov	r3, r0
- 582 027c FB71     		strb	r3, [r7, #7]
+ 567              		.loc 1 324 0
+ 568              		.cfi_startproc
+ 569              		@ args = 0, pretend = 0, frame = 8
+ 570              		@ frame_needed = 1, uses_anonymous_args = 0
+ 571              		@ link register save eliminated.
+ 572 0274 80B4     		push	{r7}
+ 573              	.LCFI33:
+ 574              		.cfi_def_cfa_offset 4
+ 575              		.cfi_offset 7, -4
+ 576 0276 83B0     		sub	sp, sp, #12
+ 577              	.LCFI34:
+ 578              		.cfi_def_cfa_offset 16
+ 579 0278 00AF     		add	r7, sp, #0
+ 580              	.LCFI35:
+ 581              		.cfi_def_cfa_register 7
+ 582 027a 0346     		mov	r3, r0
+ 583 027c FB71     		strb	r3, [r7, #7]
  325:../src/stm32f30x_crc.c ****   CRC->IDR = CRC_IDValue;
- 583              		.loc 1 325 0
- 584 027e 4FF44053 		mov	r3, #12288
- 585 0282 C4F20203 		movt	r3, 16386
- 586 0286 FA79     		ldrb	r2, [r7, #7]
- 587 0288 1A71     		strb	r2, [r3, #4]
+ 584              		.loc 1 325 0
+ 585 027e 4FF44053 		mov	r3, #12288
+ 586 0282 C4F20203 		movt	r3, 16386
+ 587 0286 FA79     		ldrb	r2, [r7, #7]
+ 588 0288 1A71     		strb	r2, [r3, #4]
  326:../src/stm32f30x_crc.c **** }
- 588              		.loc 1 326 0
- 589 028a 07F10C07 		add	r7, r7, #12
- 590 028e BD46     		mov	sp, r7
- 591 0290 80BC     		pop	{r7}
- 592 0292 7047     		bx	lr
- 593              		.cfi_endproc
- 594              	.LFE123:
- 596              		.align	2
- 597              		.global	CRC_GetIDRegister
- 598              		.thumb
- 599              		.thumb_func
- 601              	CRC_GetIDRegister:
- 602              	.LFB124:
+ 589              		.loc 1 326 0
+ 590 028a 07F10C07 		add	r7, r7, #12
+ 591 028e BD46     		mov	sp, r7
+ 592 0290 80BC     		pop	{r7}
+ 593 0292 7047     		bx	lr
+ 594              		.cfi_endproc
+ 595              	.LFE123:
+ 597              		.align	2
+ 598              		.global	CRC_GetIDRegister
+ 599              		.thumb
+ 600              		.thumb_func
+ 602              	CRC_GetIDRegister:
+ 603              	.LFB124:
  327:../src/stm32f30x_crc.c **** 
  328:../src/stm32f30x_crc.c **** /**
  329:../src/stm32f30x_crc.c ****   * @brief  Returns the 8-bit data stored in the Independent Data(ID) register
@@ -909,55 +910,55 @@
  332:../src/stm32f30x_crc.c ****   */
  333:../src/stm32f30x_crc.c **** uint8_t CRC_GetIDRegister(void)
  334:../src/stm32f30x_crc.c **** {
- 603              		.loc 1 334 0
- 604              		.cfi_startproc
- 605              		@ args = 0, pretend = 0, frame = 0
- 606              		@ frame_needed = 1, uses_anonymous_args = 0
- 607              		@ link register save eliminated.
- 608 0294 80B4     		push	{r7}
- 609              	.LCFI36:
- 610              		.cfi_def_cfa_offset 4
- 611              		.cfi_offset 7, -4
- 612 0296 00AF     		add	r7, sp, #0
- 613              	.LCFI37:
- 614              		.cfi_def_cfa_register 7
+ 604              		.loc 1 334 0
+ 605              		.cfi_startproc
+ 606              		@ args = 0, pretend = 0, frame = 0
+ 607              		@ frame_needed = 1, uses_anonymous_args = 0
+ 608              		@ link register save eliminated.
+ 609 0294 80B4     		push	{r7}
+ 610              	.LCFI36:
+ 611              		.cfi_def_cfa_offset 4
+ 612              		.cfi_offset 7, -4
+ 613 0296 00AF     		add	r7, sp, #0
+ 614              	.LCFI37:
+ 615              		.cfi_def_cfa_register 7
  335:../src/stm32f30x_crc.c ****   return (CRC->IDR);
- 615              		.loc 1 335 0
- 616 0298 4FF44053 		mov	r3, #12288
- 617 029c C4F20203 		movt	r3, 16386
- 618 02a0 1B79     		ldrb	r3, [r3, #4]
- 619 02a2 DBB2     		uxtb	r3, r3
+ 616              		.loc 1 335 0
+ 617 0298 4FF44053 		mov	r3, #12288
+ 618 029c C4F20203 		movt	r3, 16386
+ 619 02a0 1B79     		ldrb	r3, [r3, #4]
+ 620 02a2 DBB2     		uxtb	r3, r3
  336:../src/stm32f30x_crc.c **** }
- 620              		.loc 1 336 0
- 621 02a4 1846     		mov	r0, r3
- 622 02a6 BD46     		mov	sp, r7
- 623 02a8 80BC     		pop	{r7}
- 624 02aa 7047     		bx	lr
- 625              		.cfi_endproc
- 626              	.LFE124:
- 628              	.Letext0:
- 629              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
- 630              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
- 631              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
+ 621              		.loc 1 336 0
+ 622 02a4 1846     		mov	r0, r3
+ 623 02a6 BD46     		mov	sp, r7
+ 624 02a8 80BC     		pop	{r7}
+ 625 02aa 7047     		bx	lr
+ 626              		.cfi_endproc
+ 627              	.LFE124:
+ 629              	.Letext0:
+ 630              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
+ 631              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
+ 632              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32f30x_crc.c
-     /tmp/ccA7liYw.s:19     .text:00000000 $t
-     /tmp/ccA7liYw.s:24     .text:00000000 CRC_DeInit
-     /tmp/ccA7liYw.s:77     .text:00000054 CRC_ResetDR
-     /tmp/ccA7liYw.s:111    .text:00000078 CRC_PolynomialSizeSelect
-     /tmp/ccA7liYw.s:164    .text:000000b8 CRC_ReverseInputDataSelect
-     /tmp/ccA7liYw.s:217    .text:000000f8 CRC_ReverseOutputDataCmd
-     /tmp/ccA7liYw.s:272    .text:00000144 CRC_SetInitRegister
-     /tmp/ccA7liYw.s:308    .text:00000164 CRC_SetPolynomial
-     /tmp/ccA7liYw.s:344    .text:00000184 CRC_CalcCRC
-     /tmp/ccA7liYw.s:385    .text:000001b0 CRC_CalcCRC16bits
-     /tmp/ccA7liYw.s:427    .text:000001dc CRC_CalcCRC8bits
-     /tmp/ccA7liYw.s:469    .text:00000208 CRC_CalcBlockCRC
-     /tmp/ccA7liYw.s:533    .text:0000025c CRC_GetCRC
-     /tmp/ccA7liYw.s:564    .text:00000274 CRC_SetIDRegister
-     /tmp/ccA7liYw.s:601    .text:00000294 CRC_GetIDRegister
+     /tmp/ccUVy3e6.s:20     .text:00000000 $t
+     /tmp/ccUVy3e6.s:25     .text:00000000 CRC_DeInit
+     /tmp/ccUVy3e6.s:78     .text:00000054 CRC_ResetDR
+     /tmp/ccUVy3e6.s:112    .text:00000078 CRC_PolynomialSizeSelect
+     /tmp/ccUVy3e6.s:165    .text:000000b8 CRC_ReverseInputDataSelect
+     /tmp/ccUVy3e6.s:218    .text:000000f8 CRC_ReverseOutputDataCmd
+     /tmp/ccUVy3e6.s:273    .text:00000144 CRC_SetInitRegister
+     /tmp/ccUVy3e6.s:309    .text:00000164 CRC_SetPolynomial
+     /tmp/ccUVy3e6.s:345    .text:00000184 CRC_CalcCRC
+     /tmp/ccUVy3e6.s:386    .text:000001b0 CRC_CalcCRC16bits
+     /tmp/ccUVy3e6.s:428    .text:000001dc CRC_CalcCRC8bits
+     /tmp/ccUVy3e6.s:470    .text:00000208 CRC_CalcBlockCRC
+     /tmp/ccUVy3e6.s:534    .text:0000025c CRC_GetCRC
+     /tmp/ccUVy3e6.s:565    .text:00000274 CRC_SetIDRegister
+     /tmp/ccUVy3e6.s:602    .text:00000294 CRC_GetIDRegister
                      .debug_frame:00000010 $d
-                           .group:00000000 wm4.1.323dce8664331a0daf4a2675e107c70c
+                           .group:00000000 wm4.1.743cd71370ebc432b539c5dba7924ecc
                            .group:00000000 wm4.stm32f30x.h.56.6f19c65e98e3319a61449cb2b2455af5
                            .group:00000000 wm4.core_cm4.h.32.1434cd257ff5806b1b03cd32ab0641e9
                            .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05

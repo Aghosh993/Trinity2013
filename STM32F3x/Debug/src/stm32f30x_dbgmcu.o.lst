@@ -1,28 +1,29 @@
    1              		.syntax unified
    2              		.cpu cortex-m4
    3              		.eabi_attribute 27, 3
-   4              		.fpu fpv4-sp-d16
-   5              		.eabi_attribute 20, 1
-   6              		.eabi_attribute 21, 1
-   7              		.eabi_attribute 23, 3
-   8              		.eabi_attribute 24, 1
-   9              		.eabi_attribute 25, 1
-  10              		.eabi_attribute 26, 1
-  11              		.eabi_attribute 30, 6
-  12              		.eabi_attribute 34, 1
-  13              		.eabi_attribute 18, 4
-  14              		.thumb
-  15              		.file	"stm32f30x_dbgmcu.c"
-  16              		.text
-  17              	.Ltext0:
-  18              		.cfi_sections	.debug_frame
-  19              		.align	2
-  20              		.global	DBGMCU_GetREVID
-  21              		.thumb
-  22              		.thumb_func
-  24              	DBGMCU_GetREVID:
-  25              	.LFB111:
-  26              		.file 1 "../src/stm32f30x_dbgmcu.c"
+   4              		.eabi_attribute 28, 1
+   5              		.fpu fpv4-sp-d16
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 6
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.thumb
+  16              		.file	"stm32f30x_dbgmcu.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.align	2
+  21              		.global	DBGMCU_GetREVID
+  22              		.thumb
+  23              		.thumb_func
+  25              	DBGMCU_GetREVID:
+  26              	.LFB111:
+  27              		.file 1 "../src/stm32f30x_dbgmcu.c"
    1:../src/stm32f30x_dbgmcu.c **** /**
    2:../src/stm32f30x_dbgmcu.c ****   ******************************************************************************
    3:../src/stm32f30x_dbgmcu.c ****   * @file    stm32f30x_dbgmcu.c
@@ -97,38 +98,38 @@
   72:../src/stm32f30x_dbgmcu.c ****   */
   73:../src/stm32f30x_dbgmcu.c **** uint32_t DBGMCU_GetREVID(void)
   74:../src/stm32f30x_dbgmcu.c **** {
-  27              		.loc 1 74 0
-  28              		.cfi_startproc
-  29              		@ args = 0, pretend = 0, frame = 0
-  30              		@ frame_needed = 1, uses_anonymous_args = 0
-  31              		@ link register save eliminated.
-  32 0000 80B4     		push	{r7}
-  33              	.LCFI0:
-  34              		.cfi_def_cfa_offset 4
-  35              		.cfi_offset 7, -4
-  36 0002 00AF     		add	r7, sp, #0
-  37              	.LCFI1:
-  38              		.cfi_def_cfa_register 7
+  28              		.loc 1 74 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33 0000 80B4     		push	{r7}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 4
+  36              		.cfi_offset 7, -4
+  37 0002 00AF     		add	r7, sp, #0
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_register 7
   75:../src/stm32f30x_dbgmcu.c ****    return(DBGMCU->IDCODE >> 16);
-  39              		.loc 1 75 0
-  40 0004 4FF40053 		mov	r3, #8192
-  41 0008 CEF20403 		movt	r3, 57348
-  42 000c 1B68     		ldr	r3, [r3, #0]
-  43 000e 4FEA1343 		lsr	r3, r3, #16
+  40              		.loc 1 75 0
+  41 0004 4FF40053 		mov	r3, #8192
+  42 0008 CEF20403 		movt	r3, 57348
+  43 000c 1B68     		ldr	r3, [r3, #0]
+  44 000e 4FEA1343 		lsr	r3, r3, #16
   76:../src/stm32f30x_dbgmcu.c **** }
-  44              		.loc 1 76 0
-  45 0012 1846     		mov	r0, r3
-  46 0014 BD46     		mov	sp, r7
-  47 0016 80BC     		pop	{r7}
-  48 0018 7047     		bx	lr
-  49              		.cfi_endproc
-  50              	.LFE111:
-  52 001a 00BF     		.align	2
-  53              		.global	DBGMCU_GetDEVID
-  54              		.thumb
-  55              		.thumb_func
-  57              	DBGMCU_GetDEVID:
-  58              	.LFB112:
+  45              		.loc 1 76 0
+  46 0012 1846     		mov	r0, r3
+  47 0014 BD46     		mov	sp, r7
+  48 0016 80BC     		pop	{r7}
+  49 0018 7047     		bx	lr
+  50              		.cfi_endproc
+  51              	.LFE111:
+  53 001a 00BF     		.align	2
+  54              		.global	DBGMCU_GetDEVID
+  55              		.thumb
+  56              		.thumb_func
+  58              	DBGMCU_GetDEVID:
+  59              	.LFB112:
   77:../src/stm32f30x_dbgmcu.c **** 
   78:../src/stm32f30x_dbgmcu.c **** /**
   79:../src/stm32f30x_dbgmcu.c ****   * @brief   Returns the device identifier.
@@ -137,39 +138,39 @@
   82:../src/stm32f30x_dbgmcu.c ****   */
   83:../src/stm32f30x_dbgmcu.c **** uint32_t DBGMCU_GetDEVID(void)
   84:../src/stm32f30x_dbgmcu.c **** {
-  59              		.loc 1 84 0
-  60              		.cfi_startproc
-  61              		@ args = 0, pretend = 0, frame = 0
-  62              		@ frame_needed = 1, uses_anonymous_args = 0
-  63              		@ link register save eliminated.
-  64 001c 80B4     		push	{r7}
-  65              	.LCFI2:
-  66              		.cfi_def_cfa_offset 4
-  67              		.cfi_offset 7, -4
-  68 001e 00AF     		add	r7, sp, #0
-  69              	.LCFI3:
-  70              		.cfi_def_cfa_register 7
+  60              		.loc 1 84 0
+  61              		.cfi_startproc
+  62              		@ args = 0, pretend = 0, frame = 0
+  63              		@ frame_needed = 1, uses_anonymous_args = 0
+  64              		@ link register save eliminated.
+  65 001c 80B4     		push	{r7}
+  66              	.LCFI2:
+  67              		.cfi_def_cfa_offset 4
+  68              		.cfi_offset 7, -4
+  69 001e 00AF     		add	r7, sp, #0
+  70              	.LCFI3:
+  71              		.cfi_def_cfa_register 7
   85:../src/stm32f30x_dbgmcu.c ****    return(DBGMCU->IDCODE & IDCODE_DEVID_MASK);
-  71              		.loc 1 85 0
-  72 0020 4FF40053 		mov	r3, #8192
-  73 0024 CEF20403 		movt	r3, 57348
-  74 0028 1B68     		ldr	r3, [r3, #0]
-  75 002a 4FEA0353 		lsl	r3, r3, #20
-  76 002e 4FEA1353 		lsr	r3, r3, #20
+  72              		.loc 1 85 0
+  73 0020 4FF40053 		mov	r3, #8192
+  74 0024 CEF20403 		movt	r3, 57348
+  75 0028 1B68     		ldr	r3, [r3, #0]
+  76 002a 4FEA0353 		lsl	r3, r3, #20
+  77 002e 4FEA1353 		lsr	r3, r3, #20
   86:../src/stm32f30x_dbgmcu.c **** }
-  77              		.loc 1 86 0
-  78 0032 1846     		mov	r0, r3
-  79 0034 BD46     		mov	sp, r7
-  80 0036 80BC     		pop	{r7}
-  81 0038 7047     		bx	lr
-  82              		.cfi_endproc
-  83              	.LFE112:
-  85 003a 00BF     		.align	2
-  86              		.global	DBGMCU_Config
-  87              		.thumb
-  88              		.thumb_func
-  90              	DBGMCU_Config:
-  91              	.LFB113:
+  78              		.loc 1 86 0
+  79 0032 1846     		mov	r0, r3
+  80 0034 BD46     		mov	sp, r7
+  81 0036 80BC     		pop	{r7}
+  82 0038 7047     		bx	lr
+  83              		.cfi_endproc
+  84              	.LFE112:
+  86 003a 00BF     		.align	2
+  87              		.global	DBGMCU_Config
+  88              		.thumb
+  89              		.thumb_func
+  91              	DBGMCU_Config:
+  92              	.LFB113:
   87:../src/stm32f30x_dbgmcu.c **** 
   88:../src/stm32f30x_dbgmcu.c **** /**
   89:../src/stm32f30x_dbgmcu.c ****   * @}
@@ -200,75 +201,75 @@
  114:../src/stm32f30x_dbgmcu.c ****   */
  115:../src/stm32f30x_dbgmcu.c **** void DBGMCU_Config(uint32_t DBGMCU_Periph, FunctionalState NewState)
  116:../src/stm32f30x_dbgmcu.c **** {
-  92              		.loc 1 116 0
-  93              		.cfi_startproc
-  94              		@ args = 0, pretend = 0, frame = 8
-  95              		@ frame_needed = 1, uses_anonymous_args = 0
-  96              		@ link register save eliminated.
-  97 003c 80B4     		push	{r7}
-  98              	.LCFI4:
-  99              		.cfi_def_cfa_offset 4
- 100              		.cfi_offset 7, -4
- 101 003e 83B0     		sub	sp, sp, #12
- 102              	.LCFI5:
- 103              		.cfi_def_cfa_offset 16
- 104 0040 00AF     		add	r7, sp, #0
- 105              	.LCFI6:
- 106              		.cfi_def_cfa_register 7
- 107 0042 7860     		str	r0, [r7, #4]
- 108 0044 0B46     		mov	r3, r1
- 109 0046 FB70     		strb	r3, [r7, #3]
+  93              		.loc 1 116 0
+  94              		.cfi_startproc
+  95              		@ args = 0, pretend = 0, frame = 8
+  96              		@ frame_needed = 1, uses_anonymous_args = 0
+  97              		@ link register save eliminated.
+  98 003c 80B4     		push	{r7}
+  99              	.LCFI4:
+ 100              		.cfi_def_cfa_offset 4
+ 101              		.cfi_offset 7, -4
+ 102 003e 83B0     		sub	sp, sp, #12
+ 103              	.LCFI5:
+ 104              		.cfi_def_cfa_offset 16
+ 105 0040 00AF     		add	r7, sp, #0
+ 106              	.LCFI6:
+ 107              		.cfi_def_cfa_register 7
+ 108 0042 7860     		str	r0, [r7, #4]
+ 109 0044 0B46     		mov	r3, r1
+ 110 0046 FB70     		strb	r3, [r7, #3]
  117:../src/stm32f30x_dbgmcu.c ****   /* Check the parameters */
  118:../src/stm32f30x_dbgmcu.c ****   assert_param(IS_DBGMCU_PERIPH(DBGMCU_Periph));
  119:../src/stm32f30x_dbgmcu.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
  120:../src/stm32f30x_dbgmcu.c ****   if (NewState != DISABLE)
- 110              		.loc 1 120 0
- 111 0048 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
- 112 004a 002B     		cmp	r3, #0
- 113 004c 0CD0     		beq	.L6
+ 111              		.loc 1 120 0
+ 112 0048 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 113 004a 002B     		cmp	r3, #0
+ 114 004c 0CD0     		beq	.L6
  121:../src/stm32f30x_dbgmcu.c ****   {
  122:../src/stm32f30x_dbgmcu.c ****     DBGMCU->CR |= DBGMCU_Periph;
- 114              		.loc 1 122 0
- 115 004e 4FF40053 		mov	r3, #8192
- 116 0052 CEF20403 		movt	r3, 57348
- 117 0056 4FF40052 		mov	r2, #8192
- 118 005a CEF20402 		movt	r2, 57348
- 119 005e 5168     		ldr	r1, [r2, #4]
- 120 0060 7A68     		ldr	r2, [r7, #4]
- 121 0062 0A43     		orrs	r2, r2, r1
- 122 0064 5A60     		str	r2, [r3, #4]
- 123 0066 0DE0     		b	.L5
- 124              	.L6:
+ 115              		.loc 1 122 0
+ 116 004e 4FF40053 		mov	r3, #8192
+ 117 0052 CEF20403 		movt	r3, 57348
+ 118 0056 4FF40052 		mov	r2, #8192
+ 119 005a CEF20402 		movt	r2, 57348
+ 120 005e 5168     		ldr	r1, [r2, #4]
+ 121 0060 7A68     		ldr	r2, [r7, #4]
+ 122 0062 0A43     		orrs	r2, r2, r1
+ 123 0064 5A60     		str	r2, [r3, #4]
+ 124 0066 0DE0     		b	.L5
+ 125              	.L6:
  123:../src/stm32f30x_dbgmcu.c ****   }
  124:../src/stm32f30x_dbgmcu.c ****   else
  125:../src/stm32f30x_dbgmcu.c ****   {
  126:../src/stm32f30x_dbgmcu.c ****     DBGMCU->CR &= ~DBGMCU_Periph;
- 125              		.loc 1 126 0
- 126 0068 4FF40053 		mov	r3, #8192
- 127 006c CEF20403 		movt	r3, 57348
- 128 0070 4FF40052 		mov	r2, #8192
- 129 0074 CEF20402 		movt	r2, 57348
- 130 0078 5168     		ldr	r1, [r2, #4]
- 131 007a 7A68     		ldr	r2, [r7, #4]
- 132 007c 6FEA0202 		mvn	r2, r2
- 133 0080 0A40     		ands	r2, r2, r1
- 134 0082 5A60     		str	r2, [r3, #4]
- 135              	.L5:
+ 126              		.loc 1 126 0
+ 127 0068 4FF40053 		mov	r3, #8192
+ 128 006c CEF20403 		movt	r3, 57348
+ 129 0070 4FF40052 		mov	r2, #8192
+ 130 0074 CEF20402 		movt	r2, 57348
+ 131 0078 5168     		ldr	r1, [r2, #4]
+ 132 007a 7A68     		ldr	r2, [r7, #4]
+ 133 007c 6FEA0202 		mvn	r2, r2
+ 134 0080 0A40     		ands	r2, r2, r1
+ 135 0082 5A60     		str	r2, [r3, #4]
+ 136              	.L5:
  127:../src/stm32f30x_dbgmcu.c ****   }
  128:../src/stm32f30x_dbgmcu.c **** }
- 136              		.loc 1 128 0
- 137 0084 07F10C07 		add	r7, r7, #12
- 138 0088 BD46     		mov	sp, r7
- 139 008a 80BC     		pop	{r7}
- 140 008c 7047     		bx	lr
- 141              		.cfi_endproc
- 142              	.LFE113:
- 144 008e 00BF     		.align	2
- 145              		.global	DBGMCU_APB1PeriphConfig
- 146              		.thumb
- 147              		.thumb_func
- 149              	DBGMCU_APB1PeriphConfig:
- 150              	.LFB114:
+ 137              		.loc 1 128 0
+ 138 0084 07F10C07 		add	r7, r7, #12
+ 139 0088 BD46     		mov	sp, r7
+ 140 008a 80BC     		pop	{r7}
+ 141 008c 7047     		bx	lr
+ 142              		.cfi_endproc
+ 143              	.LFE113:
+ 145 008e 00BF     		.align	2
+ 146              		.global	DBGMCU_APB1PeriphConfig
+ 147              		.thumb
+ 148              		.thumb_func
+ 150              	DBGMCU_APB1PeriphConfig:
+ 151              	.LFB114:
  129:../src/stm32f30x_dbgmcu.c **** 
  130:../src/stm32f30x_dbgmcu.c **** /**
  131:../src/stm32f30x_dbgmcu.c ****   * @brief  Configures APB1 peripheral behavior when the MCU is in Debug mode.
@@ -294,76 +295,76 @@
  151:../src/stm32f30x_dbgmcu.c ****   */
  152:../src/stm32f30x_dbgmcu.c **** void DBGMCU_APB1PeriphConfig(uint32_t DBGMCU_Periph, FunctionalState NewState)
  153:../src/stm32f30x_dbgmcu.c **** {
- 151              		.loc 1 153 0
- 152              		.cfi_startproc
- 153              		@ args = 0, pretend = 0, frame = 8
- 154              		@ frame_needed = 1, uses_anonymous_args = 0
- 155              		@ link register save eliminated.
- 156 0090 80B4     		push	{r7}
- 157              	.LCFI7:
- 158              		.cfi_def_cfa_offset 4
- 159              		.cfi_offset 7, -4
- 160 0092 83B0     		sub	sp, sp, #12
- 161              	.LCFI8:
- 162              		.cfi_def_cfa_offset 16
- 163 0094 00AF     		add	r7, sp, #0
- 164              	.LCFI9:
- 165              		.cfi_def_cfa_register 7
- 166 0096 7860     		str	r0, [r7, #4]
- 167 0098 0B46     		mov	r3, r1
- 168 009a FB70     		strb	r3, [r7, #3]
+ 152              		.loc 1 153 0
+ 153              		.cfi_startproc
+ 154              		@ args = 0, pretend = 0, frame = 8
+ 155              		@ frame_needed = 1, uses_anonymous_args = 0
+ 156              		@ link register save eliminated.
+ 157 0090 80B4     		push	{r7}
+ 158              	.LCFI7:
+ 159              		.cfi_def_cfa_offset 4
+ 160              		.cfi_offset 7, -4
+ 161 0092 83B0     		sub	sp, sp, #12
+ 162              	.LCFI8:
+ 163              		.cfi_def_cfa_offset 16
+ 164 0094 00AF     		add	r7, sp, #0
+ 165              	.LCFI9:
+ 166              		.cfi_def_cfa_register 7
+ 167 0096 7860     		str	r0, [r7, #4]
+ 168 0098 0B46     		mov	r3, r1
+ 169 009a FB70     		strb	r3, [r7, #3]
  154:../src/stm32f30x_dbgmcu.c ****   /* Check the parameters */
  155:../src/stm32f30x_dbgmcu.c ****   assert_param(IS_DBGMCU_APB1PERIPH(DBGMCU_Periph));
  156:../src/stm32f30x_dbgmcu.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
  157:../src/stm32f30x_dbgmcu.c **** 
  158:../src/stm32f30x_dbgmcu.c ****   if (NewState != DISABLE)
- 169              		.loc 1 158 0
- 170 009c FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
- 171 009e 002B     		cmp	r3, #0
- 172 00a0 0CD0     		beq	.L9
+ 170              		.loc 1 158 0
+ 171 009c FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 172 009e 002B     		cmp	r3, #0
+ 173 00a0 0CD0     		beq	.L9
  159:../src/stm32f30x_dbgmcu.c ****   {
  160:../src/stm32f30x_dbgmcu.c ****     DBGMCU->APB1FZ |= DBGMCU_Periph;
- 173              		.loc 1 160 0
- 174 00a2 4FF40053 		mov	r3, #8192
- 175 00a6 CEF20403 		movt	r3, 57348
- 176 00aa 4FF40052 		mov	r2, #8192
- 177 00ae CEF20402 		movt	r2, 57348
- 178 00b2 9168     		ldr	r1, [r2, #8]
- 179 00b4 7A68     		ldr	r2, [r7, #4]
- 180 00b6 0A43     		orrs	r2, r2, r1
- 181 00b8 9A60     		str	r2, [r3, #8]
- 182 00ba 0DE0     		b	.L8
- 183              	.L9:
+ 174              		.loc 1 160 0
+ 175 00a2 4FF40053 		mov	r3, #8192
+ 176 00a6 CEF20403 		movt	r3, 57348
+ 177 00aa 4FF40052 		mov	r2, #8192
+ 178 00ae CEF20402 		movt	r2, 57348
+ 179 00b2 9168     		ldr	r1, [r2, #8]
+ 180 00b4 7A68     		ldr	r2, [r7, #4]
+ 181 00b6 0A43     		orrs	r2, r2, r1
+ 182 00b8 9A60     		str	r2, [r3, #8]
+ 183 00ba 0DE0     		b	.L8
+ 184              	.L9:
  161:../src/stm32f30x_dbgmcu.c ****   }
  162:../src/stm32f30x_dbgmcu.c ****   else
  163:../src/stm32f30x_dbgmcu.c ****   {
  164:../src/stm32f30x_dbgmcu.c ****     DBGMCU->APB1FZ &= ~DBGMCU_Periph;
- 184              		.loc 1 164 0
- 185 00bc 4FF40053 		mov	r3, #8192
- 186 00c0 CEF20403 		movt	r3, 57348
- 187 00c4 4FF40052 		mov	r2, #8192
- 188 00c8 CEF20402 		movt	r2, 57348
- 189 00cc 9168     		ldr	r1, [r2, #8]
- 190 00ce 7A68     		ldr	r2, [r7, #4]
- 191 00d0 6FEA0202 		mvn	r2, r2
- 192 00d4 0A40     		ands	r2, r2, r1
- 193 00d6 9A60     		str	r2, [r3, #8]
- 194              	.L8:
+ 185              		.loc 1 164 0
+ 186 00bc 4FF40053 		mov	r3, #8192
+ 187 00c0 CEF20403 		movt	r3, 57348
+ 188 00c4 4FF40052 		mov	r2, #8192
+ 189 00c8 CEF20402 		movt	r2, 57348
+ 190 00cc 9168     		ldr	r1, [r2, #8]
+ 191 00ce 7A68     		ldr	r2, [r7, #4]
+ 192 00d0 6FEA0202 		mvn	r2, r2
+ 193 00d4 0A40     		ands	r2, r2, r1
+ 194 00d6 9A60     		str	r2, [r3, #8]
+ 195              	.L8:
  165:../src/stm32f30x_dbgmcu.c ****   }
  166:../src/stm32f30x_dbgmcu.c **** }
- 195              		.loc 1 166 0
- 196 00d8 07F10C07 		add	r7, r7, #12
- 197 00dc BD46     		mov	sp, r7
- 198 00de 80BC     		pop	{r7}
- 199 00e0 7047     		bx	lr
- 200              		.cfi_endproc
- 201              	.LFE114:
- 203 00e2 00BF     		.align	2
- 204              		.global	DBGMCU_APB2PeriphConfig
- 205              		.thumb
- 206              		.thumb_func
- 208              	DBGMCU_APB2PeriphConfig:
- 209              	.LFB115:
+ 196              		.loc 1 166 0
+ 197 00d8 07F10C07 		add	r7, r7, #12
+ 198 00dc BD46     		mov	sp, r7
+ 199 00de 80BC     		pop	{r7}
+ 200 00e0 7047     		bx	lr
+ 201              		.cfi_endproc
+ 202              	.LFE114:
+ 204 00e2 00BF     		.align	2
+ 205              		.global	DBGMCU_APB2PeriphConfig
+ 206              		.thumb
+ 207              		.thumb_func
+ 209              	DBGMCU_APB2PeriphConfig:
+ 210              	.LFB115:
  167:../src/stm32f30x_dbgmcu.c **** 
  168:../src/stm32f30x_dbgmcu.c **** /**
  169:../src/stm32f30x_dbgmcu.c ****   * @brief  Configures APB2 peripheral behavior when the MCU is in Debug mode.
@@ -380,84 +381,84 @@
  180:../src/stm32f30x_dbgmcu.c ****   */
  181:../src/stm32f30x_dbgmcu.c **** void DBGMCU_APB2PeriphConfig(uint32_t DBGMCU_Periph, FunctionalState NewState)
  182:../src/stm32f30x_dbgmcu.c **** {
- 210              		.loc 1 182 0
- 211              		.cfi_startproc
- 212              		@ args = 0, pretend = 0, frame = 8
- 213              		@ frame_needed = 1, uses_anonymous_args = 0
- 214              		@ link register save eliminated.
- 215 00e4 80B4     		push	{r7}
- 216              	.LCFI10:
- 217              		.cfi_def_cfa_offset 4
- 218              		.cfi_offset 7, -4
- 219 00e6 83B0     		sub	sp, sp, #12
- 220              	.LCFI11:
- 221              		.cfi_def_cfa_offset 16
- 222 00e8 00AF     		add	r7, sp, #0
- 223              	.LCFI12:
- 224              		.cfi_def_cfa_register 7
- 225 00ea 7860     		str	r0, [r7, #4]
- 226 00ec 0B46     		mov	r3, r1
- 227 00ee FB70     		strb	r3, [r7, #3]
+ 211              		.loc 1 182 0
+ 212              		.cfi_startproc
+ 213              		@ args = 0, pretend = 0, frame = 8
+ 214              		@ frame_needed = 1, uses_anonymous_args = 0
+ 215              		@ link register save eliminated.
+ 216 00e4 80B4     		push	{r7}
+ 217              	.LCFI10:
+ 218              		.cfi_def_cfa_offset 4
+ 219              		.cfi_offset 7, -4
+ 220 00e6 83B0     		sub	sp, sp, #12
+ 221              	.LCFI11:
+ 222              		.cfi_def_cfa_offset 16
+ 223 00e8 00AF     		add	r7, sp, #0
+ 224              	.LCFI12:
+ 225              		.cfi_def_cfa_register 7
+ 226 00ea 7860     		str	r0, [r7, #4]
+ 227 00ec 0B46     		mov	r3, r1
+ 228 00ee FB70     		strb	r3, [r7, #3]
  183:../src/stm32f30x_dbgmcu.c ****   /* Check the parameters */
  184:../src/stm32f30x_dbgmcu.c ****   assert_param(IS_DBGMCU_APB2PERIPH(DBGMCU_Periph));
  185:../src/stm32f30x_dbgmcu.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
  186:../src/stm32f30x_dbgmcu.c **** 
  187:../src/stm32f30x_dbgmcu.c ****   if (NewState != DISABLE)
- 228              		.loc 1 187 0
- 229 00f0 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
- 230 00f2 002B     		cmp	r3, #0
- 231 00f4 0CD0     		beq	.L12
+ 229              		.loc 1 187 0
+ 230 00f0 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 231 00f2 002B     		cmp	r3, #0
+ 232 00f4 0CD0     		beq	.L12
  188:../src/stm32f30x_dbgmcu.c ****   {
  189:../src/stm32f30x_dbgmcu.c ****     DBGMCU->APB2FZ |= DBGMCU_Periph;
- 232              		.loc 1 189 0
- 233 00f6 4FF40053 		mov	r3, #8192
- 234 00fa CEF20403 		movt	r3, 57348
- 235 00fe 4FF40052 		mov	r2, #8192
- 236 0102 CEF20402 		movt	r2, 57348
- 237 0106 D168     		ldr	r1, [r2, #12]
- 238 0108 7A68     		ldr	r2, [r7, #4]
- 239 010a 0A43     		orrs	r2, r2, r1
- 240 010c DA60     		str	r2, [r3, #12]
- 241 010e 0DE0     		b	.L11
- 242              	.L12:
+ 233              		.loc 1 189 0
+ 234 00f6 4FF40053 		mov	r3, #8192
+ 235 00fa CEF20403 		movt	r3, 57348
+ 236 00fe 4FF40052 		mov	r2, #8192
+ 237 0102 CEF20402 		movt	r2, 57348
+ 238 0106 D168     		ldr	r1, [r2, #12]
+ 239 0108 7A68     		ldr	r2, [r7, #4]
+ 240 010a 0A43     		orrs	r2, r2, r1
+ 241 010c DA60     		str	r2, [r3, #12]
+ 242 010e 0DE0     		b	.L11
+ 243              	.L12:
  190:../src/stm32f30x_dbgmcu.c ****   }
  191:../src/stm32f30x_dbgmcu.c ****   else
  192:../src/stm32f30x_dbgmcu.c ****   {
  193:../src/stm32f30x_dbgmcu.c ****     DBGMCU->APB2FZ &= ~DBGMCU_Periph;
- 243              		.loc 1 193 0
- 244 0110 4FF40053 		mov	r3, #8192
- 245 0114 CEF20403 		movt	r3, 57348
- 246 0118 4FF40052 		mov	r2, #8192
- 247 011c CEF20402 		movt	r2, 57348
- 248 0120 D168     		ldr	r1, [r2, #12]
- 249 0122 7A68     		ldr	r2, [r7, #4]
- 250 0124 6FEA0202 		mvn	r2, r2
- 251 0128 0A40     		ands	r2, r2, r1
- 252 012a DA60     		str	r2, [r3, #12]
- 253              	.L11:
+ 244              		.loc 1 193 0
+ 245 0110 4FF40053 		mov	r3, #8192
+ 246 0114 CEF20403 		movt	r3, 57348
+ 247 0118 4FF40052 		mov	r2, #8192
+ 248 011c CEF20402 		movt	r2, 57348
+ 249 0120 D168     		ldr	r1, [r2, #12]
+ 250 0122 7A68     		ldr	r2, [r7, #4]
+ 251 0124 6FEA0202 		mvn	r2, r2
+ 252 0128 0A40     		ands	r2, r2, r1
+ 253 012a DA60     		str	r2, [r3, #12]
+ 254              	.L11:
  194:../src/stm32f30x_dbgmcu.c ****   }
  195:../src/stm32f30x_dbgmcu.c **** }
- 254              		.loc 1 195 0
- 255 012c 07F10C07 		add	r7, r7, #12
- 256 0130 BD46     		mov	sp, r7
- 257 0132 80BC     		pop	{r7}
- 258 0134 7047     		bx	lr
- 259              		.cfi_endproc
- 260              	.LFE115:
- 262              	.Letext0:
- 263              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
- 264              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
- 265              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
+ 255              		.loc 1 195 0
+ 256 012c 07F10C07 		add	r7, r7, #12
+ 257 0130 BD46     		mov	sp, r7
+ 258 0132 80BC     		pop	{r7}
+ 259 0134 7047     		bx	lr
+ 260              		.cfi_endproc
+ 261              	.LFE115:
+ 263              	.Letext0:
+ 264              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
+ 265              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
+ 266              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32f30x_dbgmcu.c
-     /tmp/cc4dts37.s:19     .text:00000000 $t
-     /tmp/cc4dts37.s:24     .text:00000000 DBGMCU_GetREVID
-     /tmp/cc4dts37.s:57     .text:0000001c DBGMCU_GetDEVID
-     /tmp/cc4dts37.s:90     .text:0000003c DBGMCU_Config
-     /tmp/cc4dts37.s:149    .text:00000090 DBGMCU_APB1PeriphConfig
-     /tmp/cc4dts37.s:208    .text:000000e4 DBGMCU_APB2PeriphConfig
+     /tmp/ccVyxOPx.s:20     .text:00000000 $t
+     /tmp/ccVyxOPx.s:25     .text:00000000 DBGMCU_GetREVID
+     /tmp/ccVyxOPx.s:58     .text:0000001c DBGMCU_GetDEVID
+     /tmp/ccVyxOPx.s:91     .text:0000003c DBGMCU_Config
+     /tmp/ccVyxOPx.s:150    .text:00000090 DBGMCU_APB1PeriphConfig
+     /tmp/ccVyxOPx.s:209    .text:000000e4 DBGMCU_APB2PeriphConfig
                      .debug_frame:00000010 $d
-                           .group:00000000 wm4.1.323dce8664331a0daf4a2675e107c70c
+                           .group:00000000 wm4.1.743cd71370ebc432b539c5dba7924ecc
                            .group:00000000 wm4.stm32f30x.h.56.6f19c65e98e3319a61449cb2b2455af5
                            .group:00000000 wm4.core_cm4.h.32.1434cd257ff5806b1b03cd32ab0641e9
                            .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05

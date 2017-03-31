@@ -1,28 +1,29 @@
    1              		.syntax unified
    2              		.cpu cortex-m4
    3              		.eabi_attribute 27, 3
-   4              		.fpu fpv4-sp-d16
-   5              		.eabi_attribute 20, 1
-   6              		.eabi_attribute 21, 1
-   7              		.eabi_attribute 23, 3
-   8              		.eabi_attribute 24, 1
-   9              		.eabi_attribute 25, 1
-  10              		.eabi_attribute 26, 1
-  11              		.eabi_attribute 30, 6
-  12              		.eabi_attribute 34, 1
-  13              		.eabi_attribute 18, 4
-  14              		.thumb
-  15              		.file	"stm32f30x_misc.c"
-  16              		.text
-  17              	.Ltext0:
-  18              		.cfi_sections	.debug_frame
-  19              		.align	2
-  20              		.global	NVIC_PriorityGroupConfig
-  21              		.thumb
-  22              		.thumb_func
-  24              	NVIC_PriorityGroupConfig:
-  25              	.LFB111:
-  26              		.file 1 "../src/stm32f30x_misc.c"
+   4              		.eabi_attribute 28, 1
+   5              		.fpu fpv4-sp-d16
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 6
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.thumb
+  16              		.file	"stm32f30x_misc.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.align	2
+  21              		.global	NVIC_PriorityGroupConfig
+  22              		.thumb
+  23              		.thumb_func
+  25              	NVIC_PriorityGroupConfig:
+  26              	.LFB111:
+  27              		.file 1 "../src/stm32f30x_misc.c"
    1:../src/stm32f30x_misc.c **** /**
    2:../src/stm32f30x_misc.c ****   ******************************************************************************
    3:../src/stm32f30x_misc.c ****   * @file    stm32f30x_misc.c
@@ -124,48 +125,48 @@
   99:../src/stm32f30x_misc.c ****   */
  100:../src/stm32f30x_misc.c **** void NVIC_PriorityGroupConfig(uint32_t NVIC_PriorityGroup)
  101:../src/stm32f30x_misc.c **** {
-  27              		.loc 1 101 0
-  28              		.cfi_startproc
-  29              		@ args = 0, pretend = 0, frame = 8
-  30              		@ frame_needed = 1, uses_anonymous_args = 0
-  31              		@ link register save eliminated.
-  32 0000 80B4     		push	{r7}
-  33              	.LCFI0:
-  34              		.cfi_def_cfa_offset 4
-  35              		.cfi_offset 7, -4
-  36 0002 83B0     		sub	sp, sp, #12
-  37              	.LCFI1:
-  38              		.cfi_def_cfa_offset 16
-  39 0004 00AF     		add	r7, sp, #0
-  40              	.LCFI2:
-  41              		.cfi_def_cfa_register 7
-  42 0006 7860     		str	r0, [r7, #4]
+  28              		.loc 1 101 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 8
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33 0000 80B4     		push	{r7}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 4
+  36              		.cfi_offset 7, -4
+  37 0002 83B0     		sub	sp, sp, #12
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_offset 16
+  40 0004 00AF     		add	r7, sp, #0
+  41              	.LCFI2:
+  42              		.cfi_def_cfa_register 7
+  43 0006 7860     		str	r0, [r7, #4]
  102:../src/stm32f30x_misc.c ****   /* Check the parameters */
  103:../src/stm32f30x_misc.c ****   assert_param(IS_NVIC_PRIORITY_GROUP(NVIC_PriorityGroup));
  104:../src/stm32f30x_misc.c ****   
  105:../src/stm32f30x_misc.c ****   /* Set the PRIGROUP[10:8] bits according to NVIC_PriorityGroup value */
  106:../src/stm32f30x_misc.c ****   SCB->AIRCR = AIRCR_VECTKEY_MASK | NVIC_PriorityGroup;
-  43              		.loc 1 106 0
-  44 0008 4FF46D43 		mov	r3, #60672
-  45 000c CEF20003 		movt	r3, 57344
-  46 0010 7A68     		ldr	r2, [r7, #4]
-  47 0012 42F0BF62 		orr	r2, r2, #100139008
-  48 0016 42F40032 		orr	r2, r2, #131072
-  49 001a DA60     		str	r2, [r3, #12]
+  44              		.loc 1 106 0
+  45 0008 4FF46D43 		mov	r3, #60672
+  46 000c CEF20003 		movt	r3, 57344
+  47 0010 7A68     		ldr	r2, [r7, #4]
+  48 0012 42F0BF62 		orr	r2, r2, #100139008
+  49 0016 42F40032 		orr	r2, r2, #131072
+  50 001a DA60     		str	r2, [r3, #12]
  107:../src/stm32f30x_misc.c **** }
-  50              		.loc 1 107 0
-  51 001c 07F10C07 		add	r7, r7, #12
-  52 0020 BD46     		mov	sp, r7
-  53 0022 80BC     		pop	{r7}
-  54 0024 7047     		bx	lr
-  55              		.cfi_endproc
-  56              	.LFE111:
-  58 0026 00BF     		.align	2
-  59              		.global	NVIC_Init
-  60              		.thumb
-  61              		.thumb_func
-  63              	NVIC_Init:
-  64              	.LFB112:
+  51              		.loc 1 107 0
+  52 001c 07F10C07 		add	r7, r7, #12
+  53 0020 BD46     		mov	sp, r7
+  54 0022 80BC     		pop	{r7}
+  55 0024 7047     		bx	lr
+  56              		.cfi_endproc
+  57              	.LFE111:
+  59 0026 00BF     		.align	2
+  60              		.global	NVIC_Init
+  61              		.thumb
+  62              		.thumb_func
+  64              	NVIC_Init:
+  65              	.LFB112:
  108:../src/stm32f30x_misc.c **** 
  109:../src/stm32f30x_misc.c **** /**
  110:../src/stm32f30x_misc.c ****   * @brief  Initializes the NVIC peripheral according to the specified
@@ -178,30 +179,30 @@
  117:../src/stm32f30x_misc.c ****   */
  118:../src/stm32f30x_misc.c **** void NVIC_Init(NVIC_InitTypeDef* NVIC_InitStruct)
  119:../src/stm32f30x_misc.c **** {
-  65              		.loc 1 119 0
-  66              		.cfi_startproc
-  67              		@ args = 0, pretend = 0, frame = 24
-  68              		@ frame_needed = 1, uses_anonymous_args = 0
-  69              		@ link register save eliminated.
-  70 0028 80B4     		push	{r7}
-  71              	.LCFI3:
-  72              		.cfi_def_cfa_offset 4
-  73              		.cfi_offset 7, -4
-  74 002a 87B0     		sub	sp, sp, #28
-  75              	.LCFI4:
-  76              		.cfi_def_cfa_offset 32
-  77 002c 00AF     		add	r7, sp, #0
-  78              	.LCFI5:
-  79              		.cfi_def_cfa_register 7
-  80 002e 7860     		str	r0, [r7, #4]
+  66              		.loc 1 119 0
+  67              		.cfi_startproc
+  68              		@ args = 0, pretend = 0, frame = 24
+  69              		@ frame_needed = 1, uses_anonymous_args = 0
+  70              		@ link register save eliminated.
+  71 0028 80B4     		push	{r7}
+  72              	.LCFI3:
+  73              		.cfi_def_cfa_offset 4
+  74              		.cfi_offset 7, -4
+  75 002a 87B0     		sub	sp, sp, #28
+  76              	.LCFI4:
+  77              		.cfi_def_cfa_offset 32
+  78 002c 00AF     		add	r7, sp, #0
+  79              	.LCFI5:
+  80              		.cfi_def_cfa_register 7
+  81 002e 7860     		str	r0, [r7, #4]
  120:../src/stm32f30x_misc.c ****   uint32_t tmppriority = 0x00, tmppre = 0x00, tmpsub = 0x0F;
-  81              		.loc 1 120 0
-  82 0030 4FF00003 		mov	r3, #0
-  83 0034 7B61     		str	r3, [r7, #20]
-  84 0036 4FF00003 		mov	r3, #0
-  85 003a 3B61     		str	r3, [r7, #16]
-  86 003c 4FF00F03 		mov	r3, #15
-  87 0040 FB60     		str	r3, [r7, #12]
+  82              		.loc 1 120 0
+  83 0030 4FF00003 		mov	r3, #0
+  84 0034 7B61     		str	r3, [r7, #20]
+  85 0036 4FF00003 		mov	r3, #0
+  86 003a 3B61     		str	r3, [r7, #16]
+  87 003c 4FF00F03 		mov	r3, #15
+  88 0040 FB60     		str	r3, [r7, #12]
  121:../src/stm32f30x_misc.c ****   
  122:../src/stm32f30x_misc.c ****   /* Check the parameters */
  123:../src/stm32f30x_misc.c ****   assert_param(IS_FUNCTIONAL_STATE(NVIC_InitStruct->NVIC_IRQChannelCmd));
@@ -209,130 +210,130 @@
  125:../src/stm32f30x_misc.c ****   assert_param(IS_NVIC_SUB_PRIORITY(NVIC_InitStruct->NVIC_IRQChannelSubPriority));
  126:../src/stm32f30x_misc.c ****     
  127:../src/stm32f30x_misc.c ****   if (NVIC_InitStruct->NVIC_IRQChannelCmd != DISABLE)
-  88              		.loc 1 127 0
-  89 0042 7B68     		ldr	r3, [r7, #4]
-  90 0044 DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
-  91 0046 002B     		cmp	r3, #0
-  92 0048 47D0     		beq	.L3
+  89              		.loc 1 127 0
+  90 0042 7B68     		ldr	r3, [r7, #4]
+  91 0044 DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+  92 0046 002B     		cmp	r3, #0
+  93 0048 47D0     		beq	.L3
  128:../src/stm32f30x_misc.c ****   {
  129:../src/stm32f30x_misc.c ****     /* Compute the Corresponding IRQ Priority --------------------------------*/    
  130:../src/stm32f30x_misc.c ****     tmppriority = (0x700 - ((SCB->AIRCR) & (uint32_t)0x700))>> 0x08;
-  93              		.loc 1 130 0
-  94 004a 4FF46D43 		mov	r3, #60672
-  95 004e CEF20003 		movt	r3, 57344
-  96 0052 DB68     		ldr	r3, [r3, #12]
-  97 0054 6FEA0303 		mvn	r3, r3
-  98 0058 03F4E063 		and	r3, r3, #1792
-  99 005c 4FEA1323 		lsr	r3, r3, #8
- 100 0060 7B61     		str	r3, [r7, #20]
+  94              		.loc 1 130 0
+  95 004a 4FF46D43 		mov	r3, #60672
+  96 004e CEF20003 		movt	r3, 57344
+  97 0052 DB68     		ldr	r3, [r3, #12]
+  98 0054 6FEA0303 		mvn	r3, r3
+  99 0058 03F4E063 		and	r3, r3, #1792
+ 100 005c 4FEA1323 		lsr	r3, r3, #8
+ 101 0060 7B61     		str	r3, [r7, #20]
  131:../src/stm32f30x_misc.c ****     tmppre = (0x4 - tmppriority);
- 101              		.loc 1 131 0
- 102 0062 7B69     		ldr	r3, [r7, #20]
- 103 0064 C3F10403 		rsb	r3, r3, #4
- 104 0068 3B61     		str	r3, [r7, #16]
+ 102              		.loc 1 131 0
+ 103 0062 7B69     		ldr	r3, [r7, #20]
+ 104 0064 C3F10403 		rsb	r3, r3, #4
+ 105 0068 3B61     		str	r3, [r7, #16]
  132:../src/stm32f30x_misc.c ****     tmpsub = tmpsub >> tmppriority;
- 105              		.loc 1 132 0
- 106 006a 7B69     		ldr	r3, [r7, #20]
- 107 006c FA68     		ldr	r2, [r7, #12]
- 108 006e 22FA03F3 		lsr	r3, r2, r3
- 109 0072 FB60     		str	r3, [r7, #12]
+ 106              		.loc 1 132 0
+ 107 006a 7B69     		ldr	r3, [r7, #20]
+ 108 006c FA68     		ldr	r2, [r7, #12]
+ 109 006e 22FA03F3 		lsr	r3, r2, r3
+ 110 0072 FB60     		str	r3, [r7, #12]
  133:../src/stm32f30x_misc.c **** 
  134:../src/stm32f30x_misc.c ****     tmppriority = (uint32_t)NVIC_InitStruct->NVIC_IRQChannelPreemptionPriority << tmppre;
- 110              		.loc 1 134 0
- 111 0074 7B68     		ldr	r3, [r7, #4]
- 112 0076 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 113 0078 1A46     		mov	r2, r3
- 114 007a 3B69     		ldr	r3, [r7, #16]
- 115 007c 02FA03F3 		lsl	r3, r2, r3
- 116 0080 7B61     		str	r3, [r7, #20]
+ 111              		.loc 1 134 0
+ 112 0074 7B68     		ldr	r3, [r7, #4]
+ 113 0076 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 114 0078 1A46     		mov	r2, r3
+ 115 007a 3B69     		ldr	r3, [r7, #16]
+ 116 007c 02FA03F3 		lsl	r3, r2, r3
+ 117 0080 7B61     		str	r3, [r7, #20]
  135:../src/stm32f30x_misc.c ****     tmppriority |=  NVIC_InitStruct->NVIC_IRQChannelSubPriority & tmpsub;
- 117              		.loc 1 135 0
- 118 0082 7B68     		ldr	r3, [r7, #4]
- 119 0084 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
- 120 0086 1A46     		mov	r2, r3
- 121 0088 FB68     		ldr	r3, [r7, #12]
- 122 008a 1340     		ands	r3, r3, r2
- 123 008c 7A69     		ldr	r2, [r7, #20]
- 124 008e 1343     		orrs	r3, r3, r2
- 125 0090 7B61     		str	r3, [r7, #20]
+ 118              		.loc 1 135 0
+ 119 0082 7B68     		ldr	r3, [r7, #4]
+ 120 0084 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 121 0086 1A46     		mov	r2, r3
+ 122 0088 FB68     		ldr	r3, [r7, #12]
+ 123 008a 1340     		ands	r3, r3, r2
+ 124 008c 7A69     		ldr	r2, [r7, #20]
+ 125 008e 1343     		orrs	r3, r3, r2
+ 126 0090 7B61     		str	r3, [r7, #20]
  136:../src/stm32f30x_misc.c ****     tmppriority = tmppriority << 0x04;
- 126              		.loc 1 136 0
- 127 0092 7B69     		ldr	r3, [r7, #20]
- 128 0094 4FEA0313 		lsl	r3, r3, #4
- 129 0098 7B61     		str	r3, [r7, #20]
+ 127              		.loc 1 136 0
+ 128 0092 7B69     		ldr	r3, [r7, #20]
+ 129 0094 4FEA0313 		lsl	r3, r3, #4
+ 130 0098 7B61     		str	r3, [r7, #20]
  137:../src/stm32f30x_misc.c ****         
  138:../src/stm32f30x_misc.c ****     NVIC->IP[NVIC_InitStruct->NVIC_IRQChannel] = tmppriority;
- 130              		.loc 1 138 0
- 131 009a 4FF46143 		mov	r3, #57600
- 132 009e CEF20003 		movt	r3, 57344
- 133 00a2 7A68     		ldr	r2, [r7, #4]
- 134 00a4 1278     		ldrb	r2, [r2, #0]	@ zero_extendqisi2
- 135 00a6 1146     		mov	r1, r2
- 136 00a8 7A69     		ldr	r2, [r7, #20]
- 137 00aa D2B2     		uxtb	r2, r2
- 138 00ac 5B18     		adds	r3, r3, r1
- 139 00ae 83F80023 		strb	r2, [r3, #768]
+ 131              		.loc 1 138 0
+ 132 009a 4FF46143 		mov	r3, #57600
+ 133 009e CEF20003 		movt	r3, 57344
+ 134 00a2 7A68     		ldr	r2, [r7, #4]
+ 135 00a4 1278     		ldrb	r2, [r2, #0]	@ zero_extendqisi2
+ 136 00a6 1146     		mov	r1, r2
+ 137 00a8 7A69     		ldr	r2, [r7, #20]
+ 138 00aa D2B2     		uxtb	r2, r2
+ 139 00ac 5B18     		adds	r3, r3, r1
+ 140 00ae 83F80023 		strb	r2, [r3, #768]
  139:../src/stm32f30x_misc.c ****     
  140:../src/stm32f30x_misc.c ****     /* Enable the Selected IRQ Channels --------------------------------------*/
  141:../src/stm32f30x_misc.c ****     NVIC->ISER[NVIC_InitStruct->NVIC_IRQChannel >> 0x05] =
- 140              		.loc 1 141 0
- 141 00b2 4FF46143 		mov	r3, #57600
- 142 00b6 CEF20003 		movt	r3, 57344
- 143 00ba 7A68     		ldr	r2, [r7, #4]
- 144 00bc 1278     		ldrb	r2, [r2, #0]	@ zero_extendqisi2
- 145 00be 4FEA5212 		lsr	r2, r2, #5
- 146 00c2 D2B2     		uxtb	r2, r2
+ 141              		.loc 1 141 0
+ 142 00b2 4FF46143 		mov	r3, #57600
+ 143 00b6 CEF20003 		movt	r3, 57344
+ 144 00ba 7A68     		ldr	r2, [r7, #4]
+ 145 00bc 1278     		ldrb	r2, [r2, #0]	@ zero_extendqisi2
+ 146 00be 4FEA5212 		lsr	r2, r2, #5
+ 147 00c2 D2B2     		uxtb	r2, r2
  142:../src/stm32f30x_misc.c ****       (uint32_t)0x01 << (NVIC_InitStruct->NVIC_IRQChannel & (uint8_t)0x1F);
- 147              		.loc 1 142 0
- 148 00c4 7968     		ldr	r1, [r7, #4]
- 149 00c6 0978     		ldrb	r1, [r1, #0]	@ zero_extendqisi2
- 150 00c8 01F01F01 		and	r1, r1, #31
- 151 00cc 4FF00100 		mov	r0, #1
- 152 00d0 00FA01F1 		lsl	r1, r0, r1
+ 148              		.loc 1 142 0
+ 149 00c4 7968     		ldr	r1, [r7, #4]
+ 150 00c6 0978     		ldrb	r1, [r1, #0]	@ zero_extendqisi2
+ 151 00c8 01F01F01 		and	r1, r1, #31
+ 152 00cc 4FF00100 		mov	r0, #1
+ 153 00d0 00FA01F1 		lsl	r1, r0, r1
  141:../src/stm32f30x_misc.c ****     NVIC->ISER[NVIC_InitStruct->NVIC_IRQChannel >> 0x05] =
- 153              		.loc 1 141 0
- 154 00d4 43F82210 		str	r1, [r3, r2, lsl #2]
- 155 00d8 14E0     		b	.L2
- 156              	.L3:
+ 154              		.loc 1 141 0
+ 155 00d4 43F82210 		str	r1, [r3, r2, lsl #2]
+ 156 00d8 14E0     		b	.L2
+ 157              	.L3:
  143:../src/stm32f30x_misc.c ****   }
  144:../src/stm32f30x_misc.c ****   else
  145:../src/stm32f30x_misc.c ****   {
  146:../src/stm32f30x_misc.c ****     /* Disable the Selected IRQ Channels -------------------------------------*/
  147:../src/stm32f30x_misc.c ****     NVIC->ICER[NVIC_InitStruct->NVIC_IRQChannel >> 0x05] =
- 157              		.loc 1 147 0
- 158 00da 4FF46143 		mov	r3, #57600
- 159 00de CEF20003 		movt	r3, 57344
- 160 00e2 7A68     		ldr	r2, [r7, #4]
- 161 00e4 1278     		ldrb	r2, [r2, #0]	@ zero_extendqisi2
- 162 00e6 4FEA5212 		lsr	r2, r2, #5
- 163 00ea D2B2     		uxtb	r2, r2
+ 158              		.loc 1 147 0
+ 159 00da 4FF46143 		mov	r3, #57600
+ 160 00de CEF20003 		movt	r3, 57344
+ 161 00e2 7A68     		ldr	r2, [r7, #4]
+ 162 00e4 1278     		ldrb	r2, [r2, #0]	@ zero_extendqisi2
+ 163 00e6 4FEA5212 		lsr	r2, r2, #5
+ 164 00ea D2B2     		uxtb	r2, r2
  148:../src/stm32f30x_misc.c ****       (uint32_t)0x01 << (NVIC_InitStruct->NVIC_IRQChannel & (uint8_t)0x1F);
- 164              		.loc 1 148 0
- 165 00ec 7968     		ldr	r1, [r7, #4]
- 166 00ee 0978     		ldrb	r1, [r1, #0]	@ zero_extendqisi2
- 167 00f0 01F01F01 		and	r1, r1, #31
- 168 00f4 4FF00100 		mov	r0, #1
- 169 00f8 00FA01F1 		lsl	r1, r0, r1
+ 165              		.loc 1 148 0
+ 166 00ec 7968     		ldr	r1, [r7, #4]
+ 167 00ee 0978     		ldrb	r1, [r1, #0]	@ zero_extendqisi2
+ 168 00f0 01F01F01 		and	r1, r1, #31
+ 169 00f4 4FF00100 		mov	r0, #1
+ 170 00f8 00FA01F1 		lsl	r1, r0, r1
  147:../src/stm32f30x_misc.c ****     NVIC->ICER[NVIC_InitStruct->NVIC_IRQChannel >> 0x05] =
- 170              		.loc 1 147 0
- 171 00fc 02F12002 		add	r2, r2, #32
- 172 0100 43F82210 		str	r1, [r3, r2, lsl #2]
- 173              	.L2:
+ 171              		.loc 1 147 0
+ 172 00fc 02F12002 		add	r2, r2, #32
+ 173 0100 43F82210 		str	r1, [r3, r2, lsl #2]
+ 174              	.L2:
  149:../src/stm32f30x_misc.c ****   }
  150:../src/stm32f30x_misc.c **** }
- 174              		.loc 1 150 0
- 175 0104 07F11C07 		add	r7, r7, #28
- 176 0108 BD46     		mov	sp, r7
- 177 010a 80BC     		pop	{r7}
- 178 010c 7047     		bx	lr
- 179              		.cfi_endproc
- 180              	.LFE112:
- 182 010e 00BF     		.align	2
- 183              		.global	NVIC_SetVectorTable
- 184              		.thumb
- 185              		.thumb_func
- 187              	NVIC_SetVectorTable:
- 188              	.LFB113:
+ 175              		.loc 1 150 0
+ 176 0104 07F11C07 		add	r7, r7, #28
+ 177 0108 BD46     		mov	sp, r7
+ 178 010a 80BC     		pop	{r7}
+ 179 010c 7047     		bx	lr
+ 180              		.cfi_endproc
+ 181              	.LFE112:
+ 183 010e 00BF     		.align	2
+ 184              		.global	NVIC_SetVectorTable
+ 185              		.thumb
+ 186              		.thumb_func
+ 188              	NVIC_SetVectorTable:
+ 189              	.LFB113:
  151:../src/stm32f30x_misc.c **** 
  152:../src/stm32f30x_misc.c **** /**
  153:../src/stm32f30x_misc.c ****   * @brief  Sets the vector table location and Offset.
@@ -345,51 +346,51 @@
  160:../src/stm32f30x_misc.c ****   */
  161:../src/stm32f30x_misc.c **** void NVIC_SetVectorTable(uint32_t NVIC_VectTab, uint32_t Offset)
  162:../src/stm32f30x_misc.c **** { 
- 189              		.loc 1 162 0
- 190              		.cfi_startproc
- 191              		@ args = 0, pretend = 0, frame = 8
- 192              		@ frame_needed = 1, uses_anonymous_args = 0
- 193              		@ link register save eliminated.
- 194 0110 80B4     		push	{r7}
- 195              	.LCFI6:
- 196              		.cfi_def_cfa_offset 4
- 197              		.cfi_offset 7, -4
- 198 0112 83B0     		sub	sp, sp, #12
- 199              	.LCFI7:
- 200              		.cfi_def_cfa_offset 16
- 201 0114 00AF     		add	r7, sp, #0
- 202              	.LCFI8:
- 203              		.cfi_def_cfa_register 7
- 204 0116 7860     		str	r0, [r7, #4]
- 205 0118 3960     		str	r1, [r7, #0]
+ 190              		.loc 1 162 0
+ 191              		.cfi_startproc
+ 192              		@ args = 0, pretend = 0, frame = 8
+ 193              		@ frame_needed = 1, uses_anonymous_args = 0
+ 194              		@ link register save eliminated.
+ 195 0110 80B4     		push	{r7}
+ 196              	.LCFI6:
+ 197              		.cfi_def_cfa_offset 4
+ 198              		.cfi_offset 7, -4
+ 199 0112 83B0     		sub	sp, sp, #12
+ 200              	.LCFI7:
+ 201              		.cfi_def_cfa_offset 16
+ 202 0114 00AF     		add	r7, sp, #0
+ 203              	.LCFI8:
+ 204              		.cfi_def_cfa_register 7
+ 205 0116 7860     		str	r0, [r7, #4]
+ 206 0118 3960     		str	r1, [r7, #0]
  163:../src/stm32f30x_misc.c ****   /* Check the parameters */
  164:../src/stm32f30x_misc.c ****   assert_param(IS_NVIC_VECTTAB(NVIC_VectTab));
  165:../src/stm32f30x_misc.c ****   assert_param(IS_NVIC_OFFSET(Offset));  
  166:../src/stm32f30x_misc.c ****    
  167:../src/stm32f30x_misc.c ****   SCB->VTOR = NVIC_VectTab | (Offset & (uint32_t)0x1FFFFF80);
- 206              		.loc 1 167 0
- 207 011a 4FF46D43 		mov	r3, #60672
- 208 011e CEF20003 		movt	r3, 57344
- 209 0122 3A68     		ldr	r2, [r7, #0]
- 210 0124 22F06042 		bic	r2, r2, #-536870912
- 211 0128 22F07F02 		bic	r2, r2, #127
- 212 012c 7968     		ldr	r1, [r7, #4]
- 213 012e 0A43     		orrs	r2, r2, r1
- 214 0130 9A60     		str	r2, [r3, #8]
+ 207              		.loc 1 167 0
+ 208 011a 4FF46D43 		mov	r3, #60672
+ 209 011e CEF20003 		movt	r3, 57344
+ 210 0122 3A68     		ldr	r2, [r7, #0]
+ 211 0124 22F06042 		bic	r2, r2, #-536870912
+ 212 0128 22F07F02 		bic	r2, r2, #127
+ 213 012c 7968     		ldr	r1, [r7, #4]
+ 214 012e 0A43     		orrs	r2, r2, r1
+ 215 0130 9A60     		str	r2, [r3, #8]
  168:../src/stm32f30x_misc.c **** }
- 215              		.loc 1 168 0
- 216 0132 07F10C07 		add	r7, r7, #12
- 217 0136 BD46     		mov	sp, r7
- 218 0138 80BC     		pop	{r7}
- 219 013a 7047     		bx	lr
- 220              		.cfi_endproc
- 221              	.LFE113:
- 223              		.align	2
- 224              		.global	NVIC_SystemLPConfig
- 225              		.thumb
- 226              		.thumb_func
- 228              	NVIC_SystemLPConfig:
- 229              	.LFB114:
+ 216              		.loc 1 168 0
+ 217 0132 07F10C07 		add	r7, r7, #12
+ 218 0136 BD46     		mov	sp, r7
+ 219 0138 80BC     		pop	{r7}
+ 220 013a 7047     		bx	lr
+ 221              		.cfi_endproc
+ 222              	.LFE113:
+ 224              		.align	2
+ 225              		.global	NVIC_SystemLPConfig
+ 226              		.thumb
+ 227              		.thumb_func
+ 229              	NVIC_SystemLPConfig:
+ 230              	.LFB114:
  169:../src/stm32f30x_misc.c **** 
  170:../src/stm32f30x_misc.c **** /**
  171:../src/stm32f30x_misc.c ****   * @brief  Selects the condition for the system to enter low power mode.
@@ -403,77 +404,77 @@
  179:../src/stm32f30x_misc.c ****   */
  180:../src/stm32f30x_misc.c **** void NVIC_SystemLPConfig(uint8_t LowPowerMode, FunctionalState NewState)
  181:../src/stm32f30x_misc.c **** {
- 230              		.loc 1 181 0
- 231              		.cfi_startproc
- 232              		@ args = 0, pretend = 0, frame = 8
- 233              		@ frame_needed = 1, uses_anonymous_args = 0
- 234              		@ link register save eliminated.
- 235 013c 80B4     		push	{r7}
- 236              	.LCFI9:
- 237              		.cfi_def_cfa_offset 4
- 238              		.cfi_offset 7, -4
- 239 013e 83B0     		sub	sp, sp, #12
- 240              	.LCFI10:
- 241              		.cfi_def_cfa_offset 16
- 242 0140 00AF     		add	r7, sp, #0
- 243              	.LCFI11:
- 244              		.cfi_def_cfa_register 7
- 245 0142 0246     		mov	r2, r0
- 246 0144 0B46     		mov	r3, r1
- 247 0146 FA71     		strb	r2, [r7, #7]
- 248 0148 BB71     		strb	r3, [r7, #6]
+ 231              		.loc 1 181 0
+ 232              		.cfi_startproc
+ 233              		@ args = 0, pretend = 0, frame = 8
+ 234              		@ frame_needed = 1, uses_anonymous_args = 0
+ 235              		@ link register save eliminated.
+ 236 013c 80B4     		push	{r7}
+ 237              	.LCFI9:
+ 238              		.cfi_def_cfa_offset 4
+ 239              		.cfi_offset 7, -4
+ 240 013e 83B0     		sub	sp, sp, #12
+ 241              	.LCFI10:
+ 242              		.cfi_def_cfa_offset 16
+ 243 0140 00AF     		add	r7, sp, #0
+ 244              	.LCFI11:
+ 245              		.cfi_def_cfa_register 7
+ 246 0142 0246     		mov	r2, r0
+ 247 0144 0B46     		mov	r3, r1
+ 248 0146 FA71     		strb	r2, [r7, #7]
+ 249 0148 BB71     		strb	r3, [r7, #6]
  182:../src/stm32f30x_misc.c ****   /* Check the parameters */
  183:../src/stm32f30x_misc.c ****   assert_param(IS_NVIC_LP(LowPowerMode));
  184:../src/stm32f30x_misc.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));  
  185:../src/stm32f30x_misc.c ****   
  186:../src/stm32f30x_misc.c ****   if (NewState != DISABLE)
- 249              		.loc 1 186 0
- 250 014a BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
- 251 014c 002B     		cmp	r3, #0
- 252 014e 0CD0     		beq	.L7
+ 250              		.loc 1 186 0
+ 251 014a BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 252 014c 002B     		cmp	r3, #0
+ 253 014e 0CD0     		beq	.L7
  187:../src/stm32f30x_misc.c ****   {
  188:../src/stm32f30x_misc.c ****     SCB->SCR |= LowPowerMode;
- 253              		.loc 1 188 0
- 254 0150 4FF46D43 		mov	r3, #60672
- 255 0154 CEF20003 		movt	r3, 57344
- 256 0158 4FF46D42 		mov	r2, #60672
- 257 015c CEF20002 		movt	r2, 57344
- 258 0160 1169     		ldr	r1, [r2, #16]
- 259 0162 FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
- 260 0164 0A43     		orrs	r2, r2, r1
- 261 0166 1A61     		str	r2, [r3, #16]
- 262 0168 0DE0     		b	.L6
- 263              	.L7:
+ 254              		.loc 1 188 0
+ 255 0150 4FF46D43 		mov	r3, #60672
+ 256 0154 CEF20003 		movt	r3, 57344
+ 257 0158 4FF46D42 		mov	r2, #60672
+ 258 015c CEF20002 		movt	r2, 57344
+ 259 0160 1169     		ldr	r1, [r2, #16]
+ 260 0162 FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
+ 261 0164 0A43     		orrs	r2, r2, r1
+ 262 0166 1A61     		str	r2, [r3, #16]
+ 263 0168 0DE0     		b	.L6
+ 264              	.L7:
  189:../src/stm32f30x_misc.c ****   }
  190:../src/stm32f30x_misc.c ****   else
  191:../src/stm32f30x_misc.c ****   {
  192:../src/stm32f30x_misc.c ****     SCB->SCR &= (uint32_t)(~(uint32_t)LowPowerMode);
- 264              		.loc 1 192 0
- 265 016a 4FF46D43 		mov	r3, #60672
- 266 016e CEF20003 		movt	r3, 57344
- 267 0172 4FF46D42 		mov	r2, #60672
- 268 0176 CEF20002 		movt	r2, 57344
- 269 017a 1169     		ldr	r1, [r2, #16]
- 270 017c FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
- 271 017e 6FEA0202 		mvn	r2, r2
- 272 0182 0A40     		ands	r2, r2, r1
- 273 0184 1A61     		str	r2, [r3, #16]
- 274              	.L6:
+ 265              		.loc 1 192 0
+ 266 016a 4FF46D43 		mov	r3, #60672
+ 267 016e CEF20003 		movt	r3, 57344
+ 268 0172 4FF46D42 		mov	r2, #60672
+ 269 0176 CEF20002 		movt	r2, 57344
+ 270 017a 1169     		ldr	r1, [r2, #16]
+ 271 017c FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
+ 272 017e 6FEA0202 		mvn	r2, r2
+ 273 0182 0A40     		ands	r2, r2, r1
+ 274 0184 1A61     		str	r2, [r3, #16]
+ 275              	.L6:
  193:../src/stm32f30x_misc.c ****   }
  194:../src/stm32f30x_misc.c **** }
- 275              		.loc 1 194 0
- 276 0186 07F10C07 		add	r7, r7, #12
- 277 018a BD46     		mov	sp, r7
- 278 018c 80BC     		pop	{r7}
- 279 018e 7047     		bx	lr
- 280              		.cfi_endproc
- 281              	.LFE114:
- 283              		.align	2
- 284              		.global	SysTick_CLKSourceConfig
- 285              		.thumb
- 286              		.thumb_func
- 288              	SysTick_CLKSourceConfig:
- 289              	.LFB115:
+ 276              		.loc 1 194 0
+ 277 0186 07F10C07 		add	r7, r7, #12
+ 278 018a BD46     		mov	sp, r7
+ 279 018c 80BC     		pop	{r7}
+ 280 018e 7047     		bx	lr
+ 281              		.cfi_endproc
+ 282              	.LFE114:
+ 284              		.align	2
+ 285              		.global	SysTick_CLKSourceConfig
+ 286              		.thumb
+ 287              		.thumb_func
+ 289              	SysTick_CLKSourceConfig:
+ 290              	.LFB115:
  195:../src/stm32f30x_misc.c **** 
  196:../src/stm32f30x_misc.c **** /**
  197:../src/stm32f30x_misc.c ****   * @brief  Configures the SysTick clock source.
@@ -485,78 +486,78 @@
  203:../src/stm32f30x_misc.c ****   */
  204:../src/stm32f30x_misc.c **** void SysTick_CLKSourceConfig(uint32_t SysTick_CLKSource)
  205:../src/stm32f30x_misc.c **** {
- 290              		.loc 1 205 0
- 291              		.cfi_startproc
- 292              		@ args = 0, pretend = 0, frame = 8
- 293              		@ frame_needed = 1, uses_anonymous_args = 0
- 294              		@ link register save eliminated.
- 295 0190 80B4     		push	{r7}
- 296              	.LCFI12:
- 297              		.cfi_def_cfa_offset 4
- 298              		.cfi_offset 7, -4
- 299 0192 83B0     		sub	sp, sp, #12
- 300              	.LCFI13:
- 301              		.cfi_def_cfa_offset 16
- 302 0194 00AF     		add	r7, sp, #0
- 303              	.LCFI14:
- 304              		.cfi_def_cfa_register 7
- 305 0196 7860     		str	r0, [r7, #4]
+ 291              		.loc 1 205 0
+ 292              		.cfi_startproc
+ 293              		@ args = 0, pretend = 0, frame = 8
+ 294              		@ frame_needed = 1, uses_anonymous_args = 0
+ 295              		@ link register save eliminated.
+ 296 0190 80B4     		push	{r7}
+ 297              	.LCFI12:
+ 298              		.cfi_def_cfa_offset 4
+ 299              		.cfi_offset 7, -4
+ 300 0192 83B0     		sub	sp, sp, #12
+ 301              	.LCFI13:
+ 302              		.cfi_def_cfa_offset 16
+ 303 0194 00AF     		add	r7, sp, #0
+ 304              	.LCFI14:
+ 305              		.cfi_def_cfa_register 7
+ 306 0196 7860     		str	r0, [r7, #4]
  206:../src/stm32f30x_misc.c ****   /* Check the parameters */
  207:../src/stm32f30x_misc.c ****   assert_param(IS_SYSTICK_CLK_SOURCE(SysTick_CLKSource));
  208:../src/stm32f30x_misc.c ****   if (SysTick_CLKSource == SysTick_CLKSource_HCLK)
- 306              		.loc 1 208 0
- 307 0198 7B68     		ldr	r3, [r7, #4]
- 308 019a 042B     		cmp	r3, #4
- 309 019c 0CD1     		bne	.L10
+ 307              		.loc 1 208 0
+ 308 0198 7B68     		ldr	r3, [r7, #4]
+ 309 019a 042B     		cmp	r3, #4
+ 310 019c 0CD1     		bne	.L10
  209:../src/stm32f30x_misc.c ****   {
  210:../src/stm32f30x_misc.c ****     SysTick->CTRL |= SysTick_CLKSource_HCLK;
- 310              		.loc 1 210 0
- 311 019e 4EF21003 		movw	r3, #57360
- 312 01a2 CEF20003 		movt	r3, 57344
- 313 01a6 4EF21002 		movw	r2, #57360
- 314 01aa CEF20002 		movt	r2, 57344
- 315 01ae 1268     		ldr	r2, [r2, #0]
- 316 01b0 42F00402 		orr	r2, r2, #4
- 317 01b4 1A60     		str	r2, [r3, #0]
- 318 01b6 0BE0     		b	.L9
- 319              	.L10:
+ 311              		.loc 1 210 0
+ 312 019e 4EF21003 		movw	r3, #57360
+ 313 01a2 CEF20003 		movt	r3, 57344
+ 314 01a6 4EF21002 		movw	r2, #57360
+ 315 01aa CEF20002 		movt	r2, 57344
+ 316 01ae 1268     		ldr	r2, [r2, #0]
+ 317 01b0 42F00402 		orr	r2, r2, #4
+ 318 01b4 1A60     		str	r2, [r3, #0]
+ 319 01b6 0BE0     		b	.L9
+ 320              	.L10:
  211:../src/stm32f30x_misc.c ****   }
  212:../src/stm32f30x_misc.c ****   else
  213:../src/stm32f30x_misc.c ****   {
  214:../src/stm32f30x_misc.c ****     SysTick->CTRL &= SysTick_CLKSource_HCLK_Div8;
- 320              		.loc 1 214 0
- 321 01b8 4EF21003 		movw	r3, #57360
- 322 01bc CEF20003 		movt	r3, 57344
- 323 01c0 4EF21002 		movw	r2, #57360
- 324 01c4 CEF20002 		movt	r2, 57344
- 325 01c8 1268     		ldr	r2, [r2, #0]
- 326 01ca 22F00402 		bic	r2, r2, #4
- 327 01ce 1A60     		str	r2, [r3, #0]
- 328              	.L9:
+ 321              		.loc 1 214 0
+ 322 01b8 4EF21003 		movw	r3, #57360
+ 323 01bc CEF20003 		movt	r3, 57344
+ 324 01c0 4EF21002 		movw	r2, #57360
+ 325 01c4 CEF20002 		movt	r2, 57344
+ 326 01c8 1268     		ldr	r2, [r2, #0]
+ 327 01ca 22F00402 		bic	r2, r2, #4
+ 328 01ce 1A60     		str	r2, [r3, #0]
+ 329              	.L9:
  215:../src/stm32f30x_misc.c ****   }
  216:../src/stm32f30x_misc.c **** }
- 329              		.loc 1 216 0
- 330 01d0 07F10C07 		add	r7, r7, #12
- 331 01d4 BD46     		mov	sp, r7
- 332 01d6 80BC     		pop	{r7}
- 333 01d8 7047     		bx	lr
- 334              		.cfi_endproc
- 335              	.LFE115:
- 337              	.Letext0:
- 338              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
- 339              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
- 340              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
- 341              		.file 5 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_misc.h"
+ 330              		.loc 1 216 0
+ 331 01d0 07F10C07 		add	r7, r7, #12
+ 332 01d4 BD46     		mov	sp, r7
+ 333 01d6 80BC     		pop	{r7}
+ 334 01d8 7047     		bx	lr
+ 335              		.cfi_endproc
+ 336              	.LFE115:
+ 338              	.Letext0:
+ 339              		.file 2 "/home/aghosh01/gcc-arm-none-eabi-4_7-2012q4/bin/../lib/gcc/arm-none-eabi/4.7.3/../../../.
+ 340              		.file 3 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/core_cm4.h"
+ 341              		.file 4 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x.h"
+ 342              		.file 5 "/home/aghosh01/git/Trinity2013/STM32F3x/inc/stm32f30x_misc.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32f30x_misc.c
-     /tmp/cch6tJtk.s:19     .text:00000000 $t
-     /tmp/cch6tJtk.s:24     .text:00000000 NVIC_PriorityGroupConfig
-     /tmp/cch6tJtk.s:63     .text:00000028 NVIC_Init
-     /tmp/cch6tJtk.s:187    .text:00000110 NVIC_SetVectorTable
-     /tmp/cch6tJtk.s:228    .text:0000013c NVIC_SystemLPConfig
-     /tmp/cch6tJtk.s:288    .text:00000190 SysTick_CLKSourceConfig
+     /tmp/ccS42e9t.s:20     .text:00000000 $t
+     /tmp/ccS42e9t.s:25     .text:00000000 NVIC_PriorityGroupConfig
+     /tmp/ccS42e9t.s:64     .text:00000028 NVIC_Init
+     /tmp/ccS42e9t.s:188    .text:00000110 NVIC_SetVectorTable
+     /tmp/ccS42e9t.s:229    .text:0000013c NVIC_SystemLPConfig
+     /tmp/ccS42e9t.s:289    .text:00000190 SysTick_CLKSourceConfig
                      .debug_frame:00000010 $d
-                           .group:00000000 wm4.1.323dce8664331a0daf4a2675e107c70c
+                           .group:00000000 wm4.1.743cd71370ebc432b539c5dba7924ecc
                            .group:00000000 wm4.stm32f30x.h.56.6f19c65e98e3319a61449cb2b2455af5
                            .group:00000000 wm4.core_cm4.h.32.1434cd257ff5806b1b03cd32ab0641e9
                            .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05

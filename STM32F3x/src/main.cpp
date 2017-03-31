@@ -119,6 +119,7 @@ void timer2_timebase_init(void);
 void comp_init(void);
 
 void trinity2013_waitForStart(void);
+void trinity2016_sound_start(void);
 
 float IR_distance(int IR_ADC_VAL);
 
@@ -153,6 +154,7 @@ int state;
 
 float match_time_counter;
 float t_firefight_start;
+float t_homing_start;
 int leds_on;
 
 // Initialize all encoder data structures to zero:
@@ -167,7 +169,8 @@ int main(void)
 
 	LED_MATRIX_ISR_init();
 
-	trinity2013_waitForStart();
+//	trinity2013_waitForStart();
+//	trinity2016_sound_start();
 
 	state = ST_WANDER;
 
@@ -254,10 +257,8 @@ int main(void)
 
 	while(true)
 	{
-		printf("%4d %4d %4d\n\r", (int)adcData[0] , (int)adc2_data[2], ((int)adcData[0] - (int)adc2_data[2]));
-//		printf("%d %1.3f \n\r", (int)adc2_data[3], d_front);
-//		printf("Time elapsed since start: %1.3f \n\r", match_time_counter);
-		if(((adc2_data[2] > UV_THRESHOLD || adcData[0] > UV_THRESHOLD)) && state == ST_WANDER) //500
+#ifdef ENABLE_FIREFIGHTING
+		if(((adc2_data[2] > UV_THRESHOLD && adcData[0] > UV_THRESHOLD)) && state == ST_WANDER) //500
 		{
 			for(uv_iter=0; uv_iter<UV_NUMSAMPLES; ++uv_iter)
 			{
@@ -267,8 +268,9 @@ int main(void)
 			uv1_avg = (float)uv_avgBuf1/(float)UV_NUMSAMPLES;
 			uv2_avg = (float)uv_avgBuf2/(float)UV_NUMSAMPLES;
 
-			if(uv1_avg > (float)UV_THRESHOLD || uv2_avg > (float)UV_THRESHOLD)
+			if(uv1_avg > (float)UV_THRESHOLD && uv2_avg > (float)UV_THRESHOLD)
 			{
+				t_homing_start = match_time_counter;
 				state = ST_HOMING;
 			}
 
@@ -286,6 +288,7 @@ int main(void)
 			t_firefight_start = match_time_counter;
 			state = ST_CANDLE_BLOWOUT;
 		}
+#endif
 
 	}
 	return 0; // We should never manage to get here...
@@ -305,6 +308,169 @@ void trinity2013_waitForStart(void)
 	while(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_3) == (uint8_t)Bit_RESET);
 	match_time_counter = 0.0f;
 	state = ST_WANDER;
+}
+
+void trinity2016_sound_start(void)
+{
+	// Enable GPIOE, Pin 9 for sound detect indication:
+
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOE, ENABLE);
+
+	GPIO_InitTypeDef a;
+
+	a.GPIO_Pin = GPIO_Pin_9;
+	a.GPIO_Mode = GPIO_Mode_OUT;
+	a.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	a.GPIO_OType = GPIO_OType_PP;
+	a.GPIO_Speed = GPIO_Speed_Level_2;
+
+	GPIO_Init(GPIOE, &a);
+
+	ADC_InitTypeDef       ADC_InitStructure;
+	ADC_CommonInitTypeDef ADC_CommonInitStructure;
+	GPIO_InitTypeDef      GPIO_InitStructure;
+
+	/* Configure the ADC clock */
+	RCC_ADCCLKConfig(RCC_ADC12PLLCLK_Div2);
+	/* Enable ADC2 clock */
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_ADC12, ENABLE);
+	/* GPIOA, GPIOB, GPIOC Periph clock enable */
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
+
+	// Configure PA5 as an analog input:
+
+	GPIO_StructInit(&GPIO_InitStructure);
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOA, &GPIO_InitStructure);
+
+	ADC_StructInit(&ADC_InitStructure);
+
+	/* Calibration procedure */
+	ADC_VoltageRegulatorCmd(ADC2, ENABLE);
+
+	/* Insert delay equal to about 900 µs */
+	int foo;
+	for(foo = 0; foo < 64000; ++foo)
+	{
+	  ++foo;
+	}
+
+	ADC_SelectCalibrationMode(ADC2, ADC_CalibrationMode_Single);
+	ADC_StartCalibration(ADC2);
+
+	while(ADC_GetCalibrationStatus(ADC2) != RESET );
+
+	ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
+	ADC_CommonInitStructure.ADC_Clock = ADC_Clock_AsynClkMode;
+	ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_1;
+	ADC_CommonInitStructure.ADC_DMAMode = ADC_DMAMode_Circular;
+	ADC_CommonInitStructure.ADC_TwoSamplingDelay = 0xF;
+	ADC_CommonInit(ADC2, &ADC_CommonInitStructure);
+
+	ADC_InitStructure.ADC_ContinuousConvMode = ADC_ContinuousConvMode_Enable;
+	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
+	ADC_InitStructure.ADC_ExternalTrigConvEvent = ADC_ExternalTrigConvEvent_0;
+	ADC_InitStructure.ADC_ExternalTrigEventEdge = ADC_ExternalTrigEventEdge_None;
+	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+	ADC_InitStructure.ADC_OverrunMode = ADC_OverrunMode_Disable;
+	ADC_InitStructure.ADC_AutoInjMode = ADC_AutoInjec_Disable;
+	ADC_InitStructure.ADC_NbrOfRegChannel = 1;
+	ADC_Init(ADC2, &ADC_InitStructure);
+
+	/* ADC2 regular Channel 2 (conversion #1) configuration */
+
+	ADC_RegularChannelConfig(ADC2, ADC_Channel_2, 1, ADC_SampleTime_1Cycles5);
+
+	/* Enable ADC2 */
+	ADC_Cmd(ADC2, ENABLE);
+
+	/* wait for ADRDY */
+	while(!ADC_GetFlagStatus(ADC2, ADC_FLAG_RDY));
+
+	/* Start ADC2 Software Conversion */
+	ADC_StartConversion(ADC2);
+
+	/* Enable Timer 2 timebase to enable timed ADC measurements: */
+	/* 1 us/timer tick */
+	timer2_timebase_init();
+	TIM_SetCounter(TIM2, 0);
+	TIM_Cmd(TIM2, ENABLE);
+
+	float normalized_mic_adc_input = 0.0f;
+
+	float last_lowpass_output = 0.0f;
+	float last_lowpass_output2 = 0.0f;
+	float last_lowpass_output3 = 0.0f;
+
+	float last_highpass_input = 0.0f;
+	float last_highpass_output = 0.0f;
+
+	float last_highpass_input2 = 0.0f;
+	float last_highpass_output2 = 0.0f;
+
+	float sampling_time = 0.000001f * (float)SOUND_ACTIVATION_SAMPLING_TIME_US;
+
+	float lowpass_alpha = 2.0f*3.14159f*sampling_time*(float)SOUND_ACTIVATION_HIGH_BOUND_HERTZ /
+						((2.0f*3.14159f*sampling_time*(float)SOUND_ACTIVATION_HIGH_BOUND_HERTZ) + 1.0f);
+
+	float highpass_alpha = 1.0f/((2.0f*3.14159f*sampling_time*SOUND_ACTIVATION_LOW_BOUND_HERTZ) + 1.0f);
+
+	int i = 0;
+	float rms_accum = 0.0f;
+	float last_rms_value = 0.0f;
+
+	while(1)
+	{
+		if(TIM_GetCounter(TIM2) >= SOUND_ACTIVATION_SAMPLING_TIME_US)
+		{
+			TIM_Cmd(TIM2, DISABLE);
+			TIM_SetCounter(TIM2, 0);
+			TIM_Cmd(TIM2, ENABLE);
+
+			// Normalize input:
+			normalized_mic_adc_input = (float)ADC_GetConversionValue(ADC2)/(float)4096;
+
+			// Perform one step of lowpass filter operation:
+			last_lowpass_output = (lowpass_alpha * normalized_mic_adc_input) +
+										((1.0f - lowpass_alpha)*last_lowpass_output);
+
+			// Perform one step of lowpass filter operation:
+			last_lowpass_output2 = (lowpass_alpha * last_lowpass_output) +
+										((1.0f - lowpass_alpha)*last_lowpass_output2);
+
+			// Perform one step of highpass filter operation:
+			last_highpass_output = (highpass_alpha * last_highpass_output) +
+										(highpass_alpha * (last_lowpass_output2 - last_highpass_input));
+			last_highpass_input = last_lowpass_output2;
+
+			// Perform one step of highpass filter operation:
+			last_highpass_output2 = (highpass_alpha * last_highpass_output2) +
+										(highpass_alpha * (last_highpass_output - last_highpass_input2));
+			last_highpass_input2 = last_highpass_output;
+
+			rms_accum += last_highpass_output2 * last_highpass_output2;
+			++i;
+
+			if(i == SOUND_ACTIVATION_RMS_CALC_BUFFER_SIZE)
+			{
+				last_rms_value = sqrt(rms_accum/(float)SOUND_ACTIVATION_RMS_CALC_BUFFER_SIZE);
+				i = 0;
+				rms_accum = 0.0f;
+			}
+		}
+
+		if(last_rms_value >= SOUND_ACTIVATION_RMS_THRESH)
+		{
+			break;
+		}
+	}
+	ADC_DeInit(ADC2);
+	match_time_counter = 0.0f;
+	state = ST_WANDER;
+	GPIO_Write(GPIOE, GPIO_Pin_9);
 }
 
 float IR_distance(int IR_ADC_VAL)
